@@ -347,7 +347,7 @@ We show that reasonable levels of mean average precision (MAP) can be achieved f
 Additionally, we demonstrate several applications of subword spotting: user directed searching to aid in human transcription, suffix searching/spotting, and CAT using word completion from aggregated subword spottings.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Related Work}
+\chapter{Related Work}\label{relatedword}
 
 \section{Word Spotting}
 
@@ -360,28 +360,42 @@ Most early work with local features share the common theme of taking features fr
 
 Rodr{\i}guez et al.~\cite{Rodrıguez2008} proposed a simple histogram gradient feature that demonstrated improved performance when compared with (1) the popular profile and transition-based features of Rath and Manmantha \cite{Rath2003}, (2) the gradient and transition-focused features of Marti and Bunke \cite{Marti2001} and (3) the simple histogram features of Bunke et al.~\cite{Bunke2004}. They also showed that a HMM worked better than DTW, for their features. Their method was not an exemplar-based approach.
 
-Aldavert et al.~\cite{Aldavert2015} and Almazan et al.~\cite{Almazan2014} have presented superior word spotting methods that rely on heuristic descriptions. Aldavert et al.~used the well known bag-of-visual-words method, including recent improvements from the computer vision community. This is a very simple, yet effective, exemplar spotting approach. Aldavert et al.~use Fischer vectors, which are similar to bag-of-visual-words, with spatial pyramids in addition to a special pyramidal histogram of characters (PHOC), which are described in more detail in Chapter \ref{subwordspotting}. These are used to find a new space in training in which both strings and word images can be embedded. This allows it to perform both string and exemplar queries as well as hybrid queries which yield excellent results.
+Aldavert et al.~\cite{Aldavert2015} and Almazan et al.~\cite{Almazan2014} have presented superior word spotting methods that rely on heuristic descriptions. Aldavert et al.~used the well known bag-of-visual-words method, including recent improvements from the computer vision community. This is a very simple, yet effective, exemplar spotting approach. Aldavert et al.~use Fischer vectors, which are similar to bag-of-visual-words, with spatial pyramids in addition to a special pyramidal histogram of characters (PHOC).
+% which are described in more detail in Chapter \ref{subwordspotting}. 
+PHOC vectors are a fixed length vector which describe a word; it encodes which characters are present and roughly their location. If your alphabet is length $N$, the first $N$ values of the vector indicate if each character is present in the word (Is `a' in the word? Is `b' in the word?). The next $N$ values indicate if each character is present in the first half of the word, the $N$ values after that indicating presence in the second half of the word. This is carried out to three levels, and a set of character bigrams are also used on the first two levels. See Figure \ref{fig:phoc} for clarification.
+The PHOC vector and pyramidal bag-of-visual-words are used to find a new space in training in which both strings and word images can be embedded. This allows it to perform both string and exemplar queries as well as hybrid queries which yield excellent results.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=.65\textwidth]{phoc}
+    \caption{Example of a three level PHOC vector for the word ``face''. The final vector is all levels appended together. Note that partial values are given when characters are split over bins.}
+    \label{fig:phoc}
+\end{figure}
 
 %PHOCNet
 Sudholt and Fink \cite{sudholt2016} expanded on \cite{Almazan2014} by training a deep convolutional neural network to produce the PHOC vector from a word image. This, and following improvements \cite{krishnan2016, retsinasTrans2017}, have yielded the state-of-the-art for segmentation based spotting. We base our spotting method on \cite{sudholt2016}.
 
 There are also techniques for segmentation-free word spotting, where they don't require segmented word images but can use full page images \cite{wilkinson2017}. While we used word image segmentations in our work to narrow its scope, we note that it could be applied, with some adjustments, in a segmentation-free setting.
 
-We are interested in spotting character n-grams (uni-, bi- and trigrams) rather than words. While this hasn't explicitly been done, we feel examining the performance of other methods on short words (2 to 3 letters) is instructive. For Rothacker et al.'s \cite{Rothacker2013} segmentation free HMM based method, they report $\sim$46\% and $\sim$55\% mean Average Precision (mAP) for two- and three-lettered words respectively, a drop by $\sim$15\% and $\sim$6\% from the mAP for all words they tested (61\%). Fischer et al.~\cite{Fischer2012} report $\sim$70\% and $\sim$83\% mAP for two and three lettered words, compared to {\textgreater}90\% mAP for words of length 5 or longer, for their line segmentation dependent, character HMM based method. While neither of these numbers are very promising, Almazan et al.~\cite{Almazan2012} observe that sliding window approaches can frequently find false positives of short words inside other words (e.g.~finding the word ``the'' inside the word ``weather''). As this is precisely what we want to happen in n-gram spotting (that is, we \textit{want} to find groups of letters in the middle of words), we expect we should have more success spotting character n-grams than other methods in spotting short words, assuming we have good sliding windows. However, part of the poor accuracy in spotting short words is simply the fact that there is less information with which to discriminate.%; this is an obstacle we still must overcome.
+We are interested in spotting character n-grams (uni-, bi- and trigrams) rather than words. While this hasn't explicitly been done, we feel examining the performance of other methods on short words (2 to 3 letters) is instructive. For Rothacker et al.'s \cite{Rothacker2013} segmentation free HMM based method, they report $\sim$46\% and $\sim$55\% mean Average Precision (mAP) for two- and three-lettered words respectively, a drop by $\sim$15\% and $\sim$6\% from the mAP for all words they tested (61\%). Fischer et al.~\cite{Fischer2012} report $\sim$70\% and $\sim$83\% mAP for two and three lettered words, compared to {\textgreater}90\% mAP for words of length 5 or longer, for their line segmentation dependent, character HMM based method. While neither of these numbers are very promising, Almazan et al.~\cite{Almazan2012} observe that sliding window approaches can frequently find false positives of short words inside other words (e.g.~finding the word ``the'' inside the word ``weather''). As this is precisely what we want to have happen in n-gram spotting (that is, we \textit{want} to find groups of letters in the middle of words), we expect we should have more success spotting character n-grams than other methods in spotting short words, assuming we have good sliding windows. However, part of the poor accuracy in spotting short words is simply the fact that there is less information with which to discriminate.%; this is an obstacle we still must overcome.
 
 %Closely related to subword spotting is glyph spotting, where single characters are searched for; typically in languages where single characters carry more meaning than English.
 
 \section{Automatic Handwriting Recognition}
 
 %[!] Should this be here, or only in introduction?
-The state-of-the-art for handwriting recognition relies heavily on recursive neural networks (RNNs) paired with convolutional neural networks (CNNs). The key component is the connectionist temporal classification (CTC) loss which allows the network to be trained given a line image and a the ground truth text for that line without any alignment \cite{CTC}. In a recent competition on historical German documents \cite{icfhrComp2016}, the leading contestants either used a bidirectional RNN on top of a CNN, or used staggered 2-dimensional RNNs with CNN layers. The best results had word error rates of 20.9 and character error rates of 4.8. This is impressively low and continues to drop as methods are improving \cite{wigington2017}.
+The state-of-the-art for handwriting recognition relies heavily on recursive neural networks (RNNs) paired with convolutional neural networks (CNNs). The key component is the connectionist temporal classification (CTC) loss which allows the network to be trained given a line image and the ground truth text for that line without any alignment \cite{CTC}. In a recent competition on historical German documents \cite{icfhrComp2016} (see Figure \ref{germanlines}), the leading contestants either used a bidirectional RNN on top of a CNN, or used staggered 2-dimensional RNNs with CNN layers. The best results had word error rates of 20.9 and character error rates of 4.8. This is impressively low and continues to drop as methods are improving \cite{wigington2017}.
+
+%TODO germanlines figure
 
 %copied from proposal [!]
 
 \section{Computer Assisted Transcription} %TODO, brand corrective/directive
 
 %Due to the limitations of current handwriting recognition methods, we believe that a fully automated handwriting transcription is out of reach with the present of technology. We thus turn our attention to semi-automated recognition approaches, where we are still using a human to transcribe, but also some intelligent recognition technology. A semi-automated solution will outperform a fully automated system in terms of accuracy and is still far more effective than completely manual transcription. 
-There tends to be two primary CAT methodologies: corrective and directive. Corrective CAT methods rely on handwriting recognition to do most of the work, and then users provide feedback correcting some errors of the recognition, where the gain comes from other errors being automatically corrected or being assisted so that corrections are easier to make. In a directive CAT method, the user provides some of the initial input to the system and it uses this to transcribe more than what the user inputted.
+There tends to be two primary CAT (Computer Assisted Transcription) methodologies: corrective and directive. Corrective CAT methods rely on handwriting recognition to do most of the work, and then users provide feedback correcting some errors of the recognition, where the gain comes from other errors being automatically corrected or being assisted so that corrections are easier to make.
+
+In a directive CAT method, the user provides some of the initial input to the system and it uses this to transcribe more than what the user inputted.
 %Standard CAT approaches use human feedback in two ways: to correct or direct. Either the user is correcting automatic transcription in an intelligent way, or to seeding and directing the recognition by labeling/transcribing words.
 %Both try two use human input in an intelligent way were more is learned than simply the label/correction given. 
 An active learning approach to handwriting transcription is similar to CAT, but is not concerned about achieving human level accuracy, just better accuracy, and thus requires less human involvement~\cite{Serrano2010}. 
@@ -397,10 +411,10 @@ Toselli et al.~\cite{Toselli2007} have explored the realm of corrective CAT usin
     \label{fig:Toselli_multimodalCAT}
 \end{figure}
 
-While it is useful to employ an automatic handwriting recognition method as part of a CAT approach to reduce the human burden, we cannot use the same type of recognition used be these previous CAT systems, where there is a reliance on the predictive capacity of a language model. Some documents are not comprised of only sentences, and thus cannot be transcribed by these methods (we examine the name field of census documents). However, many documents are structured such that a pattern can be learned to assist in transcription.
+While it is useful to employ an automatic handwriting recognition method as part of a CAT approach to reduce the human burden, we cannot use the same type of recognition used by these previous CAT systems, where there is a reliance on the predictive capacity of a language model. Some documents are not comprised of only sentences, and thus cannot be transcribed by these methods (e.g.~the name field of census documents, see Figure \ref{fig:ii}). However, many documents are structured such that a pattern can be learned to assist in transcription.
 
 
-Robert Clawson \cite{Clawson2014}\footnote{You can view a short demo and explanation of his approach at \url{https://www.youtube.com/watch?v=gqdVzEPnBEw}} designed a CAT system for handwritten tabular documents, which have a clear pattern. His approach relied on simply finding matches in the document column of the current word image (essentially query by example word spotting) and assigning them the same user-specified label, as seen in Fig.~\ref{fig:ii}. This provides an accurate CAT system where the user oversees all transcription. The user oversight of matches was accomplished by showing a list of matches to the user (with an adjustable threshold for sensitivity) from which the user removed the false-positive matches. This leveraged the human user's natural ability to identify outliers.
+Robert Clawson \cite{Clawson2014}\footnote{You can view a short demo and explanation of his approach at \url{https://www.youtube.com/watch?v=gqdVzEPnBEw}} designed a CAT system for handwritten tabular documents, which have a clear pattern. His approach relies on simply finding matches in the document column of the current word image (red box in Figure \ref{fig:ii}(a). This is essentially query by example word spotting with user oversight. The matched words are assigned the same user-specified label. This provides an accurate CAT system where the user oversees all transcription. The user oversight of matches is accomplished by showing a list of matches to the user (with an adjustable threshold for sensitivity) from which the user removes the false-positive matches. This user interface leverages the human user's natural ability to identify outliers.
 Our CAT attempts to also leverage this ability as well.
 %However, the approach as a whole is limited as it requires frequent word repetition to be effective. While some tabular documents have this, it is not true for most other documents. Additionally, this method required a computationally expensive preprocessing stage in which a similarity score of all words in a column with all other words in the column had to be computed.
 %The word image comparison method used in \cite{Clawson2014} was costly and prohin
@@ -410,28 +424,36 @@ Our CAT attempts to also leverage this ability as well.
     \begin{subfigure}[t]{0.46\textwidth}
     		\centering
     		\includegraphics[width=\textwidth]{ii_ex_a}
-    		\caption{A small window shows the user matching words later in the column. The user can get rid of bad matches by either clicking on them or adjusting a  threshold.}
+    		\caption{The red box indicates the current word. A small window shows the matching words that appear elsewhere in the column. The user can get rid of bad matches by either clicking on them or adjusting a  threshold.}
     	\end{subfigure}
     	~
     	\begin{subfigure}[t]{0.46\textwidth}
     		\centering
     		\includegraphics[width=\textwidth]{ii_ex_b}
-    		\caption{The matched words are given the same label when entered.}
+    		\caption{The matched words, the latter highlighted words, are given the same label when entered.}
     	\end{subfigure}
     	\caption{Clawson's CAT system for tabular documents.}
     	\label{fig:ii}
 \end{figure}
 
 %"A Framework for Efficient Transcription of Historical Documents Using Keyword Spotting"
-Zagoris et al.~\cite{Zagoris2015} \footnote{A demo of their system is found at \url{http://vc.ee.duth.gr/ws/}} presented a CAT system that was also based on word spotting. In their system when the user is transcribing a word image, they are presented with the results of spotting that image (sorted according to rank). The user can then confirm these spottings by clicking on them, causing them to move to a separate list. When this is done, a relevance feedback loop is activated, which submits another word spotting query of the confirmed image. These results are fused into the ranked list, providing a better selection. The description of the system is unclear, but we believe the list of confirmed spottings are then labelled the same as the current word image.
+Zagoris et al.~\cite{Zagoris2015} \footnote{A demo of their system is found at \url{http://vc.ee.duth.gr/ws/}} presented a CAT system that was also based on word spotting. In their system when the user is transcribing a word image, they are presented with the results of spotting that image (sorted according to rank). The user can then confirm these spottings by clicking on them, causing them to move to a separate list. When this is done, a relevance feedback loop is activated, which submits another word spotting query of the confirmed image. These results are fused into the ranked list, providing a better selection. Figure \ref{fig:zagoris} shows a screen-shot of their demo system.
+%The description of the system is unclear, but we believe the list of confirmed spottings are then labelled the same as the current word image.
 We use the fusion results of \cite{Zagoris2015} to guide the fusion of our subword spotting results.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.9\textwidth]{zagoris}
+    \caption{A screen-shot of a the CAT system of Zagoris et al.~\cite{Zagoris2015}. The green text indicates hand labeling, the blue text indicates automatic labeling. You can see to the right of the current word (``must'') the current ranked list of spottings.}
+    \label{fig:zagoris}
+\end{figure}
 
 Neudecker and Tzadok \cite{Neudecker2010} presented a CAT system for historical printed documents that is very similar to the CAT system we present in Chapter \ref{applications}. The system would first segment the individual characters of the documents and run an OCR engine on them. Those characters with low confidence would then be presented to a user for verification in a character session. A single character session contains all the low-confidence character images classified to a single character. An example of their system's character session for the character ``?'' is given in Fig.~\ref{fig:carpet}.  The user merely needs to select the incorrect classifications. Then in a word session, a word image is shown to the user with possible transcriptions for the word, from which they select the correct one. There are three key strengths of this system. One is that as long as the document’s characters can be segmented, it can work. The second is that it formats all user tasks as selections, rather than typing, and they are quickly completed. This creates a much more enjoyable experience for the user. The third key strength is that it is highly parallelizable for crowd-sourced transcribing. This parallelism is achieved because all character sessions are independent of one another and all word sessions are independent of one another. Our system will follow this method's pattern so it has flexibility of document types, simple user tasks and a parallelizable framework.
 
 \begin{figure}
     \centering
     \includegraphics[width=.9\textwidth]{carpet}
-    \caption{A screen shot of a character session for ``?'' from Neudecker and Tzadok's CAT system, taken directly from their report \cite{Neudecker2010}. Notice how easy it is for a user to simply click on the erroneous classifications.}
+    \caption{A screen-shot of a character session for ``?'' from Neudecker and Tzadok's CAT system, taken directly from their report \cite{Neudecker2010}. Notice how easy it is for a user to simply click on the erroneous classifications.}
     \label{fig:carpet}
 \end{figure}
 
@@ -492,14 +514,9 @@ In this chapter we describe our implementation of subword spotting and then eval
 
 \subsection{Architecture}
 
-Our subword spotting is built on the segmentation based word spotting method PHOCNet \cite{sudholt2016} which we converted to perform a sliding window over the word images. \cite{sudholt2016} uses a deep convolutional network trained on word images with pyramidal histogram of characters (PHOC) \cite{Almazan2014} as the target vectors. This method can word spot by both query-by-string (QbS) and query-by-example (QbE), that is querying with text words and word images. PHOC vectors are a fixed length vector which describe a word; it encodes which characters are present and roughly their location. If your alphabet is length $N$, the first $N$ values of the vector indicate if each character is present in the word (Is `a' in the word? Is `b' in the word?). The next $N$ values indicate if each character is present in the first half of the word, the $N$ values after that indicating presence in the second half of the word. This is carried out to three levels, and a set of character bigrams are also used on the first two levels. See Figure \ref{fig:phoc} for clarification. We used a case insensitive PHOC vector. We note that the bigrams used in the PHOC vector overlap with, but are not identical with the bigrams we spot; changing this so that they were identical did not improve results. 
+Our subword spotting is built on the segmentation based word spotting method PHOCNet \cite{sudholt2016} which we converted to perform a sliding window over the word images. \cite{sudholt2016} uses a deep convolutional network trained on word images with pyramidal histogram of characters (PHOC) \cite{Almazan2014} as the target vectors. This method can word spot by both query-by-string (QbS) and query-by-example (QbE), that is querying with text words and word images. See Chapter \ref{relatedwork} for the details of PHOC vectors. We used a case insensitive PHOC vector. We note that the bigrams used in the PHOC vector overlap with, but are not identical with the bigrams we spot; changing this so that they were identical did not improve results. 
 
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=.65\textwidth]{phoc}
-    \caption{Example of a PHOC vector for the word ``face''. The final vector is all levels appended together. Note that partial values are given when characters are split over bins.}
-    \label{fig:phoc}
-\end{figure}
+
 
 Our network architecture varies slightly from \cite{sudholt2016} and is outlined in Figure \ref{fig:network}. We note the reduction in the number of channels in the layer before the spatial pyramid pooling (SPP) and fully connected layers; this is to reduce the size of featurized images (which are saved after this layer).  We used the Caffe framework \cite{caffe}.
 

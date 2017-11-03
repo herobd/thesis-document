@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2017.8.25)  3 NOV 2017 14:31
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2017.8.25)  3 NOV 2017 16:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -609,14 +609,14 @@ Chapter 1.
 [1
 
 
-] <spotting_explination_pay.png, id=321, 244.63396pt x 115.27065pt>
+] <spotting_explination_pay.png, id=327, 244.63396pt x 115.27065pt>
 File: spotting_explination_pay.png Graphic file (type png)
 
 <use spotting_explination_pay.png>
 Package pdftex.def Info: spotting_explination_pay.png used on input line 271.
 (pdftex.def)             Requested size: 216.09044pt x 101.82367pt.
 
-<spotting_explination_payment.png, id=323, 244.63396pt x 115.27065pt>
+<spotting_explination_payment.png, id=329, 244.63396pt x 115.27065pt>
 File: spotting_explination_payment.png Graphic file (type png)
 
 <use spotting_explination_payment.png>
@@ -624,7 +624,7 @@ Package pdftex.def Info: spotting_explination_payment.png used on input line 27
 7.
 (pdftex.def)             Requested size: 216.09044pt x 101.82367pt.
 
-<spotting_explination_sub_pay.png, id=324, 244.63396pt x 115.27065pt>
+<spotting_explination_sub_pay.png, id=330, 244.63396pt x 115.27065pt>
 File: spotting_explination_sub_pay.png Graphic file (type png)
 
 <use spotting_explination_sub_pay.png>
@@ -632,7 +632,7 @@ Package pdftex.def Info: spotting_explination_sub_pay.png used on input line 28
 7.
 (pdftex.def)             Requested size: 216.09044pt x 101.82367pt.
 
-<spotting_explination_sub_pa.png, id=325, 244.63396pt x 115.27065pt>
+<spotting_explination_sub_pa.png, id=331, 244.63396pt x 115.27065pt>
 File: spotting_explination_sub_pa.png Graphic file (type png)
 
 <use spotting_explination_sub_pa.png>
@@ -641,13 +641,13 @@ Package pdftex.def Info: spotting_explination_sub_pa.png used on input line 293
 (pdftex.def)             Requested size: 216.09044pt x 101.82367pt.
  [2 <./spotting_explination_pay.png> <./spotting_explination_payment.png> <./sp
 otting_explination_sub_pay.png> <./spotting_explination_sub_pa.png>] <ei.png, i
-d=342, 36.135pt x 23.1264pt>
+d=348, 36.135pt x 23.1264pt>
 File: ei.png Graphic file (type png)
  <use ei.png>
 Package pdftex.def Info: ei.png used on input line 322.
 (pdftex.def)             Requested size: 211.3883pt x 135.32559pt.
 
-[3] <spotting_completion_payment.png, id=352, 153.57375pt x 152.12836pt>
+[3] <spotting_completion_payment.png, id=357, 153.57375pt x 152.12836pt>
 File: spotting_completion_payment.png Graphic file (type png)
 
 <use spotting_completion_payment.png>
@@ -659,216 +659,227 @@ Package pdftex.def Info: spotting_completion_payment.png used on input line 335
 
 ]
 Chapter 2.
-[7]
-LaTeX Font Info:    Try loading font information for OML+cmr on input line 370.
+[7] <phoc.png, id=393, 715.67375pt x 339.2675pt>
+File: phoc.png Graphic file (type png)
+ <use phoc.png>
+Package pdftex.def Info: phoc.png used on input line 370.
+(pdftex.def)             Requested size: 305.33788pt x 144.74846pt.
+ [8 <./phoc.png (PNG copy)>]
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 380.
 
  (/usr/share/texlive/texmf-dist/tex/latex/base/omlcmr.fd
 File: omlcmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <12> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 370.
- [8] [9]
-<Toselli_multimodalCAT.png, id=426, 837.1275pt x 261.97874pt>
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 380.
+ [9]
+[10] <Toselli_multimodalCAT.png, id=441, 837.1275pt x 261.97874pt>
 File: Toselli_multimodalCAT.png Graphic file (type png)
 
 <use Toselli_multimodalCAT.png>
-Package pdftex.def Info: Toselli_multimodalCAT.png used on input line 395.
+Package pdftex.def Info: Toselli_multimodalCAT.png used on input line 405.
 (pdftex.def)             Requested size: 446.2658pt x 139.65556pt.
- [10 <./Toselli_multimodalCAT.png>]
-<ii_ex_a.png, id=442, 219.26718pt x 152.92332pt>
+
+<ii_ex_a.png, id=446, 219.26718pt x 152.92332pt>
 File: ii_ex_a.png Graphic file (type png)
  <use ii_ex_a.png>
-Package pdftex.def Info: ii_ex_a.png used on input line 412.
+Package pdftex.def Info: ii_ex_a.png used on input line 422.
 (pdftex.def)             Requested size: 216.09044pt x 150.70618pt.
 
-<ii_ex_b.png, id=443, 218.68903pt x 152.92332pt>
+<ii_ex_b.png, id=447, 218.68903pt x 152.92332pt>
 File: ii_ex_b.png Graphic file (type png)
  <use ii_ex_b.png>
-Package pdftex.def Info: ii_ex_b.png used on input line 418.
+Package pdftex.def Info: ii_ex_b.png used on input line 428.
 (pdftex.def)             Requested size: 216.09044pt x 151.1052pt.
- [11 <./ii_ex_a.png> <./ii_ex_b.png>]
+ [11 <./Toselli_multimodalCAT.png>] <zagoris.png, id=465, 725.71124pt x 346.293
+75pt>
+File: zagoris.png Graphic file (type png)
+
+<use zagoris.png>
+Package pdftex.def Info: zagoris.png used on input line 442.
+(pdftex.def)             Requested size: 422.77661pt x 201.7435pt.
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no ™ in font cmr12!
- <carpet.png, id=464, 337.7418pt x 218.2554pt>
+ [12 <./ii_ex_a.png> <./ii_ex_b.png>]
+<carpet.png, id=478, 337.7418pt x 218.2554pt>
 File: carpet.png Graphic file (type png)
-
-<use carpet.png>
-Package pdftex.def Info: carpet.png used on input line 433.
+ <use carpet.png>
+Package pdftex.def Info: carpet.png used on input line 451.
 (pdftex.def)             Requested size: 422.77661pt x 273.22153pt.
- [12] [13 <./carpet.png>] [14]
+ [13 <./zagoris.png>] [14 <./carpet.png>] [15] [16
+
+
+]
 Chapter 3.
 
-LaTeX Warning: Reference `IAMExamples' on page 15 undefined on input line 454.
+LaTeX Warning: Reference `IAMExamples' on page 17 undefined on input line 472.
 
 
-LaTeX Warning: Reference `BenthamExamples' on page 15 undefined on input line 4
-63.
+LaTeX Warning: Reference `BenthamExamples' on page 17 undefined on input line 4
+81.
 
-[15
-
-
-] [16] [17] [18
+[17] [18] [19] [20
 
 
 ]
 Chapter 4.
-[19] <phoc.png, id=516, 715.67375pt x 339.2675pt>
-File: phoc.png Graphic file (type png)
- <use phoc.png>
-Package pdftex.def Info: phoc.png used on input line 499.
-(pdftex.def)             Requested size: 305.33788pt x 144.74846pt.
 
-<thesis-phocnet.png, id=521, 1306.8825pt x 367.3725pt>
+LaTeX Warning: Reference `relatedwork' on page 21 undefined on input line 513.
+
+[21] <thesis-phocnet.png, id=538, 1306.8825pt x 367.3725pt>
 File: thesis-phocnet.png Graphic file (type png)
 
 <use thesis-phocnet.png>
-Package pdftex.def Info: thesis-phocnet.png used on input line 511.
+Package pdftex.def Info: thesis-phocnet.png used on input line 524.
 (pdftex.def)             Requested size: 460.35788pt x 129.40631pt.
- [20 <./phoc.png (PNG copy)>]
-<Captain_unwarped.png, id=533, 417.56pt x 120.45pt>
+ [22 <./thesis-phocnet.png>]
+<Captain_unwarped.png, id=551, 417.56pt x 120.45pt>
 File: Captain_unwarped.png Graphic file (type png)
  <use Captain_unwarped.png>
-Package pdftex.def Info: Captain_unwarped.png used on input line 532.
+Package pdftex.def Info: Captain_unwarped.png used on input line 545.
 (pdftex.def)             Requested size: 216.09044pt x 62.33476pt.
 
-<Captain_warped.png, id=534, 417.56pt x 120.45pt>
+<Captain_warped.png, id=552, 417.56pt x 120.45pt>
 File: Captain_warped.png Graphic file (type png)
  <use Captain_warped.png>
-Package pdftex.def Info: Captain_warped.png used on input line 538.
+Package pdftex.def Info: Captain_warped.png used on input line 551.
 (pdftex.def)             Requested size: 216.09044pt x 62.33476pt.
 
-[21 <./thesis-phocnet.png>]
+[23 <./Captain_unwarped.png> <./Captain_warped.png (PNG copy)>]
 Package microtype Info: Loading generic settings for font family
 (microtype)             `cmss' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-LaTeX Font Info:    Try loading font information for OT1+qag on input line 562.
+LaTeX Font Info:    Try loading font information for OT1+qag on input line 575.
 
- (/usr/share/texmf/tex/latex/tex-gyre/ot1qag.fd
+
+(/usr/share/texmf/tex/latex/tex-gyre/ot1qag.fd
 File: ot1qag.fd 2009/09/25 v1.2 font definition file for OT1/qag
 )
 Package microtype Info: Loading generic settings for font family
 (microtype)             `qag' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
+ [24]
 
-[22 <./Captain_unwarped.png> <./Captain_warped.png (PNG copy)>] [23]
+LaTeX Warning: Reference `TODO' on page 25 undefined on input line 631.
 
-LaTeX Warning: Reference `TODO' on page 24 undefined on input line 618.
-
-<removengrams.png, id=563, 867.24pt x 536.0025pt>
+[25] <removengrams.png, id=581, 867.24pt x 536.0025pt>
 File: removengrams.png Graphic file (type png)
  <use removengrams.png>
-Package pdftex.def Info: removengrams.png used on input line 684.
+Package pdftex.def Info: removengrams.png used on input line 697.
 (pdftex.def)             Requested size: 352.31624pt x 217.75047pt.
 
-[24]
 
-LaTeX Warning: Reference `fig:unigram' on page 25 undefined on input line 689.
-
-
-LaTeX Warning: Reference `fig:??' on page 25 undefined on input line 689.
+LaTeX Warning: Reference `fig:unigram' on page 26 undefined on input line 702.
 
 
-LaTeX Warning: Reference `fig:??' on page 25 undefined on input line 689.
+LaTeX Warning: Reference `fig:??' on page 26 undefined on input line 702.
 
-<unigram_respot_chart.png, id=571, 885.3075pt x 547.04375pt>
+
+LaTeX Warning: Reference `fig:??' on page 26 undefined on input line 702.
+
+[26] [27 <./removengrams.png (PNG copy)>]
+<unigram_respot_chart.png, id=593, 885.3075pt x 547.04375pt>
 File: unigram_respot_chart.png Graphic file (type png)
 
 <use unigram_respot_chart.png>
-Package pdftex.def Info: unigram_respot_chart.png used on input line 717.
+Package pdftex.def Info: unigram_respot_chart.png used on input line 730.
 (pdftex.def)             Requested size: 352.31624pt x 217.70343pt.
- [25]
-<bigram_respot_chart.png, id=577, 881.2925pt x 545.03625pt>
+
+<bigram_respot_chart.png, id=594, 881.2925pt x 545.03625pt>
 File: bigram_respot_chart.png Graphic file (type png)
 
 <use bigram_respot_chart.png>
-Package pdftex.def Info: bigram_respot_chart.png used on input line 723.
+Package pdftex.def Info: bigram_respot_chart.png used on input line 736.
 (pdftex.def)             Requested size: 352.31624pt x 217.8859pt.
 
-<trigram_respot_chart.png, id=578, 878.28125pt x 543.02875pt>
+<trigram_respot_chart.png, id=595, 878.28125pt x 543.02875pt>
 File: trigram_respot_chart.png Graphic file (type png)
 
 <use trigram_respot_chart.png>
-Package pdftex.def Info: trigram_respot_chart.png used on input line 729.
+Package pdftex.def Info: trigram_respot_chart.png used on input line 742.
 (pdftex.def)             Requested size: 352.31624pt x 217.83737pt.
- [26 <./removengrams.png (PNG copy)>] [27 <./unigram_respot_chart.png (PNG copy
-)> <./bigram_respot_chart.png (PNG copy)>]
-[28 <./trigram_respot_chart.png (PNG copy)>]
+ [28 <./unigram_respot_chart.png (PNG copy)>]
+[29 <./bigram_respot_chart.png (PNG copy)> <./trigram_respot_chart.png (PNG cop
+y)>] [30
+
+
+]
 Chapter 5.
-[29
-
-
-] <suffix_IAM_ap.png, id=595, 785.93625pt x 699.61375pt>
+[31] <suffix_IAM_ap.png, id=613, 785.93625pt x 699.61375pt>
 File: suffix_IAM_ap.png Graphic file (type png)
 
 <use suffix_IAM_ap.png>
-Package pdftex.def Info: suffix_IAM_ap.png used on input line 850.
+Package pdftex.def Info: suffix_IAM_ap.png used on input line 863.
 (pdftex.def)             Requested size: 232.53pt x 206.99275pt.
- <suffix_IAM_count.png, id=596, 786.94pt x 699.61375pt>
+ <suffix_IAM_count.png, id=614, 786.94pt x 699.61375pt>
 File: suffix_IAM_count.png Graphic file (type png)
 
 <use suffix_IAM_count.png>
-Package pdftex.def Info: suffix_IAM_count.png used on input line 856.
+Package pdftex.def Info: suffix_IAM_count.png used on input line 869.
 (pdftex.def)             Requested size: 232.53pt x 206.72588pt.
- [30 <./suffix_IAM_ap.png (PNG copy)> <./suffix_IAM_count.png (PNG copy)>]
-Overfull \hbox (8.24495pt too wide) in paragraph at lines 880--880
+ [32 <./suffix_IAM_ap.png (PNG copy)> <./suffix_IAM_count.png (PNG copy)>]
+Overfull \hbox (8.24495pt too wide) in paragraph at lines 893--893
  |[]\OT1/cmr/bx/n/12 CAT Through Unas-sisted Sub-word Spot-ting Us-ing Dy-namic
  Time-Warping
  []
 
-<flow6.png, id=603, 1220.27895pt x 722.7pt>
+<flow6.png, id=621, 1220.27895pt x 722.7pt>
 File: flow6.png Graphic file (type png)
  <use flow6.png>
-Package pdftex.def Info: flow6.png used on input line 890.
+Package pdftex.def Info: flow6.png used on input line 903.
 (pdftex.def)             Requested size: 422.77661pt x 250.3904pt.
- [31] [32 <./flow6.png>] [33] [34]
+ [33] [34 <./flow6.png>] [35] [36]
 Overfull \vbox (85.71928pt too high) has occurred while \output is active []
 
 
-[35] [36]
+[37] [38]
 Chapter 6.
-(./byumsphd-example.bbl [37
+(./byumsphd-example.bbl [39
 
 
-] [38
+] [40
 
 
 ]
 Missing character: There is no Ã in font cmr12!
 Missing character: There is no ¡ in font cmr12!
- [39] [40]
+ [41] [42]
 Missing character: There is no Ã in font cmr12!
 Missing character: There is no ¡ in font cmr12!
- [41])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1034.
- [42]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1034.
+ [43])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1047.
+ [44]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1047.
  (./byumsphd-example.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1034.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1034.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1047.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1047.
 
 Package rerunfilecheck Info: File `byumsphd-example.out' has not changed.
 (rerunfilecheck)             Checksum: 87A735B6A45C0119364F80651D20CC95;2493.
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1034.
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1047.
  )
 (\end occurred inside a group at level 2)
 
-### semi simple group (level 2) entered at line 1032 (\begingroup)
+### semi simple group (level 2) entered at line 1045 (\begingroup)
 ### semi simple group (level 1) entered at line 244 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 13284 strings out of 494989
- 201779 string characters out of 6180577
- 384417 words of memory out of 5000000
- 16053 multiletter control sequences out of 15000+600000
+ 13295 strings out of 494989
+ 201923 string characters out of 6180577
+ 385687 words of memory out of 5000000
+ 16060 multiletter control sequences out of 15000+600000
  18951 words of font info for 98 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 36i,16n,41p,1585b,1516s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,16n,41p,1585b,1517s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/tex-gyre/q-rm.enc}</usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/tex
@@ -883,9 +894,9 @@ m/cmss12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
 share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/
 texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texmf/
 fonts/type1/public/tex-gyre/qagr.pfb>
-Output written on byumsphd-example.pdf (54 pages, 4891102 bytes).
+Output written on byumsphd-example.pdf (56 pages, 5194482 bytes).
 PDF statistics:
- 764 PDF objects out of 1000 (max. 8388607)
- 159 named destinations out of 1000 (max. 500000)
- 16266 words of extra memory for PDF output out of 17280 (max. 10000000)
+ 782 PDF objects out of 1000 (max. 8388607)
+ 162 named destinations out of 1000 (max. 500000)
+ 16271 words of extra memory for PDF output out of 17280 (max. 10000000)
 
