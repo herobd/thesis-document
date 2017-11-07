@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2017.8.25)  3 NOV 2017 16:01
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2017.9.4)  7 NOV 2017 07:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -218,8 +218,8 @@ Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
 )
-(/etc/texmf/tex/latex/config/graphics.cfg
-File: graphics.cfg 2009/08/28 v1.8 graphics configuration of TeX Live
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/graphics.cfg
+File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
 )
 Package graphics Info: Driver file: pdftex.def on input line 91.
 
@@ -527,7 +527,21 @@ LaTeX Info: Redefining \nameref on input line 244.
 \MPnumerator=\count140
 \makeMPintoPDFobject=\count141
 \everyMPtoPDFconversion=\toks27
+) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
 )
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 452.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: hypcap package is loaded.
@@ -542,7 +556,8 @@ Package microtype Info: Using default expansion set `basictext'.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
- (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-cmr.cfg
+
+(/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
@@ -609,14 +624,14 @@ Chapter 1.
 [1
 
 
-] <spotting_explination_pay.png, id=327, 244.63396pt x 115.27065pt>
+] <spotting_explination_pay.png, id=330, 244.63396pt x 115.27065pt>
 File: spotting_explination_pay.png Graphic file (type png)
 
 <use spotting_explination_pay.png>
 Package pdftex.def Info: spotting_explination_pay.png used on input line 271.
 (pdftex.def)             Requested size: 216.09044pt x 101.82367pt.
 
-<spotting_explination_payment.png, id=329, 244.63396pt x 115.27065pt>
+<spotting_explination_payment.png, id=332, 244.63396pt x 115.27065pt>
 File: spotting_explination_payment.png Graphic file (type png)
 
 <use spotting_explination_payment.png>
@@ -624,7 +639,7 @@ Package pdftex.def Info: spotting_explination_payment.png used on input line 27
 7.
 (pdftex.def)             Requested size: 216.09044pt x 101.82367pt.
 
-<spotting_explination_sub_pay.png, id=330, 244.63396pt x 115.27065pt>
+<spotting_explination_sub_pay.png, id=333, 244.63396pt x 115.27065pt>
 File: spotting_explination_sub_pay.png Graphic file (type png)
 
 <use spotting_explination_sub_pay.png>
@@ -632,7 +647,7 @@ Package pdftex.def Info: spotting_explination_sub_pay.png used on input line 28
 7.
 (pdftex.def)             Requested size: 216.09044pt x 101.82367pt.
 
-<spotting_explination_sub_pa.png, id=331, 244.63396pt x 115.27065pt>
+<spotting_explination_sub_pa.png, id=334, 244.63396pt x 115.27065pt>
 File: spotting_explination_sub_pa.png Graphic file (type png)
 
 <use spotting_explination_sub_pa.png>
@@ -641,13 +656,13 @@ Package pdftex.def Info: spotting_explination_sub_pa.png used on input line 293
 (pdftex.def)             Requested size: 216.09044pt x 101.82367pt.
  [2 <./spotting_explination_pay.png> <./spotting_explination_payment.png> <./sp
 otting_explination_sub_pay.png> <./spotting_explination_sub_pa.png>] <ei.png, i
-d=348, 36.135pt x 23.1264pt>
+d=351, 36.135pt x 23.1264pt>
 File: ei.png Graphic file (type png)
  <use ei.png>
 Package pdftex.def Info: ei.png used on input line 322.
 (pdftex.def)             Requested size: 211.3883pt x 135.32559pt.
 
-[3] <spotting_completion_payment.png, id=357, 153.57375pt x 152.12836pt>
+[3] <spotting_completion_payment.png, id=360, 153.57375pt x 152.12836pt>
 File: spotting_completion_payment.png Graphic file (type png)
 
 <use spotting_completion_payment.png>
@@ -659,7 +674,7 @@ Package pdftex.def Info: spotting_completion_payment.png used on input line 335
 
 ]
 Chapter 2.
-[7] <phoc.png, id=393, 715.67375pt x 339.2675pt>
+[7] <phoc.png, id=396, 715.67375pt x 339.2675pt>
 File: phoc.png Graphic file (type png)
  <use phoc.png>
 Package pdftex.def Info: phoc.png used on input line 370.
@@ -672,40 +687,43 @@ File: omlcmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <12> not available
 (Font)              Font shape `OML/cmm/m/it' tried instead on input line 380.
- [9]
-[10] <Toselli_multimodalCAT.png, id=441, 837.1275pt x 261.97874pt>
+
+
+LaTeX Warning: Reference `germanlines' on page 9 undefined on input line 387.
+
+[9] [10] <Toselli_multimodalCAT.png, id=444, 837.1275pt x 261.97874pt>
 File: Toselli_multimodalCAT.png Graphic file (type png)
 
 <use Toselli_multimodalCAT.png>
-Package pdftex.def Info: Toselli_multimodalCAT.png used on input line 405.
+Package pdftex.def Info: Toselli_multimodalCAT.png used on input line 409.
 (pdftex.def)             Requested size: 446.2658pt x 139.65556pt.
-
-<ii_ex_a.png, id=446, 219.26718pt x 152.92332pt>
+ [11 <./Toselli_multimodalCAT.png>]
+<ii_ex_a.png, id=463, 219.26718pt x 152.92332pt>
 File: ii_ex_a.png Graphic file (type png)
  <use ii_ex_a.png>
-Package pdftex.def Info: ii_ex_a.png used on input line 422.
+Package pdftex.def Info: ii_ex_a.png used on input line 426.
 (pdftex.def)             Requested size: 216.09044pt x 150.70618pt.
 
-<ii_ex_b.png, id=447, 218.68903pt x 152.92332pt>
+<ii_ex_b.png, id=464, 218.68903pt x 152.92332pt>
 File: ii_ex_b.png Graphic file (type png)
  <use ii_ex_b.png>
-Package pdftex.def Info: ii_ex_b.png used on input line 428.
+Package pdftex.def Info: ii_ex_b.png used on input line 432.
 (pdftex.def)             Requested size: 216.09044pt x 151.1052pt.
- [11 <./Toselli_multimodalCAT.png>] <zagoris.png, id=465, 725.71124pt x 346.293
-75pt>
-File: zagoris.png Graphic file (type png)
 
-<use zagoris.png>
-Package pdftex.def Info: zagoris.png used on input line 442.
+<zagoris.png, id=470, 725.71124pt x 346.29375pt>
+File: zagoris.png Graphic file (type png)
+ <use zagoris.png>
+Package pdftex.def Info: zagoris.png used on input line 446.
 (pdftex.def)             Requested size: 422.77661pt x 201.7435pt.
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no ™ in font cmr12!
- [12 <./ii_ex_a.png> <./ii_ex_b.png>]
-<carpet.png, id=478, 337.7418pt x 218.2554pt>
+ [12 <./ii_ex_a.png> <./ii_ex_b.png>] <carpet.png, id=483, 337.7418pt x 218.255
+4pt>
 File: carpet.png Graphic file (type png)
- <use carpet.png>
-Package pdftex.def Info: carpet.png used on input line 451.
+
+<use carpet.png>
+Package pdftex.def Info: carpet.png used on input line 455.
 (pdftex.def)             Requested size: 422.77661pt x 273.22153pt.
  [13 <./zagoris.png>] [14 <./carpet.png>] [15] [16
 
@@ -713,11 +731,11 @@ Package pdftex.def Info: carpet.png used on input line 451.
 ]
 Chapter 3.
 
-LaTeX Warning: Reference `IAMExamples' on page 17 undefined on input line 472.
+LaTeX Warning: Reference `IAMExamples' on page 17 undefined on input line 476.
 
 
 LaTeX Warning: Reference `BenthamExamples' on page 17 undefined on input line 4
-81.
+85.
 
 [17] [18] [19] [20
 
@@ -725,25 +743,25 @@ LaTeX Warning: Reference `BenthamExamples' on page 17 undefined on input line 4
 ]
 Chapter 4.
 
-LaTeX Warning: Reference `relatedwork' on page 21 undefined on input line 513.
+LaTeX Warning: Reference `relatedwork' on page 21 undefined on input line 517.
 
-[21] <thesis-phocnet.png, id=538, 1306.8825pt x 367.3725pt>
+[21] <thesis-phocnet.png, id=543, 1306.8825pt x 367.3725pt>
 File: thesis-phocnet.png Graphic file (type png)
 
 <use thesis-phocnet.png>
-Package pdftex.def Info: thesis-phocnet.png used on input line 524.
+Package pdftex.def Info: thesis-phocnet.png used on input line 528.
 (pdftex.def)             Requested size: 460.35788pt x 129.40631pt.
  [22 <./thesis-phocnet.png>]
-<Captain_unwarped.png, id=551, 417.56pt x 120.45pt>
+<Captain_unwarped.png, id=556, 417.56pt x 120.45pt>
 File: Captain_unwarped.png Graphic file (type png)
  <use Captain_unwarped.png>
-Package pdftex.def Info: Captain_unwarped.png used on input line 545.
+Package pdftex.def Info: Captain_unwarped.png used on input line 549.
 (pdftex.def)             Requested size: 216.09044pt x 62.33476pt.
 
-<Captain_warped.png, id=552, 417.56pt x 120.45pt>
+<Captain_warped.png, id=557, 417.56pt x 120.45pt>
 File: Captain_warped.png Graphic file (type png)
  <use Captain_warped.png>
-Package pdftex.def Info: Captain_warped.png used on input line 551.
+Package pdftex.def Info: Captain_warped.png used on input line 555.
 (pdftex.def)             Requested size: 216.09044pt x 62.33476pt.
 
 [23 <./Captain_unwarped.png> <./Captain_warped.png (PNG copy)>]
@@ -751,7 +769,7 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             `cmss' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-LaTeX Font Info:    Try loading font information for OT1+qag on input line 575.
+LaTeX Font Info:    Try loading font information for OT1+qag on input line 579.
 
 
 (/usr/share/texmf/tex/latex/tex-gyre/ot1qag.fd
@@ -763,43 +781,43 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             See the microtype manual for details.
  [24]
 
-LaTeX Warning: Reference `TODO' on page 25 undefined on input line 631.
+LaTeX Warning: Reference `TODO' on page 25 undefined on input line 635.
 
-[25] <removengrams.png, id=581, 867.24pt x 536.0025pt>
+[25] <removengrams.png, id=586, 867.24pt x 536.0025pt>
 File: removengrams.png Graphic file (type png)
  <use removengrams.png>
-Package pdftex.def Info: removengrams.png used on input line 697.
+Package pdftex.def Info: removengrams.png used on input line 701.
 (pdftex.def)             Requested size: 352.31624pt x 217.75047pt.
 
 
-LaTeX Warning: Reference `fig:unigram' on page 26 undefined on input line 702.
+LaTeX Warning: Reference `fig:unigram' on page 26 undefined on input line 706.
 
 
-LaTeX Warning: Reference `fig:??' on page 26 undefined on input line 702.
+LaTeX Warning: Reference `fig:??' on page 26 undefined on input line 706.
 
 
-LaTeX Warning: Reference `fig:??' on page 26 undefined on input line 702.
+LaTeX Warning: Reference `fig:??' on page 26 undefined on input line 706.
 
 [26] [27 <./removengrams.png (PNG copy)>]
-<unigram_respot_chart.png, id=593, 885.3075pt x 547.04375pt>
+<unigram_respot_chart.png, id=599, 885.3075pt x 547.04375pt>
 File: unigram_respot_chart.png Graphic file (type png)
 
 <use unigram_respot_chart.png>
-Package pdftex.def Info: unigram_respot_chart.png used on input line 730.
+Package pdftex.def Info: unigram_respot_chart.png used on input line 734.
 (pdftex.def)             Requested size: 352.31624pt x 217.70343pt.
 
-<bigram_respot_chart.png, id=594, 881.2925pt x 545.03625pt>
+<bigram_respot_chart.png, id=600, 881.2925pt x 545.03625pt>
 File: bigram_respot_chart.png Graphic file (type png)
 
 <use bigram_respot_chart.png>
-Package pdftex.def Info: bigram_respot_chart.png used on input line 736.
+Package pdftex.def Info: bigram_respot_chart.png used on input line 740.
 (pdftex.def)             Requested size: 352.31624pt x 217.8859pt.
 
-<trigram_respot_chart.png, id=595, 878.28125pt x 543.02875pt>
+<trigram_respot_chart.png, id=601, 878.28125pt x 543.02875pt>
 File: trigram_respot_chart.png Graphic file (type png)
 
 <use trigram_respot_chart.png>
-Package pdftex.def Info: trigram_respot_chart.png used on input line 742.
+Package pdftex.def Info: trigram_respot_chart.png used on input line 746.
 (pdftex.def)             Requested size: 352.31624pt x 217.83737pt.
  [28 <./unigram_respot_chart.png (PNG copy)>]
 [29 <./bigram_respot_chart.png (PNG copy)> <./trigram_respot_chart.png (PNG cop
@@ -808,28 +826,28 @@ y)>] [30
 
 ]
 Chapter 5.
-[31] <suffix_IAM_ap.png, id=613, 785.93625pt x 699.61375pt>
+[31] <suffix_IAM_ap.png, id=619, 785.93625pt x 699.61375pt>
 File: suffix_IAM_ap.png Graphic file (type png)
 
 <use suffix_IAM_ap.png>
-Package pdftex.def Info: suffix_IAM_ap.png used on input line 863.
+Package pdftex.def Info: suffix_IAM_ap.png used on input line 867.
 (pdftex.def)             Requested size: 232.53pt x 206.99275pt.
- <suffix_IAM_count.png, id=614, 786.94pt x 699.61375pt>
+ <suffix_IAM_count.png, id=620, 786.94pt x 699.61375pt>
 File: suffix_IAM_count.png Graphic file (type png)
 
 <use suffix_IAM_count.png>
-Package pdftex.def Info: suffix_IAM_count.png used on input line 869.
+Package pdftex.def Info: suffix_IAM_count.png used on input line 873.
 (pdftex.def)             Requested size: 232.53pt x 206.72588pt.
  [32 <./suffix_IAM_ap.png (PNG copy)> <./suffix_IAM_count.png (PNG copy)>]
-Overfull \hbox (8.24495pt too wide) in paragraph at lines 893--893
+Overfull \hbox (8.24495pt too wide) in paragraph at lines 897--897
  |[]\OT1/cmr/bx/n/12 CAT Through Unas-sisted Sub-word Spot-ting Us-ing Dy-namic
  Time-Warping
  []
 
-<flow6.png, id=621, 1220.27895pt x 722.7pt>
+<flow6.png, id=627, 1220.27895pt x 722.7pt>
 File: flow6.png Graphic file (type png)
  <use flow6.png>
-Package pdftex.def Info: flow6.png used on input line 903.
+Package pdftex.def Info: flow6.png used on input line 907.
 (pdftex.def)             Requested size: 422.77661pt x 250.3904pt.
  [33] [34 <./flow6.png>] [35] [36]
 Overfull \vbox (85.71928pt too high) has occurred while \output is active []
@@ -850,36 +868,33 @@ Missing character: There is no ¡ in font cmr12!
 Missing character: There is no Ã in font cmr12!
 Missing character: There is no ¡ in font cmr12!
  [43])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1047.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1051.
  [44]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1047.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1051.
  (./byumsphd-example.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1047.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1047.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1051.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1051.
 
 Package rerunfilecheck Info: File `byumsphd-example.out' has not changed.
 (rerunfilecheck)             Checksum: 87A735B6A45C0119364F80651D20CC95;2493.
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1047.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1051.
  )
 (\end occurred inside a group at level 2)
 
-### semi simple group (level 2) entered at line 1045 (\begingroup)
+### semi simple group (level 2) entered at line 1049 (\begingroup)
 ### semi simple group (level 1) entered at line 244 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 13295 strings out of 494989
- 201923 string characters out of 6180577
- 385687 words of memory out of 5000000
- 16060 multiletter control sequences out of 15000+600000
+ 13429 strings out of 494985
+ 204571 string characters out of 6180357
+ 388137 words of memory out of 5000000
+ 16185 multiletter control sequences out of 15000+600000
  18951 words of font info for 98 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 36i,16n,41p,1585b,1517s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,16n,41p,1590b,1630s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/tex-gyre/q-rm.enc}</usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/tex
@@ -894,9 +909,10 @@ m/cmss12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
 share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/
 texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texmf/
 fonts/type1/public/tex-gyre/qagr.pfb>
-Output written on byumsphd-example.pdf (56 pages, 5194482 bytes).
+Output written on byumsphd-example.pdf (56 pages, 5119436 bytes).
 PDF statistics:
- 782 PDF objects out of 1000 (max. 8388607)
+ 791 PDF objects out of 1000 (max. 8388607)
+ 673 compressed objects within 7 object streams
  162 named destinations out of 1000 (max. 500000)
  16271 words of extra memory for PDF output out of 17280 (max. 10000000)
 

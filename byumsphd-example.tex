@@ -351,12 +351,18 @@ Additionally, we demonstrate several applications of subword spotting: user dire
 
 \section{Word Spotting}
 
-%Clawson \cite{Clawson2014} uses word spotting and user approval to transcribe, which is dependent on frequent word repetition. Neudecker, Tzadok \cite{Neudecker2010} and Retsinas et al.~\cite{Retsinas2015} uses OCR and user approval to transcribe, which is dependent on character segmentation, a difficult problem for handwriting.
 
 Word spotting was first proposed as an alternative to transcribing a corpus. Rather than transcribing the document image so standard text searches can be run, the document is searched using the images themselves, either with a keyword string or a keyword image (exemplar image). In the past, techniques were distinguished by which search pattern they used. There are two primary approaches to featurizing the images when word spotting is performed: holistic features, that capture information about a whole image (word), and local or sequential features \cite{Rodrıguez2008}. Holistic features have one description for an entire word image (such as a bag-of-visual-words \cite{Shekhar2012}), whereas local features have a descriptor for a small portion, or window, of a word image. 
 %Because local features provide much more detail and are more flexible than holistic features, they have been the most actively pursued in research.
 
-Most early work with local features share the common theme of taking features from vertical slice windows (usually only one or a handful of pixels wide). They compare an exemplar using either dynamic time warping (DTW) or hidden Markov models (HMMs), relying on a prior line segmentation. The variation between the methods largely lies in the features used. Some use small square windows to allow segmentation-free word spotting using a sliding window \cite{Rothacker2013}.
+Most early work with local features share the common theme of taking features from vertical slice windows (usually only one or a handful of pixels wide); figure \ref{fig:vertslice} shows an example of this process. They compare an exemplar using either dynamic time warping (DTW) or hidden Markov models (HMMs), relying on a prior line segmentation. The variation between the methods largely lies in the features used. Some use small square windows to allow segmentation-free word spotting using a sliding window \cite{Rothacker2013}.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=.65\textwidth]{vertwind}
+    \caption{Example of how vertical slice window features are extracted. Typically most features are extracted on a binarized image. Deskewing plays an important role as the vertical slices are very sensitive to skew. Many features extracted are pixel counts.}
+    \label{fig:vertslice}
+\end{figure}
 
 Rodr{\i}guez et al.~\cite{Rodrıguez2008} proposed a simple histogram gradient feature that demonstrated improved performance when compared with (1) the popular profile and transition-based features of Rath and Manmantha \cite{Rath2003}, (2) the gradient and transition-focused features of Marti and Bunke \cite{Marti2001} and (3) the simple histogram features of Bunke et al.~\cite{Bunke2004}. They also showed that a HMM worked better than DTW, for their features. Their method was not an exemplar-based approach.
 
