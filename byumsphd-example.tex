@@ -347,24 +347,24 @@ We show that reasonable levels of mean average precision (MAP) can be achieved f
 Additionally, we demonstrate several applications of subword spotting: user directed searching to aid in human transcription, suffix searching/spotting, and CAT using word completion from aggregated subword spottings.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Related Work}\label{relatedword}
+\chapter{Related Work}\label{relatedwork}
 
-\section{Word Spotting}
+\section{Word Spotting}\label{relatedwork_wordspotting}
 
 
 Word spotting was first proposed as an alternative to transcribing a corpus. Rather than transcribing the document image so standard text searches can be run, the document is searched using the images themselves, either with a keyword string or a keyword image (exemplar image). In the past, techniques were distinguished by which search pattern they used. There are two primary approaches to featurizing the images when word spotting is performed: holistic features, that capture information about a whole image (word), and local or sequential features \cite{Rodrıguez2008}. Holistic features have one description for an entire word image (such as a bag-of-visual-words \cite{Shekhar2012}), whereas local features have a descriptor for a small portion, or window, of a word image. 
 %Because local features provide much more detail and are more flexible than holistic features, they have been the most actively pursued in research.
 
-Most early work with local features share the common theme of taking features from vertical slice windows (usually only one or a handful of pixels wide); figure \ref{fig:vertslice} shows an example of this process. They compare an exemplar using either dynamic time warping (DTW) or hidden Markov models (HMMs), relying on a prior line segmentation. The variation between the methods largely lies in the features used. Some use small square windows to allow segmentation-free word spotting using a sliding window \cite{Rothacker2013}.
+Most early work with local features share the common theme of taking features from vertical slice windows (usually only one or a handful of pixels wide); Figure \ref{fig:vertslice} shows an example of this process. They compare these to a the features extracted from an exemplar using either dynamic time warping or hidden Markov models (HMMs), relying on a prior line segmentation. The variation between the methods largely lies in the features used. Some use small square windows to allow segmentation-free word spotting using a sliding window \cite{Rothacker2013}.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=.65\textwidth]{vertwind}
-    \caption{Example of how vertical slice window features are extracted. Typically most features are extracted on a binarized image. Deskewing plays an important role as the vertical slices are very sensitive to skew. Many features extracted are pixel counts.}
+    \includegraphics[width=.9\textwidth]{vertwind}
+    \caption{Example of how vertical slice window features are extracted. Typically most features are extracted on a binarized image. Deskewing plays an important role as the vertical slices are very sensitive to skew. Many features extracted are pixel counts; in this example we show count features dependent on baselines (blue).}
     \label{fig:vertslice}
 \end{figure}
 
-Rodr{\i}guez et al.~\cite{Rodrıguez2008} proposed a simple histogram gradient feature that demonstrated improved performance when compared with (1) the popular profile and transition-based features of Rath and Manmantha \cite{Rath2003}, (2) the gradient and transition-focused features of Marti and Bunke \cite{Marti2001} and (3) the simple histogram features of Bunke et al.~\cite{Bunke2004}. They also showed that a HMM worked better than DTW, for their features. Their method was not an exemplar-based approach.
+Rodr{\i}guez et al.~\cite{Rodrıguez2008} proposed a simple histogram gradient feature that demonstrated improved performance when compared with (1) the popular profile and transition-based features of Rath and Manmantha \cite{Rath2003}, (2) the gradient and transition-focused features of Marti and Bunke \cite{Marti2001} and (3) the simple histogram features of Bunke et al.~\cite{Bunke2004}. They also showed that a HMM worked better than dynamic time warping, for their features. Their method was not an exemplar-based approach.
 
 Aldavert et al.~\cite{Aldavert2015} and Almazan et al.~\cite{Almazan2014} have presented superior word spotting methods that rely on heuristic descriptions. Aldavert et al.~used the well known bag-of-visual-words method, including recent improvements from the computer vision community. This is a very simple, yet effective, exemplar spotting approach. Aldavert et al.~use Fischer vectors, which are similar to bag-of-visual-words, with spatial pyramids in addition to a special pyramidal histogram of characters (PHOC).
 % which are described in more detail in Chapter \ref{subwordspotting}. 
@@ -450,7 +450,7 @@ We use the fusion results of \cite{Zagoris2015} to guide the fusion of our subwo
 \begin{figure}
     \centering
     \includegraphics[width=.9\textwidth]{zagoris}
-    \caption{A screen-shot of a the CAT system of Zagoris et al.~\cite{Zagoris2015}. The green text indicates hand labeling, the blue text indicates automatic labeling. You can see to the right of the current word (``must'') the current ranked list of spottings.}
+    \caption{A screen-shot of a the CAT system of Zagoris et al.~\cite{Zagoris2015}. The green text indicates hand labeling, the blue text indicates automatic labeling. You can see to the right of the current word (``must'') the current ranked list of spottings (blue boxes).}
     \label{fig:zagoris}
 \end{figure}
 
@@ -476,35 +476,81 @@ While we have not seen it done, it would be relatively easy to transfer the resu
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Datasets}\label{datasets}
 
-We use three datasets in our evaluations: the IAM handwriting dataset, the Bentham dataset, and a dataset we created, which we refer to as Census Names. In this chapter we describe each of these datasets and additionally describe our lexicon.
+We use three datasets in our evaluations: the IAM handwriting dataset, the Bentham dataset, and a dataset we extracted from the U.S.~1930 census, which we refer to as Census Names. In this chapter we describe each of these datasets and additionally describe our lexicon.
 
-The IAM handwriting dataset \cite{IAM} is a dataset collected by having human subjects copy certain blocks of printed text into handwriting. They were instructed to keep lines separated well and the dataset is very clean as a result. It contains annotations to the word level. We used the provided test set split, the combine training and validation 2 splits as our training set, and the validation 1 set as our validation set.
-Example lines from the IAM dataset can be seen in Figure \ref{IAMExamples}.
-The test set has X\% of its contents in our lexicon.
+The IAM handwriting dataset \cite{IAM} is a dataset collected by having human subjects copy certain blocks of printed text into handwriting. They were instructed to keep lines well separated and the dataset is very clean as a result. It contains annotations to the word level. We used the provided test set split, the combine training and validation 2 splits as our training set, and the validation 1 set as our validation set.
+Example lines from the IAM dataset can be seen in Figure \ref{fig:IAMExamples}.
+The test set has 96.1\% of its contents in our lexicon.
 These sets have the respective sizes and number of (exclusive) authors:\\
-\indent \indent Training: X words, 326 authors\\
-\indent \indent Validation: X words, 46 authors\\
-\indent \indent Testing: X words, 128 authors
+\indent \indent Training: 55106 words, 326 authors\\
+\indent \indent Validation: 7089 words, 46 authors\\
+\indent \indent Testing: 14600 words, 128 authors
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.9\textwidth]{IAM_examples}
+    \caption{Examples of lines from the IAM dataset.}
+    \label{fig:IAMExamples}
+\end{figure}
 
 
 The Bentham dataset \cite{bentham} is a collection of documents written by the 17th century philosopher Jeremy Bentham. While there are a  Due a plethora of errors we corrected in the ground truth, that ground truth we use differs significantly from that which is officially released, though it is based on it. Our training, validation, and test sets are based on the official split, but are not identical. We ensured pages are exclusive to a single set.
-Example lines from the Bentham dataset can be seen in Figure \ref{BenthamExamples}.
-The test set has X\% of its contents in our lexicon
-These sets have the respective sizes:
+Example lines from the Bentham dataset can be seen in Figure \ref{fig:BenthamExamples}.
+The test set has 94.9\% of its contents in our lexicon
+These sets have the respective sizes:\\
 \indent \indent Training: 8490 words\\
 \indent \indent Validation: 1071 words\\
 \indent \indent Testing: 860 words
 
-%These files are in py_stuff/census_prep and robert_stuff/document_project/apps_src/field_cropper
-The Census Names dataset is an extraction of names from the United Stated of America 1930 census. FamilySearch provided us the ground truth index as well as a  registration of the form images (rotation, scale and offset to align them). We extracted the name fields by first averaging the registered images together and manually enhanced the contrast of the resulting image. We then hand annotated this average image with the lines of the fields, using straight lines. Next we processed each image individually by doing a second registration with the hand annotated form lines by the following. First, we globally moved all the form lines together to maximize the summed inverse pixel intensity (darker is better) along the form lines. This was done by scanning 50 pixels in the four cardinal directions separately. We then tried all positions in a $7\times 7$ neighborhood around the combined the best x and y positions from the seperate horizontal and vertical scans.  Then, for each individual cell of the form, a small (12 pixel) vertical or horizontal histogram is created around each for the four lines forming the cell boundaries and is used to locally snap the cell boundary to the darkest part of the histogram. This yields a very precise registration in most cases.
+\begin{figure}
+    \centering
+    \includegraphics[width=.9\textwidth]{bentham_examples}
+    \caption{Excerpts from the Bentham dataset.}
+    \label{fig:BenthamExamples}
+\end{figure}
 
-For the testing portion and a small validation set of the Bentham and Census Names datasets, we produced a ground truth with character segmentation. We annotated the word segmentation ground truth by marking the point between characters, meaning character boundaries do not overlap, in addition to a tighter start and end boundary for the word (first and last letters).
+%These files are in py_stuff/census_prep and robert_stuff/document_project/apps_src/field_cropper
+The Census Names dataset is an extraction of names from the United Stated of America 1930 census. FamilySearch provided us the ground truth index as well as a  registration of the form images (rotation, scale and offset to align them). We extracted the name fields by first averaging the registered images (Figure \ref{fig:makenames} b) together and manually enhancing the contrast of the resulting image (Figure \ref{fig:makenames} c). We then hand annotated this average image with the lines of the form, using straight lines (Figure \ref{fig:makenames} d). Next we processed each image individually by doing a second registration with the hand annotated form lines by the following. First, we globally moved all the form lines together to maximize the summed inverse pixel intensity (darker is better) along the form lines. This was done by scanning 50 pixels in the four cardinal directions separately (Figure \ref{fig:makenames} e). We then tried all positions in a $7\times 7$ neighborhood around the combined the best x and y positions from the separate horizontal and vertical scans (Figure \ref{fig:makenames} f).  Then, for each individual cell of the form, a small (12 pixel) vertical or horizontal histogram is created around each for the four lines forming the cell boundaries (Figure \ref{fig:makenames} g) and is used to locally snap the cell boundary to the darkest part of the histogram (Figure \ref{fig:makenames} h). This yields a very precise registration in most cases. We then manually segmented the words within each cell (Figure \ref{fig:makenames} i). 
+Example lines from the Census Names dataset can be seen in Figure \ref{fig:NamesExamples}.
+The test set has 83.7\% of its contents in our lexicon
+These sets have the respective sizes:\\
+\indent \indent Training: 2130 words\\
+\indent \indent Validation: X words\\
+\indent \indent Testing: X words
+
+%TODO fig:makenames
+Creation figure:\\
+a. Unalgined forms (perhaps fake)
+b. aligned forms
+c. contrast enhanced average
+d. lines on contrast enhanced average
+e. lines of form, arrows showing 50 pix scan
+f. best point, 7x7 window scan (colored box)
+g. histograms for borders
+h. snapped image
+i. word segmentation
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.75\textwidth]{names_examples}
+    \caption{Excerpts from the Census Names dataset.}
+    \label{fig:NamesExamples}
+\end{figure}
+
+For the testing portion and a small validation set of the Bentham and Census Names datasets, we produced a ground truth with character segmentation. We annotated the word segmentation ground truth by marking the point between characters, meaning character boundaries do not overlap, in addition to a tighter start and end boundary for the word (first and last letters), as seen in Figure \ref{fig:charseg}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.5\textwidth]{charseg}
+    \caption{Example of hand annotated character segmentation.}
+    \label{fig:charseg}
+\end{figure}
 
 %Lexicon was created with extractMostFrequentNames.perl
 %Merged(intersection) wordsEn.txt with last and first names with 1000 frequency count.
 %108,028 words and 6,939 names
 %SIL International, linguistics site
-For our CAT methods, we require a lexicon. We choose to pursue a large English lexicon as this would indicate the methods could generalize to other corpi. We Obtained a lexicon from SIL International at \url{http://www-01.sil.org/linguistics/wordlists/english/} which contained 108,028 words (not including names). We also desired a large lexicon of names which would enable the Census Names dataset to be transcribed. FamilySearch provided us with data from the US 1940 census, which listed all names appearing in those records along with a count of how many times they occurred. We took all names occuring at least 1000 times, leaving us with a names list of 6,939 unique names. Combining these two sets leaves us with a lexicon size of 114,968. We use the full lexicon for the Bentham dataset, but only the names portion for the Census Names dataset.
+For our CAT methods, we require a lexicon. We choose to use a large English lexicon as this would indicate the methods could generalize to other corpi. We obtained a lexicon from SIL International at \url{http://www-01.sil.org/linguistics/wordlists/english/} which contained 108,028 words (not including names). We also desired a large lexicon of names which would enable the Census Names dataset to be transcribed. FamilySearch provided us with data from the US 1940 census, which listed all names appearing in those records along with a count of how many times they occurred. We took all names occuring at least 1000 times, leaving us with a names list of 6,939 unique names. Combining these two sets gave us a lexicon size of 114,968. We use the full lexicon for the Bentham dataset, but only the names portion for the Census Names dataset.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Subword Spotting}\label{subwordspotting}
@@ -520,13 +566,13 @@ In this chapter we describe our implementation of subword spotting and then eval
 
 \subsection{Architecture}
 
-Our subword spotting is built on the segmentation based word spotting method PHOCNet \cite{sudholt2016} which we converted to perform a sliding window over the word images. \cite{sudholt2016} uses a deep convolutional network trained on word images with pyramidal histogram of characters (PHOC) \cite{Almazan2014} as the target vectors. This method can word spot by both query-by-string (QbS) and query-by-example (QbE), that is querying with text words and word images. See Chapter \ref{relatedwork} for the details of PHOC vectors. We used a case insensitive PHOC vector. We note that the bigrams used in the PHOC vector overlap with, but are not identical with the bigrams we spot; changing this so that they were identical did not improve results. 
+Our subword spotting is built on the segmentation based word spotting method PHOCNet \cite{sudholt2016} which we converted to perform a sliding window over the word images. \cite{sudholt2016} uses a deep convolutional network trained on word images with pyramidal histogram of characters (PHOC) \cite{Almazan2014} as the target vectors. This method can word spot by both query-by-string (QbS) and query-by-example (QbE), that is querying with text words and word images. See Section \ref{relatedwork_wordspotting} for the details of PHOC vectors. We used a case insensitive PHOC vector and include the bigrams used in \cite{sudholt2016}. We note that the bigrams used in the PHOC vector overlap with, but are not identical with the bigrams we spot; changing this so that they were identical did not improve results. 
 
 
 
 Our network architecture varies slightly from \cite{sudholt2016} and is outlined in Figure \ref{fig:network}. We note the reduction in the number of channels in the layer before the spatial pyramid pooling (SPP) and fully connected layers; this is to reduce the size of featurized images (which are saved after this layer).  We used the Caffe framework \cite{caffe}.
 
-SPP \cite{SPP} is a method of allowing a network with fully connected layers to handle images of arbitrary size. This is accomplished by performing a pooling (max in our implementation) over windows of the image. The first window encompasses the full image and then it proceeds by dividing the windows into 4 at each level down. We use 3 levels for all datasets except the Census Names dataset, which has smaller characters. We use 2 levels for the Census Names dataset to allow the network to operate on smaller images.
+SPP \cite{SPP} is a method of allowing a network with fully connected layers to handle images of arbitrary size. This is accomplished by performing a pooling (max in our implementation) over windows of the image. The first window encompasses the full image and then it proceeds by dividing the windows into 4 at each level down. We use 3 levels for all datasets except the Census Names dataset, which has smaller characters. We use 2 levels for the Census Names dataset to allow the network to operate on smaller images (the SPP won't be creating windows of subpixel size).
 
 
 \begin{figure}[t]
@@ -543,10 +589,13 @@ In training, we used a batch size of 10, an initial learning rate of $r_0=0.0001
 For the Bentham dataset we started with control points $d_0 = 64$ pixels apart and initial perturbations with a standard deviation of $\sigma_0 = 0.3 d_0$. We decreased control point distance by a factor of 0.5 and decreased the perturbation standard deviation by a factor of 0.6 for each of 4 levels, so that if $l$ is the level, $d_l = 64(0.5^{l})$ and $\sigma_l = 0.3 d_l (0.6^{l})$.
 Similar to \citep{sudholt2016} we balance word counts in the training set. We set a goal for the count of each word of $c_{goal} = 0.6c_{max}+0.4c_{mean}$, where $c_{max}$ is the maximum count of any word and $c_{mean}$ is the mean count of all words. A set of $c_{goal}$ instances of each word form the training set, including some duplicates when needed.
 
-We used a validation set to determine the optimal number of training iterations.
+Each word image is a unique size, however, to train on a GPU all instances in a batch must be the same size. We circumvent this by resizing all word images in a batch to the same size. This height and width of this size is drawn from Gaussian distributions parameterized by the mean of the height and width of
+the word images of the batch, the standard deviations being $2/3$ the standard deviation of the height and width of the batch images. This is additionally capped at a maximum and minimum height (X,X) and width (X,X).
+We used a validation set to determine the optimal number of training iterations by observing when QbS word spotting on the validations set peaked in performance.
 
-NOT TRUE ANY MORE?
-To prevent images too small for the network (SPP layer is sensitive to this), any instances smaller than 32 pixels in their smallest dimension are resampled with a larger bounding box. Additionally we scale any images taller than 200 pixels to be 200 pixels tall; this improves efficiency and provides some normalization to the titles found in the Bentham dataset.
+%NOT TRUE ANY MORE? not in training at least
+%To prevent images too small for the network (SPP layer is sensitive to this), any instances smaller than 32 pixels in their smallest dimension are resampled with a larger bounding box. Additionally 
+We scale any images taller than 200 pixels to be 200 pixels tall; this improves efficiency and provides some normalization to the titles found in the Bentham dataset.
 
 \begin{figure}
     \centering
