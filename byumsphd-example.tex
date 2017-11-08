@@ -636,7 +636,7 @@ To reduce computation, we only return the top two highest scored subwindows of a
 
 We tried refining top scoring subwindows by slightly adjusting their boundaries and re-scoring, however, we did not see a significant improvement. %and the computation cost was prohibitive (as the featurization of the refined subwindows was not precomputed).
 
-\subsection{Combining QbE Results}
+\subsection{Combining QbE Results}\label{combine}
 
 We perform iterative aggregation of QbE results by merging results from consecutive queries. To do this we check for potential overlapping spottings, if there is an overlap (of at least 20\%) we discard the result with the worse/higher score. This, merging by taking the better score, follows what \cite{Zagoris2015} found to be most effective when combining full word spotting results. As further justification, one can think of each n-gram or word as having several prototypical ways it can appear (e.g.~an `a' appearing with or without the tail on top, `\textsf{a}' or `{\fontfamily{qag}\selectfont\footnotesize a}'). By selecting the best/minimum score you select the score computed on the exemplar image with the prototype closest to the instance of interest's prototype.
 
@@ -789,8 +789,8 @@ In Tables \ref{fig:unigram}, \ref{fig:??}, and \ref{fig:??} we show the (M)AP fo
 
 \subsection{Respotting Subwords}
 
-We had hoped to use approved spottings as new exemplars for an iterative CAT system. The verify the validity of this approach we created an experiment where we continually refine spotting results by spotting with new exemplars. We show the MAP at each iteration out to 50 iterations in Figures \ref{fig:unigram_respot}, \ref{fig:bigram_respot}, and \ref{fig:trigram_respot}, for uni-, bi-, and trigrams respectively. The first exemplar for a word was selected as the middle score of positive instances from a QbS spotting. The following exemplars were the middle score of the previous QbE spottings positive instances. We choose to do this as there is a variety of qualities of exemplar images. Taking the middle score should roughly give us a middle quality. The overall quality of MAP is higher in these experiments as we pruned all n-grams which occur less than 100 times, which tend to be the more difficult instances.
-We can see that the iterative refinement leads to better results
+We had hoped to use approved spottings as new exemplars for an iterative CAT system. To verify the validity of this approach we created an experiment where we continually refine spotting results by spotting with new exemplars and merging the results (see Section \ref{combine}). We show the MAP at each iteration out to 50 iterations in Figures \ref{fig:unigram_respot}, \ref{fig:bigram_respot}, and \ref{fig:trigram_respot}, for uni-, bi-, and trigrams respectively. The first exemplar for an n-gram was selected as the middle score of positive instances from a QbS spotting. The following exemplars were the middle score of the previous QbE spotting's positive instances. We choose to do this as there is a variety of qualities of exemplar images. Taking the middle score should roughly give us a middle quality. The overall quality of MAP is higher in these experiments as we pruned all n-grams which occur less than 100 times, which tend to be the more difficult instances.
+We can see that the iterative refinement leads to better results compared to the average of all the QbE scores. It appears that aggregating multiple queries tends to stabilized the bad queries, though it does not out perform QbS (except with trigrams) or individual good QbE queries (as the spikes in performance are not at the end).
 
 \begin{figure}
     \centering
@@ -817,14 +817,20 @@ We can see that the iterative refinement leads to better results
 \chapter{Applications of Subword Spotting}\label{applications}
 
 \section{Manual Transcription Assistant}
-Frequently when a person is transcribing a handwritten document they come across a handwritten word they do not recognize. A common solution is to scan the document for similar shapes as what they see in the difficult word. If the transcriber can find the same letters, written by the same author, in the context of a word they do recognize, the transcriber can identify the letters, thus aiding in the transcription of difficult word. However, the same letters do not always occur on the same page, or may be difficult to find. QbE subword spotting provides a way to automate this scanning task. The user need only to select the portion of the difficult word they wish to query with and the system can return a ranked list of results.
+Frequently when a person is transcribing a handwritten document they come across a handwritten word they do not recognize. A common solution is to scan the document for similar shapes as what they see in the difficult word. If the transcriber can find the same letters, written by the same author, in the context of a word they do recognize, the transcriber can identify the letters, thus aiding in the transcription of a difficult word. However, the same letters do not always occur on the same page, or may be difficult to find. QbE subword spotting provides a way to automate this scanning task. The user need only to select the portion of the difficult word they wish to query with and the system can return a ranked list of results.
+We are able to achieve real-time results over X pages by using word segmentations and pre-computing PHOC vectors for a set of window sizes () and X  pixel stride, which the users query is snapped to. 
+Figure ?? demonstrates this process. First the trouble characters are selected and the bounding box is snapped to the precomputed one. This PHOC vector is compared against all others of the same window size. The ranked list is shown to the user both as a list and by highlighting the results with the color intensity representing the strength of the match.
 
-Figure ?? demonstrates this process...
-
-Speed considerations, we optimize, but work is being done on fast CNN execution
+%Speed considerations, we optimize, but work is being done on fast CNN execution
 
 \section{Prefix/Suffix Spotting}
-Word spotting is a technique that can be used to find certain words in a corpus of handwritten documents. However, there are certain situations where one may want to search for a partial word, such as a prefix or suffix. For example, if one wanted to find names of towns in a corpus of German documents, being able to spot the suffix ``-berg'' would be very helpful.
+Word spotting is a technique that can be used to find certain words in a corpus of handwritten documents. However, there are certain situations where one may want to search for a partial word, such as a prefix or suffix. For example, if one wanted to find names of towns in a corpus of German documents, being able to spot the suffix ``-berg'' would potentially return many town names.
+
+We identify a list of X suffixes and evaluate spotting these. 
+ The window size for a given suffix query is found by identifying all n-grams we have window estimates for (see Section \ref{detirminewindowsize}) which cmpose the query and averaging their window widths according to which characters they contribute to.
+We are able to make the assumption that the spottings only occur at the end of the word which reduces the number of possible subwindows significantly. We additionally don't need to consider window overlap in out evaluation.
+
+We evaluate on the IAM and Census Names datasets as these have a good number of instances of our suffixes. The results are presented in Table \ref{tab:suffixspottingresults}. We additionally in
 
 GW dataset (all)
 town: 3
