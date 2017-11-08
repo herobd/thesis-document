@@ -195,12 +195,12 @@
 \citation{wigington2017}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces Example of data augmentation used in training.\relax }}{25}{figure.caption.16}}
 \newlabel{fig:augmentation}{{4.2}{25}{Example of data augmentation used in training.\relax }{figure.caption.16}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.3}Running}{25}{subsection.4.1.3}}
 \citation{sudholt2016}
 \citation{sudholt2016}
 \citation{Zagoris2015}
 \citation{Zagoris2015}
-\@writefile{toc}{\contentsline {section}{\numberline {4.2}Analysis of Subword Spotting}{26}{section.4.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.3}Determining Window Widths}{26}{subsection.4.1.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.4}Running}{26}{subsection.4.1.4}}
 \citation{sudholt2016}
 \citation{sudholt2016}
 \citation{sudholt2016}
@@ -209,23 +209,24 @@
 \citation{sudholt2016}
 \citation{sudholt2016}
 \citation{sudholt2016}
-\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces MAP for full word spotting results, reported for both query-by-string (QbS) and query-by-example (QbE). Results on Census Names uses network with SPP depth of 2 instead of 3. Using 3 yields QbS:0.525 and QbE:0.511.\relax }}{27}{table.caption.17}}
-\newlabel{tab:wordspottingresults}{{4.1}{27}{MAP for full word spotting results, reported for both query-by-string (QbS) and query-by-example (QbE). Results on Census Names uses network with SPP depth of 2 instead of 3. Using 3 yields QbS:0.525 and QbE:0.511.\relax }{table.caption.17}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}Analysis of Subword Spotting}{27}{section.4.2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}Full Word Spotting}{27}{subsection.4.2.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}Subword Spotting}{27}{subsection.4.2.2}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces MAP for subword spotting results on the Bentham and Census Names datasets, reported for query-by-string (QbS), QbS weighted by n-gram frequency, query-by-example (QbE) by n-gram (comparable to QbS), and QbE by instance (comparable to weighed QbS).\relax }}{28}{table.caption.18}}
-\newlabel{tab:subwordspotting}{{4.2}{28}{MAP for subword spotting results on the Bentham and Census Names datasets, reported for query-by-string (QbS), QbS weighted by n-gram frequency, query-by-example (QbE) by n-gram (comparable to QbS), and QbE by instance (comparable to weighed QbS).\relax }{table.caption.18}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces MAP for QbS subword spotting results on the Bentham and Census Names datasets, where we only use n-grams in our query set which have an occurrence count above a threshold (in the testing sets). MAP increases, demonstrating less frequent n-grams are more difficult. Only trigrams are shown for the Bentham dataset due to the high frequency of all unigrams and bigrams.\relax }}{29}{figure.caption.19}}
-\newlabel{fig:remove}{{4.3}{29}{MAP for QbS subword spotting results on the Bentham and Census Names datasets, where we only use n-grams in our query set which have an occurrence count above a threshold (in the testing sets). MAP increases, demonstrating less frequent n-grams are more difficult. Only trigrams are shown for the Bentham dataset due to the high frequency of all unigrams and bigrams.\relax }{figure.caption.19}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces MAP for full word spotting results, reported for both query-by-string (QbS) and query-by-example (QbE). Results on Census Names uses network with SPP depth of 2 instead of 3. Using 3 yields QbS:0.525 and QbE:0.511.\relax }}{28}{table.caption.17}}
+\newlabel{tab:wordspottingresults}{{4.1}{28}{MAP for full word spotting results, reported for both query-by-string (QbS) and query-by-example (QbE). Results on Census Names uses network with SPP depth of 2 instead of 3. Using 3 yields QbS:0.525 and QbE:0.511.\relax }{table.caption.17}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}Subword Spotting}{28}{subsection.4.2.2}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces MAP for subword spotting results on the Bentham and Census Names datasets, reported for query-by-string (QbS), QbS weighted by n-gram frequency, query-by-example (QbE) by n-gram (comparable to QbS), and QbE by instance (comparable to weighed QbS).\relax }}{29}{table.caption.18}}
+\newlabel{tab:subwordspotting}{{4.2}{29}{MAP for subword spotting results on the Bentham and Census Names datasets, reported for query-by-string (QbS), QbS weighted by n-gram frequency, query-by-example (QbE) by n-gram (comparable to QbS), and QbE by instance (comparable to weighed QbS).\relax }{table.caption.18}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {4.3}{\ignorespaces AP for QbS and QbE on each unigram.\relax }}{29}{table.caption.20}}
 \newlabel{tab:unigram}{{4.3}{29}{AP for QbS and QbE on each unigram.\relax }{table.caption.20}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces Unigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.\relax }}{30}{figure.caption.21}}
-\newlabel{fig:unigram_respot}{{4.4}{30}{Unigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.\relax }{figure.caption.21}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.3}Respotting Subwords}{30}{subsection.4.2.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.3}Respotting Subwords}{29}{subsection.4.2.3}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces MAP for QbS subword spotting results on the Bentham and Census Names datasets, where we only use n-grams in our query set which have an occurrence count above a threshold (in the testing sets). MAP increases, demonstrating less frequent n-grams are more difficult. Only trigrams are shown for the Bentham dataset due to the high frequency of all unigrams and bigrams.\relax }}{30}{figure.caption.19}}
+\newlabel{fig:remove}{{4.3}{30}{MAP for QbS subword spotting results on the Bentham and Census Names datasets, where we only use n-grams in our query set which have an occurrence count above a threshold (in the testing sets). MAP increases, demonstrating less frequent n-grams are more difficult. Only trigrams are shown for the Bentham dataset due to the high frequency of all unigrams and bigrams.\relax }{figure.caption.19}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces Unigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.\relax }}{31}{figure.caption.21}}
+\newlabel{fig:unigram_respot}{{4.4}{31}{Unigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.\relax }{figure.caption.21}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces Bigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.\relax }}{31}{figure.caption.22}}
 \newlabel{fig:bigram_respot}{{4.5}{31}{Bigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.\relax }{figure.caption.22}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.6}{\ignorespaces Trigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.\relax }}{31}{figure.caption.23}}
-\newlabel{fig:trigram_respot}{{4.6}{31}{Trigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.\relax }{figure.caption.23}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.6}{\ignorespaces Trigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.\relax }}{32}{figure.caption.23}}
+\newlabel{fig:trigram_respot}{{4.6}{32}{Trigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.\relax }{figure.caption.23}{}}
 \@writefile{toc}{\contentsline {chapter}{\numberline {5}Applications of Subword Spotting}{33}{chapter.5}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
