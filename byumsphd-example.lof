@@ -23,6 +23,6 @@
 \contentsline {figure}{\numberline {4.5}{\ignorespaces Bigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.\relax }}{31}{figure.caption.22}
 \contentsline {figure}{\numberline {4.6}{\ignorespaces Trigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.\relax }}{32}{figure.caption.23}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces A figure with two subfigures\relax }}{34}{figure.caption.25}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces A figure with two subfigures\relax }}{35}{figure.caption.25}
 \contentsline {figure}{\numberline {5.2}{\ignorespaces An overview of the CAT system which uses approved subword spottings. The arrows represent the flow of data.\relax }}{36}{figure.caption.26}
 \addvspace {10\p@ }
