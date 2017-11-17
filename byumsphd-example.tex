@@ -510,7 +510,8 @@ These sets have the respective sizes:\\
 \end{figure}
 
 %These files are in py_stuff/census_prep and robert_stuff/document_project/apps_src/field_cropper
-The Census Names dataset is an extraction of names from the United Stated of America 1930 census. FamilySearch provided us the ground truth index as well as a  registration of the form images (rotation, scale and offset to align them). We extracted the name fields by first averaging the registered images (Figure \ref{fig:makenames} b) together and manually enhancing the contrast of the resulting image (Figure \ref{fig:makenames} c). We then hand annotated this average image with the lines of the form, using straight lines (Figure \ref{fig:makenames} d). Next we processed each image individually by doing a second registration with the hand annotated form lines by the following. First, we globally moved all the form lines together to maximize the summed inverse pixel intensity (darker is better) along the form lines. This was done by scanning 50 pixels in the four cardinal directions separately (Figure \ref{fig:makenames} e). We then tried all positions in a $7\times 7$ neighborhood around the combined the best x and y positions from the separate horizontal and vertical scans (Figure \ref{fig:makenames} f).  Then, for each individual cell of the form, a small (12 pixel) vertical or horizontal histogram is created around each for the four lines forming the cell boundaries (Figure \ref{fig:makenames} g) and is used to locally snap the cell boundary to the darkest part of the histogram (Figure \ref{fig:makenames} h). This yields a very precise registration in most cases. We then manually segmented the words within each cell (Figure \ref{fig:makenames} i). 
+The Census Names dataset is an extraction of names from the United Stated of America 1930 census. FamilySearch provided us the ground truth index as well as a  registration of the form images (rotation, scale and offset to align them). We extracted the name fields by first averaging the registered images (Figure \ref{fig:makenames} a) together and manually enhancing the contrast of the resulting image (Figure \ref{fig:makenames} b). We then hand annotated this average image with the lines of the form, using straight lines (Figure \ref{fig:makenames} c). Next we processed each image individually by doing a second registration with the hand annotated form lines by the following. First, we globally moved all the form lines together to maximize the summed inverse pixel intensity (darker is better) along the form lines. This was done by scanning 50 pixels in the four cardinal directions separately (Figure \ref{fig:makenames} d). We then tried all positions in a $7\times 7$ neighborhood around the combined the best x and y positions from the separate horizontal and vertical scans. %(Figure \ref{fig:makenames} f)
+ Then, for each individual cell of the form, a small (12 pixel) vertical or horizontal histogram is created around each for the four lines forming the cell boundaries (Figure \ref{fig:makenames} e) and is used to locally snap the cell boundary to the darkest part of the histogram (Figure \ref{fig:makenames} f). This yields a very precise registration in most cases. We then manually segmented the words (last name, first name, middle initial/name) within each cell (Figure \ref{fig:makenames} g). 
 Example lines from the Census Names dataset can be seen in Figure \ref{fig:NamesExamples}.
 The test set has 83.7\% of its contents in our lexicon
 These sets have the respective sizes:\\
@@ -520,15 +521,20 @@ These sets have the respective sizes:\\
 
 %TODO fig:makenames
 Creation figure:\\
-a. Unalgined forms (perhaps fake)
-b. aligned forms
-c. contrast enhanced average
-d. lines on contrast enhanced average
-e. lines of form, arrows showing 50 pix scan
-f. best point, 7x7 window scan (colored box)
-g. histograms for borders
-h. snapped image
-i. word segmentation
+a. "aligned forms"
+b. contrast enhanced average
+c. lines on contrast enhanced average
+d. lines of form, arrows showing 50 pix scan %f. best point, 7x7 window scan (colored box)
+e. histograms for borders (Downloads/makehist.py)
+f. snapped image
+g. word segmentation
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.75\textwidth]{makenames}
+    \caption{Process for extracting names from US 1930 census forms for Census Names data set. We begin with registerd forms (a). Then we average the images together (b). The average image is used to mark form boundaries manually (c).}
+    \label{fig:makenames}
+\end{figure}
 
 \begin{figure}
     \centering
@@ -974,13 +980,13 @@ We use a nearest-neighbors approach as a baseline to transcription using our spo
     \caption{An overview of the CAT system which uses approved subword spottings. The arrows represent the flow of data.}
     \label{fig:flow}
 \end{figure}
-An overview of the CAT system using approved subword spotting can be seen in Figure \ref{fig:flow}. Initially the system spots character n-grams in the corpus (word images). These results are pooled and sent to users in batches. After the user filters out incorrect spottings, the spottings text and positions in the word images are used to create regular expressions which is used to query a lexicon for a list of all words constrained by the spottings. These are scored through word spotting and lower scores are removed from the list. This list is then sent to a user, who selects the correct transcription. Information from approved spottings and transcribed word images can be used in further spottings.
+An overview of the CAT system using approved subword spotting can be seen in Figure \ref{fig:flow}. Initially the system spots character n-grams in the corpus (word images). These results are pooled and sent to users in batches. After the user filters out incorrect spottings, the spottings' text/label and positions in the word images are used to create regular expressions which is used to query a lexicon for a list of all words matching the constraints set by the spottings. These are scored through word spotting (spotting each possible word in the image) and lower scores are removed from the list (according to an Otsu threshold). This list is then sent to a user, who selects the correct transcription. Information from approved spottings and transcribed word images can be used in further spottings.
 
 We now go over the individual pieces in greater detail.
 
 \subsubsection{Subword Spotting}
 We follow the same procedure for subword spotting as outlined in the Chapter \ref{subwordspotting}. We begin by spotting the n-grams in frequency order, beginning with the largest n using QbS. QbE comes into play after spottings are approved as correct by users. We combine QbE results the same way as described in Chapter \ref{subwordspotting}.
-We also only return the top portion of all subwindows for a spotting: 75\% for unigrams, 25\% for bigrams, and 15\% for trigrams.
+To reduce the number of possible n-grams needing approval, we only return the top portion of all subwindows for a spotting: 75\% for unigrams, 25\% for bigrams, and 15\% for trigrams.
 
 \subsubsection{User Tasks and Interface}
 
