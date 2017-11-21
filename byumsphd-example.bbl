@@ -1,4 +1,4 @@
-\begin{thebibliography}{34}
+\begin{thebibliography}{35}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -126,6 +126,12 @@ C.~Neudecker and A.~Tzadok.
 \newblock User collaboration for improving access to historical texts.
 \newblock \emph{Liber Quarterly}, 20\penalty0 (1):\penalty0 119--128, 2010.
 
+\bibitem[Puigcerver(2017)]{puigcerver2017}
+Joan Puigcerver.
+\newblock Are multidimensional recurrent layers really necessary for
+  handwritten text recognition?
+\newblock In \emph{Proceedings of ICDAR}, 2017.
+
 \bibitem[Rath and Manmatha(2003)]{Rath2003}
 Toni~M. Rath and Raghavan Manmatha.
 \newblock Features for word spotting in historical manuscripts.
@@ -157,21 +163,20 @@ V.~Romero, A.H. Toselli, L.~Rodriguez, and E.~Vidal.
   handwritten text images.
 \newblock In \emph{Proceedings of ICDAR}, pages 96--100. IEEE, 2009.
 
-\bibitem[Romero et~al.(2017)Romero, Toselli, Villegas, Vidal, and
-  S\'{a}nchez]{icdarComp2017}
-Ver\'{o}nica Romero, Alejandro~H. Toselli, Mauricio Villegas, Enrique Vidal,
-  and Joan~Andreu S\'{a}nchez.
-\newblock Icdar 2017 competition on handwritten text recognition on the read
-  dataset.
-\newblock In \emph{Proceedings of ICDAR}, 2017.
-\newblock URL \url{icdar.org/proceedings}.
-
 \bibitem[Rothacker et~al.(2013)Rothacker, Rusi{\~{n}ol}, and
   Fink]{Rothacker2013}
 Leonard Rothacker, Mar\c{c}al Rusi{\~{n}ol}, and Gernot~A. Fink.
 \newblock Bag-of-features hmms for segmentation-free word spotting in
   handwritten documents.
-\newblock In \emph{Proc. ICDAR 2013}, pages 1305--1309. IEEE, 2013.
+\newblock In \emph{Proceedings of ICDAR}, pages 1305--1309. IEEE, 2013.
+
+\bibitem[S\'{a}nchez et~al.(2017)S\'{a}nchez, Romero, Toselli, Villegas, and
+  Vidal]{icdarComp2017}
+Joan~Andreu S\'{a}nchez, Ver\'{o}nica Romero, Alejandro~H. Toselli, Mauricio
+  Villegas, and Enrique Vidal.
+\newblock Icdar2017 competition on handwritten text recognition on the read
+  dataset.
+\newblock In \emph{Proceedings of ICDAR}, 2017.
 
 \bibitem[Serrano et~al.(2010)Serrano, Gim{\'e}nez, Sanchis, and
   Juan]{Serrano2010}
@@ -248,8 +253,7 @@ AlejandroH. Toselli, Ver\'{o}nica Romero, and Enrique Vidal.
 Curtis Wigington, Seth Stewart, Brian Davis, and Bill Barrett.
 \newblock Data augmentation for recognition of handwritten words and lines
   using a cnn-lstm network.
-\newblock In \emph{2017 14th International Conference on Document Analysis and
-  Recognition}, 2017.
+\newblock In \emph{Proceedings of ICDAR}, 2017.
 
 \bibitem[Wilkinson et~al.(2017)Wilkinson, Lindstr{\"{o}}m, and
   Brun]{wilkinson2017}

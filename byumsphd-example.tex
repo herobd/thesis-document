@@ -390,9 +390,14 @@ We are interested in spotting character n-grams (uni-, bi- and trigrams) rather 
 \section{Automatic Handwriting Recognition}
 
 %[!] Should this be here, or only in introduction?
-The state-of-the-art for handwriting recognition relies heavily on recursive neural networks (RNNs) paired with convolutional neural networks (CNNs). The key component is the connectionist temporal classification (CTC) loss which allows the network to be trained given a line image and the ground truth text for that line without any alignment \cite{CTC}. In a recent competition on historical German documents \cite{icfhrComp2016} (see Figure \ref{germanlines}), the leading contestants either used a bidirectional RNN on top of a CNN, or used staggered 2-dimensional RNNs with CNN layers. The best results had word error rates of 20.9 and character error rates of 4.8. This is impressively low and continues to drop as methods are improving \cite{wigington2017}.
+The state-of-the-art for handwriting recognition relies heavily on recursive neural networks (RNNs) paired with convolutional neural networks (CNNs). The key component is the connectionist temporal classification (CTC) loss which allows the network to be trained given a line image and the ground truth text for that line without any alignment \cite{CTC}. In a recent competition on historical German documents \cite{icdarComp2017} (see Figure \ref{fig:germanlines}), the leading contestants used a bidirectional RNN on top of a CNN. The best results had word error rates of 19.1\% and character error rates of 7.0\%. This is impressively low given the diversity of the data, and methods are continueing to improve \cite{wigington2017,puigcerver2017}.
 
-%TODO germanlines figure
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=.98\textwidth]{german_lines}
+    \caption{Example of lines extracted from the dataset of the ICDAR HTR competition \cite{icdarComp2017}.}
+    \label{fig:germanlines}
+\end{figure}
 
 %copied from proposal [!]
 
@@ -443,30 +448,37 @@ Our CAT attempts to also leverage this ability as well.
 \end{figure}
 
 %"A Framework for Efficient Transcription of Historical Documents Using Keyword Spotting"
-Zagoris et al.~\cite{Zagoris2015} \footnote{A demo of their system is found at \url{http://vc.ee.duth.gr/ws/}} presented a CAT system that was also based on word spotting. In their system when the user is transcribing a word image, they are presented with the results of spotting that image (sorted according to rank). The user can then confirm these spottings by clicking on them, causing them to move to a separate list. When this is done, a relevance feedback loop is activated, which submits another word spotting query of the confirmed image. These results are fused into the ranked list, providing a better selection. Figure \ref{fig:zagoris} shows a screen-shot of their demo system.
+Zagoris et al.~\cite{Zagoris2015} \footnote{A demo of their system is found at \url{http://vc.ee.duth.gr/ws/}} presented a CAT system that was also based on word spotting. In their system when the user is transcribing a word image, they are presented with the results of spotting that image (sorted according to rank). The user can then confirm these spottings by clicking on them, causing them to move to a separate list. When this is done, a relevance feedback loop is activated, which submits another word spotting query of the confirmed image. These spotting results are used to refine the ranked list, providing a better selection. Figure \ref{fig:zagoris} shows a screen-shot of their demo system.
 %The description of the system is unclear, but we believe the list of confirmed spottings are then labelled the same as the current word image.
-We use the fusion results of \cite{Zagoris2015} to guide the fusion of our subword spotting results.
+We use the same strategy as \cite{Zagoris2015} to guide the combination of our subword spotting results from multiple queries. Further details are given in Section \ref{combine}.
 
 \begin{figure}
     \centering
-    \includegraphics[width=.9\textwidth]{zagoris}
+    \includegraphics[width=.85\textwidth]{zagoris}
     \caption{A screen-shot of a the CAT system of Zagoris et al.~\cite{Zagoris2015}. The green text indicates hand labeling, the blue text indicates automatic labeling. You can see to the right of the current word (``must'') the current ranked list of spottings (blue boxes).}
     \label{fig:zagoris}
 \end{figure}
 
-Neudecker and Tzadok \cite{Neudecker2010} presented a CAT system for historical printed documents that is very similar to the CAT system we present in Chapter \ref{applications}. The system would first segment the individual characters of the documents and run an OCR engine on them. Those characters with low confidence would then be presented to a user for verification in a character session. A single character session contains all the low-confidence character images classified to a single character. An example of their system's character session for the character ``?'' is given in Fig.~\ref{fig:carpet}.  The user merely needs to select the incorrect classifications. Then in a word session, a word image is shown to the user with possible transcriptions for the word, from which they select the correct one. There are three key strengths of this system. One is that as long as the document’s characters can be segmented, it can work. The second is that it formats all user tasks as selections, rather than typing, and they are quickly completed. This creates a much more enjoyable experience for the user. The third key strength is that it is highly parallelizable for crowd-sourced transcribing. This parallelism is achieved because all character sessions are independent of one another and all word sessions are independent of one another. Our system will follow this method's pattern so it has flexibility of document types, simple user tasks and a parallelizable framework.
+Neudecker and Tzadok \cite{Neudecker2010} presented a CAT system for historical printed documents that is very similar to the CAT system we present in Chapter \ref{applications}. The system would first segment the individual characters of the documents and run an OCR engine on them. Those characters with low confidence would then be presented to a user for verification in a character session. A single character session contains all the low-confidence character images classified to a single character. An example of their system's character session for the character ``?'' is given in Fig.~\ref{fig:carpet}.  The user merely needs to select the incorrect classifications. Then in a word session, a word image is shown to the user with possible transcriptions for the word, from which they select the correct one. There are three key strengths of this system. One is that as long as the document’s characters can be segmented, it can work. The second is that it formats all user tasks as selections, rather than typing, and they are quickly completed. This creates a much more enjoyable experience for the user. The third key strength is that it is highly parallelizable for crowd-sourced transcribing. This parallelism is achieved because all character sessions are independent of one another and all word sessions are independent of one another. Our system follows this method's pattern so it has flexibility of document types, simple user tasks and a parallelizable framework.
 
 \begin{figure}
     \centering
-    \includegraphics[width=.9\textwidth]{carpet}
-    \caption{A screen-shot of a character session for ``?'' from Neudecker and Tzadok's CAT system, taken directly from their report \cite{Neudecker2010}. Notice how easy it is for a user to simply click on the erroneous classifications.}
+    \includegraphics[width=.85\textwidth]{carpet}
+    \caption{A screen-shot of a character session for ``?'' from Neudecker and Tzadok's CAT system \cite{Neudecker2010}, taken directly from their report \cite{Neudecker2010}. Notice how easy it is for a user to simply click on the erroneous classifications.}
     \label{fig:carpet}
 \end{figure}
 
-Retsinas et al.~\cite{Retsinas2015} expanded on \cite{Neudecker2010} to reduce the amount of user input required by clustering character images together. By viewing an average of a character cluster (the characters overlapped), the user could then assign the whole cluster a character label or reject the cluster as being incoherent (the cluster contains multiple characters). Though requiring more thought from the user, this prevents the tediousness of examining all character images. %Clustering could be applied to our work; it would be more difficult with handwriting, though using online learning to initialize clusters may overcome this. We, however, will not pursue it at this time.
-We attempt to use clustering in our own CAT method, however we cannot perform the overlap due to the greater variance in handwriting.
+Retsinas et al.~\cite{Retsinas2015} expanded on \cite{Neudecker2010} to reduce the amount of user input required by clustering character images together. By viewing an average of a character cluster (where the characters are overlapped), the user can then assign the whole cluster a character label or reject the cluster as being incoherent (i.e.~the cluster contains multiple characters). See Figure \ref{fig:retsinas_ex} for an example. Though requiring more thought from the user, this prevents the tediousness of examining all character images. %Clustering could be applied to our work; it would be more difficult with handwriting, though using online learning to initialize clusters may overcome this. We, however, will not pursue it at this time.
+We attempt to use clustering in our own CAT method, however we cannot perform the overlap due to the greater variance in handwriting. Instead we take the approach of \cite{Clawson2014} and simply group clusters together to help visual discrimination.
 
-While we have not seen it done, it would be relatively easy to transfer the results of RNN/CTC based automatic transcription method to CAT as a top-N can be extracted from the network output. This could then be fed to a user for approval and quick correction for most errors. Given the strength of these automatic methods by themselves, we expect a CAT version of them would outperform the older CAT methods discussed in this section. 
+\begin{figure}
+    \centering
+    \includegraphics[width=.4\textwidth]{retsinas_ex}
+    \caption{Examples of a good cluster (`c') and an incoherent cluster (multiple character classes) taken from \cite{Retsinas2015}.}
+    \label{fig:retsinas_ex}
+\end{figure}
+
+While we have not seen it done, it would be relatively easy to transfer the results of RNN/CTC-based automatic transcription method to CAT by extracting the top-N transcriptions from the network output. These could then be fed to a user for approval and quick correction for most errors. Given the strength of these automatic methods by themselves, we expect a CAT version of them would outperform the older CAT methods discussed in this section. 
 
 
 
@@ -478,7 +490,9 @@ While we have not seen it done, it would be relatively easy to transfer the resu
 
 We use three datasets in our evaluations: the IAM handwriting dataset, the Bentham dataset, and a dataset we extracted from the U.S.~1930 census, which we refer to as Census Names. In this chapter we describe each of these datasets and additionally describe our lexicon.
 
-The IAM handwriting dataset \cite{IAM} is a dataset collected by having human subjects copy certain blocks of printed text into handwriting. They were instructed to keep lines well separated and the dataset is very clean as a result. It contains annotations to the word level. We used the provided test set split, the combine training and validation 2 splits as our training set, and the validation 1 set as our validation set.
+\section{IAM Dataset}
+
+The IAM handwriting dataset \cite{IAM} is a dataset collected by having human subjects copy certain paragraphs of printed text into handwriting. They were instructed to keep lines well separated and the dataset is very clean as a result. It contains annotations to the word level. We used the provided test set split, the combine training and validation 2 splits as our training set, and the validation 1 set as our validation set.
 Example lines from the IAM dataset can be seen in Figure \ref{fig:IAMExamples}.
 The test set has 96.1\% of its contents in our lexicon.
 These sets have the respective sizes and number of (exclusive) authors:\\
@@ -493,8 +507,12 @@ These sets have the respective sizes and number of (exclusive) authors:\\
     \label{fig:IAMExamples}
 \end{figure}
 
+\section{Bentham Dataset}
 
-The Bentham dataset \cite{bentham} is a collection of documents written by the 17th century philosopher Jeremy Bentham. While there are a  Due a plethora of errors we corrected in the ground truth, that ground truth we use differs significantly from that which is officially released, though it is based on it. Our training, validation, and test sets are based on the official split, but are not identical. We ensured pages are exclusive to a single set.
+The Bentham dataset \cite{bentham} is a collection of documents written by the 17th century philosopher Jeremy Bentham. While there are a plethora of errors we corrected in the ground truth, that ground truth we use differs significantly from that which is officially released, though it is based on it. 
+Our training, validation, and test sets are based on the official split, but are not identical.
+We ensured pages are exclusive to a single set.
+%As we are observing a CAT application of subword spotting it would be optimal that the ``seed'' training set would cover all writing styles. We mix the word instances assigned to the training, validation, and test sets; this likely covers all writing styles and it would be very feasible to randomly label words of a segmented dataset.
 Example lines from the Bentham dataset can be seen in Figure \ref{fig:BenthamExamples}.
 The test set has 94.9\% of its contents in our lexicon
 These sets have the respective sizes:\\
@@ -509,41 +527,36 @@ These sets have the respective sizes:\\
     \label{fig:BenthamExamples}
 \end{figure}
 
+\section{Census Names Dataset}
+
 %These files are in py_stuff/census_prep and robert_stuff/document_project/apps_src/field_cropper
 The Census Names dataset is an extraction of names from the United Stated of America 1930 census. FamilySearch provided us the ground truth index as well as a  registration of the form images (rotation, scale and offset to align them). We extracted the name fields by first averaging the registered images (Figure \ref{fig:makenames} a) together and manually enhancing the contrast of the resulting image (Figure \ref{fig:makenames} b). We then hand annotated this average image with the lines of the form, using straight lines (Figure \ref{fig:makenames} c). Next we processed each image individually by doing a second registration with the hand annotated form lines by the following. First, we globally moved all the form lines together to maximize the summed inverse pixel intensity (darker is better) along the form lines. This was done by scanning 50 pixels in the four cardinal directions separately (Figure \ref{fig:makenames} d). We then tried all positions in a $7\times 7$ neighborhood around the combined the best x and y positions from the separate horizontal and vertical scans. %(Figure \ref{fig:makenames} f)
  Then, for each individual cell of the form, a small (12 pixel) vertical or horizontal histogram is created around each for the four lines forming the cell boundaries (Figure \ref{fig:makenames} e) and is used to locally snap the cell boundary to the darkest part of the histogram (Figure \ref{fig:makenames} f). This yields a very precise registration in most cases. We then manually segmented the words (last name, first name, middle initial/name) within each cell (Figure \ref{fig:makenames} g). 
 Example lines from the Census Names dataset can be seen in Figure \ref{fig:NamesExamples}.
 The test set has 83.7\% of its contents in our lexicon
 These sets have the respective sizes:\\
-\indent \indent Training: 2130 words\\
-\indent \indent Validation: X words\\
-\indent \indent Testing: X words
+\indent \indent Training: 6292 words\\
+\indent \indent Validation: 718 words\\
+\indent \indent Testing: 2130 words
 
-%TODO fig:makenames
-Creation figure:\\
-a. "aligned forms"
-b. contrast enhanced average
-c. lines on contrast enhanced average
-d. lines of form, arrows showing 50 pix scan %f. best point, 7x7 window scan (colored box)
-e. histograms for borders (Downloads/makehist.py)
-f. snapped image
-g. word segmentation
 
 \begin{figure}
     \centering
-    \includegraphics[width=.75\textwidth]{makenames}
-    \caption{Process for extracting names from US 1930 census forms for Census Names data set. We begin with registerd forms (a). Then we average the images together (b). The average image is used to mark form boundaries manually (c).}
+    \includegraphics[width=.9\textwidth]{makenames}
+    \caption{Process for extracting names from US 1930 census forms for Census Names data set. We begin with registerd forms (a). Then we average the images together (b). The average image is used to mark form boundaries manually (c). The lines are registered to specific census image (d). At each cell a histogram is computed around the cell boundaries (dark blue) (e). The cell boundaries are snapped to the histogram peaks (f). Word boundaries were manually annotated for each cell (g).}
     \label{fig:makenames}
 \end{figure}
 
 \begin{figure}
     \centering
-    \includegraphics[width=.75\textwidth]{names_examples}
+    \includegraphics[width=.5\textwidth]{names_examples}
     \caption{Excerpts from the Census Names dataset.}
     \label{fig:NamesExamples}
 \end{figure}
 
-For the testing portion and a small validation set of the Bentham and Census Names datasets, we produced a ground truth with character segmentation. We annotated the word segmentation ground truth by marking the point between characters, meaning character boundaries do not overlap, in addition to a tighter start and end boundary for the word (first and last letters), as seen in Figure \ref{fig:charseg}.
+\section{Character Annotation}
+
+For the testing portion and a small validation set of the Bentham and Census Names datasets, we produced a character segmentation ground truth. We annotated the word segmentation ground truth by marking the point between characters, meaning character boundaries do not overlap, in addition to a tighter start and end boundary for the word (first and last letters), as seen in Figure \ref{fig:charseg}.
 
 \begin{figure}
     \centering
@@ -552,11 +565,13 @@ For the testing portion and a small validation set of the Bentham and Census Nam
     \label{fig:charseg}
 \end{figure}
 
+\section{Lexicon}
+
 %Lexicon was created with extractMostFrequentNames.perl
 %Merged(intersection) wordsEn.txt with last and first names with 1000 frequency count.
 %108,028 words and 6,939 names
 %SIL International, linguistics site
-For our CAT methods, we require a lexicon. We choose to use a large English lexicon as this would indicate the methods could generalize to other corpi. We obtained a lexicon from SIL International at \url{http://www-01.sil.org/linguistics/wordlists/english/} which contained 108,028 words (not including names). We also desired a large lexicon of names which would enable the Census Names dataset to be transcribed. FamilySearch provided us with data from the US 1940 census, which listed all names appearing in those records along with a count of how many times they occurred. We took all names occuring at least 1000 times, leaving us with a names list of 6,939 unique names. Combining these two sets gave us a lexicon size of 114,968. We use the full lexicon for the Bentham dataset, but only the names portion for the Census Names dataset.
+For our CAT methods, we require a lexicon. We choose to use a large English lexicon as this would indicate the methods could generalize to other corpi. We obtained a lexicon from SIL International at \url{http://www-01.sil.org/linguistics/wordlists/english/} which contained 108,028 words (not including names). We also desired a large lexicon of names which would enable the Census Names dataset to be transcribed. FamilySearch provided us with data from the US 1940 census, which listed all names appearing in those records along with a count of how many times they occurred. We took all names occuring at least 1000 times, leaving us with a list of 6,939 unique names. Combining these two sets gave us a lexicon size of 114,968. We use the full lexicon for the Bentham dataset, but only the names portion for the Census Names dataset.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Subword Spotting}\label{subwordspotting}
@@ -1085,7 +1100,14 @@ sdfgfag
 
 \subsection{CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment} %
 
-We want to avoid having to make decisions about spottings, either thresholding or having user input, which the previous methods rely on. A way to avoid this is to simply merge all spottings together into a single character probability vector, resulting is something like Figure \ref{fig:cpv}.
+We want to avoid having to make decisions about spottings, either thresholding or having user input, which the previous methods rely on. A way to avoid this is to simply merge all spottings together into a single character probability vector, resulting in something like Figure \ref{fig:cpv}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{cpv}
+    \caption{An example of a character probability vector for the word ``adultery''. The relative probability of each character (a-z) at each horizontal position is represented both by the height and color of the graph. The discontinuities occuring at the begining and end of the word (e.g. see `x') occur due to the merging of unigram, bigram, and trigram scores.}
+    \label{fig:cpv}
+\end{figure}
 
 The combining happens according to the following procedure.
 
