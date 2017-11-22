@@ -595,7 +595,7 @@ Our network architecture varies slightly from \cite{sudholt2017} and is outlined
 
 %SPP \cite{SPP} is a method of allowing a network with fully connected layers to handle images of arbitrary size. This is accomplished by performing a pooling (max in our implementation) over windows of the image. The first window encompasses the full image and then it proceeds by dividing the windows into 4 at each level down. We use 3 levels for all datasets except the Census Names dataset, which has smaller characters. We use 2 levels for the Census Names dataset to allow the network to operate on smaller images (the SPP won't be creating windows of subpixel size).
 
-TPP is a slight mofication of SPP \cite{SPP}, which is a method of allowing a network with fully connected layers to handle images of arbitrary size. This is accomplished by performing a pooling (max in our implementation) over windows of the image. The first window encompasses the full image and then it proceeds by dividing the windows at each level down. TPP uses the same idea, but only divides windows horizontally as verticle information is not useful once word images are featurized. We use 5 layers (dividing the image into 1, 2, 3, 4, and 5 even windows) for all datasets except the Census Names dataset, which has smaller characters. We use 4 layers for the Census Names dataset to allow the network to operate on smaller images. We additionally modify TPP slightly to handle the corner case of small images such that the windows adjusted to be slightly overlapping if a window had no pixels.
+TPP is a slight mofication of SPP \cite{SPP}, which is a method of allowing a network with fully connected layers to handle images of arbitrary size. This is accomplished by performing a pooling (max in our implementation) over windows of the image. The first window encompasses the full image and then it proceeds by dividing the windows at each level down. TPP uses the same idea, but only divides windows horizontally as verticle information is not useful once word images are featurized. We use 5 layers (dividing the image into 1, 2, 3, 4, and 5 even windows) for all datasets except the Census Names dataset, which has smaller characters. We use 4 layers for the Census Names dataset to allow the network to operate on smaller images. We additionally modify TPP slightly to handle the corner case of small images such that the windows adjusted to be slightly overlapping at a particular level if a window had no pixels at that level.
 
 \begin{figure}[t]
     \centering
@@ -608,10 +608,12 @@ TPP is a slight mofication of SPP \cite{SPP}, which is a method of allowing a ne
 
 In training, we used a batch size of 10, a learning rate of $10^{-4}$, weight decay of 0.00005, and the Adam optimizer \cite{adam}.
 %decay the learning rate so that the learning rate at iteration $i$ is $r_i = r_0 (1 + 0.0001 i)^{-0.75}$ (``inv'' policy in Caffe).
-We train until out validation loss begins to increase, indicating overfit. We then rewind weights 4000 iterations
-%TODO or 1/10th of the iterations?
-and begin training with a learning rate of $10^{-5}$, stopping again when the validation loss begins to increase and rewinding weights 4000 iterations.
-We additionally use a distortion augmentation technique similar to the one described in \cite{wigington2017}. In the augmentation technique each example is distorted by placing control points in grid fashion on the image and then distorting the image by perturbing these control points. This is repeated at finer scales; the control points are more closely aligned and the perturbations smaller. See Figure \ref{fig:augmentation} to see the result of this augmentation on a word image. This augmentation greatly reduces possible overfitting during training as the network never sees the exact same images twice.
+We train until out validation loss begins to increase (passes a minimum), indicating overfit.
+We then test the validation set MAP for various iterations (including and previous to our stopping point) to find the maximum performance, as MAP generally peaks before the loss reaches its minimum.
+%We then begin training with a learning rate of $10^{-5}$ 4000 iterations prior to the MAP peak, stopping again when the validation loss begins to increase. 
+%We then repeat the process of finding the validation MAP peak.
+
+During training, we use a distortion augmentation technique similar to the one described in \cite{wigington2017}. In the augmentation technique each example is distorted by placing control points in grid fashion on the image and then distorting the image by perturbing these control points. This is repeated at finer scales; the control points are more closely aligned and the perturbations smaller. See Figure \ref{fig:augmentation} to see the result of this augmentation on a word image. This augmentation greatly reduces possible overfitting during training as the network never sees the exact same images twice.
 %For the Bentham dataset we started with control points $d^0_{control} = 64$ pixels apart and initial perturbations with a standard deviation of $\sigma^0_{control} = 0.3 d^0_{control}$. We decreased control point distance by a factor of 0.5 and decreased the perturbation standard deviation by a factor of 0.6 for each of 4 levels, so that if $l$ is the level, $d^l_{control} = 64(0.5^{l})$ and $\sigma^l_{control} = 0.3 d^l_{control} (0.6^{l})$.
 For the Bentham dataset we started with control points $d_0 = 64$ pixels apart and initial perturbations with a standard deviation of $\sigma_0 = 0.3 d_0$. We decreased control point distance by a factor of 0.5 and decreased the perturbation standard deviation by a factor of 0.6 for each of 4 levels, so that if $l$ is the level, $d_l = 64(0.5^{l})$ and $\sigma_l = 0.3 d_l (0.6^{l})$.
 Similar to \cite{sudholt2016} we balance word counts in the training set. However, we allow far more instances of each word (more duplicates of images) in the training set due to our improved augmentation technique. We set a goal for the count of each word of $c_{goal} = 0.6c_{max}+0.4c_{mean}$, where $c_{max}$ is the maximum count of any word and $c_{mean}$ is the mean count of all words ($c_{max}$ is capped at 200 to prevent too large of training sets). A set of $c_{goal}$ instances of each word form the training set, including some duplicates when needed.
@@ -689,7 +691,7 @@ Full word spotting is performed as described in \cite{sudholt2016}, where the ne
   Method & QbS & QbE & QbS & QbE & QbS & QbE\\
   \hline		
   %Old network & 0.755 & 0.683 & 0.762 & 0.811 & 0.525 & 0.511  %results with msfNoLRN/sig-bray IAM:208000  BEN:160000 NAMES(less):144000
-  Our network  &  0.X & 0.X  &  0.X & 0.X  &  0.X & 0.X  %results with new_phocnet(TPP) IAM:X  BEN:X NAMES(less):X
+  Our network  &  0.X & 0.X  &  0.X & 0.X  &  0.559 & 0.561  %results with new_phocnet(TPP) IAM:X  BEN:X NAMES(less):fine37000
   %bentham:ben_fixed_corpus.gtp
   \\
   PHOCNet\cite{sudholt2016} & 0.830 & 0.725 & - & - & - & - \\
@@ -922,7 +924,11 @@ There are three tasks which need completed: spotting approval, transcription sel
 %Should I actually go into the use study? It didn't go through the IRB...
 The task which would be presented to users most frequently is spotting approval, as most words will require multiple character n-grams and some spottings will be incorrect. Thus we considered the most effective way to present these to users to reduce the time spent per task.
 
-Clustering, refer to previous discussion of this? Of discuss here? \cite{Retsinas2015} inspired
+%Clustering, refer to previous discussion of this? Of discuss here? \cite{Retsinas2015} inspired
+
+Through some trials, we found presenting the potentail n-gram spottings as a list, grouped by the n-gram label, and having the user classify each instance to be efficient. The grouping of spottings with the same n-gram label minimizes context switching and forcing the user to make a decision about each spotting maintains accuracy.
+
+Figure \ref{fig:spottingapproval} shows the interface. The spottings at the bottom is classified as correct or incorrect either with a swipe gesture or a button press. The spottings shown above the current spotting (bottom) allow the user to look ahead and make decisions about the upcoming spottings. The colors of the hilights change when the n-gram label changes to alert the user to the change.
 
 %%%%%%%%%%%%%%
 \iffalse
@@ -942,21 +948,27 @@ fdsgfdh
 %%%%%%%%%%%%%
 
 \paragraph{Transcription Selection}
-gfdg
+This task's interface can be seen in Figure \ref{fig:transcriptionselection}.
+The user is presented with the image of the word with the spotted n-grams hilighted. Below are the n-gram labels each with an `x' button so the user can indicate an incorrect spotting.
+Below these is the list of possible transcriptions. They are presented in an order according to their word spotting score, as this frequently places the correct transcription at the top.
+At the end of this list an additional ``Error'' button allows the user to indicate that the correct transcription is not present, and the spotting n-grams are correct.
 
 \paragraph{Manual Transcription}
+This task's interface can be seen in Figure \ref{fig:manualtranscription}.
 Some words will not be able to be reduced to a short list of possible transcriptions due to poor spotting or possibly errors. These transcriptions must be manually entered by the user. It seems useful to use any known spottings on the given word to provide an intelligent lexicon from which an auto-complete might be able to speed up transcription. However, we observed that generally the spottings were too poor for this assistance to be of much help.
 
 
-\subsubsection{Word Completion / Regular Expression Generation}
-We rely on the word image width, estimate character width (see Section \ref{subwordspotting}) and the locations and width of confirmed spottings (spottings approved by user or threshold) in the word to estimate how many characters are likely not spotted in a word. This allows a regular expression to be generated which represents all possible transcriptions of that word.
 
+\subsubsection{Word Completion / Regular Expression Generation}\label{wordcompletion}
+We rely on the word image width, estimate character width, and the locations of confirmed spottings (spottings approved by user or threshold) in the word to estimate how many characters are likely not spotted in a word. This allows a regular expression to be generated which represents all possible transcriptions of that word.
 
+Spottings are estimated to be a width calculated using the process described in Section \ref{detirminewindowsize}, but without the clustering.
+We average these as an approximation of the character width of an unknown character.
 
 The general approach is to measure the number of pixels between each confirmed spotting and divide this by the estimated character width, providing an estimated number of characters (with fractional characters). The range of characters used is 0.8 subtracted and added to this estimate, rounded. The first and last characters are similarly computed, using the beggining and end of the image boundaries as the previous and next spottings, but we additionaly allow each of those ranges to have one less character than computed to account for the fact that frequently first and last letters are longer than others (e.g.~capital letters at the beginning of a word, or a long tail on the last character of a word). If spottings overlap by less than 0.15 the estimated character width, we allow a character to possibly be between them. If spottings overlap and share boundary characters (e.g.~`al' and `le' sharing `l') we permit either a double letter (`alle') or single (`ale') as the spotting methods we use would have trouble distinguishing these situations. Pseudo code is shown in Algorithm \ref{regex}.
 
-%%%%Should be in appendix
-\begin{algorithm}[H]\label{regex}
+%%%%Should be in appendix ?
+\begin{algorithm}\label{regex}
  \KwData{Word image width: $W$, List of spottings in word image: $S$ (where $S_i^L$ and $S_i^R$ are the leftmost and rightmost boundary of the $i$th spotting for a word and $S_i^T$ is the n-gram of the spotting), Estimate character width: $C$}
  \KwResult{regular expression for possible transcriptions}
  $i$:=$0$\;
@@ -986,21 +998,56 @@ The general approach is to measure the number of pixels between each confirmed s
    }
   }
  }
- \caption{How to write algorithms}
+ \caption{Regular expression generation from spottings.}
 \end{algorithm}
 
-...
-If the ``loose'' mode is on, each 
 
-\subsubsection{Subword Spotting}
-order of spottings
+
+Once we have the regular expression, we find all matches in our lexicon.
+
+If there are no matches there are three possible scenarios: the word is not in the lexicon, there is an incorrectly approved spotting, or the spottings and unlabeled characters alignment didn't transfer to the regular expression properly.
+To account for the second scenario, we iteratively try removing individual spottings, regenerating the regular expression, and requerying the lexicon to see if matches are found. We make the assumption that only one spotting will be incorrect and union the matching lexicon results. We first only remove spottings that have no overlap (overlap meaning two or more spottings idetified a mutual character) and then those that do.
+To account for the third scenario, regenerate the regular expression in a ``loose'' mode, where each range of unknown characters is expanded by one to allow matches initailly constrained by a bad aligment estimation.
+If there are no matches and we are already using the ``loose'' regular expression we simply skip the word. It will be manually transcribed eventually.
+
+If there are matches, and the count of them falls below the threshold 49 we score each possible transcription against the image using word spotting.
+%That is, we word spot the possible transcription and the word spotting score is used.
+As the possible transcriptions are based only on the regular expression, some will be obviously wrong from a visual point of view (e.g.~missing descenders). Following this intuition, we perform an Otsu threshold on the scores to attempt to discard the obviously wrong possibilties. This thresholding is only applied if there are more than 5 possibilities, or if the threshold falls less than half distance between the highest and lowest score (we're confident we're discarding something poor).
+If the resulting number of possible transcriptions is less than 7, we package them into a transcription selection task and enqueue it for a user to complete.
+
+
+\subsubsection{Receiving Transcription}
+The user either returns a transcription selection task in three ways: with a selected transcription, with a spotting marked for removal, or with a error indication. These are handeled in the following ways.
+
+If a transcription was selected, that is stored as the transcription for the word. We attempted to extract new ngram image exemplars by interpolating where unspotted n-grams were in the word image, but these generally failed to be good exemplars.
+
+If a spotting is marked for removal, it is removed and the process described in Section \ref{wordcompletion} is followed again, potentailly leading to a new task being enqueued.
+
+If the user indicates an error we first attempt to loosen the regular expression, as described in Section \ref{wordcompletion}. If no matching words are found, we remove the ``worst'' spotting. ``Worst'' first being any spotting labeled by a threshold (not user oversight), and then simply follows the spotting scores.
 
 \subsubsection{Batch Distribution}
+ordered list
+attempt to find thresholds to accept/reject
 
-\subsubsection{Exemplar extraction}
+checks if all batches in before sending last 12
 
+top, draw best score
+guass, draw scores from guassian dist (closest spottings)
+fancy-single, draw uniform dist between thresholds
+fancy
 
+\subsubsection{Receiving Spotting Approvals}
 
+%\subsubsection{Exemplar extraction}
+
+\subsubsection{Alternate Mode: Don't Wait to Transcribe}
+After word spotting lexicon look up (Section \ref{wordcompletion}), return top 7
+sdtore others
+lexicon lookup
+
+when error on trans, just enqueue next batch
+
+%%%%%%%%%
 
 \subsection{CAT Through Approved Subword Spottings Using Clustering}
 sdfgfag
