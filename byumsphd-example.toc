@@ -18,32 +18,33 @@
 \contentsline {section}{\numberline {4.1}Implementation}{25}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Architecture}{25}{subsection.4.1.1}
 \contentsline {subsection}{\numberline {4.1.2}Training}{26}{subsection.4.1.2}
-\contentsline {subsection}{\numberline {4.1.3}Determining Window Widths}{28}{subsection.4.1.3}
-\contentsline {subsection}{\numberline {4.1.4}Running}{28}{subsection.4.1.4}
-\contentsline {subsection}{\numberline {4.1.5}Combining QbE Results}{29}{subsection.4.1.5}
-\contentsline {section}{\numberline {4.2}Analysis of Subword Spotting}{29}{section.4.2}
+\contentsline {subsection}{\numberline {4.1.3}Determining Window Widths}{27}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}Running}{27}{subsection.4.1.4}
+\contentsline {subsection}{\numberline {4.1.5}Combining QbE Results}{28}{subsection.4.1.5}
+\contentsline {section}{\numberline {4.2}Analysis of Subword Spotting}{28}{section.4.2}
 \contentsline {subsection}{\numberline {4.2.1}Full Word Spotting}{29}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}Subword Spotting}{30}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.2}Subword Spotting}{29}{subsection.4.2.2}
 \contentsline {subsection}{\numberline {4.2.3}Respotting Subwords}{31}{subsection.4.2.3}
-\contentsline {chapter}{\numberline {5}Applications of Subword Spotting}{35}{chapter.5}
-\contentsline {section}{\numberline {5.1}Manual Transcription Assistant}{35}{section.5.1}
-\contentsline {section}{\numberline {5.2}Prefix/Suffix Spotting}{35}{section.5.2}
-\contentsline {section}{\numberline {5.3}Transcription}{37}{section.5.3}
-\contentsline {subsection}{\numberline {5.3.1}Baseline: CAT Through PHOC Vectors}{37}{subsection.5.3.1}
-\contentsline {subsection}{\numberline {5.3.2}CAT Through Approved Subword Spottings}{38}{subsection.5.3.2}
-\contentsline {subsubsection}{\numberline {5.3.2.1}Subword Spotting}{39}{subsubsection.5.3.2.1}
-\contentsline {subsubsection}{\numberline {5.3.2.2}User Tasks and Interface}{39}{subsubsection.5.3.2.2}
-\contentsline {paragraph}{\numberline {5.3.2.2.1}Spotting Approval}{39}{paragraph.5.3.2.2.1}
-\contentsline {paragraph}{\numberline {5.3.2.2.2}Transcription Selection}{39}{paragraph.5.3.2.2.2}
-\contentsline {paragraph}{\numberline {5.3.2.2.3}Manual Transcription}{40}{paragraph.5.3.2.2.3}
-\contentsline {subsubsection}{\numberline {5.3.2.3}Word Completion / Regular Expression Generation}{40}{subsubsection.5.3.2.3}
-\contentsline {subsubsection}{\numberline {5.3.2.4}Subword Spotting}{42}{subsubsection.5.3.2.4}
-\contentsline {subsubsection}{\numberline {5.3.2.5}Batch Distribution}{42}{subsubsection.5.3.2.5}
-\contentsline {subsubsection}{\numberline {5.3.2.6}Exemplar extraction}{42}{subsubsection.5.3.2.6}
-\contentsline {subsection}{\numberline {5.3.3}CAT Through Approved Subword Spottings Using Clustering}{42}{subsection.5.3.3}
-\contentsline {subsection}{\numberline {5.3.4}CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment}{42}{subsection.5.3.4}
-\contentsline {section}{\numberline {5.4}Evaluation of Transcription Strategies}{42}{section.5.4}
-\contentsline {chapter}{\numberline {6}Conclusion}{45}{chapter.6}
-\contentsline {section}{\numberline {6.1}Contributions}{45}{section.6.1}
-\contentsline {section}{\numberline {6.2}Future Work}{45}{section.6.2}
-\contentsline {chapter}{References}{47}{toclistings.4}
+\contentsline {chapter}{\numberline {5}Applications of Subword Spotting}{37}{chapter.5}
+\contentsline {section}{\numberline {5.1}Manual Transcription Assistant}{37}{section.5.1}
+\contentsline {section}{\numberline {5.2}Prefix/Suffix Spotting}{38}{section.5.2}
+\contentsline {section}{\numberline {5.3}Transcription}{38}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Baseline: CAT Through PHOC Vectors}{39}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}CAT Through Approved Subword Spottings}{39}{subsection.5.3.2}
+\contentsline {subsubsection}{\numberline {5.3.2.1}Subword Spotting}{40}{subsubsection.5.3.2.1}
+\contentsline {subsubsection}{\numberline {5.3.2.2}User Tasks and Interface}{41}{subsubsection.5.3.2.2}
+\contentsline {paragraph}{\numberline {5.3.2.2.1}Spotting Approval}{41}{paragraph.5.3.2.2.1}
+\contentsline {paragraph}{\numberline {5.3.2.2.2}Transcription Selection}{42}{paragraph.5.3.2.2.2}
+\contentsline {paragraph}{\numberline {5.3.2.2.3}Manual Transcription}{42}{paragraph.5.3.2.2.3}
+\contentsline {subsubsection}{\numberline {5.3.2.3}Word Completion / Regular Expression Generation}{42}{subsubsection.5.3.2.3}
+\contentsline {subsubsection}{\numberline {5.3.2.4}Receiving Transcription}{44}{subsubsection.5.3.2.4}
+\contentsline {subsubsection}{\numberline {5.3.2.5}Batch Distribution}{45}{subsubsection.5.3.2.5}
+\contentsline {subsubsection}{\numberline {5.3.2.6}Receiving Spotting Approvals}{45}{subsubsection.5.3.2.6}
+\contentsline {subsubsection}{\numberline {5.3.2.7}Alternate Mode: Don't Wait to Transcribe}{45}{subsubsection.5.3.2.7}
+\contentsline {subsection}{\numberline {5.3.3}CAT Through Approved Subword Spottings Using Clustering}{45}{subsection.5.3.3}
+\contentsline {subsection}{\numberline {5.3.4}CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment}{46}{subsection.5.3.4}
+\contentsline {section}{\numberline {5.4}Evaluation of Transcription Strategies}{46}{section.5.4}
+\contentsline {chapter}{\numberline {6}Conclusion}{49}{chapter.6}
+\contentsline {section}{\numberline {6.1}Contributions}{49}{section.6.1}
+\contentsline {section}{\numberline {6.2}Future Work}{49}{section.6.2}
+\contentsline {chapter}{References}{51}{toclistings.4}

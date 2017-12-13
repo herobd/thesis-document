@@ -215,6 +215,8 @@ X==================
 
 \acknowledgments{%
     I would like to thank my wife Sarah for her patience with and support of my endeavors.
+    
+    I would like to extend special thanks to Curtis Wigington, Seth Stewart, Chris Tensmyer and Bill Barrett, who, among other assistance to my work, provided use timing data for my semi-autometed transcription system used in its simulations.
 }
 
 \department{Computer~Science}
@@ -585,22 +587,25 @@ In this chapter we describe our implementation of subword spotting and then eval
 
 \section{Implementation}
 
+We use a sliding window over word images with a word spotting CNN to perform subword spotting.
+
 \subsection{Architecture}
 
-Our subword spotting is built on the segmentation based word spotting method PHOCNet \cite{sudholt2016 sudholt2017} which we converted to perform a sliding window over the word images. \cite{sudholt2017} uses a deep convolutional network trained on word images with pyramidal histogram of characters (PHOC) \cite{Almazan2014} as the target vectors. This method can word spot by both query-by-string (QbS) and query-by-example (QbE), that is querying with text words and word images. See Section \ref{relatedwork_wordspotting} for the details of PHOC vectors. We used a case insensitive PHOC vector and include the bigrams used in \cite{sudholt2016}. We note that the bigrams used in the PHOC vector overlap with, but are not identical with the bigrams we spot; changing this so that they were identical did not improve results. 
+Our subword spotting is built on the segmentation based word spotting method PHOCNet \cite{sudholt2016, sudholt2017} which we converted to perform a sliding window over the word images. \cite{sudholt2017} uses a deep convolutional network trained on word images with pyramidal histogram of characters (PHOC) \cite{Almazan2014} as the target vectors. This method can word spot by both query-by-string (QbS) and query-by-example (QbE), that is querying with text words and word images. See Section \ref{relatedwork_wordspotting} for the details of PHOC vectors. We used a case insensitive PHOC vector with digits and do not include bigrams, following the findings in \cite{sudholt2017}. %We note that the bigrams used in the PHOC vector overlap with, but are not identical with the bigrams we spot; changing this so that they were identical did not improve results. 
 
 
 
-Our network architecture varies slightly from \cite{sudholt2017} and is outlined in Figure \ref{fig:network}. We note the reduction in the number of channels in the layer before the temporal pyramid pooling (TPP) and fully connected layers; this is to reduce the size of featurized images (which are saved after this layer).  We used the Caffe framework \cite{caffe}.
+Our network architecture varies slightly from \cite{sudholt2017} and is outlined in Figure \ref{fig:network}. We note the reduction in the number of channels in the layer before the temporal pyramid pooling (TPP) and fully connected layers (from 512 to 128); this is to reduce the size of featurized images (which are saved after this layer).  We used Sudholts's code available on GitHub (\url{https://github.com/ssudholt/phocnet}), which uses the Caffe framework \cite{caffe}.
 
 %SPP \cite{SPP} is a method of allowing a network with fully connected layers to handle images of arbitrary size. This is accomplished by performing a pooling (max in our implementation) over windows of the image. The first window encompasses the full image and then it proceeds by dividing the windows into 4 at each level down. We use 3 levels for all datasets except the Census Names dataset, which has smaller characters. We use 2 levels for the Census Names dataset to allow the network to operate on smaller images (the SPP won't be creating windows of subpixel size).
 
-TPP is a slight mofication of SPP \cite{SPP}, which is a method of allowing a network with fully connected layers to handle images of arbitrary size. This is accomplished by performing a pooling (max in our implementation) over windows of the image. The first window encompasses the full image and then it proceeds by dividing the windows at each level down. TPP uses the same idea, but only divides windows horizontally as verticle information is not useful once word images are featurized. We use 5 layers (dividing the image into 1, 2, 3, 4, and 5 even windows) for all datasets except the Census Names dataset, which has smaller characters. We use 4 layers for the Census Names dataset to allow the network to operate on smaller images. We additionally modify TPP slightly to handle the corner case of small images such that the windows adjusted to be slightly overlapping at a particular level if a window had no pixels at that level.
+TPP is a slight mofication of spatial pyramid pooling (SPP) \cite{SPP}, which is a method of allowing a network with fully connected layers to handle images of arbitrary size. This is accomplished by performing a pooling (max in our implementation) over windows of the image. The first window encompasses the full image and then it proceeds by dividing the windows at each level down. TPP uses the same idea, but only divides windows horizontally as verticle information is not useful once word images are featurized. We use 5 layers (dividing the image into 1, 2, 3, 4, and 5 even windows). %for all datasets except the Census Names dataset, which has smaller characters. We use 4 layers for the Census Names dataset to allow the network to operate on smaller images. 
+We modify TPP slightly to handle the corner case of small images such that the windows are adjusted to be slightly overlapping at a particular level if a window had no pixels at that level.
 
 \begin{figure}[t]
     \centering
     \includegraphics[width=.98\textwidth]{thesis-phocnet}
-    \caption{Network architecture for embedding images as PHOC vectors. The numbers beneath each layer represent the number of channels. As the network uses spatial pyramid pooling before the fully connected layers, it can accept images of any size.}
+    \caption{Network architecture for embedding images as PHOC vectors. The numbers beneath each layer represent the number of channels. As the network uses temporal pyramid pooling before the fully connected layers, it can accept images of any size. Our archetivture differs from \cite{sudholt2017} only in the number of channels of the last convolutional layer.}
     \label{fig:network}
 \end{figure}
 
@@ -608,66 +613,72 @@ TPP is a slight mofication of SPP \cite{SPP}, which is a method of allowing a ne
 
 In training, we used a batch size of 10, a learning rate of $10^{-4}$, weight decay of 0.00005, and the Adam optimizer \cite{adam}.
 %decay the learning rate so that the learning rate at iteration $i$ is $r_i = r_0 (1 + 0.0001 i)^{-0.75}$ (``inv'' policy in Caffe).
-We train until out validation loss begins to increase (passes a minimum), indicating overfit.
-We then test the validation set MAP for various iterations (including and previous to our stopping point) to find the maximum performance, as MAP generally peaks before the loss reaches its minimum.
+%We train until out validation loss begins to increase (passes a minimum), indicating overfit, or flatlines for a significant number of iterations.
+%We then test the validation set MAP for various iterations to find the maximum performance, as MAP generally peaks differently than the loss.
+We train the model out 240,000 iterations, droping the learning rate by a factor of 10 for the last 10,000 iterations. We note that the model does not appear to overfit at this point, but gains at this point in training are minimal.
+%The final iterations for our trained models are as follows. IAM:X, Bentham:X, Census Names:X.
 %We then begin training with a learning rate of $10^{-5}$ 4000 iterations prior to the MAP peak, stopping again when the validation loss begins to increase. 
 %We then repeat the process of finding the validation MAP peak.
 
-During training, we use a distortion augmentation technique similar to the one described in \cite{wigington2017}. In the augmentation technique each example is distorted by placing control points in grid fashion on the image and then distorting the image by perturbing these control points. This is repeated at finer scales; the control points are more closely aligned and the perturbations smaller. See Figure \ref{fig:augmentation} to see the result of this augmentation on a word image. This augmentation greatly reduces possible overfitting during training as the network never sees the exact same images twice.
-%For the Bentham dataset we started with control points $d^0_{control} = 64$ pixels apart and initial perturbations with a standard deviation of $\sigma^0_{control} = 0.3 d^0_{control}$. We decreased control point distance by a factor of 0.5 and decreased the perturbation standard deviation by a factor of 0.6 for each of 4 levels, so that if $l$ is the level, $d^l_{control} = 64(0.5^{l})$ and $\sigma^l_{control} = 0.3 d^l_{control} (0.6^{l})$.
-For the Bentham dataset we started with control points $d_0 = 64$ pixels apart and initial perturbations with a standard deviation of $\sigma_0 = 0.3 d_0$. We decreased control point distance by a factor of 0.5 and decreased the perturbation standard deviation by a factor of 0.6 for each of 4 levels, so that if $l$ is the level, $d_l = 64(0.5^{l})$ and $\sigma_l = 0.3 d_l (0.6^{l})$.
-Similar to \cite{sudholt2016} we balance word counts in the training set. However, we allow far more instances of each word (more duplicates of images) in the training set due to our improved augmentation technique. We set a goal for the count of each word of $c_{goal} = 0.6c_{max}+0.4c_{mean}$, where $c_{max}$ is the maximum count of any word and $c_{mean}$ is the mean count of all words ($c_{max}$ is capped at 200 to prevent too large of training sets). A set of $c_{goal}$ instances of each word form the training set, including some duplicates when needed.
+We use the same data augmentation as \cite{sudholt2017}, which consists of balancing the training set according to word occurances (by their text) and distorting duplicate instances with random affine transformations.
 
-Each word image is a unique size, however, to train on a GPU all instances in a batch must be the same size. We circumvent this by resizing all word images in a batch to the same size. The height and width composing this size are drawn from Gaussian distributions parametrized by the mean of the height and width of
-the word images of the batch, the standard deviations being $2/3$ the standard deviation of the height and width of the batch images. This is additionally capped at a maximum and minimum height (X,X) and width (X,X).
+%During training, we use a distortion augmentation technique similar to the one described in \cite{wigington2017}. In the augmentation technique each example is distorted by placing control points in grid fashion on the image and then distorting the image by perturbing these control points. This is repeated at finer scales; the control points are more closely aligned and the perturbations smaller. See Figure \ref{fig:augmentation} to see the result of this augmentation on a word image. This augmentation greatly reduces possible overfitting during training as the network never sees the exact same images twice.
+%For the Bentham dataset we started with control points $d_0 = 64$ pixels apart and initial perturbations with a standard deviation of $\sigma_0 = 0.3 d_0$. We decreased control point distance by a factor of 0.5 and decreased the perturbation standard deviation by a factor of 0.6 for each of 4 levels, so that if $l$ is the level, $d_l = 64(0.5^{l})$ and $\sigma_l = 0.3 d_l (0.6^{l})$.
 
-We used a validation set to determine the optimal number of training iterations by observing when QbS word spotting on the validations set peaked in performance.
+%Similar to \cite{sudholt2016} we balance word counts in the training set. However, we allow far more instances of each word (more duplicates of images) in the training set due to our improved augmentation technique. We set a goal for the count of each word of $c_{goal} = 0.6c_{max}+0.4c_{mean}$, where $c_{max}$ is the maximum count of any word and $c_{mean}$ is the mean count of all words ($c_{max}$ is capped at 150 to prevent too large of training sets). A set of $c_{goal}$ instances of each word form the training set, including some duplicates when needed. Also following \cite{sudholt2016}, duplicate images in the dataset have a random affine transformation applied to them. We differ slightly from the implementation \cite{sudholt2016} used, as they did not resize images to capture pixels moved off of the origin images frame by the transformation; we do this as we find it slightly enhances performance.
+
+%Each word image is a unique size, however, to train on a GPU all instances in a batch must be the same size. We circumvent this by resizing all word images in a batch to the same size. The height and width composing this size are drawn from Gaussian distributions parametrized by the mean of the height and width of
+%the word images of the batch, the standard deviations being $2/3$ the standard deviation of the height and width of the batch images. This is additionally capped at a maximum and minimum height (120,1) and width (600,20). This process slows training, as the network must be resized every iteration. To minimize this, it a new batch size is within a threshold (height 15 pixels, width 20 pixels) of the previous batch size, the previous batch size is used. While the network sees slightly less variation is size, it significantly speeds up training.
+
+%We used a validation set to determine the optimal number of training iterations by observing when QbS word spotting on the validations set peaked in performance.
 
 %NOT TRUE ANY MORE? not in training at least
 %To prevent images too small for the network (SPP layer is sensitive to this), any instances smaller than 32 pixels in their smallest dimension are resampled with a larger bounding box. Additionally 
-We scale any images taller than 200 pixels to be 200 pixels tall; this improves efficiency and provides some normalization to the titles found in the Bentham dataset.
+%We scale any images taller than 200 pixels to be 200 pixels tall; this improves efficiency and provides some normalization to the titles found in the Bentham dataset.
 
-\begin{figure}
-    \centering
-    \begin{subfigure}[t]{0.46\textwidth}
-    		\centering
-    		\includegraphics[width=\textwidth]{Captain_unwarped}
-    		\caption{Unwarped image.}
-    	\end{subfigure}
-    	~
-    	\begin{subfigure}[t]{0.46\textwidth}
-    		\centering
-    		\includegraphics[width=\textwidth]{Captain_warped}
-    		\caption{Image warped using augmentation technique from \cite{wigington2017}.}
-    	\end{subfigure}
-    	\caption{Example of data augmentation used in training.}
-    	\label{fig:augmentation}
-\end{figure}
+%\begin{figure}
+%    \centering
+%    \begin{subfigure}[t]{0.46\textwidth}
+%    		\centering
+%    		\includegraphics[width=\textwidth]{Captain_unwarped}
+%    		\caption{Unwarped image.}
+%    	\end{subfigure}
+%    	~
+%    	\begin{subfigure}[t]{0.46\textwidth}
+%    		\centering
+%    		\includegraphics[width=\textwidth]{Captain_warped}
+%    		\caption{Image warped using augmentation technique from \cite{wigington2017}.}
+%    	\end{subfigure}
+%    	\caption{Example of data augmentation used in training.}
+%    	\label{fig:augmentation}
+%\end{figure}
 
 \subsection{Determining Window Widths}\label{detirminewindowsize}
 Because the neural network takes in some context, it is difficult to measure what the optimal sliding window size should be based on visual width.
 Additionally each n-gram is likely to have a different optimal window size. We determine the optimal window size for each n-gram as follows.
 We first compute the MAP for a range of window sizes (stepping 4 pixels), smoothing these results and taking the max. We smooth by averaging a window of 3 steps (average MAP from 3 window sizes), using 2 steps on the edges. For efficiency we cluster all the resulting window sizes (from each n-gram) into 10 clusters using k-means, assigning each n-gram the cluster mean as its width. This allows us to pre-compute PHOC vectors of only 10 window sizes.% for all n-gram.
 
+We note that refining the window size during spotting to maximize the score for a given word image does not give improvements overall.
+
 \subsection{Running}
 
-To prepare for spotting, we save the output of the network up to the spatial pyramid pooling as a featurization of each word image. Then subwindows of this featurization can be passed to the latter part of the network (starting with spatial pyramid pooling) to generate a PHOC vector. As part of the preprocessing we extract PHOC vectors for subwindows with a stride of 4 pixels (step of 1 in the featurized image as the network reduces images by a factor of 4) for the 10 sizes determined using the method in the previous section.
+To prepare for spotting, we save the output of the network before the TPP layer as a featurization of each word image. Then subwindows of this featurization can be passed to the latter part of the network (starting with TPP) to generate a PHOC vector. As part of the preprocessing we extract PHOC vectors for subwindows with a stride of 4 pixels (step of 1 in the featurized image as the network reduces images by a factor of 4) for the 10 sizes determined using the method in the previous section.
 
 %the number of characters being spotted and an estimated character width for the dataset; 37? 33 pixels for the Bentham dataset, 20 for the Census Names dataset.
 %This preprocessing allows us to forgo running the network as we merely need
 
 %For performing QbS, one compares the PHOC vector representing the query word or n-gram to the output of the network. For QbE, the outputs of the network are compared against eachother.
-\cite{sudholt2016} used the Bray-Curtis dissimilarity to compare PHOC vectors (both string and network generated) and we follow the same procedure.
+\cite{sudholt2017} used a cosine similarity to compare PHOC vectors (both string and network generated) and we follow the same procedure. We note that \cite{sudholt2016} uses the Bray-Curtis similarity, which yields inferior results with our implementation. We believe the change from SPP to TPP is the reason.
 %, however, we found a dot-product similarity, normalizing network outputs, worked better for our implementation.
 %The score for a subwindow is the normalized dot product between the query PHOC vector (the network output of the query image or the actual PHOC vector of the query word) and the network's generated PHOC vector for that subwindow.
-To reduce computation, we only return the top two highest scored subwindows of a word image which are at least 40\% of the estimated character width apart. Here, we assume an n-gram never occurs more than twice in a word, which is a reasonable assumption for English.
+To reduce computation, we only return the top two highest scored subwindows of a word image which are at least 40\% of the estimated character width (window size divided by number of characters) apart. Here, we assume an n-gram never occurs more than twice in a word.%, which is a reasonable assumption for English.
 
 
-We tried refining top scoring subwindows by slightly adjusting their boundaries and re-scoring, however, we did not see a significant improvement. %and the computation cost was prohibitive (as the featurization of the refined subwindows was not precomputed).
+%We tried refining top scoring subwindows by slightly adjusting their boundaries and re-scoring, however, we did not see a significant improvement. %and the computation cost was prohibitive (as the featurization of the refined subwindows was not precomputed).
 
 \subsection{Combining QbE Results}\label{combine}
 
-We perform iterative aggregation of QbE results by merging results from consecutive queries. To do this we check for potential overlapping spottings, if there is an overlap (of at least 20\%) we discard the result with the worse/higher score. This, merging by taking the better score, follows what \cite{Zagoris2015} found to be most effective when combining full word spotting results. As further justification, one can think of each n-gram or word as having several prototypical ways it can appear (e.g.~an `a' appearing with or without the tail on top, `\textsf{a}' or `{\fontfamily{qag}\selectfont\footnotesize a}'). By selecting the best/minimum score you select the score computed on the exemplar image with the prototype closest to the instance of interest's prototype.
+We perform iterative aggregation of QbE results by merging results from consecutive queries. To do this we check for potential overlapping spottings, if there is an overlap (of at least 20\%) we discard the result with the worse score. This, merging by taking the better score, follows what \cite{Zagoris2015} found to be most effective when combining full word spotting results. As further justification, one can think of each n-gram or word as having several prototypical ways it can appear (e.g.~an `a' appearing with or without the tail on top, `\textsf{a}' or `{\fontfamily{qag}\selectfont\footnotesize a}'). By selecting the best score you select the score computed on the exemplar image with the prototype closest to the instance of interest's prototype.
 
 In the following section we show results of this network's performance on unigrams, bigrams, trigrams and whole words.
 
@@ -691,7 +702,7 @@ Full word spotting is performed as described in \cite{sudholt2016}, where the ne
   Method & QbS & QbE & QbS & QbE & QbS & QbE\\
   \hline		
   %Old network & 0.755 & 0.683 & 0.762 & 0.811 & 0.525 & 0.511  %results with msfNoLRN/sig-bray IAM:208000  BEN:160000 NAMES(less):144000
-  Our network  &  0.X & 0.X  &  0.X & 0.X  &  0.559 & 0.561  %results with new_phocnet(TPP) IAM:X  BEN:X NAMES(less):fine37000
+  Our network  &  0.892 & 0.833  &  0.926 & 0.971  &  0.758 & 0.858  %results with phocnetSkinny(Adam,dot) IAM:124000  BEN:X NAMES(less):124000
   %bentham:ben_fixed_corpus.gtp
   \\
   PHOCNet\cite{sudholt2016} & 0.830 & 0.725 & - & - & - & - \\
@@ -702,26 +713,17 @@ Full word spotting is performed as described in \cite{sudholt2016}, where the ne
 \caption{MAP for full word spotting results, reported for both query-by-string (QbS) and query-by-example (QbE). Results on Census Names uses network with SPP depth of 2 instead of 3. Using 3 yields QbS:0.525 and QbE:0.511.}
 \label{tab:wordspottingresults}
 \end{table}
-%fixed_corpus QbS: 0.592938 QbE mAP: 0.749275
-%,this is with Bray-Curtis QbS mAP: 0.32189  QbE mAP: 0.642274
-%cattss_c_corpus QbS mAP: 0.582461   QbE mAP: 0.720274
-%nn_valid QbS mAP: 0.79995  QbE mAP: 0.922255
-%nn_gwnb_valid QbS mAP: 0.807672  QbE mAP: 0.914204
-%Did we overfit to our validation set? Possibly nn_valid has some of nn_gwnb_train
-%we trained on nn_gwnb_train (?),
-%retraining on nn_train
 
-%cattss_c_train QbS mAP: 0.76686  QbE mAP: 0.822692
+%We first note that our model significantly under performs \cite{sudholt2016} on the IAM dataset (by 7.5\% on QbS and 4.2\% on QbE). We were unable to reproduce their results, mimicking their model, and the architecture changes we make we expected would have a negative effect on performance. It is likely a better word spotting model could be produced, but this was not the the focus of our work.
+%It is clear that the Census Names dataset is significantly more challenging than the other datasets, however, having above 50\% MAP indicates the network is learning the task to some degree.
+It can be seen that we underperform compared to \cite{sudholt2017}. This is to be expected as we have reduced the CNN model capcity.
 
-%Trying with sigmoind+bray-curtis ...
-
-We first note that our model significantly under performs \cite{sudholt2016} on the IAM dataset (by 7.5\% on QbS and 4.2\% on QbE). We were unable to reproduce their results, mimicking their model, and the architecture changes we make we expected would have a negative effect on performance. It is likely a better word spotting model could be produced, but this was not the the focus of our work.
-It is clear that the Census Names dataset is significantly more challenging than the other datasets, however, having above 50\% MAP indicates the network is learning the task to some degree.
+As a note, it is not always meaningful to compare QbS scores to QbE scores, as QbS represents a mean over text queries, one for each possible word label and QbE represents a mean over instance queries, one for each instance of a word in the dataset.
 
 \subsection{Subword Spotting}
 
-We use our sliding window method to evaluate spotting uni-, bi- and trigrams on the Betham dataset. We used our ground truth for the testing portion of the Bentham and Census Names datasets which have character boundaries. We considered a spotting to be correct if its window overlapped with the desired n-gram's boundaries by 0.5 of the largest of the two's boundaries and there were no other spottings overlapping with the n-gram more. 
-We spotted each letter of the alphabet, the 100 most frequent bigrams (in the English language), and the 300 most frequent trigrams. Each of these n-grams were spotted using QbS, if there was at least one instance of it in the testing set, and all examples of these n-grams in the dataset was used as a QbE query, if there are at least two instances of the n-gram.
+We use our sliding window method to evaluate spotting uni-, bi- and trigrams on the Betham dataset. We used our ground truth for the testing portion of the Bentham and Census Names datasets which have character boundaries. We considered a spotting to be correct if its window overlapped with the desired n-gram's boundaries by 0.5 of the largest of the two's boundaries, and there were no other spottings overlapping with the n-gram more. 
+We spotted each letter of the alphabet, the 100 most frequent bigrams (in the English language), and the 300 most frequent trigrams. Each of these n-grams were spotted using QbS, if there was at least one instance of it in the testing set, and all examples of these n-grams in the dataset was used as a QbE query, if there are at least two instances of the n-gram in the test set.
 Results can be seen in Table \ref{tab:subwordspotting}.
 Some qualitative results are show in Figure \ref{TODO}. several (3) n-grams on several words, colored boxes, 1,2,3 seperate. 3 words which share high activations for 3 ngrams
 %We show QbS results for both using all n-grams (full) and those n-grams used for QbE (same).
@@ -736,60 +738,92 @@ In section \ref{detirminewindowsize} we explained how we found the window sizes 
 
 \begin{table}
 \centering
-\begin{tabular}{| l | c c c c | c c c c |}
+\begin{tabular}{| l | c c | c c |}
   \hline
    %& \multicolumn{2}{c|}{Bentham} & \multicolumn{2}{c|}{Census Names}\\
    %& QbS & QbE & QbS & QbE \\
-   & \multicolumn{4}{c|}{Bentham} & \multicolumn{4}{c|}{Census Names}\\
-   &     & weighted & n-gram & instance &     & weighted & n-gram & instance \\
-   & QbS & QbS      & QbE    & QbE      & QbS & QbS      & QbE    & QbE \\
+   & \multicolumn{2}{c|}{Bentham} & \multicolumn{2}{c|}{Census Names}\\
+   %&     & weighted & n-gram & instance &     & weighted & n-gram & instance \\
+   & QbS  & QbE    &  QbS &  QbE    \\
   %vvv FIXED vvvv
-  \hline %FIX(sig-bray-curtis precomp) NoLRN, 0.5 thresh, 160000 full QbS  same set,  (Bray-Curtis turned on...), NAMES with less-SPP
-  Unigram & 0.460 & X & X & 0.395  & 0.316 & 0.439 & 0.188 & 0.280\\ %these are all running (corpus_original.txt)
-  Bigram  & 0.541 & X & X & 0.435  & 0.296 & 0.387 & 0.185 & 0.246\\ 
-  Trigram & 0.481 & X & X & 0.444  & 0.204 & 0.271 & 0.121 & 0.212\\ 
-  \hline %FIX(sig-bray-curtis precomp) NoLRN custom widths, 0.5 thresh, full QbS  same set,  (Bray-Curtis turned on...), NAMES with less-SPP
-  Unigram & 0.496 & 0.577 & 0.320 & 0.382  & 0.335 & 0.438 & 0.183 & 0.274\\
-  Bigram  & 0.567 & 0.632 & 0.363 & 0.431  & 0.280 & 0.375 & 0.169 & 0.223\\ 
-  Trigram & 0.496 & 0.572 & 0.350 & 0.441  & 0.191 & 0.262 & 0.112 & 0.204\\ 
-  \hline %new phocnet
-  Unigram &  0.X & 0.X & 0.X & 0.X  & 0.X & 0.X & 0.X & 0.X \\
-  Bigram  &  0.X & 0.X & 0.X & 0.X  & 0.X & 0.X & 0.X & 0.X \\
-  Trigram &  0.X & 0.X & 0.X & 0.X  & 0.X & 0.X & 0.X & 0.X \\
+  %\hline %FIX(sig-bray-curtis precomp) NoLRN, 0.5 thresh, 160000 full QbS  same set,  (Bray-Curtis turned on...), NAMES with less-SPP
+  %Unigram & 0.460 & X & X & 0.395  & 0.316 & 0.439 & 0.188 & 0.280\\ %these are all running (corpus_original.txt)
+  %Bigram  & 0.541 & X & X & 0.435  & 0.296 & 0.387 & 0.185 & 0.246\\ 
+  %Trigram & 0.481 & X & X & 0.444  & 0.204 & 0.271 & 0.121 & 0.212\\ 
+  %\hline %FIX(sig-bray-curtis precomp) NoLRN custom widths, 0.5 thresh, full QbS  same set,  (Bray-Curtis turned on...), NAMES with less-SPP
+  %Unigram & 0.496 & 0.577 & 0.320 & 0.382  & 0.335 & 0.438 & 0.183 & 0.274\\
+  %Bigram  & 0.567 & 0.632 & 0.363 & 0.431  & 0.280 & 0.375 & 0.169 & 0.223\\ 
+ % Trigram & 0.496 & 0.572 & 0.350 & 0.441  & 0.191 & 0.262 & 0.112 & 0.204\\ 
+ 
+  %\hline %phocnetSkinny no custom
+  %Fixed character width & & & & & \\
+  %& Unigram &  0.437 &   0.471  & 0.385 &  0.322 \\
+  %& Bigram  &  0.490 &   0.531  & 0.376 &  0.293 \\
+  %& Trigram &  0.483 &   0.560  & 0.286 &  0.283 \\
+  \hline %phocnetSkinny with custom widths
+  %Maximized n-gram widths & & & & & \\
+  Unigram &  0.476 &  0.371  & 0.388 &  0.138 \\
+  Bigram  &  0.498 &  0.523  & 0.370 &  0.270 \\
+  Trigram &  0.499 &  0.556  & 0.264 &  0.277 \\
   \hline 
 \end{tabular}
 \caption{MAP for subword spotting results on the Bentham and Census Names datasets, reported for query-by-string (QbS), QbS weighted by n-gram frequency, query-by-example (QbE) by n-gram (comparable to QbS), and QbE by instance (comparable to weighed QbS).}
 \label{tab:subwordspotting}
 \end{table}
 
-We notice in Table \ref{tab:subwordspotting} that trigrams have a worse performance compared to bigrams on the Bentham dataset, and on the Census names, unigrams out perform bigrams and trigrams. This immediately seems counterintuitive, as trigrams and bigrams have more context than unigrams. However, n-grams which occur less frequently tend to produce greater error, and the higher n is, the less the n-gram occurs. 
-This is demonstrated in Figure \ref{fig:remove}, where n-grams which occur infrequently are removed from our testing set and the MAP increases. This is potentially because there are less examples seen in training (training is balanced at a word, not n-gram, level).
+In Figures \ref{fig:benthamsub} and \ref{fig:namessub} we show, for the Bentham and Census Names datasets, the AP of n-grams individually, arranged in descending order of frequency. While there is a general trend of more frequent n-grams being spotted better, there is a wide variance indicating the distinctiveness of character shape likely plays an important role. 
+
+We notice in Table \ref{tab:subwordspotting} that on the Census names, unigrams out perform bigrams and trigrams. This immediately seems counterintuitive, as trigrams and bigrams have more context than unigrams. However, n-grams which occur less frequently tend to produce greater error, and the higher n is, the less the n-gram occurs. 
+This can be seen in Figure \ref{fig:namessub} and we additionally demonstrated it in Figure \ref{fig:remove}, where n-grams which occur infrequently are removed from our testing set and the MAP increases. This is potentially because there are less examples seen in training (training is balanced at a word, not n-gram, level).
 
 
 \begin{figure}
     \centering
     \includegraphics[width=.75\textwidth]{removengrams}
-    \caption{MAP for QbS subword spotting results on the Bentham and Census Names datasets, where we only use n-grams in our query set which have an occurrence count above a threshold (in the testing sets). MAP increases, demonstrating less frequent n-grams are more difficult. Only trigrams are shown for the Bentham dataset due to the high frequency of all unigrams and bigrams.}
+    \caption{MAP for QbS subword spotting results on the Census Names datasets where we only use n-grams in our query set which have an occurrence count above a threshol1d (in the testing sets). MAP increases, demonstrating the least frequent n-grams are more difficult. Bigrams are not shown as all occur at least 10 times. %Only trigrams are shown for the Bentham dataset due to the high frequency of all unigrams and bigrams.
+    }
     \label{fig:remove}
 \end{figure}
 
-In Tables \ref{fig:unigram}, \ref{fig:??}, and \ref{fig:??} we show the (M)AP for each n-gram individually. 
-%TODO Change to figures
-\begin{table}
+
+
+\begin{figure}
 \centering
-\begin{tabular}{| r | c c | c c |}
-  \hline
-  & \multicolumn{2}{c|}{Bentham} & \multicolumn{2}{c|}{Census Names}\\
-  \hline
-  unigram & QbS & QbE & QbS & QbE\\
-  \hline 
-  a & X & X  &   X & X\\
-  ...\\
-  \hline 
-\end{tabular}
-\caption{AP for QbS and QbE on each unigram.}
-\label{tab:unigram}
-\end{table}
+\begin{subfigure}{.99\textwidth}
+  \centering
+  \includegraphics[width=.75\linewidth]{benthamUniSpot}
+  \caption{Unigrams}
+  \label{fig:benthamUniSpot}
+\end{subfigure}
+\\
+\begin{subfigure}{.99\textwidth}
+  \centering
+  \includegraphics[width=.99\linewidth]{benthamBiSpot}
+  \caption{Bigrams}
+  \label{fig:benthamBiSpot}
+\end{subfigure}
+\caption{Results for QbS subword spotting on the Bentham dataset. N-grams are arrange in descending order of frequency in test set. Trigrams are not displayed for space reasons.}
+\label{fig:benthamsub}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.99\textwidth}
+  \centering
+  \includegraphics[width=.75\linewidth]{namesUniSpot}
+  \caption{Unigrams}
+  \label{fig:namesUniSpot}
+\end{subfigure}
+\\
+\begin{subfigure}{.99\textwidth}
+  \centering
+  \includegraphics[width=.99\linewidth]{namesBiSpot}
+  \caption{Bigrams}
+  \label{fig:namesBiSpot}
+\end{subfigure}
+\caption{Results for QbS subword spotting on the Census Names dataset. N-grams are arrange in descending order of frequency in test set. Trigrams are not displayed for space reasons.}
+\label{fig:namessub}
+\end{figure}
 
 %~/caffe/scripts/cnnspp_spotter/cnnspp_spotter models/phocnet_msfNoLRN_featurizer.prototxt models/phocnet_less_embedderSig.prototxt  net/phocnet_lessNoLRN_iter_144000.caffemodel 1 0.25 ./seg_names_corpus_mod.gtp NAME_COLUMNS/ customWidths.txt manual_segmentations_train_val.csv = ../alphabet.txt ../top100_bigrams_in_freq_order.txt ../top300_trigrams_in_freq_order.txt
 %~/caffe/scripts/cnnspp_spotter/cnnspp_spotter models/phocnet_msfNoLRN_featurizer.prototxt models/phocnet_msf_embedderSig.prototxt net/phocnet_msfNoLRN_iter_160000.caffemodel 2 0.25 ben_fixed_corpus.gtp page_images/ customWidths.txt manual_segmentations ! ../alphabet.txt 50 1 1 > respotUni_oct10.txt
@@ -797,7 +831,7 @@ In Tables \ref{fig:unigram}, \ref{fig:??}, and \ref{fig:??} we show the (M)AP fo
 \subsection{Respotting Subwords}
 
 We had hoped to use approved spottings as new exemplars for an iterative CAT system. To verify the validity of this approach we created an experiment where we continually refine spotting results by spotting with new exemplars and merging the results (see Section \ref{combine}). We show the MAP at each iteration out to 50 iterations in Figures \ref{fig:unigram_respot}, \ref{fig:bigram_respot}, and \ref{fig:trigram_respot}, for uni-, bi-, and trigrams respectively. The first exemplar for an n-gram was selected as the middle score of positive instances from a QbS spotting. The following exemplars were the middle score of the previous QbE spotting's positive instances. We choose to do this as there is a variety of qualities of exemplar images. Taking the middle score should roughly give us a middle quality. The overall quality of MAP is higher in these experiments as we pruned all n-grams which occur less than 100 times, which tend to be the more difficult instances.
-We can see that the iterative refinement leads to better results compared to the average of all the QbE scores. It appears that aggregating multiple queries tends to stabilized the bad queries, though it does not out perform QbS (except with trigrams) or individual good QbE queries (as the spikes in performance are not at the end).
+We can see that the iterative refinement leads to better results compared to the average of all the QbE scores. It appears that aggregating multiple queries tends to stabilized the bad queries.%, though it does not out perform QbS (except with trigrams) or individual good QbE queries (as the spikes in performance are not at the end).
 
 \begin{figure}
     \centering
@@ -827,9 +861,13 @@ We can see that the iterative refinement leads to better results compared to the
 \chapter{Applications of Subword Spotting}\label{applications}
 
 \section{Manual Transcription Assistant}
-Frequently when a person is transcribing a handwritten document they come across a handwritten word they do not recognize. A common solution is to scan the document for similar shapes as what they see in the difficult word. If the transcriber can find the same letters, written by the same author, in the context of a word they do recognize, the transcriber can identify the letters, thus aiding in the transcription of a difficult word. However, the same letters do not always occur on the same page, or may be difficult to find. QbE subword spotting provides a way to automate this scanning task. The user need only to select the portion of the difficult word they wish to query with and the system can return a ranked list of results.
-We are able to achieve real-time results over X pages by using word segmentations and pre-computing PHOC vectors for a set of window sizes () and X  pixel stride, which the users query is snapped to. 
-Figure ?? demonstrates this process. First the trouble characters are selected and the bounding box is snapped to the precomputed one. This PHOC vector is compared against all others of the same window size. The ranked list is shown to the user both as a list and by highlighting the results with the color intensity representing the strength of the match.
+Frequently when a person is transcribing a handwritten document they come across a handwritten word they do not recognize. A common solution is to scan the document for similar shapes which are present in the difficult word. If the transcriber can find the same letters, written by the same author, in the context of a word they do recognize, the transcriber can identify the letters, thus aiding in the transcription of a difficult word. 
+However, the same letters may be time consuming to find due to the density of the document and rarity of the characters. QbE subword spotting provides a way to automate this scanning task. The user need only to select the portion of the difficult word they wish to query with and the system can return a ranked list of results.
+We are able to achieve real-time results over a handful of pages by using word segmentations and pre-computing PHOC vectors for a set of window sizes (-) and 16  pixel stride, which the users query is snapped to. 
+
+Figure ?? demonstrates how the assistant works. First the trouble characters are selected and the bounding box is snapped to the precomputed one. This PHOC vector is compared against all others of the same window size. The ranked list is shown to the user both as a list and by highlighting the results with the color intensity representing the strength of the match.
+
+This assistant system is a proof of concept and no testing was done on it. Its performanced is directly related to QbE performance reported in Table \ref{tab:subwordspotting}.
 
 %Speed considerations, we optimize, but work is being done on fast CNN execution
 
@@ -840,7 +878,7 @@ We identify a list of X suffixes and evaluate spotting these.
  The window size for a given suffix query is found by identifying all n-grams we have window estimates for (see Section \ref{detirminewindowsize}) which cmpose the query and averaging their window widths according to which characters they contribute to.
 We are able to make the assumption that the spottings only occur at the end of the word which reduces the number of possible subwindows significantly. We additionally don't need to consider window overlap in out evaluation.
 
-We evaluate on the IAM and Census Names datasets as these have a reasonable number of instances of our suffixes. The results are presented in Table \ref{tab:suffixspottingresults}. We additionally inves...
+We evaluate on the IAM and Census Names datasets as these have a reasonable number of instances of our suffixes. The results are presented in Table \ref{tab:suffixspottingresults}. We additionally show the AP for the suffixes individually in Figures \ref{fig:IAM_suffix} and \ref{fig:names_suffix}.
 
 
 
@@ -852,8 +890,8 @@ We evaluate on the IAM and Census Names datasets as these have a reasonable numb
   \hline			
   %oldMAP across queries & 0.481  & 0.271\\
   %oldMAP across instances & 0.581 & 0.338\\ 
-  MAP across queries & 0.X  & 0.X \\
-  MAP across instances & 0.X & 0.X \\
+  MAP across queries & 0.550  & 0.297 \\
+  MAP across instances & 0.660 & 0.403 \\
   \hline  
 \end{tabular}
 \caption{MAP for suffix spotting results using QbS.}
@@ -861,22 +899,19 @@ We evaluate on the IAM and Census Names datasets as these have a reasonable numb
 \end{table}
 
 \begin{figure}
-\centering
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=.99\linewidth]{suffix_IAM_ap}
-  \caption{A subfigure}
-  \label{fig:sub1}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=.99\linewidth]{suffix_IAM_count}
-  \caption{A subfigure}
-  \label{fig:sub2}
-\end{subfigure}
-\caption{A figure with two subfigures}
-\label{fig:test}
+    \centering
+    \includegraphics[width=.75\textwidth]{suffix_IAM_ap}
+    \caption{Suffix spotting AP of individual suffixes for the IAM dataset. Arranged in descending order of frequency in test set.}
+    \label{fig:IAM_suffix}
 \end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.75\textwidth]{suffix_names_ap}
+    \caption{Suffix spotting AP of individual suffixes for The Census Names dataset. Arranged in descending order of frequency in test set.}
+    \label{fig:census_suffix}
+\end{figure}
+
 
 
 \section{Transcription}
