@@ -1,64 +1,46 @@
 This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: byumsphd-example.aux
-White space in argument---line 199 of file byumsphd-example.aux
- : \citation{sudholt2016
- :                       sudholt2017}
-I'm skipping whatever remains of this command
-White space in argument---line 200 of file byumsphd-example.aux
- : \citation{sudholt2016
- :                       sudholt2017}
-I'm skipping whatever remains of this command
 The style file: plainnat.bst
 Database file #1: bib.bib
-I was expecting a `,' or a `}'---line 441 of file bib.bib
- : 
- : booktitle={Proceedings of ICLR},
-(Error may have been on previous line)
-I'm skipping whatever remains of this entry
-Warning--empty title in adam
-Warning--empty booktitle in adam
-Warning--empty year in adam
-Warning--empty year in adam
 You've used 37 entries,
             2773 wiz_defined-function locations,
-            843 strings with 12778 characters,
-and the built_in function-call counts, 20309 in all, are:
-= -- 1796
+            845 strings with 12841 characters,
+and the built_in function-call counts, 20323 in all, are:
+= -- 1801
 > -- 1258
 < -- 24
 + -- 420
 - -- 383
-* -- 1673
-:= -- 3030
-add.period$ -- 141
+* -- 1667
+:= -- 3035
+add.period$ -- 143
 call.type$ -- 37
-change.case$ -- 237
+change.case$ -- 238
 chr.to.int$ -- 37
-cite$ -- 78
-duplicate$ -- 939
-empty$ -- 1630
+cite$ -- 74
+duplicate$ -- 940
+empty$ -- 1632
 format.name$ -- 438
-if$ -- 4397
+if$ -- 4404
 int.to.chr$ -- 1
 int.to.str$ -- 1
 missing$ -- 36
-newline$ -- 214
+newline$ -- 216
 num.names$ -- 150
-pop$ -- 504
+pop$ -- 498
 preamble$ -- 1
 purify$ -- 201
 quote$ -- 0
-skip$ -- 729
+skip$ -- 732
 stack$ -- 0
 substring$ -- 676
-swap$ -- 175
+swap$ -- 176
 text.length$ -- 13
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 407
-warning$ -- 4
+warning$ -- 0
 while$ -- 150
 width$ -- 0
-write$ -- 529
-(There were 3 error messages)
+write$ -- 534

@@ -724,12 +724,13 @@ As a note, it is not always meaningful to compare QbS scores to QbE scores, as Q
 
 We use our sliding window method to evaluate spotting uni-, bi- and trigrams on the Betham dataset. We used our ground truth for the testing portion of the Bentham and Census Names datasets which have character boundaries. We considered a spotting to be correct if its window overlapped with the desired n-gram's boundaries by 0.5 of the largest of the two's boundaries, and there were no other spottings overlapping with the n-gram more. 
 We spotted each letter of the alphabet, the 100 most frequent bigrams (in the English language), and the 300 most frequent trigrams. Each of these n-grams were spotted using QbS, if there was at least one instance of it in the testing set, and all examples of these n-grams in the dataset was used as a QbE query, if there are at least two instances of the n-gram in the test set.
-Results can be seen in Table \ref{tab:subwordspotting}.
-Some qualitative results are show in Figure \ref{TODO}. several (3) n-grams on several words, colored boxes, 1,2,3 seperate. 3 words which share high activations for 3 ngrams
-%We show QbS results for both using all n-grams (full) and those n-grams used for QbE (same).
 
-%Effect of window size %TODO
-In section \ref{detirminewindowsize} we explained how we found the window sizes we used. We show in Figure \ref{fig:windowsizes} the effect of changing the window size for some selected n-grams.
+Owning to the fact that a single word may have multiple instances of an n-gram we align the spotting results to their nearest instance. If multiple spottings claim the same instance and are both overlapping enough to be considered a positive match, we only keep the one overlapping the most.
+If an n-gram instance is not claimed by any spotting, we introduce a psuedo-spotting result that has the maximum spotting score to include the n-gram instance in the MAP calculations.
+
+Results can be seen in Table \ref{tab:subwordspotting}.
+Some qualitative results are show in Figure \ref{fig:qualSpot}.
+%We show QbS results for both using all n-grams (full) and those n-grams used for QbE (same).
 
 
 %Trigrams, having the most context, perform the best by a wide margin. Bigrams and unigrams have very comparable performance. Consistently QbS outperforms QbE, we expect this is because the learned representations of the n-grams (used in QbS) are more invariant than individual n-gram instances, which can have large variation in their context and form.
@@ -762,14 +763,37 @@ In section \ref{detirminewindowsize} we explained how we found the window sizes 
   %& Trigram &  0.483 &   0.560  & 0.286 &  0.283 \\
   \hline %phocnetSkinny with custom widths
   %Maximized n-gram widths & & & & & \\
-  Unigram &  0.476 &  0.371  & 0.388 &  0.138 \\
-  Bigram  &  0.498 &  0.523  & 0.370 &  0.270 \\
-  Trigram &  0.499 &  0.556  & 0.264 &  0.277 \\
+  %Unigram &  0.476 &  0.371  & 0.388 &  0.138 \\
+  %Bigram  &  0.498 &  0.523  & 0.370 &  0.270 \\
+  %Trigram &  0.499 &  0.556  & 0.264 &  0.277 \\
+  %after fix
+  Unigram &  0.654 &  0.511  & 0.480 &  0.340 \\
+  Bigram  &  0.549 &  0.569  & 0.375 &  0.294 \\
+  Trigram &  0.522 &  0.571  & 0.271 &  0.285 \\
   \hline 
 \end{tabular}
-\caption{MAP for subword spotting results on the Bentham and Census Names datasets, reported for query-by-string (QbS), QbS weighted by n-gram frequency, query-by-example (QbE) by n-gram (comparable to QbS), and QbE by instance (comparable to weighed QbS).}
+\caption{MAP for subword spotting results on the Bentham and Census Names datasets, reported for query-by-string (QbS) and, query-by-example (QbE).}
 \label{tab:subwordspotting}
 \end{table}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.75\textwidth]{qualSpot}
+    \caption{Qualitative results for QbS subword spotting on the Bentham Dataset. Spottings show represent the top result for the various n-gram queries. We selected some of the better n-grams (`n', `pr', `sed') and worse n-grams (`z', `et', `tte') by MAP.
+    }
+    \label{fig:qualSpot}
+\end{figure}
+
+%Effect of window size
+In Section \ref{detirminewindowsize} we explained how we found the window sizes we used. We show in Figure \ref{fig:windowsizes} the change in MAP as the window size varies for some selected n-grams. As can be seen by the peaks in the data, performance can be dependent on having an optimal window size. We cannot assume however that this is simply becuse the n-grams are becoming fully enclosed in the window; for example, the n-gram ``ery'' (maroon x) has two approximately equal peaks for widths 100 pixels apart. Thus simply measuring the width of the n-grams may yield non-optimal window sizes, we must test the actuall performance as done in Section \ref{detirminewindowsize}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.98\textwidth]{windowsizes}
+    \caption{This shows the QbS MAP for 18 n-grams on the Bentham dataset for varying sliding window sizes.
+    }
+    \label{fig:windowsizes}
+\end{figure}
 
 In Figures \ref{fig:benthamsub} and \ref{fig:namessub} we show, for the Bentham and Census Names datasets, the AP of n-grams individually, arranged in descending order of frequency. While there is a general trend of more frequent n-grams being spotted better, there is a wide variance indicating the distinctiveness of character shape likely plays an important role. 
 
@@ -831,7 +855,7 @@ This can be seen in Figure \ref{fig:namessub} and we additionally demonstrated i
 \subsection{Respotting Subwords}
 
 We had hoped to use approved spottings as new exemplars for an iterative CAT system. To verify the validity of this approach we created an experiment where we continually refine spotting results by spotting with new exemplars and merging the results (see Section \ref{combine}). We show the MAP at each iteration out to 50 iterations in Figures \ref{fig:unigram_respot}, \ref{fig:bigram_respot}, and \ref{fig:trigram_respot}, for uni-, bi-, and trigrams respectively. The first exemplar for an n-gram was selected as the middle score of positive instances from a QbS spotting. The following exemplars were the middle score of the previous QbE spotting's positive instances. We choose to do this as there is a variety of qualities of exemplar images. Taking the middle score should roughly give us a middle quality. The overall quality of MAP is higher in these experiments as we pruned all n-grams which occur less than 100 times, which tend to be the more difficult instances.
-We can see that the iterative refinement leads to better results compared to the average of all the QbE scores. It appears that aggregating multiple queries tends to stabilized the bad queries.%, though it does not out perform QbS (except with trigrams) or individual good QbE queries (as the spikes in performance are not at the end).
+We can see that the iterative refinement leads to better results compared to the average of all the QbE scores for unigrams and bigrams. %It appears that aggregating multiple queries tends to stabilized the bad queries.%, though it does not out perform QbS (except with trigrams) or individual good QbE queries (as the spikes in performance are not at the end).
 
 \begin{figure}
     \centering
@@ -874,9 +898,9 @@ This assistant system is a proof of concept and no testing was done on it. Its p
 \section{Prefix/Suffix Spotting}
 Word spotting is a technique that can be used to find certain words in a corpus of handwritten documents. However, there are certain situations where one may want to search for a partial word, such as a prefix or suffix. For example, if one wanted to find names of towns in a corpus of German documents, spotting the suffix ``-berg'' should return many town names.
 
-We identify a list of X suffixes and evaluate spotting these. 
- The window size for a given suffix query is found by identifying all n-grams we have window estimates for (see Section \ref{detirminewindowsize}) which cmpose the query and averaging their window widths according to which characters they contribute to.
-We are able to make the assumption that the spottings only occur at the end of the word which reduces the number of possible subwindows significantly. We additionally don't need to consider window overlap in out evaluation.
+We identify a list of 41 suffixes and evaluate spotting the suffixes present from this list in the IAM and Census Names dataset. 
+ The window size for a given suffix query is found by identifying all n-grams we have window estimates for (see Section \ref{detirminewindowsize}) which compose the query and averaging their window widths according to which characters they contribute to.
+We are able to make the assumption that the spottings only occur at the end of the word which reduces the number of possible subwindows significantly. We additionally don't need to consider window overlap in our evaluation as the goal is whole word retrieval.
 
 We evaluate on the IAM and Census Names datasets as these have a reasonable number of instances of our suffixes. The results are presented in Table \ref{tab:suffixspottingresults}. We additionally show the AP for the suffixes individually in Figures \ref{fig:IAM_suffix} and \ref{fig:names_suffix}.
 
@@ -908,22 +932,25 @@ We evaluate on the IAM and Census Names datasets as these have a reasonable numb
 \begin{figure}
     \centering
     \includegraphics[width=.75\textwidth]{suffix_names_ap}
-    \caption{Suffix spotting AP of individual suffixes for The Census Names dataset. Arranged in descending order of frequency in test set.}
-    \label{fig:census_suffix}
+    \caption{Suffix spotting AP of individual suffixes for the Census Names dataset. Arranged in descending order of frequency in test set.}
+    \label{fig:names_suffix}
 \end{figure}
 
 
 
 \section{Transcription}
 
-Subword spotting can also be used to transcribe words. There are several ways one could do this, but one of the key aspects that makes subword spotting for transcription appealing is that while subword spotting naturally yields partial transcriptions, matching against a lexicon can constrain the possible full transcriptions resulting from a partial one. We aim towards CAT to better leverage the possibility of user feedback on processes leading to the full transcription.
+Subword spotting can also be used to transcribe words. There are several ways one could do this, but one of the key aspects that makes subword spotting for transcription appealing is that while subword spotting naturally yields partial transcriptions, matching against a lexicon can constrain the full transcription from a partial one. We aim towards a CAT model to better leverage the possibility of user feedback on processes leading to the full transcription.
 
 We describe 4 transcription methods in this section and the results in the following section.
 For all methods we used a lexicon. Our primary lexicon consists of 108,028 words and 6,939 names, as described in Chapter \ref{datasets}.
 
 \subsection{Baseline: CAT Through PHOC Vectors}
+%Knowledge::Corpus::phocTrans
+We use a nearest-neighbors approach as a baseline to transcription using our spotting network, similar to what \cite{krishnan2016} do for word recognition. The PHOC vectors generated by the network on word image are compared to the PHOC vectors of the  words in our lexicon using a cosine similarity and the top N matches from the lexicon are returned. This does not use subword spotting, and thus provides a baseline for transcription using our PHOCNet based architecture.
 
-We use a nearest-neighbors approach as a baseline to transcription using our spotting network, similar to what \cite{krishnan2016} do for word recognition. The PHOC vectors generated by the network on word image are compared to the PHOC vectors of the  words in our lexicon using the Bray-Curtis dissimilarity and the top N matches from the lexicon are returned. This does not use subword spotting, and thus provides a baseline for transcription using our PHOCNet based architecture.
+To compare it to the other CAT methods, we assume a transcription for a word image is performed by a user selecting the correct transcription from the top 7 returned lexicon words. If the correct transcription is not returned in the top 7, it must be manually transcribed.
+To be more efficient, we only return a certain portion of the words to be transcribed in this manner (the remainder needing manual transcription). This portion is selected by ordering words according to the mean score of the top 7 lexical matches.
 
 
 
@@ -940,24 +967,24 @@ We use a nearest-neighbors approach as a baseline to transcription using our spo
     \caption{An overview of the CAT system which uses approved subword spottings. The arrows represent the flow of data.}
     \label{fig:flow}
 \end{figure}
-An overview of the CAT system using approved subword spotting can be seen in Figure \ref{fig:flow}. Initially the system spots character n-grams in the corpus (word images). These results are pooled and sent to users in batches. After the user identifies correct/incorrect spottings, the spottings' text/label and positions in the word images are used to create regular expressions which is used to query a lexicon for a list of all words matching the constraints set by the spottings. These are scored through word spotting (spotting each lexically relevent word in the image) and lower scores are removed from the list (according to an Otsu threshold). This list is then sent to a user, who selects the correct transcription. Information from approved spottings and transcribed word images can be used in further spottings.
+An overview of the CAT system using approved subword spotting can be seen in Figure \ref{fig:flow}. Initially the system spots character n-grams in the corpus (word images). These results are pooled and sent to users in batches. After the user identifies correct/incorrect spottings, the spottings' labels and positions in the word images are used to create regular expressions which is used to query a lexicon for a list of all words matching the constraints set by the spottings. These are scored through word spotting (spotting each lexically relevent word in the image) and lower scores are removed from the list (according to an Otsu threshold). This list is then sent to a user, who selects the correct transcription. Information from approved spottings and transcribed word images can be used in further spottings.
 
 We now go over the individual pieces in greater detail.
 
 \subsubsection{Subword Spotting}
-We follow the same procedure for subword spotting as outlined in the Chapter \ref{subwordspotting}. We begin by spotting the n-grams in frequency order, beginning with the largest n using QbS. QbE comes into play after spottings are approved as correct by users. We combine QbE results the same way as described in Section \ref{combine}.
+We follow the same procedure for subword spotting as outlined in the Chapter \ref{subwordspotting}. We begin by spotting the n-grams using QbS. We evenly interleave spotting the n-grams, ordering each n by frequency order. That is, we order all trigrams, bigrams and unigrams individually by frequency order, then interleave these three lists such that each list is evenly disperesed among the resulting list. QbE comes into play after spottings are approved as correct by users. We combine QbE results the same way as described in Section \ref{combine}.
 To reduce the number of possible n-grams needing approval, we only return the top portion of all subwindows for a spotting: 75\% for unigrams, 25\% for bigrams, and 15\% for trigrams. The differening percentages reflect the general frequencies of the n-grams in English.
 
 \subsubsection{User Tasks and Interface}
 
 The tasks were intended to be able to be completed on smartphones, but the UI was created as a webapp to increase flexibility to more devices. The webapp requests new batches from the server (system), provides a way for the user to complete the tasks, and sends the completed tasks back to the server.
 
-There are three tasks which need completed: spotting approval, transcription selection, and manual transcription. Spotting approval is rejecting or accepting subword spotting results presented as a word image with a highlighted region. Transcription selection is selecting a correct transcription for a given word image, or correcting spottings displayed on the image. Manual transcription is typing in the transcription for a given word image.
+There are three user tasks: spotting approval, transcription selection, and manual transcription. Spotting approval is rejecting or accepting subword spotting results presented as a word image with a highlighted region. Transcription selection is selecting a correct transcription for a given word image, or correcting spottings displayed on the image. Manual transcription is typing in the transcription for a given word image.
 
 \paragraph{Spotting Approval}
 
 %Should I actually go into the use study? It didn't go through the IRB...
-The task which would be presented to users most frequently is spotting approval, as most words will require multiple character n-grams and some spottings will be incorrect. Thus we considered the most effective way to present these to users to reduce the time spent per task.
+The task which would be presented to users most frequently is spotting approval, as most words will require multiple character n-grams and these must be sorted out from false positives. Thus we considered the most effective way to present these to users to reduce the time spent per task.
 
 %Clustering, refer to previous discussion of this? Of discuss here? \cite{Retsinas2015} inspired
 
@@ -982,7 +1009,7 @@ fdsgfdh
 \fi
 %%%%%%%%%%%%%
 
-\paragraph{Transcription Selection}
+\paragraph{Transcription Selection}\label{transtask}
 This task's interface can be seen in Figure \ref{fig:transcriptionselection}.
 The user is presented with the image of the word with the spotted n-grams hilighted. Below are the n-gram labels each with an `x' button so the user can indicate an incorrect spotting.
 Below these is the list of possible transcriptions. They are presented in an order according to their word spotting score, as this frequently places the correct transcription at the top.
@@ -995,74 +1022,90 @@ Some words will not be able to be reduced to a short list of possible transcript
 
 
 \subsubsection{Word Completion / Regular Expression Generation}\label{wordcompletion}
-We rely on the word image width, estimate character width, and the locations of confirmed spottings (spottings approved by user or threshold) in the word to estimate how many characters are likely not spotted in a word. This allows a regular expression to be generated which represents all possible transcriptions of that word.
+We rely on the word image width, estimate character width, and the locations of confirmed spottings (spottings approved by user or threshold) in the word to estimate how many characters have not been spotted in a word. This allows a regular expression to be generated which represents all possible transcriptions of that word.
 
 Spottings are estimated to be a width calculated using the process described in Section \ref{detirminewindowsize}, but without the clustering.
 We average these as an approximation of the character width of an unknown character.
 
-The general approach is to measure the number of pixels between each confirmed spotting and divide this by the estimated character width, providing an estimated number of characters (with fractional characters). The range of characters used is 0.8 subtracted and added to this estimate, rounded. The first and last characters are similarly computed, using the beggining and end of the image boundaries as the previous and next spottings, but we additionaly allow each of those ranges to have one less character than computed to account for the fact that frequently first and last letters are longer than others (e.g.~capital letters at the beginning of a word, or a long tail on the last character of a word). If spottings overlap by less than 0.15 the estimated character width, we allow a character to possibly be between them. If spottings overlap and share boundary characters (e.g.~`al' and `le' sharing `l') we permit either a double letter (`alle') or single (`ale') as the spotting methods we use would have trouble distinguishing these situations. Pseudo code is shown in Algorithm \ref{regex}.
+The procedure to create the regular expression is as follows. First we measure the number of pixels between each confirmed spotting and divide this by the estimated character width, providing an estimated number of characters $\epsilon$ (with fractional characters). The range of characters used in the expression is 
+round($\epsilon-0.8$) to round($\epsilon+0.8$).
+%0.8 subtracted and added to the count estimate, rounded.
+ The first and last characters are similarly computed, using the beggining and end of the image boundaries as the previous and next spottings, but we additionaly allow each of those ranges to have one less character than the range computed to account for the fact that frequently first and last letters are longer than others (e.g.~capital letters at the beginning of a word, or a long tail on the last character of a word). If spottings overlap by less than 0.15 the estimated character width, we allow a character to possibly be between them. If spottings overlap and share boundary characters (e.g.~`al' and `le' sharing `l') we permit either a double letter (`alle') or single (`ale') as the spotting methods we use would have trouble distinguishing these situations. 
+ %Pseudo code is shown in Algorithm \ref{regex}.
 
 %%%%Should be in appendix ?
-\begin{algorithm}\label{regex}
- \KwData{Word image width: $W$, List of spottings in word image: $S$ (where $S_i^L$ and $S_i^R$ are the leftmost and rightmost boundary of the $i$th spotting for a word and $S_i^T$ is the n-gram of the spotting), Estimate character width: $C$}
- \KwResult{regular expression for possible transcriptions}
- $i$:=$0$\;
- $p$:=$0$\;
- $r$:=`` ''; (return string)\\
- \While{$i < \text{length of }S$}{
- 
-  $\delta$:=$S_i^L - p$\;
-  $\epsilon$:=$\delta / C$; (estimated number of characters as a float)\\
-  
-  \eIf{$\epsilon > 0$}{
-   $l$:=$\text{floor}(\epsilon)$\;
-   $m$:=$\text{ceiling}(\epsilon)$\;
-   \If{$\epsilon - l < 0.3$ and $l>0$}{
-     $l$:=$l-1$\;
-   }
-   \If{$m - \epsilon < 0.3$}{
-     $m$:=$m+1$\;
-   }
-   $r$=$r$..``[a-zA-Z0-9]\{$l$,$m$\}''\;
-   }{
-   (Handling possible overlaps)\\
-   $o$:=$\text{length of }S_i^T$\;
-   \While{$o>0$}{
-     ....\;
-     $o$:=$o+1$\;
-   }
-  }
- }
- \caption{Regular expression generation from spottings.}
-\end{algorithm}
+%\begin{algorithm}\label{regex}
+% \KwData{Word image width: $W$, List of spottings in word image: $S$ (where $S_i^L$ and $S_i^R$ are the leftmost and rightmost boundary of the $i$th spotting for a word and $S_i^T$ is the n-gram of the spotting), Estimate character width: $C$}
+% \KwResult{regular expression for possible transcriptions}
+% $i$:=$0$\;
+% $p$:=$0$\;
+% $r$:=`` ''; (return string)\\
+% \While{$i < \text{length of }S$}{
+% 
+%  $\delta$:=$S_i^L - p$\;
+%  $\epsilon$:=$\delta / C$; (estimated number of characters as a float)\\
+%  
+%  \eIf{$\epsilon > 0$}{
+%   $l$:=$\text{floor}(\epsilon)$\;
+%   $m$:=$\text{ceiling}(\epsilon)$\;
+%   \If{$\epsilon - l < 0.3$ and $l>0$}{
+%     $l$:=$l-1$\;
+%   }
+%   \If{$m - \epsilon < 0.3$}{
+%     $m$:=$m+1$\;
+%   }
+%   $r$=$r$..``[a-zA-Z0-9]\{$l$,$m$\}''\;
+%   }{
+%   (Handling possible overlaps)\\
+%   $o$:=$\text{length of }S_i^T$\;
+%   \While{$o>0$}{
+%     ....\;
+%     $o$:=$o+1$\;
+%   }
+%  }
+% }
+% \caption{Regular expression generation from spottings.}
+%\end{algorithm}
 
 
 
 Once we have the regular expression, we find all matches in our lexicon.
 
-If there are no matches there are three possible scenarios: the word is not in the lexicon, there is an incorrectly approved spotting, or the spottings and unlabeled characters alignment didn't transfer to the regular expression properly.
+If there are no matches there are three possible scenarios: the word is not in the lexicon, there is an incorrectly approved spotting, or the spottings and unlabeled characters' count or alignment didn't transfer to the regular expression properly.
 To account for the second scenario, we iteratively try removing individual spottings, regenerating the regular expression, and requerying the lexicon to see if matches are found. We make the assumption that only one spotting will be incorrect and union the matching lexicon results. We first only remove spottings that have no overlap (overlap meaning two or more spottings idetified a mutual character) and then those that do.
-To account for the third scenario, regenerate the regular expression in a ``loose'' mode, where each range of unknown characters is expanded by one to allow matches initailly constrained by a bad aligment estimation.
+If this fails to yield any lexicon matches, we try to account for the third scenario by regenerating the regular expression in a ``loose'' mode, where each range of unknown characters is expanded by one to allow matches initailly constrained by a bad aligment estimation.
 If there are no matches and we are already using the ``loose'' regular expression we simply skip the word. It will be manually transcribed eventually.
 
-If there are matches, and the count of them falls below the threshold 49 we score each possible transcription against the image using word spotting.
+If there are matches, and less than 49 of them, we score each possible transcription against the image using word spotting.
 %That is, we word spot the possible transcription and the word spotting score is used.
 As the possible transcriptions are based only on the regular expression, some will be obviously wrong from a visual point of view (e.g.~missing descenders). Following this intuition, we perform an Otsu threshold on the scores to attempt to discard the obviously wrong possibilties. This thresholding is only applied if there are more than 5 possibilities, or if the threshold falls less than half distance between the highest and lowest score (we're confident we're discarding something poor).
-If the resulting number of possible transcriptions is less than 7, we package them into a transcription selection task and enqueue it for a user to complete.
+If the resulting number of possible transcriptions is less than 7, we package them into a transcription selection task, ordered by spotting score, and enqueue it for a user to complete.
 
 
 \subsubsection{Receiving Transcription}
-The user either returns a transcription selection task in three ways: with a selected transcription, with a spotting marked for removal, or with a error indication. These are handeled in the following ways.
+The user either returns a transcription selection task in three ways: with a selected transcription, with a spotting marked for removal, or with a error indication (see Section \ref{transtask}). These are handeled in the following ways.
 
-If a transcription was selected, that is stored as the transcription for the word. We attempted to extract new ngram image exemplars by interpolating where unspotted n-grams were in the word image, but these generally failed to be good exemplars.
+If a transcription was selected, that is stored as the transcription for the word. We attempted to extract new ngram image exemplars by interpolating where unspotted n-grams were in the word image, but these generally failed to be good exemplars so we choose not to use them.
 
 If a spotting is marked for removal, it is removed and the process described in Section \ref{wordcompletion} is followed again, potentailly leading to a new task being enqueued.
 
 If the user indicates an error we first attempt to loosen the regular expression, as described in Section \ref{wordcompletion}. If no matching words are found, we remove the ``worst'' spotting. ``Worst'' first being any spotting labeled by a threshold (not user oversight), and then simply follows the spotting scores.
 
 \subsubsection{Batch Distribution}
+When approving spottings it is a non-trivial task to distribute the spottings to users in an efficient manner. We would like to maximize the humans efforts, ideally quickly finding thresholds for each n-gram that can be used to automatically label the remaining spottings. We tried several approaches to this.
+
+The simplest method is to simply take the spotting with the highest score until the user begins to classify enough as false that  a we can assume we are at a good thresholding location to reject the remaining spottings. 
+%In our implementation we make this decision after a running average of true classifications falls below 0.3, where the window is X. 
+Obviously this has the downside of not looking for a possible threshold to accept spottings by.
+
+
+
+
+Looking at a graph of true and false spotting instances in Figure ??(data with testmode on), one can see that each of the groups forms a distintive distribution. If we can model these it would give us a useful tool to create both an accept and reject threshold. 
+
 ordered list
 attempt to find thresholds to accept/reject
+uniform between thresholds
 
 checks if all batches in before sending last 12
 

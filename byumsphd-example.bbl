@@ -84,8 +84,10 @@ Yangqing Jia, Evan Shelhamer, Jeff Donahue, Sergey Karayev, Jonathan Long, Ross
 \newblock Caffe: Convolutional architecture for fast feature embedding.
 \newblock \emph{arXiv preprint arXiv:1408.5093}, 2014.
 
-\bibitem[Kingma and Ba()]{adam}
+\bibitem[Kingma and Ba(2015)]{adam}
 Diederik~P. Kingma and Jimmy Ba.
+\newblock Adam: {A} method for stochastic optimization.
+\newblock In \emph{Proceedings of ICLR}, 2015.
 
 \bibitem[Krishnan et~al.(2016)Krishnan, Dutta, and Jawahar]{krishnan2016}
 Praveen Krishnan, Kartik Dutta, and CV~Jawahar.
