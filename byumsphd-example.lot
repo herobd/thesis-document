@@ -3,7 +3,8 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {4.1}{\ignorespaces MAP for full word spotting results, reported for both query-by-string (QbS) and query-by-example (QbE). Results on Census Names uses network with SPP depth of 2 instead of 3. Using 3 yields QbS:0.525 and QbE:0.511.\relax }}{29}{table.caption.19}
-\contentsline {table}{\numberline {4.2}{\ignorespaces MAP for subword spotting results on the Bentham and Census Names datasets, reported for query-by-string (QbS), QbS weighted by n-gram frequency, query-by-example (QbE) by n-gram (comparable to QbS), and QbE by instance (comparable to weighed QbS).\relax }}{30}{table.caption.20}
+\contentsline {table}{\numberline {4.2}{\ignorespaces MAP for subword spotting results on the Bentham and Census Names datasets, reported for query-by-string (QbS) and, query-by-example (QbE).\relax }}{30}{table.caption.20}
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces MAP for suffix spotting results using QbS.\relax }}{40}{table.caption.29}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
 \addvspace {10\p@ }

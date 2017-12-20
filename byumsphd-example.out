@@ -31,13 +31,20 @@
 \BOOKMARK [0][-]{chapter.5}{5 Applications of Subword Spotting}{}% 31
 \BOOKMARK [1][-]{section.5.1}{5.1 Manual Transcription Assistant}{chapter.5}% 32
 \BOOKMARK [1][-]{section.5.2}{5.2 Prefix/Suffix Spotting}{chapter.5}% 33
-\BOOKMARK [1][-]{section.5.3}{5.3 Transcription}{chapter.5}% 34
-\BOOKMARK [2][-]{subsection.5.3.1}{5.3.1 Baseline: CAT Through PHOC Vectors}{section.5.3}% 35
-\BOOKMARK [2][-]{subsection.5.3.2}{5.3.2 CAT Through Approved Subword Spottings}{section.5.3}% 36
-\BOOKMARK [2][-]{subsection.5.3.3}{5.3.3 CAT Through Approved Subword Spottings Using Clustering}{section.5.3}% 37
-\BOOKMARK [2][-]{subsection.5.3.4}{5.3.4 CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment}{section.5.3}% 38
-\BOOKMARK [1][-]{section.5.4}{5.4 Evaluation of Transcription Strategies}{chapter.5}% 39
-\BOOKMARK [0][-]{chapter.6}{6 Conclusion}{}% 40
-\BOOKMARK [1][-]{section.6.1}{6.1 Contributions}{chapter.6}% 41
-\BOOKMARK [1][-]{section.6.2}{6.2 Future Work}{chapter.6}% 42
-\BOOKMARK [0][-]{toclistings.4}{References}{}% 43
+\BOOKMARK [0][-]{chapter.6}{6 Application of Subword Spotting to Transcription}{}% 34
+\BOOKMARK [1][-]{section.6.1}{6.1 Baseline: CAT Through PHOC Vectors}{chapter.6}% 35
+\BOOKMARK [1][-]{section.6.2}{6.2 CAT Through Approved Subword Spottings}{chapter.6}% 36
+\BOOKMARK [2][-]{subsection.6.2.1}{6.2.1 Subword Spotting}{section.6.2}% 37
+\BOOKMARK [2][-]{subsection.6.2.2}{6.2.2 User Tasks and Interface}{section.6.2}% 38
+\BOOKMARK [2][-]{subsection.6.2.3}{6.2.3 Word Completion / Regular Expression Generation}{section.6.2}% 39
+\BOOKMARK [2][-]{subsection.6.2.4}{6.2.4 Receiving Transcription}{section.6.2}% 40
+\BOOKMARK [2][-]{subsection.6.2.5}{6.2.5 Batch Distribution}{section.6.2}% 41
+\BOOKMARK [2][-]{subsection.6.2.6}{6.2.6 Receiving Spotting Approvals}{section.6.2}% 42
+\BOOKMARK [2][-]{subsection.6.2.7}{6.2.7 Alternate Mode: Don't Wait to Transcribe}{section.6.2}% 43
+\BOOKMARK [1][-]{section.6.3}{6.3 CAT Through Approved Subword Spottings Using Clustering}{chapter.6}% 44
+\BOOKMARK [1][-]{section.6.4}{6.4 CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment}{chapter.6}% 45
+\BOOKMARK [0][-]{chapter.7}{7 Evaluation of Transcription Strategies}{}% 46
+\BOOKMARK [0][-]{chapter.8}{8 Conclusion}{}% 47
+\BOOKMARK [1][-]{section.8.1}{8.1 Contributions}{chapter.8}% 48
+\BOOKMARK [1][-]{section.8.2}{8.2 Future Work}{chapter.8}% 49
+\BOOKMARK [0][-]{toclistings.4}{References}{}% 50
