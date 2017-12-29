@@ -42,9 +42,18 @@
 \BOOKMARK [2][-]{subsection.6.2.6}{6.2.6 Receiving Spotting Approvals}{section.6.2}% 42
 \BOOKMARK [2][-]{subsection.6.2.7}{6.2.7 Alternate Mode: Don't Wait to Transcribe}{section.6.2}% 43
 \BOOKMARK [1][-]{section.6.3}{6.3 CAT Through Approved Subword Spottings Using Clustering}{chapter.6}% 44
-\BOOKMARK [1][-]{section.6.4}{6.4 CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment}{chapter.6}% 45
-\BOOKMARK [0][-]{chapter.7}{7 Evaluation of Transcription Strategies}{}% 46
-\BOOKMARK [0][-]{chapter.8}{8 Conclusion}{}% 47
-\BOOKMARK [1][-]{section.8.1}{8.1 Contributions}{chapter.8}% 48
-\BOOKMARK [1][-]{section.8.2}{8.2 Future Work}{chapter.8}% 49
-\BOOKMARK [0][-]{toclistings.4}{References}{}% 50
+\BOOKMARK [2][-]{subsection.6.3.1}{6.3.1 Clustering}{section.6.3}% 45
+\BOOKMARK [2][-]{subsection.6.3.2}{6.3.2 Spotting Approval Batch Distribution}{section.6.3}% 46
+\BOOKMARK [2][-]{subsection.6.3.3}{6.3.3 Spotting Approval UI}{section.6.3}% 47
+\BOOKMARK [1][-]{section.6.4}{6.4 CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment}{chapter.6}% 48
+\BOOKMARK [0][-]{chapter.7}{7 Evaluation of Transcription Strategies}{}% 49
+\BOOKMARK [1][-]{section.7.1}{7.1 Methods}{chapter.7}% 50
+\BOOKMARK [1][-]{section.7.2}{7.2 Results}{chapter.7}% 51
+\BOOKMARK [2][-]{subsection.7.2.1}{7.2.1 CAT Through PHOC Vectors Results}{section.7.2}% 52
+\BOOKMARK [2][-]{subsection.7.2.2}{7.2.2 CAT Through Approved Subword Spottings Results}{section.7.2}% 53
+\BOOKMARK [2][-]{subsection.7.2.3}{7.2.3 CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment Results}{section.7.2}% 54
+\BOOKMARK [2][-]{subsection.7.2.4}{7.2.4 Comparison}{section.7.2}% 55
+\BOOKMARK [0][-]{chapter.8}{8 Conclusion}{}% 56
+\BOOKMARK [1][-]{section.8.1}{8.1 Contributions}{chapter.8}% 57
+\BOOKMARK [1][-]{section.8.2}{8.2 Future Work}{chapter.8}% 58
+\BOOKMARK [0][-]{toclistings.4}{References}{}% 59

@@ -964,9 +964,9 @@ The MAP for the Census Names dataset reflects its subword spotting performance. 
 
 \chapter{Application of Subword Spotting to Transcription}\label{transcription}
 
-Subword spotting can also be used to transcribe words. There are several ways one could do this, but one of the key aspects that makes subword spotting for transcription appealing is that while subword spotting naturally yields partial transcriptions, matching against a lexicon can constrain the full transcription from a partial one. We aim towards a CAT model to better leverage the possibility of user feedback on processes leading to the full transcription.
+Subword spotting can also be used to transcribe words. There are several ways one could do this, but one of the key aspects that makes subword spotting for transcription appealing is that while subword spotting naturally yields partial transcriptions, matching against a lexicon can constrain the full transcription from a partial one. We aim towards a CAT model to better leverage the possibility of user feedback on the steps leading to the full transcription.
 
-We describe 4 transcription methods in this section and the results in the following section.
+We describe 4 transcription methods in this chapter and the results in the following chapter.
 For all methods we used a lexicon. Our primary lexicon consists of 108,028 words and 6,939 names, as described in Chapter \ref{datasets}.
 
 \section{Baseline: CAT Through PHOC Vectors}
@@ -993,6 +993,8 @@ To be more efficient, we only return a certain portion of the words to be transc
 \end{figure}
 An overview of the CAT system using approved subword spotting can be seen in Figure \ref{fig:flow}.  Initially the system spots character n-grams in the corpus of word images (a). These results are pooled and sent to users in batches (b). After the user identifies correct/incorrect spottings (c), the spottings' labels and positions in the word images are used to create regular expressions which is used to query a lexicon for a list of all words matching the constraints set by the spottings (d). These are scored through word spotting (spotting each lexically relevent word in the image) and lower scores are removed from the list (according to an Otsu threshold). This list is then sent to a user, who selects the correct transcription (e). Information from approved spottings is used in further spottings.
 
+When there are no more user tasks the system is finished. Words not transcribed will need to be manually transcribed.
+
 We now go over the individual pieces in greater detail.
 
 \subsection{Subword Spotting}
@@ -1003,7 +1005,8 @@ To reduce the number of possible n-grams needing approval, we only return the to
 
 The tasks were intended to be able to be completed on smartphones, but the UI was created as a webapp to increase flexibility to more devices. The webapp requests new batches from the server (system), provides a way for the user to complete the tasks, and sends the completed tasks back to the server.
 
-There are three user tasks: spotting approval, transcription selection, and manual transcription. Spotting approval is rejecting or accepting subword spotting results presented as a word image with a highlighted region. Transcription selection is selecting a correct transcription for a given word image, or correcting spottings displayed on the image. Manual transcription is typing in the transcription for a given word image.
+There are two user tasks: spotting approval and transcription selection. Spotting approval is rejecting or accepting subword spotting results presented as a word image with a highlighted region. Transcription selection is selecting a correct transcription for a given word image, or correcting spottings displayed on the image. 
+%Manual transcription is typing in the transcription for a given word image.
 
 \subsubsection{Approval}
 
@@ -1015,6 +1018,14 @@ The task which would be presented to users most frequently is spotting approval,
 Through some trials, we found presenting the potentail n-gram spottings as a list, grouped by the n-gram label, and having the user classify each instance to be efficient. The grouping of spottings with the same n-gram label minimizes context switching and forcing the user to make a decision about each spotting maintains accuracy.
 
 Figure \ref{fig:spottingapproval} shows the interface. The spottings at the bottom is classified as correct or incorrect either with a swipe gesture or a button press. The spottings shown above the current spotting (bottom) allow the user to look ahead and make decisions about the upcoming spottings. The colors of the hilights change when the n-gram label changes to alert the user to the change.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.75\textwidth]{spottingapproval}
+    \caption{Spotting approval UI. Instance being classified is at the bottom of the interface (dark border). The desired label ``and'' is below it. The next label ``ing'' can be seen above it with its associated instances above it.
+    }
+    \label{fig:spottingapproval}
+\end{figure}
 
 %%%%%%%%%%%%%%
 \iffalse
@@ -1039,9 +1050,17 @@ The user is presented with the image of the word with the spotted n-grams hiligh
 Below these is the list of possible transcriptions. They are presented in an order according to their word spotting score, as this frequently places the correct transcription at the top.
 At the end of this list an additional ``Error'' button allows the user to indicate that the correct transcription is not present, and the spotting n-grams are correct.
 
-\subsubsection{Manual Transcription}
-This task's interface can be seen in Figure \ref{fig:manualtranscription}.
-Some words will not be able to be reduced to a short list of possible transcriptions due to poor spotting or possibly errors. These transcriptions must be manually entered by the user. It seems useful to use any known spottings on the given word to provide an intelligent lexicon from which an auto-complete might be able to speed up transcription. However, we observed that generally the spottings were too poor for this assistance to be of much help.
+\begin{figure}
+    \centering
+    \includegraphics[width=.75\textwidth]{transcriptionselection}
+    \caption{Transcription selection UI.  Both ``her'' and ``for'' have been spotted in the image. The user can remove spottings if they are incorrect (red `x's). The possible transcriptions are ordered according to their word spotting score; in many instances this puts the correct transcription at the top of the list.
+    }
+    \label{fig:transcriptionselection}
+\end{figure}
+
+%\subsubsection{Manual Transcription}
+%This task's interface can be seen in Figure \ref{fig:manualtranscription}.
+%Some words will not be able to be reduced to a short list of possible transcriptions due to poor spotting or possibly errors. These transcriptions must be manually entered by the user. It seems useful to use any known spottings on the given word to provide an intelligent lexicon from which an auto-complete might be able to speed up transcription. However, we observed that generally the spottings were too poor for this assistance to be of much help.
 
 
 
@@ -1121,18 +1140,41 @@ When approving spottings it is a non-trivial task to distribute the spottings to
 
 The simplest method is to simply take the spotting with the highest score until the user begins to classify enough as false that  a we can assume we are at a good thresholding location to reject the remaining spottings. 
 %In our implementation we make this decision after a running average of true classifications falls below 0.3, where the window is X. 
-Obviously this has the downside of not looking for a possible threshold to accept spottings by.
+This has the downside of not looking for a possible threshold to accept spottings by and did not yield satisfactory results.
 
 
 
 
-Looking at a graph of true and false spotting instances in Figure ??a(data with testmode on, example of good split and bad), one can see that each of the groups forms a distintive distribution. If we can model these it would give us a useful tool to create both an accept and reject threshold. However, it is not always easy to do so. In Figure ??b we see that the false spottings subsumes the true spottings. We thus allow it to model the spottings either as two distributions or one.
+Looking at a graph of true and false spotting instances in Figure \ref{fig:two_dist_ex}, one can see that each of the groups forms a distintive distribution. If we can model these it would give us a useful tool to create both an accept and reject threshold. However, it is not always easy to do so. In Figure \ref{fig:one_dist_ex} we see that the false spottings almost subsumes the true spottings making them difficult to distinguish. We thus allow it to model the spottings either as two distributions or one.
 
-We model the distributions as normal distributions, the false spottings being only half of the distribution.
+\begin{figure}
+    \centering
+    \includegraphics[width=.75\textwidth]{two_dist_ex}
+    \caption{A histogram of spotting instances for the bigram ``nd'' divided into true and false spottings. The true spottings forms a distribution distinct from the false.
+    }
+    \label{fig:two_dist_ex}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=.75\textwidth]{one_dist_ex}
+    \caption{A histogram of spotting instances for the unigram ``g'' divided into true and false spottings. The true spottings are almost inline with the false distribution making them indistinguishable.
+    }
+    \label{fig:one_dist_ex}
+\end{figure}
 
-When begining, we do a check to see whether we will model the spotting scores as one or two distributions. We model the scores as a single distrubution the see if there are large amount of outlier instances at it's ``tail''. This should be a distictive true distribution is present. We measure this by the difference between the probability density of the model and actual density of scores in the tail of the distrubution. The ``tail'' is defined by a threshold density.
+We model the distributions as normal distributions, the false spottings being only half of the distribution (as we discard the worst scores for effiency).
 
-If we select two distributions, we estimate an initial split between true and false scores using the Otsu threshold. We model the two distributions using these two score splits.
+When begining, we do a check to see whether we will model the spotting scores as one or two distributions. We model the scores as a single distrubution the see if there are large amount of outlier instances at it's ``tail'' (Figure \ref{fig:tail_dist_ex} green circle). This should be a distictive true distribution is present. We measure this by the difference between the probability density of the model and actual density of scores in the tail of the distrubution. The ``tail'' is defined by a threshold density.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.75\textwidth]{tail_dist_ex}
+    \caption{A histogram of spotting instances for the bigram ``nd'' with a curve (red) representing the data as a single distribution. The green circle shows that the estimation greatly underestimates the tail indicating there is likely a strong true instance distribution present.
+    }
+    \label{fig:tail_dist_ex}
+\end{figure}
+
+If we select two distributions, we estimate an initial split between true and false scores using the Otsu threshold. We model the two distributions assuming all spottings is true or false based on this threshold.
 
 The distributions are constantly modeled using expectation maximization, an iteration of it being applied each time a batch is recieved. If a user label isn't known for a score, it's class is estimated using the current model.
 
@@ -1157,6 +1199,8 @@ When creating a new batch, scores are sampled from a uniform distribution betwee
 
 We also test with only using the single or dual distributions and not trying to guess which one is better.
 
+When there are no instances left between the reject and accept thresholds, the n-gram is finished. All instances above the accept threshold are accepted and all below the reject threshold are rejected.
+
 %ordered list
 %attempt to find thresholds to accept/reject
 %uniform between thresholds
@@ -1175,8 +1219,6 @@ As a hard rule, if we've had over 2 ``bad'' batches, we switch to a single distr
 
 We then perform an expectation maximization step including the new spotting labels.
 
-done?
-
 %\subsubsection{Exemplar extraction}
 
 \subsection{Alternate Mode: Don't Wait to Transcribe}
@@ -1186,11 +1228,51 @@ lexicon lookup
 
 when error on trans, just enqueue next batch
 
-%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 \section{CAT Through Approved Subword Spottings Using Clustering}
-sdfgfag
 
+The approval of spottings is a bottle-neck for the previous transcription strategy. In \cite{Retsinas2015}, they sped up approval by clustering characters together and presenting the user with a composite of a cluster. While handwriting it too noisy to composite, we follow a similar method of clustering n-gram spottings together and presenting users with (part of) a cluster to approve or disapprove. Classifying a group of spottings which belong to the same class should take as long as a single instance, the catch is that we don't know if a group of spottings is all right or all wrong. It's likely our clustering is imperfect and there is a mix. However, in the case where only a few instances in the cluster are outliers, they should be quickly identified by a user (see Figures \ref{fig:clustergood} and \ref{fig:clusterbad}). In the case where the cluster is totall mixed (50\%/50\%) one can classify each instance individually.% (see Figure ??).
+
+In this transcription strategy we use the same method as above, but change how spotting batches are distrubuted and don't use QbE in the same way. We will desribe the steps of this process next.
+
+\subsection{Clustering}
+
+We first perform a dense QbE comparison for the results of each initail n-gram QbS spotting. This gives us a similarity for all instances. We then perform a hierarchical complete-linkage agglomerative clustering (two clusters are merged if there two most dissimlar spottings are more similar than any other cluster pair). We choose a hierarchical method as this allows us to tune the ``purity'' of clusters as we recieve human feedback. ``Purity'' is the measure of how much the clusters are of one class ($2*max(T,F)/(T+F)-1$ where $T$ and $F$ are the count of true or false spottings in the cluseter). The initial level in the hierarchy is the first level where the average cluster size is above 10, which is roughly what we feel an ideal batch size is.
+
+When a running average of accuracy (the portion of instances classified as true by the user) falls below a threshold (0.3) we stop sending batches for that n-gram.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{clustergood2}
+    \caption{The cluster spotting approval UI with a true cluster. One outlier has been identified by the user (darkened instance).}
+    \label{fig:clustergood}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{clusterbad}
+    \caption{The cluster spotting approval UI with a false cluster. No outliers are present.}
+    \label{fig:clusterbad}
+\end{figure}
+
+\subsection{Spotting Approval Batch Distribution}
+
+We evaluated two methods of distributing clusters.
+One simply takes the cluster with the next highest average score.
+The other method attempts to identify good clusters based on their similarity. To do this we save each approved spotting in a queue. When finding a new cluster to distribute, we take the next instance off of the queue. We then find the cluster with that is closest using the complete-linkage metric, that is the cluster where the instance with the furthest distance from our exemplar is minimized.
+
+In both methods, if a selected cluster is too large (maximum size of 15) we split it and send each piece as a seperate batch.
+
+\subsection{Spotting Approval UI}
+
+Examples of the UI are shown in Figures \ref{fig:clustergood} and \ref{fig:clusterbad}. The idea is to allow the user to recognize whether the majority of the instances are correct or incorrect and then select the outliers. When a user selects an instance it is darkened. There are two buttons at the bottom which are used to both indicate the cluster type (correct/incorrect) and that they have selected all the outliers (they are finished).
+
+This is a minimalist interface placing a fair amount of cognitive load onto the user in exchange for efficency. One can imagine a slightly simpiler interface where the cluster type is identified as a button prior to a ``done'' button.
+
+
+%%%%
 
 \section{CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment} %
 
@@ -1206,11 +1288,44 @@ We want to avoid having to make decisions about spottings, either thresholding o
 The combining happens according to the following procedure.
 
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \chapter{Evaluation of Transcription Strategies}
-fkjdskglj
 
-top 5 acc for CTC: 0.584546 OLD
+In this chapter we will explain our procedure for testing the transcription strategies in the previous chapter. Then we will examine the results of these tests.
 
+\section{Methods}
+
+We evaluate all our transcription strategies as CAT methods. However, rather than having users use the systems we simulate approximate user behavoir using collected statistics. While the statistics may not give as accurate as results as a user study, it allows us to easily compare the performance of different transcription strategies using consistent timing data.
+
+The statistics were collected from four reseachers
+%, who were moderetly to tagently involved in this project, 
+using the system. We collected timing information regarding how quickly they completed batches, whether they were correct (against the corpus ground truth and the author's judgement), as well as information regarding the batch's ``difficulty''. For spottings this was the size of the batch, the number of true instances, and whether the previous batch was the same n-gram. For transcription selection this was the position of the correct transcription (if present). 
+%For manual transcription we recorded the length of the word(s). 
+We fit linear models to predict the time needed to complete a batch based on its ``difficulty''. We also did this for errors.
+We collected data for both spotting approval methods (instance and cluster).
+
+In more detail, we measured which ``difficulty'' measure best modeled the data and used that. For transcription selection, there is a fixed time predicted if the correct transcription is not preset, otherwise a linear model based the transctions position in the list predicts time. Two fixed values predict the error the two transcription situations. 
+%For manual transcription a linear model based on length predicts time and a fixed value predicts error (on the word level).  
+For the Bentham dataset, instance spotting approval timing is based on whether the previous batch is the same n-gram. For the Census Names dataset, instance spotting approval timing is based on the number of true instances. For both datasets, error is based in the number of true instances in the batch. For both datasets, cluster spotting approval timing and error is based on the number of instances in the batch.
+
+We also collected how long it took to manual transcribe line images so we can see if the CAT actually speeds up the transcription process.
+
+To evaluate, we ran each strategy as a CAT system with a single simulated user. When the simulated user recieved a batch, it found the correct response and then measured the probabilty of error and introduced an error if a random value between [0,1] fell below that probability. The simulated user then computed the estimated time based on the appropriate model and waited that long before returning its answer. For many of the transcription strategies, there comes a point where the strategy must be abandon and the remaining words manual transcribed. We terminate our simulations at this point, but report how much was transcribed.
+
+\section{Results}
+
+\subsection{CAT Through PHOC Vectors Results}
+report top 7? accuracy and sim time
+
+\subsection{CAT Through Approved Subword Spottings Results}
+includes fancy and cluster (others??)
+
+\subsection{CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment Results}
+
+\subsection{Comparison}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1234,6 +1349,7 @@ top 5 acc for CTC: 0.584546 OLD
 
 deslant
 segmentation free
+training free
 
 regex search/spotting
 CPV to regex
