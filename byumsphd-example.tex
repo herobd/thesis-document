@@ -1234,15 +1234,15 @@ when error on trans, just enqueue next batch
 
 \section{CAT Through Approved Subword Spottings Using Clustering}
 
-The approval of spottings is a bottle-neck for the previous transcription strategy. In \cite{Retsinas2015}, they sped up approval by clustering characters together and presenting the user with a composite of a cluster. While handwriting it too noisy to composite, we follow a similar method of clustering n-gram spottings together and presenting users with (part of) a cluster to approve or disapprove. Classifying a group of spottings which belong to the same class should take as long as a single instance, the catch is that we don't know if a group of spottings is all right or all wrong. It's likely our clustering is imperfect and there is a mix. However, in the case where only a few instances in the cluster are outliers, they should be quickly identified by a user (see Figures \ref{fig:clustergood} and \ref{fig:clusterbad}). In the case where the cluster is totall mixed (50\%/50\%) one can classify each instance individually.% (see Figure ??).
+The approval of spottings is a bottle-neck for the previous transcription strategy. In \cite{Retsinas2015}, they sped up approval by clustering printed characters together and presenting the user with a composite of a cluster. While handwriting it too noisy to composite, we follow a similar method of clustering n-gram spottings together and presenting users with (part of) a cluster to approve or disapprove. Classifying a group of spottings which belong to the same class should take as long as a single instance, the catch is that we don't know if a group of spottings is all right or all wrong. It's likely our clustering is imperfect so that there is a mix. However, in the case where only a few instances in the cluster are outliers, they should be quickly identified by a user (see Figures \ref{fig:clustergood} and \ref{fig:clusterbad}). In the case where the cluster is totall mixed (50\%/50\%) one can classify each instance individually.% (see Figure ??).
 
 In this transcription strategy we use the same method as above, but change how spotting batches are distrubuted and don't use QbE in the same way. We will desribe the steps of this process next.
 
 \subsection{Clustering}
 
-We first perform a dense QbE comparison for the results of each initail n-gram QbS spotting. This gives us a similarity for all instances. We then perform a hierarchical complete-linkage agglomerative clustering (two clusters are merged if there two most dissimlar spottings are more similar than any other cluster pair). We choose a hierarchical method as this allows us to tune the ``purity'' of clusters as we recieve human feedback. ``Purity'' is the measure of how much the clusters are of one class ($2*max(T,F)/(T+F)-1$ where $T$ and $F$ are the count of true or false spottings in the cluseter). The initial level in the hierarchy is the first level where the average cluster size is above 10, which is roughly what we feel an ideal batch size is.
+We first perform a dense QbE comparison for the results of each initail n-gram QbS spotting. This gives us a similarity for all instances. We then perform a hierarchical complete-linkage agglomerative clustering (two clusters are merged if their two most dissimlar spottings are more similar than any other cluster pair). We choose a hierarchical method as this allows us to tune the ``purity'' of clusters as we recieve human feedback. ``Purity'' is the measure of how much the clusters are of one class ($2*max(T,F)/(T+F)-1$ where $T$ and $F$ are the count of true or false spottings in the cluseter). The initial level in the hierarchy is the first level where the average cluster size is above 10, which is roughly what we feel an ideal batch size is.
 
-When a running average of accuracy (the portion of instances classified as true by the user) falls below a threshold (0.3) we stop sending batches for that n-gram.
+
 
 \begin{figure}
     \centering
@@ -1261,9 +1261,14 @@ When a running average of accuracy (the portion of instances classified as true 
 
 We evaluated two methods of distributing clusters.
 One simply takes the cluster with the next highest average score.
-The other method attempts to identify good clusters based on their similarity. To do this we save each approved spotting in a queue. When finding a new cluster to distribute, we take the next instance off of the queue. We then find the cluster with that is closest using the complete-linkage metric, that is the cluster where the instance with the furthest distance from our exemplar is minimized.
+The other method attempts to identify good clusters based on their similarity to approved spottings. To do this we save each approved spotting in a queue. When finding a new cluster to distribute, we take the next instance off of the queue. We then find the cluster with that is closest using the complete-linkage metric, that is the cluster where the instance with the furthest distance from our exemplar is minimized.
 
 In both methods, if a selected cluster is too large (maximum size of 15) we split it and send each piece as a seperate batch.
+
+We have a goal ``purity'' of 0.9 (rougly 1 or 2 outliers per batch). When our moving average purity varies from this (over an \epsilon threshold) we either move up a level in the heirarchy (we are too pure) or mode down a level in the heirarchy (we are not pure enough).
+
+When our moving average accuracy (the portion of instances classified as true by the user) falls below a threshold (0.3) we stop sending batches for that n-gram.
+%TODO test 0.4 threshold
 
 \subsection{Spotting Approval UI}
 
@@ -1276,17 +1281,26 @@ This is a minimalist interface placing a fair amount of cognitive load onto the 
 
 \section{CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment} %
 
-We want to avoid having to make decisions about spottings, either thresholding or having user input, which the previous methods rely on. A way to avoid this is to simply merge all spottings together into a single character probability vector, resulting in something like Figure \ref{fig:cpv}.
+We want to avoid having to make decisions about spottings, either by thresholding or having user input, which the previous methods rely on. Thresholding forces a decision between recall and precision, and user input is costly. A way to avoid these is to simply merge all spottings together into a single character probability vector, resulting in something like Figure \ref{fig:cpv}, and then decode this.
 
 \begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{cpv}
-    \caption{An example of a character probability vector for the word ``adultery''. The relative probability of each character (a-z) at each horizontal position is represented both by the height and color of the graph. The discontinuities occuring at the begining and end of the word (e.g. see `x') occur due to the merging of unigram, bigram, and trigram scores.}
+    \caption{An example of a character probability vector for the word ``adultery''. The relative probability of each character (`a'-`z') at each horizontal position is represented both by the height and color of the graph. The discontinuities occuring at the begining and end of the word (e.g. see `x') occur due to the merging of unigram, bigram, and trigram scores.}
     \label{fig:cpv}
 \end{figure}
 
 The combining happens according to the following procedure.
+We process each n (1, 2, and 3) seperately into an independent vector before combining them.
 
+Each spotted n-gram produces a score at each location of the sliding window. For unigrams this gives us a vector for a relative scoring of a character at each location. For bigrams and trigrams we can offset these locations and create vectors for each character present in the bigram or trigram. These can them be summed together for a word image.
+Each n-specific character vector is normalized according to how many n-grams contributed to that character.
+We then perform a soft-max at each horizontal position over the characters. This is then slightly reduced if some letters did not contribute (no n-grams with that letter) to account for the soft-max being slightly higher on the letters which are present.
+
+The individual n-specific vectors are summed and each letter normalized according to how many n-specific vectors contributed to it.
+This summed result has another soft-max applied to it to yield the final character probability vector.
+
+We then use dynamic time warping to score the character probability vectors agains the lexicon words, the lexicon words being one-hot vectors. Similar to the transcription via PHOC method we can then return the top 7 matches to the user to select the correct transcription.
 
 
 
