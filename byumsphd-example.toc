@@ -35,24 +35,23 @@
 \contentsline {subsection}{\numberline {6.2.2}User Tasks and Interface}{47}{subsection.6.2.2}
 \contentsline {subsubsection}{\numberline {6.2.2.1}Approval}{48}{subsubsection.6.2.2.1}
 \contentsline {subsubsection}{\numberline {6.2.2.2}Transcription Selection}{48}{subsubsection.6.2.2.2}
-\contentsline {subsection}{\numberline {6.2.3}Word Completion / Regular Expression Generation}{48}{subsection.6.2.3}
+\contentsline {subsection}{\numberline {6.2.3}Word Completion / Regular Expression Generation}{50}{subsection.6.2.3}
 \contentsline {subsection}{\numberline {6.2.4}Receiving Transcription}{52}{subsection.6.2.4}
 \contentsline {subsection}{\numberline {6.2.5}Batch Distribution}{53}{subsection.6.2.5}
 \contentsline {subsection}{\numberline {6.2.6}Receiving Spotting Approvals}{56}{subsection.6.2.6}
-\contentsline {subsection}{\numberline {6.2.7}Alternate Mode: Don't Wait to Transcribe}{56}{subsection.6.2.7}
+\contentsline {subsection}{\numberline {6.2.7}Alternate Mode: Don't Wait to Transcribe}{57}{subsection.6.2.7}
 \contentsline {section}{\numberline {6.3}CAT Through Approved Subword Spottings Using Clustering}{57}{section.6.3}
 \contentsline {subsection}{\numberline {6.3.1}Clustering}{57}{subsection.6.3.1}
 \contentsline {subsection}{\numberline {6.3.2}Spotting Approval Batch Distribution}{58}{subsection.6.3.2}
 \contentsline {subsection}{\numberline {6.3.3}Spotting Approval UI}{60}{subsection.6.3.3}
 \contentsline {section}{\numberline {6.4}CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment}{60}{section.6.4}
 \contentsline {chapter}{\numberline {7}Evaluation of Transcription Strategies}{63}{chapter.7}
-\contentsline {section}{\numberline {7.1}Methods}{63}{section.7.1}
+\contentsline {section}{\numberline {7.1}Evaluation Method}{63}{section.7.1}
 \contentsline {section}{\numberline {7.2}Results}{64}{section.7.2}
 \contentsline {subsection}{\numberline {7.2.1}CAT Through PHOC Vectors Results}{64}{subsection.7.2.1}
-\contentsline {subsection}{\numberline {7.2.2}CAT Through Approved Subword Spottings Results}{64}{subsection.7.2.2}
-\contentsline {subsection}{\numberline {7.2.3}CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment Results}{64}{subsection.7.2.3}
-\contentsline {subsection}{\numberline {7.2.4}Comparison}{64}{subsection.7.2.4}
-\contentsline {chapter}{\numberline {8}Conclusion}{65}{chapter.8}
-\contentsline {section}{\numberline {8.1}Contributions}{65}{section.8.1}
-\contentsline {section}{\numberline {8.2}Future Work}{65}{section.8.2}
-\contentsline {chapter}{References}{67}{toclistings.4}
+\contentsline {subsection}{\numberline {7.2.2}CAT Through Approved Subword Spottings Results}{65}{subsection.7.2.2}
+\contentsline {subsection}{\numberline {7.2.3}CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment Results}{66}{subsection.7.2.3}
+\contentsline {chapter}{\numberline {8}Conclusion}{69}{chapter.8}
+\contentsline {section}{\numberline {8.1}Contributions}{69}{section.8.1}
+\contentsline {section}{\numberline {8.2}Future Work}{69}{section.8.2}
+\contentsline {chapter}{References}{71}{toclistings.4}

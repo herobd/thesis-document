@@ -897,6 +897,8 @@ We can see that the iterative refinement leads to better results compared to the
 
 \chapter{Applications of Subword Spotting}\label{applications}
 
+In this chapter we explain two applications of subword spotting: assisting persons manually transcribing document images and suffix spotting. Due to its complexity, we explore using subword spotting to transcribe in the next chapter.
+
 \section{Manual Transcription Assistant}
 Frequently when a person is transcribing a handwritten document they come across a handwritten word they do not recognize. A common solution is to scan the document for similar shapes which are present in the difficult word. If the transcriber can find the same letters, written by the same author, in the context of a word they do recognize, the transcriber can identify the letters, thus aiding in the transcription of a difficult word. 
 However, the same letters may be time consuming to find due to the density of the document and rarity of the characters. QbE subword spotting provides a way to automate this scanning task. The user need only to select the portion of the difficult word they wish to query with and the system can return a ranked list of results.
@@ -998,7 +1000,10 @@ When there are no more user tasks the system is finished. Words not transcribed 
 We now go over the individual pieces in greater detail.
 
 \subsection{Subword Spotting}
-We follow the same procedure for subword spotting as outlined in the Chapter \ref{subwordspotting}. We begin by spotting the n-grams using QbS. We evenly interleave spotting the n-grams, ordering each n by frequency order. That is, we order all trigrams, bigrams and unigrams individually by frequency order, then interleave these three lists such that each list is evenly disperesed among the resulting list. QbE comes into play after spottings are approved as correct by users. We combine QbE results the same way as described in Section \ref{combine}.
+We follow the same procedure for subword spotting as outlined in the Chapter \ref{subwordspotting}. We begin by spotting the n-grams using QbS. We evenly interleave spotting the n-grams, ordering each n by frequency order. That is, we order all trigrams, bigrams and unigrams individually by frequency order, then interleave these three lists such that each list is evenly disperesed among the resulting list. 
+
+We attempted to use QbE after spottings are approved as correct by users. We combine QbE results as described in Section \ref{combine} when we had a certain threshold of approved spottings (to ensure stability). However, this did not enhance performance so we did not include this in our final tests.
+
 To reduce the number of possible n-grams needing approval, we only return the top portion of all subwindows for a spotting: 75\% for unigrams, 25\% for bigrams, and 15\% for trigrams. The differening percentages reflect the general frequencies of the n-grams in English.
 
 \subsection{User Tasks and Interface}
@@ -1219,6 +1224,8 @@ As a hard rule, if we've had over 2 ``bad'' batches, we switch to a single distr
 
 We then perform an expectation maximization step including the new spotting labels.
 
+
+
 %\subsubsection{Exemplar extraction}
 
 \subsection{Alternate Mode: Don't Wait to Transcribe}
@@ -1265,7 +1272,7 @@ The other method attempts to identify good clusters based on their similarity to
 
 In both methods, if a selected cluster is too large (maximum size of 15) we split it and send each piece as a seperate batch.
 
-We have a goal ``purity'' of 0.9 (rougly 1 or 2 outliers per batch). When our moving average purity varies from this (over an \epsilon threshold) we either move up a level in the heirarchy (we are too pure) or mode down a level in the heirarchy (we are not pure enough).
+We have a goal ``purity'' of 0.9 (rougly 1 or 2 outliers per batch). When our moving average purity varies from this (over an $\epsilon$ threshold) we either move up a level in the heirarchy (we are too pure) or mode down a level in the heirarchy (we are not pure enough).
 
 When our moving average accuracy (the portion of instances classified as true by the user) falls below a threshold (0.3) we stop sending batches for that n-gram.
 %TODO test 0.4 threshold
@@ -1308,11 +1315,11 @@ We then use dynamic time warping to score the character probability vectors agai
 
 \chapter{Evaluation of Transcription Strategies}
 
-In this chapter we will explain our procedure for testing the transcription strategies in the previous chapter. Then we will examine the results of these tests.
+In this chapter we will explain our procedure for testing the transcription strategies described in the previous chapter. Then we will examine the results of these tests.
 
-\section{Methods}
+\section{Evaluation Method}
 
-We evaluate all our transcription strategies as CAT methods. However, rather than having users use the systems we simulate approximate user behavoir using collected statistics. While the statistics may not give as accurate as results as a user study, it allows us to easily compare the performance of different transcription strategies using consistent timing data.
+We evaluate all our transcription strategies as CAT methods. However, rather than having users use the systems we simulate approximate user behavoir using collected statistics. While the statistics may not give results as accurate as a user study, it allows us to easily compare the performance of different transcription strategies using consistent timing data.
 
 The statistics were collected from four reseachers
 %, who were moderetly to tagently involved in this project, 
@@ -1331,15 +1338,129 @@ To evaluate, we ran each strategy as a CAT system with a single simulated user. 
 
 \section{Results}
 
+We measure the speed of the transcriptions using a words-per-minute metric. This is averaged over the time of the system running, as it varies significantly during the running for the spotting approval method. The results are summarized on Table \ref{tab:finalresults}. In the following subsections we analyse the results of each method.
+
+\begin{table}
+\centering
+\begin{tabular}{| l | c  c | c c |}
+  \hline
+   & \multicolumn{2}{c|}{Bentham} & \multicolumn{2}{c|}{Census Names}\\
+  Method & Portion transcribed & Speed (w/m) & Portion transcribed & Speed (w/m)\\
+  \hline		
+
+  Manual             & -   & 19.4 &  -   & 30.3?? \\
+  PHOC vectors 100\% & 0.845 & 19.9 &  0.669 & 22.8 \\
+  PHOC vectors 75\%  & 0.656 & 21.0 &  0.507 & 22.8 \\
+  PHOC vectors 50\%  & 0.437 & 20.9 &  0.393 & 28.5 \\
+  \hline	
+  \multicolumn{5}{|l|}{CAT through approved subword spottings} \\
+  Two-distributions B & 0.319 & 5.7 & 0.108 & 2.8 \\
+  Two-distributions UB & 0.453 & 5.2 & 0.206 & 4.1 \\
+  Closest cluster next B & 0.669 & 2.7 & 0.220 & 1.1 \\
+  \hline	
+  \multicolumn{5}{|l|}{CAT through unassisted subword spotting using DTW} \\
+  CPV+DTW UBT & 0.700 & 13.6 & 0.331 & 9.1 \\
+  
+  %? & X & X & X & X \\
+  \hline  
+\end{tabular}
+\caption{Highlights in the results from simulations. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used. The PHOC vector method is the only method we tested able to transcribe words at a rate faster than manual transcription.}
+\label{tab:finalresults}
+\end{table}
+
+Accuracy!!!
+Manual
+68.8\% Bentham
+74.5\% Names
+
+Select
+Bentham
+90.8 - 0.11
+97.1 - 0.04
+Names
+95.8 - 0.01 (prob auto)
+79.1 - 0.11
+
 \subsection{CAT Through PHOC Vectors Results}
-report top 7? accuracy and sim time
+This baseline result is the only method to surpass manual transcription time. We show results for three variations where the portion of words actually sent to the user is changed. As would be expected, decreasing the number of words sent to the user has a linear relationship with the portion transcribed, however, the speed does not follow this linear relationship. This simply means that the order of good transcription selection batches doesn't correlate directly to score.
 
 \subsection{CAT Through Approved Subword Spottings Results}
-includes fancy and cluster (others??)
+
+%We show the results of using the following combination of n-grams: bigrams alone, bigrams and trigrams, and unigrams, bigrams and trigrams. Bigrams alone far out performed unigrams or trigrams alone. Unigrams and trigrams only slightly underperforms bigrams and trigrams. %They both significantly outperform unigrams and bigrams. 
+We show more detailed results in Table \ref{tab:appresults} for the following five variations of batch distribution: switch-distribution modeling, single-distribution modeling, two-distribution modeling, clusters returning the closest cluster next and clusters returning the highest scored cluster next. We also expirimented with other methods of distributing batches, however, these far outperformed the other approaches. We don't show an exhustive list of n-gram combinations but show those that both cover a variety and were the best performing.
+
+\begin{table}
+\centering
+\begin{tabular}{| l | c  c | c c |}
+  \hline
+   & \multicolumn{2}{c|}{Bentham} & \multicolumn{2}{c|}{Census Names}\\
+  Method & Portion transcribed & Speed (w/m) & Portion transcribed & Speed (w/m)\\
+  \hline
+  Switch-distributions B & 0.324 & 5.3 &  0.098 & 2.2 \\
+  Switch-distributions BT & 0.504 & 3.0 &  0.185 & 1.6 \\
+  Switch-distributions UBT & 0.596 & 3.0 & 0.193 & 1.6 \\
+  Single-distributions B & 0.307 & 4.5 & 0.097 & 2.1 \\
+  Single-distributions BT & 0.512 & 2.8 & 0.185 & 1.6 \\
+  Single-distributions UBT & 0.597 & 2.7 & 0.192 & 1.5 \\
+  Two-distributions B & 0.319 & 5.7 & 0.108 & 2.8 \\
+  Two-distributions UB & 0.453 & 5.2 & 0.206 & 4.1 \\
+  Two-distributions BT & 0.498 & 3.8 & 0.181 & 2.1 \\
+  Two-distributions UBT & 0.594 & 3.6 & 0.265 & 2.8 \\
+  Closest cluster next B & 0.669 & 2.7 & 0.220 & 1.1 \\
+  Closest cluster next BT & 0.667& 2.7 & 0.220 & 1.1 \\
+  Closest cluster next UBT & 0.661 & 2.7 & 0.222 & 1.1 \\
+  Top cluster next B & 0.667 & 2.7 & 0.220 & 1.0 \\
+  Top cluster next BT & 0.671 & 2.7 & 0.222 & 1.1 \\
+  Top cluster next UBT & 0.657 & 2.7 & 0.220 & 1.0 \\
+  \hline  
+\end{tabular}
+\caption{Results from simulations of CATTSS using user approval on subword spotting results. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used.}
+\label{tab:appresults}
+\end{table}
+
+All of these methods perform far below manual transcription. In the best variation for the Bentham dataset (two-distributions with just bigrams) the simulated user spent 76\% of its time approving spottings. The effort required for the user to supervise the subword spotting represents a large slowdown to the system's speed. The Census Names dataset is consistently much slower than the Bentham dataset as the handwritting in it is more difficult and thus requires even more user supervision in approving subword spottings.
+
+An part of a page of the testing corpus of the Bentham dataset is show in Figure \ref{fig:aftercattss} annotated with the spottings which were approved as well as the transcribed words.
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.99\textwidth]{aftercattss}
+    \caption{Part of a page of the Bentham dataset after running the CATTSS system with subword spotting approval being distributied using a two-distribution model with only bigrams. The pink boxes represent approved bigram spottings. The red text represents a transcription made by the system.}
+    \label{fig:aftercattss}
+\end{figure}
+
+
+
 
 \subsection{CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment Results}
+%Fixes issue of spotting approval and is faster, but still not as good as PHOC-based.
+%What is the difference between PHOC-based and DTW-based? Why is straight PHOC better? 
 
-\subsection{Comparison}
+In the previous section we saw the subword spotting approval as a major bottleneck. We removed that bottleneck in this method by aggregating all spottings into character probability vectors and comparing these directly to our lexicon words using DTW. We see large gains doing this, but we still fail to beat manual transcription speeds by a wide margin. Details of the results can be seen in Table \ref{tab:dtwresults}. The best results used both unigrams, bigrams and trigrams; as the user does not have to approve any it makes sense that including more information would lead to better results.
+
+Given the similarities between this method of using a character probability vector and the baseline method using PHOC vectors, we think it valuable to describe why this method preforms worse.
+Both the PHOC vector approach and the subword spotting approach use the same network. The subword spotting approach attempts to create more localized information by evaluating the subwindows and using their location. However, PHOCNet uses a 5 level TPP layer and the PHOC vector has 5 levels as well; these provide a fair amount of resolution by themselves. Subword spotting introduces some ambiguity due to its poor localization. Some of this likely is present in the aggregated character probability vector and contributes to its worse behavoir. Additionally, the PHOCNet is trained on full word images, not subwindows. This means it will generally have better performance on word images, which the PHOC vector approach uses.
+
+%Can you cut more corners to makes things faster but less accurate? yes, but we can to the same thing for PHOC-based trans
+%Potentially viable method in absence of data-specific trained spotting method (A QbE model, but it would have to be really good).
+
+\begin{table}
+\centering
+\begin{tabular}{| l | c  c | c c |}
+  \hline
+   & \multicolumn{2}{c|}{Bentham} & \multicolumn{2}{c|}{Census Names}\\
+  Method & Portion transcribed & Speed (w/m) & Portion transcribed & Speed (w/m)\\
+  \hline
+  CPV+DTW B & 0.491 & 8.0 & 0.179 & 4.7 \\
+  CPV+DTW BT & 0.603 & 10.8 & 0.252 & 6.8 \\
+  CPV+DTW UB & 0.679 & 12.6 & 0.292 & 7.9 \\
+  CPV+DTW UBT & 0.700 & 13.6 & 0.331 & 9.1 \\
+  \hline  
+\end{tabular}
+\caption{Results from simulations using character probability vectors derived from subword spotting resutls. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used.}
+\label{tab:dtwresults}
+\end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1352,21 +1473,47 @@ includes fancy and cluster (others??)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Conclusion}
 
+We have introduced subword spotting and our method of doing it using the word spotting PHOCNet. We have presented results of subword spotting at three granularities (uni-, bi- and trigrams) with two datasets. We showed three applications two subword spottings: manual trancription assisting, suffix spotting and CAT.
+
+We now summarize what we feel our contributions are with this work and then discuss potential future work.
+
 \section{Contributions}
 
-1. Subword spotting evaluation
-2. Applications of subword spotting
-3. Transcription (RegEx, combining 1,2,3)
-4. Crowd source
+%1. Subword spotting evaluation
+%2. Applications of subword spotting
+%3. Transcription (RegEx, combining 1,2,3)
+%4. Crowd source
+
+Our primary contribution is the exploration of subword spotting, a previously unexamined area. We have shown that while word spotting has achieved good results with modern techniques, applying similar techniques to subword spotting does not yield as percise of results.
+Some other insights from our subword spotting experiments are that 
+size estimation of subwords is important 
+and that
+length of and frequency of  a subword does not directly correlate with the precision one can spot it.
+
+A further contribution is our exploration of a few applications of subword spotting.
+We show how subword spotting can be used to assist people manually transcribing documents by helping locate instances of unknown characters.
+We evaluate the performance of subword spotting when applied to the task of suffix spotting. This could easily be extended to include preffix spotting. These searches can achieve results not readily available with word spotting.
+We attempt to apply subword spotting to CAT, but fail to achieve usable results. However, the method has potential given adjustments discussed in the next section.
+
 
 \section{Future Work}
 
-deslant
-segmentation free
-training free
+%deslant
+%segmentation free
+%training free
 
-regex search/spotting
-CPV to regex
+%regex search/spotting
+%CPV to regex
+
+There are several things that could have improved the subword spotting. We did not perform any preprocessing. Deslanting the word images could have both normalized the text and made localization better as the character boundaries would be more defined. While we attempted to refine individual spotting results to improve score and localization, we did not have success. However, they may be a refinment method we did not try which would succeed.
+
+Everything we did in this work was based on word segmentation. However, it would not be difficult to extend what we have done to a segmentation free scenario. One would need to be able to distinguish the situation of letters having a space between them, but after this it should extended quite straightforwardly.
+
+Our CAT strategies were not successfull, and if they were they would need to be competitive with modern automatic handwriting recognition methods (CNN+RNN) to be applicable. However, there is a slightly different application our method has the potential to work in.
+Both our spotting method (PHOCNet) and modern automatic handwriting recognition methods (CNN+RNN) require traning data from a corpus before they can begin to work effectively. In a real workflow this will be a part of the corpus that must be manually transcribed. However, given an effective QbE subword spotting method that does not require corpus specific training, the CATTSS methods described in Chapter \ref{transcription} should work with few adjustments. Rather than the system initailly spotting a set of n-grams, a user would need to crop a few from the corpus to seed the system. After this, however, it should be able to proceed as outlined in Chapter \ref{transcription}.
+The catch is that the untrained QbE spotting method must be better than the QbS spotting we have demonstrated.
+
+While we aggregated spottings into regular expressions, an extension of suffix spotting would be regular expression spotting. That is, the user supplies a regular expression and the system returns all word images which match the expression. With some work, subword spotting should be able to achieve this.
 
 %\nocite{testentry}
 
