@@ -3,56 +3,55 @@
 \BOOKMARK [1][-]{toc.1}{Table of Contents}{}% 3
 \BOOKMARK [0][-]{toclistings.1}{List of Figures}{}% 4
 \BOOKMARK [0][-]{toclistings.2}{List of Tables}{}% 5
-\BOOKMARK [0][-]{toclistings.3}{List of Listings}{}% 6
-\BOOKMARK [0][-]{chapter.1}{1 Introduction}{}% 7
-\BOOKMARK [1][-]{section.1.1}{1.1 Why Subword Spotting?}{chapter.1}% 8
-\BOOKMARK [1][-]{section.1.2}{1.2 Main Contributions}{chapter.1}% 9
-\BOOKMARK [0][-]{chapter.2}{2 Related Work}{}% 10
-\BOOKMARK [1][-]{section.2.1}{2.1 Word Spotting}{chapter.2}% 11
-\BOOKMARK [1][-]{section.2.2}{2.2 Automatic Handwriting Recognition}{chapter.2}% 12
-\BOOKMARK [1][-]{section.2.3}{2.3 Computer Assisted Transcription}{chapter.2}% 13
-\BOOKMARK [0][-]{chapter.3}{3 Datasets}{}% 14
-\BOOKMARK [1][-]{section.3.1}{3.1 IAM Dataset}{chapter.3}% 15
-\BOOKMARK [1][-]{section.3.2}{3.2 Bentham Dataset}{chapter.3}% 16
-\BOOKMARK [1][-]{section.3.3}{3.3 Census Names Dataset}{chapter.3}% 17
-\BOOKMARK [1][-]{section.3.4}{3.4 Character Annotation}{chapter.3}% 18
-\BOOKMARK [1][-]{section.3.5}{3.5 Lexicon}{chapter.3}% 19
-\BOOKMARK [0][-]{chapter.4}{4 Subword Spotting}{}% 20
-\BOOKMARK [1][-]{section.4.1}{4.1 Implementation}{chapter.4}% 21
-\BOOKMARK [2][-]{subsection.4.1.1}{4.1.1 Architecture}{section.4.1}% 22
-\BOOKMARK [2][-]{subsection.4.1.2}{4.1.2 Training}{section.4.1}% 23
-\BOOKMARK [2][-]{subsection.4.1.3}{4.1.3 Determining Window Widths}{section.4.1}% 24
-\BOOKMARK [2][-]{subsection.4.1.4}{4.1.4 Running}{section.4.1}% 25
-\BOOKMARK [2][-]{subsection.4.1.5}{4.1.5 Combining QbE Results}{section.4.1}% 26
-\BOOKMARK [1][-]{section.4.2}{4.2 Analysis of Subword Spotting}{chapter.4}% 27
-\BOOKMARK [2][-]{subsection.4.2.1}{4.2.1 Full Word Spotting}{section.4.2}% 28
-\BOOKMARK [2][-]{subsection.4.2.2}{4.2.2 Subword Spotting}{section.4.2}% 29
-\BOOKMARK [2][-]{subsection.4.2.3}{4.2.3 Respotting Subwords}{section.4.2}% 30
-\BOOKMARK [0][-]{chapter.5}{5 Applications of Subword Spotting}{}% 31
-\BOOKMARK [1][-]{section.5.1}{5.1 Manual Transcription Assistant}{chapter.5}% 32
-\BOOKMARK [1][-]{section.5.2}{5.2 Prefix/Suffix Spotting}{chapter.5}% 33
-\BOOKMARK [0][-]{chapter.6}{6 Application of Subword Spotting to Transcription}{}% 34
-\BOOKMARK [1][-]{section.6.1}{6.1 Baseline: CAT Through PHOC Vectors}{chapter.6}% 35
-\BOOKMARK [1][-]{section.6.2}{6.2 CAT Through Approved Subword Spottings}{chapter.6}% 36
-\BOOKMARK [2][-]{subsection.6.2.1}{6.2.1 Subword Spotting}{section.6.2}% 37
-\BOOKMARK [2][-]{subsection.6.2.2}{6.2.2 User Tasks and Interface}{section.6.2}% 38
-\BOOKMARK [2][-]{subsection.6.2.3}{6.2.3 Word Completion / Regular Expression Generation}{section.6.2}% 39
-\BOOKMARK [2][-]{subsection.6.2.4}{6.2.4 Receiving Transcription}{section.6.2}% 40
-\BOOKMARK [2][-]{subsection.6.2.5}{6.2.5 Batch Distribution}{section.6.2}% 41
-\BOOKMARK [2][-]{subsection.6.2.6}{6.2.6 Receiving Spotting Approvals}{section.6.2}% 42
-\BOOKMARK [2][-]{subsection.6.2.7}{6.2.7 Alternate Mode: Don't Wait to Transcribe}{section.6.2}% 43
-\BOOKMARK [1][-]{section.6.3}{6.3 CAT Through Approved Subword Spottings Using Clustering}{chapter.6}% 44
-\BOOKMARK [2][-]{subsection.6.3.1}{6.3.1 Clustering}{section.6.3}% 45
-\BOOKMARK [2][-]{subsection.6.3.2}{6.3.2 Spotting Approval Batch Distribution}{section.6.3}% 46
-\BOOKMARK [2][-]{subsection.6.3.3}{6.3.3 Spotting Approval UI}{section.6.3}% 47
-\BOOKMARK [1][-]{section.6.4}{6.4 CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment}{chapter.6}% 48
-\BOOKMARK [0][-]{chapter.7}{7 Evaluation of Transcription Strategies}{}% 49
-\BOOKMARK [1][-]{section.7.1}{7.1 Evaluation Method}{chapter.7}% 50
-\BOOKMARK [1][-]{section.7.2}{7.2 Results}{chapter.7}% 51
-\BOOKMARK [2][-]{subsection.7.2.1}{7.2.1 CAT Through PHOC Vectors Results}{section.7.2}% 52
-\BOOKMARK [2][-]{subsection.7.2.2}{7.2.2 CAT Through Approved Subword Spottings Results}{section.7.2}% 53
-\BOOKMARK [2][-]{subsection.7.2.3}{7.2.3 CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment Results}{section.7.2}% 54
-\BOOKMARK [0][-]{chapter.8}{8 Conclusion}{}% 55
-\BOOKMARK [1][-]{section.8.1}{8.1 Contributions}{chapter.8}% 56
-\BOOKMARK [1][-]{section.8.2}{8.2 Future Work}{chapter.8}% 57
-\BOOKMARK [0][-]{toclistings.4}{References}{}% 58
+\BOOKMARK [0][-]{chapter.1}{1 Introduction}{}% 6
+\BOOKMARK [1][-]{section.1.1}{1.1 Why Subword Spotting?}{chapter.1}% 7
+\BOOKMARK [1][-]{section.1.2}{1.2 Main Contributions}{chapter.1}% 8
+\BOOKMARK [0][-]{chapter.2}{2 Related Work}{}% 9
+\BOOKMARK [1][-]{section.2.1}{2.1 Word Spotting}{chapter.2}% 10
+\BOOKMARK [1][-]{section.2.2}{2.2 Automatic Handwriting Recognition}{chapter.2}% 11
+\BOOKMARK [1][-]{section.2.3}{2.3 Computer Assisted Transcription}{chapter.2}% 12
+\BOOKMARK [0][-]{chapter.3}{3 Datasets}{}% 13
+\BOOKMARK [1][-]{section.3.1}{3.1 IAM Dataset}{chapter.3}% 14
+\BOOKMARK [1][-]{section.3.2}{3.2 Bentham Dataset}{chapter.3}% 15
+\BOOKMARK [1][-]{section.3.3}{3.3 Census Names Dataset}{chapter.3}% 16
+\BOOKMARK [1][-]{section.3.4}{3.4 Character Annotation}{chapter.3}% 17
+\BOOKMARK [1][-]{section.3.5}{3.5 Lexicon}{chapter.3}% 18
+\BOOKMARK [0][-]{chapter.4}{4 Subword Spotting}{}% 19
+\BOOKMARK [1][-]{section.4.1}{4.1 Implementation}{chapter.4}% 20
+\BOOKMARK [2][-]{subsection.4.1.1}{4.1.1 Architecture}{section.4.1}% 21
+\BOOKMARK [2][-]{subsection.4.1.2}{4.1.2 Training}{section.4.1}% 22
+\BOOKMARK [2][-]{subsection.4.1.3}{4.1.3 Determining Window Widths}{section.4.1}% 23
+\BOOKMARK [2][-]{subsection.4.1.4}{4.1.4 Running}{section.4.1}% 24
+\BOOKMARK [2][-]{subsection.4.1.5}{4.1.5 Combining QbE Results}{section.4.1}% 25
+\BOOKMARK [1][-]{section.4.2}{4.2 Analysis of Subword Spotting}{chapter.4}% 26
+\BOOKMARK [2][-]{subsection.4.2.1}{4.2.1 Full Word Spotting}{section.4.2}% 27
+\BOOKMARK [2][-]{subsection.4.2.2}{4.2.2 Subword Spotting}{section.4.2}% 28
+\BOOKMARK [2][-]{subsection.4.2.3}{4.2.3 Respotting Subwords}{section.4.2}% 29
+\BOOKMARK [0][-]{chapter.5}{5 Applications of Subword Spotting}{}% 30
+\BOOKMARK [1][-]{section.5.1}{5.1 Manual Transcription Assistant}{chapter.5}% 31
+\BOOKMARK [1][-]{section.5.2}{5.2 Prefix/Suffix Spotting}{chapter.5}% 32
+\BOOKMARK [0][-]{chapter.6}{6 Application of Subword Spotting to Transcription}{}% 33
+\BOOKMARK [1][-]{section.6.1}{6.1 Baseline: CAT Through PHOC Vectors}{chapter.6}% 34
+\BOOKMARK [1][-]{section.6.2}{6.2 CAT Through Approved Subword Spottings}{chapter.6}% 35
+\BOOKMARK [2][-]{subsection.6.2.1}{6.2.1 Subword Spotting}{section.6.2}% 36
+\BOOKMARK [2][-]{subsection.6.2.2}{6.2.2 User Tasks and Interface}{section.6.2}% 37
+\BOOKMARK [2][-]{subsection.6.2.3}{6.2.3 Word Completion / Regular Expression Generation}{section.6.2}% 38
+\BOOKMARK [2][-]{subsection.6.2.4}{6.2.4 Receiving Transcription}{section.6.2}% 39
+\BOOKMARK [2][-]{subsection.6.2.5}{6.2.5 Batch Distribution}{section.6.2}% 40
+\BOOKMARK [2][-]{subsection.6.2.6}{6.2.6 Receiving Spotting Approvals}{section.6.2}% 41
+\BOOKMARK [2][-]{subsection.6.2.7}{6.2.7 Alternate Mode: Don't Wait to Transcribe}{section.6.2}% 42
+\BOOKMARK [1][-]{section.6.3}{6.3 CAT Through Approved Subword Spottings Using Clustering}{chapter.6}% 43
+\BOOKMARK [2][-]{subsection.6.3.1}{6.3.1 Clustering}{section.6.3}% 44
+\BOOKMARK [2][-]{subsection.6.3.2}{6.3.2 Spotting Approval Batch Distribution}{section.6.3}% 45
+\BOOKMARK [2][-]{subsection.6.3.3}{6.3.3 Spotting Approval UI}{section.6.3}% 46
+\BOOKMARK [1][-]{section.6.4}{6.4 CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment}{chapter.6}% 47
+\BOOKMARK [0][-]{chapter.7}{7 Evaluation of Transcription Strategies}{}% 48
+\BOOKMARK [1][-]{section.7.1}{7.1 Evaluation Method}{chapter.7}% 49
+\BOOKMARK [1][-]{section.7.2}{7.2 Results}{chapter.7}% 50
+\BOOKMARK [2][-]{subsection.7.2.1}{7.2.1 CAT Through PHOC Vectors Results}{section.7.2}% 51
+\BOOKMARK [2][-]{subsection.7.2.2}{7.2.2 CAT Through Approved Subword Spottings Results}{section.7.2}% 52
+\BOOKMARK [2][-]{subsection.7.2.3}{7.2.3 CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment Results}{section.7.2}% 53
+\BOOKMARK [0][-]{chapter.8}{8 Conclusion}{}% 54
+\BOOKMARK [1][-]{section.8.1}{8.1 Contributions}{chapter.8}% 55
+\BOOKMARK [1][-]{section.8.2}{8.2 Future Work}{chapter.8}% 56
+\BOOKMARK [0][-]{toclistings.3}{References}{}% 57

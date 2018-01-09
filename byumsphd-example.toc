@@ -1,6 +1,5 @@
 \contentsline {chapter}{List of Figures}{ix}{toclistings.1}
 \contentsline {chapter}{List of Tables}{xv}{toclistings.2}
-\contentsline {chapter}{List of Listings}{xvii}{toclistings.3}
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
 \contentsline {section}{\numberline {1.1}Why Subword Spotting?}{3}{section.1.1}
 \contentsline {section}{\numberline {1.2}Main Contributions}{5}{section.1.2}
@@ -48,10 +47,10 @@
 \contentsline {chapter}{\numberline {7}Evaluation of Transcription Strategies}{63}{chapter.7}
 \contentsline {section}{\numberline {7.1}Evaluation Method}{63}{section.7.1}
 \contentsline {section}{\numberline {7.2}Results}{64}{section.7.2}
-\contentsline {subsection}{\numberline {7.2.1}CAT Through PHOC Vectors Results}{64}{subsection.7.2.1}
+\contentsline {subsection}{\numberline {7.2.1}CAT Through PHOC Vectors Results}{65}{subsection.7.2.1}
 \contentsline {subsection}{\numberline {7.2.2}CAT Through Approved Subword Spottings Results}{65}{subsection.7.2.2}
 \contentsline {subsection}{\numberline {7.2.3}CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment Results}{66}{subsection.7.2.3}
 \contentsline {chapter}{\numberline {8}Conclusion}{69}{chapter.8}
 \contentsline {section}{\numberline {8.1}Contributions}{69}{section.8.1}
-\contentsline {section}{\numberline {8.2}Future Work}{69}{section.8.2}
-\contentsline {chapter}{References}{71}{toclistings.4}
+\contentsline {section}{\numberline {8.2}Future Work}{70}{section.8.2}
+\contentsline {chapter}{References}{73}{toclistings.3}

@@ -1,4 +1,4 @@
-\documentclass[ms,electronic,twosidetoc,letterpaper,chaptercenter,parttop,lol,lof,lot]{byumsphd}
+\documentclass[ms,electronic,twosidetoc,letterpaper,chaptercenter,parttop,lof,lot]{byumsphd}
 % Author: Chris Monson
 %
 % This document is in the public domain
@@ -165,8 +165,8 @@
 % out if these already exist.
 \newcommand{\Title}{Subword Spotting and its Applications}
 \newcommand{\Author}{Brian L.~Davis}
-\newcommand{\GraduationMonth}{December}
-\newcommand{\GraduationYear}{2017}
+\newcommand{\GraduationMonth}{April}
+\newcommand{\GraduationYear}{2018}
 
 % Set up the internal PDF information so that it becomes part of the document
 % metadata.  The pdfinfo command will display this.
@@ -201,28 +201,27 @@
 \yearcopyrighted{\GraduationYear}
 
 \documentabstract{%
-This is where the abstract goes.
+We propose subword spotting, a generalization of word spotting where the search may be for groups of characters within words. We present a method for performing subword spotting based on state-of-the-art word spotting techniques and evaluate its performance at three granularitires (unigrams, bigrams and trigrams) on two datasets.
 
-Note that there is a blank line between paragraphs, here. 
-X==================
-=====================
-==================
+We demonstrate three applications of subword spotting, though others may exits. The first is assisting human transcribers identify unrecognized characters by locating them in other words. The second is searching for suffixes directly in word images (suffix spotting). And the third is computer assisted transcription (semi-automated transcription). We investigate several variations of computer assisted transcription, but none achieve transcription speeds above manual transcription. We investigate the causes.
 }
 
 \documentkeywords{%
-	subword, spotting, CAT, semi-automated, handwriting
+	subword, spotting, CAT, semi-automated, handwriting, n-gram, character
 }
 
 \acknowledgments{%
     I would like to thank my wife Sarah for her patience with and support of my endeavors.
+    \\
+    \\
     
-    I would like to extend special thanks to Curtis Wigington, Seth Stewart, Chris Tensmyer and Bill Barrett, who, among other assistance to my work, provided use timing data for my semi-autometed transcription system used in its simulations.
+    I would like to extend thanks to Curtis Wigington, Seth Stewart, Chris Tensmyer and Bill Barrett, who, among other assistance to my work, provided use timing data for my semi-autometed transcription system used in its simulations.
 }
 
 \department{Computer~Science}
 \graduatecoordinator{Christophe Giraud-Carrier}
-\collegedean{Thomas~W.~Sederberg}
-\collegedeantitle{Associate~Dean}
+\collegedean{Shane~Reese}
+\collegedeantitle{Dean}
 
 % Customize the name of the Table of Contents section.
 \renewcommand\contentsname{Table of Contents}
@@ -344,7 +343,7 @@ In Figure \ref{fig:subtransexample} we see an example of the word ``payment'', w
 \section{Main Contributions}
 
 The primary scope of this work is to provide an exploration of the performance of subword spotting, extending state-of-the-art word spotting methods.
-We show that reasonable levels of mean average precision (MAP) can be achieved for character tri-, bi-, and unigram spotting. We demonstrate the variability in performance between different character n-grams (referred to as simply n-grams hereafter).
+We show that reasonable levels of mean average precision (MAP) can be achieved for character tri-, bi-, and unigram spotting. We demonstrate the variability in performance between different character n-grams (referred to simply as n-grams hereafter).
 
 Additionally, we demonstrate several applications of subword spotting: user directed searching to aid in human transcription, suffix searching/spotting, and CAT using word completion from aggregated subword spottings.
 
@@ -573,7 +572,7 @@ For the testing portion and a small validation set of the Bentham and Census Nam
 %Merged(intersection) wordsEn.txt with last and first names with 1000 frequency count.
 %108,028 words and 6,939 names
 %SIL International, linguistics site
-For our CAT methods, we require a lexicon. We choose to use a large English lexicon as this would indicate the methods could generalize to other corpi. We obtained a lexicon from SIL International at \url{http://www-01.sil.org/linguistics/wordlists/english/} which contained 108,028 words (not including names). We also desired a large lexicon of names which would enable the Census Names dataset to be transcribed. FamilySearch provided us with data from the US 1940 census, which listed all names appearing in those records along with a count of how many times they occurred. We took all names occuring at least 1000 times, leaving us with a list of 6,939 unique names. Combining these two sets gave us a lexicon size of 114,968. We use the full lexicon for the Bentham dataset, but only the names portion for the Census Names dataset.
+For our CAT (computer assisted transcription) methods, we require a lexicon. We choose to use a large English lexicon as this would indicate the methods could generalize to other corpi. We obtained a lexicon from SIL International at \url{http://www-01.sil.org/linguistics/wordlists/english/} which contained 108,028 words (not including names). We also desired a large lexicon of names which would enable the Census Names dataset to be transcribed. FamilySearch provided us with data from the US 1940 census, which listed all names appearing in those records along with a count of how many times they occurred. We took all names occuring at least 1000 times, leaving us with a list of 6,939 unique names. Combining these two sets gave us a lexicon size of 114,968. We use the full lexicon for the Bentham dataset, but only the names portion for the Census Names dataset.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Subword Spotting}\label{subwordspotting}
@@ -865,7 +864,7 @@ This can be seen in Figures \ref{fig:benthamsub} and \ref{fig:namessub} and we a
 
 \subsection{Respotting Subwords}
 
-We had hoped to use approved spottings as new exemplars for an iterative CAT system. To verify the validity of this approach we created an experiment where we continually refine spotting results by spotting with new exemplars and merging the results (see Section \ref{combine}). We show the MAP at each iteration out to 50 iterations in Figures \ref{fig:unigram_respot}, \ref{fig:bigram_respot}, and \ref{fig:trigram_respot}, for uni-, bi-, and trigrams respectively. The first exemplar for an n-gram was selected as the middle score of positive instances from a QbS spotting. The following exemplars were the middle score of the previous QbE spotting's positive instances. We choose to do this as there is a variety of qualities of exemplar images. Taking the middle score should roughly give us a middle quality.
+We had hoped to use approved spottings as new exemplars for an iterative CAT (computer assisted transcription) system. To verify the validity of this approach we created an experiment where we continually refine spotting results by spotting with new exemplars and merging the results (see Section \ref{combine}). We show the MAP at each iteration out to 50 iterations in Figures \ref{fig:unigram_respot}, \ref{fig:bigram_respot}, and \ref{fig:trigram_respot}, for uni-, bi-, and trigrams respectively. The first exemplar for an n-gram was selected as the middle score of positive instances from a QbS spotting. The following exemplars were the middle score of the previous QbE spotting's positive instances. We choose to do this as there is a variety of qualities of exemplar images. Taking the middle score should roughly give us a middle quality.
 The overall quality of MAP is higher in these experiments as we only used n-grams which occur at least 100 times, which tend to be the easier instances.
 We can see that the iterative refinement leads to better results compared to the average of all the QbE scores for the individual 50 queries, except in the case of trigrams. This is unusual given the average QbE scores are relatively hight compared to the QbS score. However, for all n-grams the combine QbE results underperforms QbS.
 %It appears that aggregating multiple queries tends to stabilized the bad queries.%, though it does not out perform QbS (except with trigrams) or individual good QbE queries (as the spikes in performance are not at the end).
@@ -966,7 +965,7 @@ The MAP for the Census Names dataset reflects its subword spotting performance. 
 
 \chapter{Application of Subword Spotting to Transcription}\label{transcription}
 
-Subword spotting can also be used to transcribe words. There are several ways one could do this, but one of the key aspects that makes subword spotting for transcription appealing is that while subword spotting naturally yields partial transcriptions, matching against a lexicon can constrain the full transcription from a partial one. We aim towards a CAT model to better leverage the possibility of user feedback on the steps leading to the full transcription.
+Subword spotting can also be used to transcribe words. There are several ways one could do this, but one of the key aspects that makes subword spotting for transcription appealing is that while subword spotting naturally yields partial transcriptions, matching against a lexicon can constrain the full transcription from a partial one. We aim towards a CAT (computer assisted transcription) model to better leverage the possibility of user feedback on the steps leading to the full transcription.
 
 We describe 4 transcription methods in this chapter and the results in the following chapter.
 For all methods we used a lexicon. Our primary lexicon consists of 108,028 words and 6,939 names, as described in Chapter \ref{datasets}.
@@ -1319,7 +1318,7 @@ In this chapter we will explain our procedure for testing the transcription stra
 
 \section{Evaluation Method}
 
-We evaluate all our transcription strategies as CAT methods. However, rather than having users use the systems we simulate approximate user behavoir using collected statistics. While the statistics may not give results as accurate as a user study, it allows us to easily compare the performance of different transcription strategies using consistent timing data.
+We evaluate all our transcription strategies as CAT (computer assisted transcription) methods. However, rather than having users use the systems we simulate approximate user behavoir using collected statistics. While the statistics may not give results as accurate as a user study, it allows us to easily compare the performance of different transcription strategies using consistent timing data.
 
 The statistics were collected from four reseachers
 %, who were moderetly to tagently involved in this project, 
@@ -1368,18 +1367,23 @@ We measure the speed of the transcriptions using a words-per-minute metric. This
 \label{tab:finalresults}
 \end{table}
 
-Accuracy!!!
-Manual
-68.8\% Bentham
-74.5\% Names
+???
 
-Select
-Bentham
-90.8 - 0.11
-97.1 - 0.04
-Names
-95.8 - 0.01 (prob auto)
-79.1 - 0.11
+Here I intend to put a comparison of accuracy, but this is where I realized my data is funky. The recollection should hopefully also address why manual transcription for the Census Names was faster than the Bentham.
+
+???
+%Accuracy!!!
+%Manual
+%68.8\% Bentham
+%74.5\% Names
+
+%Select
+%Bentham
+%90.8 - 0.11
+%97.1 - 0.04
+%Names
+%95.8 - 0.01 (prob auto)
+%79.1 - 0.11
 
 \subsection{CAT Through PHOC Vectors Results}
 This baseline result is the only method to surpass manual transcription time. We show results for three variations where the portion of words actually sent to the user is changed. As would be expected, decreasing the number of words sent to the user has a linear relationship with the portion transcribed, however, the speed does not follow this linear relationship. This simply means that the order of good transcription selection batches doesn't correlate directly to score.
@@ -1473,7 +1477,7 @@ Both the PHOC vector approach and the subword spotting approach use the same net
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Conclusion}
 
-We have introduced subword spotting and our method of doing it using the word spotting PHOCNet. We have presented results of subword spotting at three granularities (uni-, bi- and trigrams) with two datasets. We showed three applications two subword spottings: manual trancription assisting, suffix spotting and CAT.
+In this thesis we have introduced subword spotting and a method of doing it leveraging state-of-the-art word spotting techniques. We have presented results of subword spotting at three granularities (uni-, bi- and trigrams) with two datasets and show it to be a more challenging task than word spotting. We showed three applications of subword spotting: manual trancription assisting, suffix spotting and CAT (computer assisted transcription).
 
 We now summarize what we feel our contributions are with this work and then discuss potential future work.
 
@@ -1485,14 +1489,16 @@ We now summarize what we feel our contributions are with this work and then disc
 %4. Crowd source
 
 Our primary contribution is the exploration of subword spotting, a previously unexamined area. We have shown that while word spotting has achieved good results with modern techniques, applying similar techniques to subword spotting does not yield as percise of results.
-Some other insights from our subword spotting experiments are that 
-size estimation of subwords is important 
+Some insights from our subword spotting experiments that we feel are important are that 
+size estimation of subwords is important if using a sliding window
 and that
-length of and frequency of  a subword does not directly correlate with the precision one can spot it.
+the number of characters in a subword  and its frequency in the data set does not directly correlate with the precision one can spot it.
 
 A further contribution is our exploration of a few applications of subword spotting.
-We show how subword spotting can be used to assist people manually transcribing documents by helping locate instances of unknown characters.
-We evaluate the performance of subword spotting when applied to the task of suffix spotting. This could easily be extended to include preffix spotting. These searches can achieve results not readily available with word spotting.
+We show how subword spotting can be used to assist people manually transcribing documents by helping locate instances of unknown characters. Subword spotting we feel is a good fit for this task as a person may want to search for a group of characters together, or may not even recognize where character boundaries are.
+We evaluate the performance of subword spotting when applied to the task of suffix spotting. 
+%This could easily be extended to include preffix spotting. 
+These searches can achieve results not readily available with word spotting and, as discussed in the next section, can be extended to even more customizable searches.
 We attempt to apply subword spotting to CAT, but fail to achieve usable results. However, the method has potential given adjustments discussed in the next section.
 
 
@@ -1509,11 +1515,13 @@ There are several things that could have improved the subword spotting. We did n
 
 Everything we did in this work was based on word segmentation. However, it would not be difficult to extend what we have done to a segmentation free scenario. One would need to be able to distinguish the situation of letters having a space between them, but after this it should extended quite straightforwardly.
 
+While we aggregated spottings into regular expressions, an extension of suffix spotting would be regular expression spotting. That is, the user supplies a regular expression and the system returns all word images which match the expression. With some work, subword spotting should be able to achieve this. One could spot all n-grams in the expression and then use the structure of the expression to aggregate the scores accroding to their spatial relationships.
+
 Our CAT strategies were not successfull, and if they were they would need to be competitive with modern automatic handwriting recognition methods (CNN+RNN) to be applicable. However, there is a slightly different application our method has the potential to work in.
 Both our spotting method (PHOCNet) and modern automatic handwriting recognition methods (CNN+RNN) require traning data from a corpus before they can begin to work effectively. In a real workflow this will be a part of the corpus that must be manually transcribed. However, given an effective QbE subword spotting method that does not require corpus specific training, the CATTSS methods described in Chapter \ref{transcription} should work with few adjustments. Rather than the system initailly spotting a set of n-grams, a user would need to crop a few from the corpus to seed the system. After this, however, it should be able to proceed as outlined in Chapter \ref{transcription}.
-The catch is that the untrained QbE spotting method must be better than the QbS spotting we have demonstrated.
+The key is that the untrained QbE spotting method must be better than the QbS spotting we have demonstrated. Currently such a method does not exist.
 
-While we aggregated spottings into regular expressions, an extension of suffix spotting would be regular expression spotting. That is, the user supplies a regular expression and the system returns all word images which match the expression. With some work, subword spotting should be able to achieve this.
+
 
 %\nocite{testentry}
 
