@@ -15,7 +15,7 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {3.1}{\ignorespaces Examples of lines from the IAM dataset.\relax }}{18}{figure.caption.13}
 \contentsline {figure}{\numberline {3.2}{\ignorespaces Excerpts from the Bentham dataset.\relax }}{19}{figure.caption.14}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Process for extracting names from US 1930 census forms for Census Names data set. We begin with registerd forms (a). Then we average the images together (b). The average image is used to mark form boundaries manually (c). The lines are registered to specific census image (d). At each cell a histogram is computed around the cell boundaries (dark blue) (e). The cell boundaries are snapped to the histogram peaks (f). Word boundaries were manually annotated for each cell (g).\relax }}{21}{figure.caption.15}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Process for extracting names from US 1930 census forms for Census Names data set. We begin with registered forms (a). Then we average the images together (b). The average image is used to mark form boundaries manually (c). The lines are registered to specific census image (d). At each cell a peojection profile is computed around the cell boundaries (dark blue) (e). The cell boundaries are snapped to the histogram peaks (f). Word boundaries were manually annotated for each cell (g).\relax }}{21}{figure.caption.15}
 \contentsline {figure}{\numberline {3.4}{\ignorespaces Excerpts from the Census Names dataset.\relax }}{22}{figure.caption.16}
 \contentsline {figure}{\numberline {3.5}{\ignorespaces Example of hand annotated character segmentation.\relax }}{22}{figure.caption.17}
 \addvspace {10\p@ }
