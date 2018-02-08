@@ -609,7 +609,7 @@ Our network architecture varies slightly from \cite{sudholt2017} and is outlined
 
 %SPP \cite{SPP} is a method of allowing a network with fully connected layers to handle images of arbitrary size. This is accomplished by performing a pooling (max in our implementation) over windows of the image. The first window encompasses the full image and then it proceeds by dividing the windows into 4 at each level down. We use 3 levels for all datasets except the Census Names dataset, which has smaller characters. We use 2 levels for the Census Names dataset to allow the network to operate on smaller images (the SPP won't be creating windows of subpixel size).
 
-TPP is a slight modification of spatial pyramid pooling (SPP) \cite{SPP}, which is a method of allowing a network with fully connected layers to handle images of arbitrary size. This is accomplished by performing a pooling (max in our implementation) over windows of the feature map (image). The first level is a window that encompasses the full image. The second level is four windows dividing the image into fourths (each the size of half the image width and half the image height). The proceeding levels follow a simlar pattern. TPP uses the same idea, but only divides windows horizontally as verticle information is not useful once word images are featurized. We use 5 layers (dividing the image into 1, 2, 3, 4, and 5 even windows). %for all datasets except the Census Names dataset, which has smaller characters. We use 4 layers for the Census Names dataset to allow the network to operate on smaller images. 
+TPP is a slight modification of spatial pyramid pooling (SPP) \cite{SPP}, which is a method of allowing a network with fully connected layers to handle images of arbitrary size. This is accomplished by performing a pooling (max in our implementation) over windows of the feature map (image). The first level is a window that encompasses the full image. The second level is four windows dividing the image into fourths (each the size of half the image width and half the image height). The proceeding levels follow a simlar pattern. TPP uses the same idea, but only divides windows horizontally as verticle information is not useful once word images are featurized. We use 5 layers (dividing the image into 1, 2, 3, 4, and 5 even windows). Figure \ref{fig:TPP_example} shows what TPP looks like visually. %for all datasets except the Census Names dataset, which has smaller characters. We use 4 layers for the Census Names dataset to allow the network to operate on smaller images. 
 We modify TPP slightly to handle the corner case of small images such that the windows are adjusted to be slightly overlapping at a particular level if a window had a width of zero at that level.
 
 %TODO image for TPP
@@ -619,6 +619,13 @@ We modify TPP slightly to handle the corner case of small images such that the w
     \includegraphics[width=.98\textwidth]{thesis-phocnet}
     \caption{Network architecture for embedding images as PHOC vectors. The numbers beneath each layer represent the number of channels. As the network uses temporal pyramid pooling before the fully connected layers, it can accept images of any size. Our architecture differs from \cite{sudholt2017} only in the number of channels of the last convolutional layer.}
     \label{fig:network}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=.55\textwidth]{TPP_example}
+    \caption{What temporal pyramid pooling (TPP) looks like visually. The same network features (large blocks) is divided into even horizontal windows of different counts (1,2,3,4,5 here). The result of pooling each of these windows (max pooling in our implementation) is appended together as an output vector. This is the red vector in Figure \ref{fig:network}.}
+    \label{fig:TPP_example}
 \end{figure}
 
 \subsection{Training}
@@ -672,6 +679,8 @@ We first compute the MAP for a range of window sizes (stepping 4 pixels), smooth
 
 We note that refining the window size during spotting to maximize the score for a specific word image does not give improvements overall.
 
+Our optimal sizes are reported in the Appendix in Table \ref{tab:customwidths}.
+
 %We report the optimal widths we found in \ref{appendiX} %TODO
 
 \subsection{Running}
@@ -693,9 +702,9 @@ To prepare for spotting, we save the output of the network before the TPP layer 
 
 \subsection{Combining QbE Results}\label{combine}
 
-In one of our tests, we perform iterative aggregation of QbE results by merging results from consecutive queries. To do this we check for potential overlapping spottings between two sets of results; if there is an overlap (of at least 20\%) we discard the result with the worse score. This, merging by taking the better score, follows what \cite{Zagoris2015} found to be most effective when combining full word spotting results. As further justification, one can think of each n-gram or word as having several prototypical ways it can appear (e.g.~an `a' appearing with or without the tail on top, `\textsf{a}' or `{\fontfamily{qag}\selectfont\footnotesize a}'). By selecting the best score you select the score computed on the exemplar image with the prototype closest to the instance of interest's prototype.
+In one of our tests, we perform aggregation of QbE results by merging results from different queries. To do this we check for potential overlapping spottings between two sets of results, where overlap is defined as when the predicted bounding boxes overlap by at least 20\%. If there is an overlap we discard the result with the worse score. This can be trivially be repeated for multiple queries as we essentailly are finding the max score. Merging by taking the better score follows what \cite{Zagoris2015} found to be most effective when combining full word spotting results. As further justification, one can think of each n-gram or word as having several prototypical ways it can appear (e.g.~an `a' appearing with or without the tail on top, `\textsf{a}' or `{\fontfamily{qag}\selectfont\footnotesize a}'). By selecting the best score you select the score computed on the exemplar image with the prototype closest to the instance of interest's prototype.
 
-In the following section we show results of this network's performance on unigrams, bigrams, trigrams and whole words.
+%In the following section we show results of this network's performance on unigrams, bigrams, trigrams and whole words.
 
 %%%%
 
@@ -703,7 +712,7 @@ In the following section we show results of this network's performance on unigra
 
 In this section we present results of testing the subword spotting method described above.
 %We present our own results of testing the subword spotting method described in Chapter \ref{subwordspotting}. 
-As a baseline, we show our network's performance on full word spotting. We evaluate subword spotting unigrams, bigrams and trigrams against our testing portions of the Bentham dataset and Census Names dataset. 
+As a baseline, we show our network's performance on full word spotting. We evaluate subword spotting of unigrams, bigrams and trigrams against our testing portions of the Bentham dataset and Census Names dataset. 
 
 \subsection{Full Word Spotting}
 
@@ -718,6 +727,7 @@ Full word spotting is performed as described in \cite{sudholt2016}, where the ne
   \hline		
   %Old network & 0.755 & 0.683 & 0.762 & 0.811 & 0.525 & 0.511  %results with msfNoLRN/sig-bray IAM:208000  BEN:160000 NAMES(less):144000
   Our network  &  0.892 & 0.833  &  0.926 & 0.971  &  0.758 & 0.858  %results with phocnetSkinny(Adam,dot) IAM:124000  BEN:X NAMES(less):124000
+  Our network adapted PHOC  &  0.X & 0.X  &  0.888 & 0.912  &  0.X & 0.X
   %bentham:ben_fixed_corpus.gtp
   \\
   PHOCNet\cite{sudholt2016} & 0.830 & 0.725 & - & - & - & - \\
@@ -762,34 +772,74 @@ Some qualitative results are show in Figures \ref{fig:qualSpot} and \ref{fig:qua
    & \multicolumn{2}{c|}{Bentham} & \multicolumn{2}{c|}{Census Names}\\
    %&     & weighted & n-gram & instance &     & weighted & n-gram & instance \\
    & QbS  & QbE    &  QbS &  QbE    \\
-  %vvv FIXED vvvv
-  %\hline %FIX(sig-bray-curtis precomp) NoLRN, 0.5 thresh, 160000 full QbS  same set,  (Bray-Curtis turned on...), NAMES with less-SPP
-  %Unigram & 0.460 & X & X & 0.395  & 0.316 & 0.439 & 0.188 & 0.280\\ %these are all running (corpus_original.txt)
-  %Bigram  & 0.541 & X & X & 0.435  & 0.296 & 0.387 & 0.185 & 0.246\\ 
-  %Trigram & 0.481 & X & X & 0.444  & 0.204 & 0.271 & 0.121 & 0.212\\ 
-  %\hline %FIX(sig-bray-curtis precomp) NoLRN custom widths, 0.5 thresh, full QbS  same set,  (Bray-Curtis turned on...), NAMES with less-SPP
-  %Unigram & 0.496 & 0.577 & 0.320 & 0.382  & 0.335 & 0.438 & 0.183 & 0.274\\
-  %Bigram  & 0.567 & 0.632 & 0.363 & 0.431  & 0.280 & 0.375 & 0.169 & 0.223\\ 
- % Trigram & 0.496 & 0.572 & 0.350 & 0.441  & 0.191 & 0.262 & 0.112 & 0.204\\ 
- 
-  %\hline %phocnetSkinny no custom
-  %Fixed character width & & & & & \\
-  %& Unigram &  0.437 &   0.471  & 0.385 &  0.322 \\
-  %& Bigram  &  0.490 &   0.531  & 0.376 &  0.293 \\
-  %& Trigram &  0.483 &   0.560  & 0.286 &  0.283 \\
-  \hline %phocnetSkinny with custom widths
-  %Maximized n-gram widths & & & & & \\
-  %Unigram &  0.476 &  0.371  & 0.388 &  0.138 \\
-  %Bigram  &  0.498 &  0.523  & 0.370 &  0.270 \\
-  %Trigram &  0.499 &  0.556  & 0.264 &  0.277 \\
-  %after fix
+  \hline 
+  %cosine similarity
   Unigram &  0.654 &  0.511  & 0.480 &  0.340 \\
   Bigram  &  0.549 &  0.569  & 0.375 &  0.294 \\
   Trigram &  0.522 &  0.571  & 0.271 &  0.285 \\
+  \hline
+  %with cross-entropy
+  Unigram &  0.608 &  0.338  & 0.X &  0.X \\
+  Bigram  &  0.641 &  0.429  & 0.X &  0.X \\
+  Trigram &  0.560 &  0.449  & 0.X &  0.X \\
+  \hline  
+  %mask-adapted
+  Unigram &  0.654 &  0.X  & 0.X &  0.X \\ %cosine
+  Bigram  &  0.679 &  0.X  & 0.X &  0.X \\ %drop 3,5
+  Trigram &  0.612 &  0.X  & 0.X &  0.X \\ %drop 2,4,5
+  \hline  
+  %net-adapted + consine sim   old ww
+  Unigram &  0.678 &  0.453  & 0.X &  0.X \\ 
+  Bigram  &  0.643 &  0.535  & 0.X &  0.X \\
+  Trigram &  0.618 &  0.533  & 0.X &  0.X \\
+  \hline 
+  %net-adapted + cross ent   old ww
+  Unigram &  0.691 &  0.318  & 0.X &  0.X \\ 
+  Bigram  &  0.665 &  0.408  & 0.X &  0.X \\
+  Trigram &  0.640 &  0.431  & 0.X &  0.X \\
+  \hline 
+  %net-adapted + masked cosine sim   old ww
+  Unigram &  0.499 &  0.296  & 0.X &  0.X \\ 
+  Bigram  &  0.571 &  0.435  & 0.X &  0.X \\
+  Trigram &  0.586 &  0.497  & 0.X &  0.X \\
+  \hline 
+  %net-adapted + masked cross ent   old ww
+  Unigram &  0.691 &  0.318  & 0.497 &  0.203 \\ 
+  Bigram  &  0.665 &  0.408  & 0.402 &  0.179 \\
+  Trigram &  0.659 &  0.438  & 0.363 &  0.170 \\
   \hline 
 \end{tabular}
 \caption{MAP for subword spotting results on the Bentham and Census Names datasets, reported for query-by-string (QbS) and, query-by-example (QbE).}
 \label{tab:subwordspotting}
+\end{table}
+
+\begin{table}
+\centering
+\begin{tabular}{| l | c c c | c c c c |}
+  \hline
+   & \multicolumn{3}{c|}{\cite{sudholt2017} PHOC} & \multicolumn{4}{c|}{Adapted PHOC}\\
+   %&     & weighted & n-gram & instance &     & weighted & n-gram & instance \\
+   & Cosine & CE & Masked CE & Cosine & CE & Masked cosine & Masked CE   \\
+  \hline 
+  QbS & & & & & & & \\
+  \hline
+Unigram &  0.654 &  0.608 &  0.654 &  0.678 &  0.691 &  0.499 &  0.691 \\
+Bigram  &  0.549 &  0.641 &  0.679 &  0.643 &  0.665 &  0.571 &  0.665 \\
+Trigram &  0.522 &  0.560 &  0.612 &  0.618 &  0.640 &  0.586 &  0.659 \\
+\hline
+
+
+\hline 
+  QbE & & & & & & & \\
+  \hline
+Unigram &  0.511 &  0.338 &  0.X &  0.453 &  0.318  &  0.296 &  0.318 \\
+Bigram  &  0.569 &  0.429 &  0.X &  0.535 &  0.408  &  0.435 &  0.408 \\
+Trigram &  0.571 &  0.449 &  0.X &  0.533 &  0.431  &  0.497 &  0.438 \\
+\hline
+
+\end{tabular}
+\caption{MAP for subword spotting results on the Bentham dataset using cosine similarity and cross-entropy (CE) similarity and networks trained with the PHOC used in \cite{sudholt2017} and an adapted PHOC for subword spotting. In some experiments parts of the PHOC vectors were masked which were uninformative to the given task.}
+\label{tab:distmetrics}
 \end{table}
 
 \begin{figure}
@@ -809,17 +859,25 @@ Some qualitative results are show in Figures \ref{fig:qualSpot} and \ref{fig:qua
 \end{figure}
 
 %Effect of window size
-In Section \ref{detirminewindowsize} we explained how we found the window sizes we used. We show in Figure \ref{fig:windowsizes} the change in MAP as the window size varies for some selected n-grams. As can be seen by the peaks in the data, performance can be dependent on having an optimal window size. We cannot assume however that this is simply becuse the n-grams are becoming fully enclosed in the window; for example, the n-gram ``ery'' (maroon x) has two approximately equal peaks for widths 100 pixels apart. Thus simply measuring the width of the n-grams may yield non-optimal window sizes, we must test the actual performance as done in Section \ref{detirminewindowsize}.
+In Section \ref{detirminewindowsize} we explained how we found the window sizes we used. We show in Figure \ref{fig:windowsizes} the change in MAP as the window size varies for some selected n-grams; an example word image with some windows of varying sizes can be seen in Figure \ref{fig:exampleWindows} to help the reader get a relative estimation of what the window sizes are. As can be seen by the peaks in the data, performance can be dependent on having an optimal window size. We cannot assume however that this is simply becuse the n-grams are becoming fully enclosed in the window; for example, the n-gram ``ery'' (maroon x) has two approximately equal peaks for widths 100 pixels apart. Thus simply measuring the width of the n-grams may yield non-optimal window sizes, we must test the actual performance as done in Section \ref{detirminewindowsize}.
 
 \begin{figure}
     \centering
+    \includegraphics[width=.33\textwidth]{exampleWindows}
+    \caption{This shows a word image with windows of various widths: 200-red, 150-green, 100-blue, 50-yellow, 25-cyan.
+    }
+    \label{fig:exampleWindows}
+%\end{figure}
+
+%\begin{figure}
+    \centering
     \includegraphics[width=.98\textwidth]{windowsizes}
-    \caption{This shows the QbS MAP for 18 n-grams on the Bentham dataset for varying sliding window sizes (in pixels).
+    \caption{This shows the QbS MAP for 18 n-grams on the Bentham dataset for varying sliding window sizes (in pixels). Figure \ref{fig:exampleWindows} shows examples of what these windows might look like.
     }
     \label{fig:windowsizes}
 \end{figure}
 
-In Figures \ref{fig:benthamsub} and \ref{fig:namessub} we show, for the Bentham and Census Names datasets, the average precision of n-grams individually, arranged in descending order of frequency. While there is a general trend of more frequent n-grams being spotted better, there is a wide variance indicating that the distinctiveness of character shape likely plays an important role. 
+In Figures \ref{fig:benthamsub}, \ref{fig:benthamsub2}, \ref{fig:namessub} and \ref{fig:namessub2} we show, for the Bentham and Census Names datasets, the average precision of n-grams individually, arranged in descending order of frequency. While there is a general trend of more frequent n-grams being spotted better, there is a wide variance indicating that the distinctiveness of character shape likely plays an important role. 
 
 \begin{figure}
 \centering
@@ -836,8 +894,31 @@ In Figures \ref{fig:benthamsub} and \ref{fig:namessub} we show, for the Bentham 
   \caption{Bigrams}
   \label{fig:benthamBiSpot}
 \end{subfigure}
-\caption{Results for QbS subword spotting on the Bentham dataset. N-grams are arrange in descending order of frequency in test set. Trigrams are not displayed for space reasons.} %TODO add broken tri-gram results
+\caption{Results for QbS unigram and bigram spotting on the Bentham dataset. N-grams are arrange in descending order of frequency in test set.}
 \label{fig:benthamsub}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.99\textwidth}
+  \centering
+  \includegraphics[width=.99\linewidth]{benthamTri1Spot}
+  \label{fig:benthamTri1Spot}
+\end{subfigure}
+\\
+\begin{subfigure}{.99\textwidth}
+  \centering
+  \includegraphics[width=.99\linewidth]{benthamTri2Spot}
+  \label{fig:benthamTri2Spot}
+\end{subfigure}
+\\
+\begin{subfigure}{.99\textwidth}
+  \centering
+  \includegraphics[width=.99\linewidth]{benthamTri3Spot}
+  \label{fig:benthamTri3Spot}
+\end{subfigure}
+\caption{Results for QbS trigram spotting on the Bentham dataset. N-grams are arrange in descending order of frequency in test set.}
+\label{fig:benthamsub2}
 \end{figure}
 
 \begin{figure}
@@ -855,12 +936,46 @@ In Figures \ref{fig:benthamsub} and \ref{fig:namessub} we show, for the Bentham 
   \caption{Bigrams}
   \label{fig:namesBiSpot}
 \end{subfigure}
-\caption{Results for QbS subword spotting on the Census Names dataset. N-grams are arrange in descending order of frequency in test set. Trigrams are not displayed for space reasons.}
+\caption{Results for QbS unigram and bigram spotting on the Census Names dataset. N-grams are arrange in descending order of frequency in test set.}
 \label{fig:namessub}
 \end{figure}
 
+\begin{figure}
+\centering
+\begin{subfigure}{.99\textwidth}
+  \centering
+  \includegraphics[width=.99\linewidth]{namesTri1Spot}
+  \label{fig:namesTri1Spot}
+\end{subfigure}
+\\
+\begin{subfigure}{.99\textwidth}
+  \centering
+  \includegraphics[width=.99\linewidth]{namesTri2Spot}
+  \label{fig:namesTri2Spot}
+\end{subfigure}
+\\
+\begin{subfigure}{.99\textwidth}
+  \centering
+  \includegraphics[width=.99\linewidth]{namesTri3Spot}
+  \label{fig:namesTri3Spot}
+\end{subfigure}
+\caption{Results for QbS trigram spotting on the Census Names dataset. N-grams are arrange in descending order of frequency in test set.}
+\label{fig:namessub2}
+\end{figure}
+
+!!!!!THE NEW STUFF
+We note that for QbS that the relative performance of unigrams, bigrams, and trigrams is reversed. This occurs becuase of an error where windows containing only part of the desired n-gram (e.g.~a single character of a bigram) are scored highly. For example...
+The problem becomes most agrevated when tryign to spotting n-grams with double letters. As these errors do not occur at all in unigrams, it's MAP is higher. It can occur more freqently in the trigram case than bigram.
+
+We note that QbE seems to be relatively immune to this. It is likely due to the fuzziness of the query vector.
+
+
+On better QbE with old PHOC:
+It is interesting that the best QbE performance is achieved with the original PHOC vector. While it is not totally clear why this is the case, we believe it is becuse a query based on an image is able to more richly describe the word visually with the larger PHOC vector. In a n-gram, different characters have different widths, meaning the location each character in one trigram is slightly different than another trigram. While QbS cannot capture this, QbE with a large enought PHOC vector can.
+!!!!
 We notice in Table \ref{tab:subwordspotting} that on the Census names, unigrams out perform bigrams and trigrams. This immediately seems counterintuitive, as trigrams and bigrams have more context than unigrams. However, n-grams which occur less frequently tend to produce greater error, and the higher n is, the less the n-gram occurs. 
 This can be seen in Figures \ref{fig:benthamsub} and \ref{fig:namessub} and we additionally demonstrated it in Figure \ref{fig:remove}, where trigrams which occur infrequently are removed from our testing set and the MAP increases. This is potentially because there are fewer examples seen in training (training is balanced at a word, not n-gram, level).
+!!!!!!
 
 
 \begin{figure}
@@ -933,7 +1048,7 @@ This assistant system is a proof of concept and no testing was done on it. Its p
 
 %Speed considerations, we optimize, but work is being done on fast CNN execution
 
-\section{Prefix/Suffix Spotting}
+\section{Suffix Spotting}
 Word spotting is a technique that can be used to find certain words in a corpus of handwritten documents. However, there are certain situations where one may want to search for a partial word, such as a prefix or suffix. For example, if one wanted to find names of towns in a corpus of German documents, spotting words with the suffix ``-berg'' should return many town names.
 
 We identified a list of 41 suffixes and evaluate spotting the suffixes present from this list in the IAM and Census Names dataset. 
@@ -1563,6 +1678,448 @@ Our CAT strategies were not successfull, and if they were they would need to be 
 Both our spotting method (PHOCNet) and modern automatic handwriting recognition methods (CNN+RNN) require traning data from a corpus before they can begin to work effectively. In a real workflow this will be a part of the corpus that must be manually transcribed. However, given an effective QbE subword spotting method that does not require corpus specific training, the CATTSS methods described in Chapter \ref{transcription} should work with few adjustments. Rather than the system initailly spotting a set of n-grams, a user would need to crop a few from the corpus to seed the system. After this, however, it should be able to proceed as outlined in Chapter \ref{transcription}.
 The key is that the untrained QbE spotting method must be better than the QbS spotting we have demonstrated. Currently such a method does not exist.
 
+
+\chapter{Appendix}
+
+\begin{table}
+\centering
+\begin{tabular}{| l | c c | c c |}
+  \hline
+  & \multicolumn{2}{c|}{Bentham} & \multicolumn{2}{c|}{Census Names}\\
+   %& QbS & QbE & QbS & QbE \\
+  n-gram & Spotting width & Predicted width & Spotting width & Predicted width \\
+  \hline
+  a & 38 & 48 & 20 & 20 \\
+  b & 33 & 36 & 27 & 28 \\
+  c & 30 & 36 & 42 & 60 \\
+  d & 48 & 64 & 23 & 20 \\
+  e & 34 & 48 & 17 & 20 \\
+  f & 35 & 48 & 44 & 60 \\
+  g & 38 & 48 & 33 & 40 \\
+  h & 31 & 36 & 26 & 28 \\
+  i & 26 & 36 & 16 & 20 \\
+  j & 42 & 64 & 41 & 60 \\
+  k & 48 & 64 & 28 & 28 \\
+  l & 30 & 36 & 20 & 20 \\
+  m & 58 & 64 & 28 & 20 \\
+  n & 45 & 48 & 32 & 40 \\
+  o & 31 & 36 & 24 & 28 \\
+  p & 38 & 36 & 38 & 56 \\
+  q & 57 & 76 & 40 & 56 \\
+  r & 31 & 36 & 17 & 20 \\
+  s & 36 & 48 & 21 & 20 \\
+  t & 32 & 36 & 17 & 20 \\
+  u & 39 & 48 & 20 & 20 \\
+  v & 42 & 48 & 35 & 44 \\
+  w & 53 & 64 & 39 & 44 \\
+  x & 52 & 64 & 18 & 20 \\
+  y & 44 & 64 & 30 & 40 \\
+  z & 48 & 64 & 39 & 60 \\
+  ac & 58 & 64 & 46 & 44 \\
+  ad & 72 & 76 & 49 & 44 \\
+  ai & 59 & 64 & 46 & 56 \\
+  al & 59 & 64 & 44 & 44 \\
+  an & 69 & 64 & 48 & 44 \\
+  ar & 58 & 64 & 39 & 40 \\
+  as & 60 & 64 & 51 & 56 \\
+  at & 67 & 76 & 61 & 84 \\
+  be & 66 & 76 & 50 & 56 \\
+  ca & 58 & 64 & 60 & 72 \\
+  ce & 62 & 76 & 42 & 44 \\
+  ch & 55 & 64 & 61 & 72 \\
+  co & 51 & 48 & 49 & 56 \\
+  ct & 54 & 64 & 42 & 44 \\
+  de & 68 & 76 & 33 & 20 \\
+  di & 74 & 96 & 32 & 20 \\
+  ea & 55 & 48 & 53 & 68 \\
+  ec & 54 & 64 & 42 & 44 \\
+  ed & 64 & 64 & 63 & 84 \\
+  ee & 63 & 76 & 49 & 68 \\
+  el & 67 & 84 & 54 & 72 \\
+  em & 81 & 76 & 58 & 60 \\
+  en & 61 & 64 & 50 & 56 \\
+  er & 56 & 64 & 46 & 56 \\
+  es & 48 & 48 & 29 & 20 \\
+  et & 57 & 64 & 28 & 20 \\
+  fo & 48 & 48 & 46 & 44 \\
+  ge & 58 & 64 & 40 & 40 \\
+  ha & 69 & 76 & 46 & 40 \\
+  he & 49 & 48 & 40 & 40 \\
+  hi & 63 & 76 & 31 & 20 \\
+  ho & 58 & 64 & 41 & 40 \\
+  ic & 60 & 76 & 53 & 68 \\
+  ie & 39 & 36 & 26 & 20 \\
+  il & 41 & 36 & 33 & 28 \\
+  im & 61 & 48 & 45 & 40 \\
+  in & 71 & 84 & 31 & 20 \\
+  io & 49 & 48 & 37 & 40 \\
+  is & 54 & 64 & 40 & 44 \\
+  it & 61 & 76 & 57 & 84 \\
+  la & 57 & 64 & 40 & 40 \\
+  le & 55 & 64 & 36 & 40 \\
+  li & 61 & 76 & 35 & 40 \\
+  ll & 55 & 64 & 29 & 20 \\
+  lo & 47 & 48 & 29 & 20 \\
+  ly & 55 & 48 & 32 & 20 \\
+  ma & 95 & 96 & 54 & 44 \\
+  me & 83 & 84 & 42 & 28 \\
+  mi & 93 & 108 & 43 & 28 \\
+  mo & 89 & 96 & 39 & 20 \\
+  na & 81 & 96 & 42 & 28 \\
+  nc & 69 & 76 & 55 & 60 \\
+  nd & 75 & 76 & 60 & 68 \\
+  ne & 59 & 64 & 52 & 60 \\
+  ng & 73 & 76 & 61 & 68 \\
+  ni & 67 & 76 & 59 & 72 \\
+  no & 70 & 76 & 47 & 44 \\
+  ns & 63 & 64 & 42 & 40 \\
+  nt & 73 & 84 & 51 & 56 \\
+  of & 64 & 76 & 55 & 68 \\
+  ol & 55 & 64 & 45 & 56 \\
+  om & 77 & 76 & 39 & 20 \\
+  on & 78 & 96 & 33 & 20 \\
+  or & 56 & 64 & 29 & 20 \\
+  ot & 59 & 64 & 37 & 40 \\
+  ou & 66 & 76 & 40 & 40 \\
+  ow & 84 & 96 & 59 & 68 \\
+  pa & 75 & 76 & 48 & 44 \\
+  pe & 69 & 76 & 61 & 84 \\
+  po & 69 & 76 & 44 & 44 \\
+  pr & 68 & 76 & 43 & 44 \\
+  ra & 60 & 64 & 43 & 44 \\
+  re & 44 & 36 & 28 & 20 \\
+  ri & 58 & 64 & 27 & 20 \\
+  ro & 52 & 48 & 33 & 28 \\
+  rs & 57 & 64 & 34 & 28 \\
+  rt & 54 & 64 & 28 & 20 \\
+  se & 48 & 48 & 31 & 28 \\
+  sh & 61 & 64 & 54 & 60 \\
+  si & 54 & 64 & 56 & 72 \\
+  so & 53 & 48 & 34 & 28 \\
+  ss & 66 & 76 & 49 & 56 \\
+  st & 64 & 76 & 30 & 20 \\
+  ta & 55 & 48 & 39 & 40 \\
+  te & 43 & 36 & 30 & 28 \\
+  th & 57 & 64 & 43 & 40 \\
+  ti & 59 & 76 & 35 & 40 \\
+  to & 57 & 64 & 29 & 20 \\
+  tr & 46 & 36 & 28 & 20 \\
+  ts & 60 & 64 & 30 & 20 \\
+  ul & 60 & 64 & 48 & 56 \\
+  un & 80 & 84 & 56 & 60 \\
+  ur & 53 & 48 & 47 & 56 \\
+  us & 61 & 64 & 47 & 44 \\
+  ut & 52 & 48 & 33 & 28 \\
+  ve & 62 & 64 & 52 & 68 \\
+  wa & 79 & 76 & 69 & 84 \\
+  we & 75 & 76 & 52 & 56 \\
+  wh & 76 & 76 & 57 & 56 \\
+  wi & 75 & 84 & 59 & 68 \\
+  abl & 102 & 120 & 55 & 40 \\
+  abo & 85 & 76 & 69 & 68 \\
+  ace & 73 & 64 & 65 & 68 \\
+  ach & 75 & 64 & 69 & 68 \\
+  act & 89 & 96 & 66 & 68 \\
+  ade & 87 & 76 & 70 & 68 \\
+  age & 89 & 84 & 54 & 40 \\
+  ain & 88 & 84 & 57 & 44 \\
+  ake & 85 & 76 & 76 & 84 \\
+  ali & 109 & 140 & 49 & 40 \\
+  all & 89 & 96 & 57 & 56 \\
+  als & 79 & 76 & 65 & 68 \\
+  ame & 111 & 108 & 68 & 56 \\
+  anc & 99 & 108 & 73 & 72 \\
+  and & 111 & 120 & 80 & 84 \\
+  ang & 87 & 76 & 75 & 72 \\
+  ans & 93 & 84 & 82 & 84 \\
+  ant & 96 & 96 & 65 & 60 \\
+  any & 118 & 140 & 73 & 72 \\
+  app & 101 & 96 & 71 & 72 \\
+  ard & 94 & 96 & 62 & 56 \\
+  are & 92 & 96 & 56 & 56 \\
+  ari & 74 & 64 & 49 & 40 \\
+  art & 78 & 76 & 62 & 68 \\
+  ary & 94 & 96 & 75 & 84 \\
+  ase & 81 & 76 & 64 & 68 \\
+  ass & 92 & 96 & 65 & 68 \\
+  ast & 89 & 96 & 64 & 68 \\
+  ate & 89 & 96 & 61 & 60 \\
+  ati & 89 & 96 & 60 & 60 \\
+  att & 73 & 64 & 66 & 72 \\
+  ave & 87 & 84 & 66 & 68 \\
+  ber & 75 & 64 & 77 & 84 \\
+  ble & 90 & 96 & 81 & 100 \\
+  but & 115 & 140 & 68 & 68 \\
+  cal & 73 & 64 & 67 & 68 \\
+  can & 107 & 120 & 73 & 72 \\
+  cat & 73 & 64 & 66 & 68 \\
+  cen & 89 & 96 & 84 & 100 \\
+  ces & 84 & 96 & 63 & 68 \\
+  cha & 113 & 140 & 75 & 72 \\
+  che & 75 & 76 & 54 & 40 \\
+  chi & 85 & 96 & 66 & 68 \\
+  cia & 89 & 96 & 64 & 68 \\
+  com & 111 & 120 & 78 & 72 \\
+  con & 86 & 84 & 69 & 68 \\
+  cou & 74 & 64 & 67 & 68 \\
+  cti & 87 & 108 & 59 & 60 \\
+  ded & 94 & 96 & 73 & 72 \\
+  den & 81 & 64 & 61 & 44 \\
+  der & 82 & 76 & 56 & 44 \\
+  des & 82 & 76 & 67 & 68 \\
+  din & 91 & 84 & 70 & 68 \\
+  dis & 84 & 84 & 66 & 68 \\
+  duc & 95 & 96 & 74 & 72 \\
+  ead & 89 & 84 & 70 & 68 \\
+  ear & 76 & 64 & 54 & 44 \\
+  eas & 79 & 76 & 64 & 68 \\
+  eat & 75 & 64 & 56 & 56 \\
+  eco & 77 & 76 & 61 & 60 \\
+  ect & 81 & 84 & 61 & 60 \\
+  een & 118 & 140 & 59 & 56 \\
+  eir & 68 & 64 & 55 & 60 \\
+  ell & 103 & 140 & 48 & 40 \\
+  ely & 85 & 84 & 62 & 68 \\
+  eme & 115 & 120 & 72 & 72 \\
+  enc & 91 & 96 & 70 & 72 \\
+  end & 101 & 108 & 72 & 72 \\
+  ene & 80 & 76 & 59 & 56 \\
+  ens & 81 & 76 & 69 & 72 \\
+  ent & 102 & 120 & 64 & 68 \\
+  era & 84 & 84 & 61 & 60 \\
+  ere & 76 & 76 & 46 & 40 \\
+  eri & 88 & 108 & 59 & 68 \\
+  ern & 113 & 140 & 77 & 84 \\
+  ers & 78 & 76 & 54 & 56 \\
+  ert & 80 & 84 & 53 & 56 \\
+  ery & 84 & 84 & 61 & 60 \\
+  ese & 73 & 64 & 58 & 60 \\
+  ess & 120 & 164 & 60 & 60 \\
+  est & 77 & 76 & 50 & 44 \\
+  eve & 85 & 84 & 78 & 100 \\
+  exp & 111 & 120 & 62 & 68 \\
+  fer & 75 & 76 & 64 & 68 \\
+  ffe & 71 & 64 & 70 & 68 \\
+  fic & 88 & 108 & 66 & 68 \\
+  for & 78 & 76 & 52 & 40 \\
+  fro & 84 & 84 & 65 & 68 \\
+  gen & 93 & 96 & 70 & 68 \\
+  ght & 89 & 96 & 72 & 72 \\
+  gra & 78 & 64 & 68 & 68 \\
+  gre & 86 & 84 & 63 & 68 \\
+  had & 81 & 64 & 77 & 72 \\
+  han & 108 & 120 & 76 & 72 \\
+  har & 85 & 76 & 55 & 40 \\
+  has & 111 & 140 & 71 & 72 \\
+  hat & 94 & 96 & 69 & 68 \\
+  hav & 105 & 120 & 72 & 72 \\
+  hea & 88 & 84 & 54 & 40 \\
+  hei & 88 & 96 & 61 & 60 \\
+  hem & 116 & 120 & 79 & 72 \\
+  hen & 88 & 84 & 56 & 40 \\
+  her & 83 & 84 & 55 & 44 \\
+  hes & 99 & 120 & 53 & 40 \\
+  hey & 98 & 108 & 68 & 68 \\
+  hic & 71 & 64 & 66 & 68 \\
+  hin & 78 & 64 & 55 & 40 \\
+  his & 81 & 84 & 64 & 68 \\
+  hou & 97 & 108 & 70 & 68 \\
+  how & 101 & 96 & 77 & 72 \\
+  ial & 77 & 76 & 61 & 60 \\
+  ica & 75 & 76 & 64 & 68 \\
+  ice & 67 & 64 & 68 & 84 \\
+  ich & 75 & 76 & 83 & 100 \\
+  ide & 75 & 64 & 63 & 68 \\
+  ien & 74 & 64 & 50 & 40 \\
+  ies & 75 & 76 & 57 & 60 \\
+  igh & 73 & 64 & 62 & 56 \\
+  ill & 77 & 84 & 77 & 100 \\
+  ime & 97 & 96 & 70 & 68 \\
+  imp & 101 & 84 & 76 & 72 \\
+  ina & 90 & 84 & 65 & 68 \\
+  inc & 77 & 76 & 59 & 56 \\
+  ind & 93 & 96 & 68 & 68 \\
+  ine & 78 & 76 & 72 & 84 \\
+  ing & 87 & 84 & 54 & 40 \\
+  ini & 72 & 64 & 57 & 56 \\
+  ins & 77 & 64 & 70 & 72 \\
+  int & 86 & 84 & 72 & 84 \\
+  ion & 90 & 96 & 63 & 68 \\
+  ire & 82 & 96 & 55 & 60 \\
+  ish & 75 & 76 & 64 & 68 \\
+  ist & 69 & 64 & 58 & 60 \\
+  ite & 73 & 76 & 55 & 60 \\
+  ith & 88 & 96 & 68 & 72 \\
+  iti & 65 & 64 & 70 & 84 \\
+  its & 75 & 76 & 58 & 60 \\
+  ity & 81 & 84 & 60 & 60 \\
+  ive & 87 & 96 & 47 & 40 \\
+  kin & 109 & 120 & 67 & 68 \\
+  lan & 86 & 76 & 63 & 56 \\
+  lar & 74 & 64 & 73 & 84 \\
+  lat & 77 & 76 & 51 & 40 \\
+  lea & 79 & 76 & 80 & 100 \\
+  led & 75 & 64 & 57 & 44 \\
+  les & 87 & 96 & 59 & 60 \\
+  lic & 67 & 64 & 79 & 100 \\
+  lin & 94 & 108 & 51 & 40 \\
+  lit & 87 & 108 & 56 & 60 \\
+  lle & 97 & 120 & 54 & 56 \\
+  lly & 91 & 96 & 64 & 68 \\
+  low & 108 & 120 & 86 & 100 \\
+  man & 124 & 120 & 89 & 84 \\
+  mar & 98 & 76 & 78 & 72 \\
+  mat & 107 & 96 & 78 & 72 \\
+  men & 122 & 120 & 79 & 72 \\
+  mer & 92 & 76 & 81 & 84 \\
+  min & 100 & 84 & 83 & 84 \\
+  mon & 122 & 120 & 85 & 84 \\
+  mor & 115 & 120 & 74 & 72 \\
+  mpl & 133 & 140 & 79 & 72 \\
+  nal & 98 & 96 & 79 & 84 \\
+  nat & 102 & 108 & 69 & 68 \\
+  nce & 77 & 64 & 62 & 56 \\
+  nde & 105 & 108 & 85 & 100 \\
+  ndi & 119 & 140 & 70 & 68 \\
+  ned & 95 & 96 & 72 & 72 \\
+  ner & 93 & 96 & 73 & 84 \\
+  nes & 85 & 76 & 61 & 56 \\
+  nge & 85 & 76 & 70 & 68 \\
+  nin & 106 & 120 & 55 & 40 \\
+  not & 116 & 140 & 65 & 68 \\
+  now & 135 & 164 & 82 & 84 \\
+  nsi & 89 & 96 & 64 & 68 \\
+  nst & 95 & 96 & 67 & 68 \\
+  nta & 92 & 84 & 69 & 68 \\
+  nte & 82 & 76 & 81 & 100 \\
+  nti & 86 & 84 & 62 & 68 \\
+  ntr & 81 & 76 & 64 & 68 \\
+  nts & 99 & 108 & 67 & 68 \\
+  ome & 106 & 108 & 73 & 72 \\
+  omm & 154 & 164 & 90 & 84 \\
+  omp & 126 & 140 & 71 & 60 \\
+  ona & 106 & 120 & 63 & 56 \\
+  ond & 88 & 76 & 73 & 72 \\
+  one & 82 & 76 & 74 & 84 \\
+  ong & 94 & 96 & 71 & 72 \\
+  ons & 90 & 84 & 67 & 68 \\
+  ont & 82 & 76 & 66 & 68 \\
+  ope & 76 & 64 & 72 & 84 \\
+  ord & 88 & 84 & 59 & 56 \\
+  ore & 77 & 76 & 51 & 44 \\
+  orm & 131 & 164 & 74 & 72 \\
+  ort & 87 & 96 & 58 & 60 \\
+  ose & 87 & 96 & 49 & 40 \\
+  ost & 109 & 140 & 71 & 84 \\
+  oth & 78 & 76 & 70 & 72 \\
+  oug & 88 & 84 & 71 & 72 \\
+  oul & 87 & 84 & 64 & 68 \\
+  oun & 87 & 76 & 65 & 60 \\
+  our & 88 & 84 & 63 & 68 \\
+  ous & 86 & 84 & 60 & 56 \\
+  out & 91 & 96 & 63 & 68 \\
+  ove & 73 & 64 & 61 & 60 \\
+  owe & 106 & 120 & 69 & 68 \\
+  own & 115 & 120 & 74 & 68 \\
+  par & 92 & 84 & 67 & 68 \\
+  pec & 97 & 108 & 65 & 68 \\
+  per & 88 & 84 & 76 & 84 \\
+  pla & 93 & 96 & 67 & 68 \\
+  ple & 81 & 76 & 80 & 100 \\
+  por & 99 & 108 & 63 & 68 \\
+  pos & 91 & 96 & 65 & 68 \\
+  pre & 90 & 96 & 61 & 60 \\
+  pri & 102 & 120 & 60 & 60 \\
+  pro & 101 & 108 & 63 & 68 \\
+  rac & 82 & 76 & 66 & 68 \\
+  ral & 92 & 96 & 63 & 68 \\
+  ran & 97 & 96 & 61 & 56 \\
+  rat & 92 & 96 & 62 & 68 \\
+  rea & 84 & 84 & 58 & 56 \\
+  rec & 84 & 96 & 61 & 60 \\
+  red & 86 & 84 & 74 & 84 \\
+  ree & 88 & 96 & 46 & 40 \\
+  rel & 82 & 84 & 67 & 84 \\
+  ren & 77 & 64 & 51 & 40 \\
+  res & 78 & 76 & 52 & 44 \\
+  ric & 84 & 96 & 56 & 56 \\
+  rie & 72 & 76 & 53 & 56 \\
+  rin & 123 & 164 & 50 & 40 \\
+  ris & 100 & 120 & 55 & 56 \\
+  rit & 96 & 120 & 52 & 56 \\
+  rom & 125 & 140 & 74 & 72 \\
+  rou & 88 & 84 & 63 & 68 \\
+  rti & 68 & 64 & 55 & 60 \\
+  sed & 86 & 84 & 67 & 68 \\
+  see & 83 & 84 & 58 & 60 \\
+  sel & 73 & 64 & 79 & 100 \\
+  sen & 81 & 76 & 83 & 100 \\
+  ser & 80 & 76 & 59 & 60 \\
+  ses & 76 & 76 & 61 & 60 \\
+  she & 79 & 76 & 66 & 68 \\
+  sho & 98 & 108 & 67 & 68 \\
+  sin & 89 & 96 & 64 & 68 \\
+  sio & 91 & 108 & 58 & 60 \\
+  sit & 69 & 64 & 58 & 60 \\
+  som & 103 & 96 & 76 & 72 \\
+  son & 84 & 76 & 70 & 72 \\
+  spe & 83 & 76 & 64 & 68 \\
+  sse & 100 & 120 & 61 & 60 \\
+  ssi & 88 & 96 & 65 & 72 \\
+  sta & 81 & 76 & 64 & 68 \\
+  ste & 75 & 76 & 48 & 40 \\
+  sti & 87 & 96 & 58 & 60 \\
+  sto & 71 & 64 & 55 & 56 \\
+  str & 72 & 64 & 60 & 60 \\
+  sur & 83 & 76 & 64 & 68 \\
+  tai & 85 & 96 & 60 & 60 \\
+  tal & 81 & 76 & 51 & 40 \\
+  tan & 86 & 76 & 69 & 68 \\
+  tat & 73 & 64 & 62 & 68 \\
+  ted & 85 & 84 & 65 & 68 \\
+  ten & 76 & 64 & 64 & 68 \\
+  ter & 76 & 76 & 55 & 56 \\
+  tes & 77 & 76 & 59 & 60 \\
+  tha & 86 & 84 & 65 & 60 \\
+  the & 84 & 84 & 81 & 100 \\
+  thi & 78 & 76 & 62 & 68 \\
+  tho & 80 & 76 & 65 & 68 \\
+  tic & 73 & 76 & 59 & 60 \\
+  tim & 93 & 84 & 71 & 72 \\
+  tin & 88 & 96 & 52 & 44 \\
+  tio & 68 & 64 & 56 & 60 \\
+  tiv & 97 & 120 & 58 & 60 \\
+  tor & 83 & 84 & 58 & 60 \\
+  tra & 80 & 76 & 62 & 68 \\
+  tri & 84 & 96 & 46 & 40 \\
+  tte & 69 & 64 & 55 & 56 \\
+  tur & 79 & 76 & 62 & 68 \\
+  ual & 88 & 84 & 67 & 68 \\
+  uch & 128 & 164 & 73 & 72 \\
+  ugh & 96 & 96 & 59 & 40 \\
+  uld & 90 & 84 & 71 & 72 \\
+  und & 106 & 108 & 77 & 72 \\
+  uni & 93 & 96 & 67 & 68 \\
+  unt & 91 & 84 & 67 & 68 \\
+  ure & 81 & 76 & 61 & 60 \\
+  use & 78 & 64 & 64 & 68 \\
+  ust & 82 & 76 & 60 & 56 \\
+  ven & 97 & 96 & 83 & 100 \\
+  ver & 88 & 96 & 57 & 56 \\
+  was & 99 & 96 & 76 & 72 \\
+  wer & 99 & 96 & 69 & 68 \\
+  whe & 88 & 76 & 76 & 72 \\
+  whi & 106 & 120 & 74 & 72 \\
+  who & 109 & 120 & 77 & 72 \\
+  wil & 112 & 140 & 68 & 68 \\
+  wit & 100 & 108 & 67 & 68 \\
+  wor & 99 & 96 & 70 & 68 \\
+  you & 131 & 164 & 67 & 68 \\
+  \hline 
+\end{tabular}
+\caption{Optimal sliding window widths for spotting and estimated visual widths for each n-gram of interest.}
+\label{tab:customwidths}
+\end{table}
 
 
 %\nocite{testentry}

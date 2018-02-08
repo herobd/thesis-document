@@ -2,12 +2,15 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces MAP for full word spotting results, reported for both query-by-string (QbS) and query-by-example (QbE). Results on Census Names uses network with SPP depth of 2 instead of 3. Using 3 yields QbS:0.525 and QbE:0.511.\relax }}{29}{table.caption.19}
-\contentsline {table}{\numberline {4.2}{\ignorespaces MAP for subword spotting results on the Bentham and Census Names datasets, reported for query-by-string (QbS) and, query-by-example (QbE).\relax }}{30}{table.caption.20}
+\contentsline {table}{\numberline {4.1}{\ignorespaces MAP for full word spotting results, reported for both query-by-string (QbS) and query-by-example (QbE).\relax }}{30}{table.caption.20}
+\contentsline {table}{\numberline {4.2}{\ignorespaces MAP for subword spotting results on the Bentham and Census Names datasets, reported for query-by-string (QbS) and, query-by-example (QbE).\relax }}{31}{table.caption.21}
+\contentsline {table}{\numberline {4.3}{\ignorespaces MAP for subword spotting results on the Bentham dataset using cosine similarity and cross-entropy (CE) similarity and networks trained with the PHOC used in \cite {sudholt2017} and an adapted PHOC for subword spotting. In some experiments parts of the PHOC vectors were masked which were uninformative to the given task.\relax }}{35}{table.caption.22}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {7.1}{\ignorespaces Highlights in the results from simulations. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used. The PHOC vector method is the only method we tested able to transcribe words at a rate faster than manual transcription.\relax }}{65}{table.caption.42}
-\contentsline {table}{\numberline {7.2}{\ignorespaces Results from simulations of CATTSS using user approval on subword spotting results. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used.\relax }}{66}{table.caption.43}
-\contentsline {table}{\numberline {7.3}{\ignorespaces Results from simulations using character probability vectors derived from subword spotting resutls. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used.\relax }}{68}{table.caption.45}
+\contentsline {table}{\numberline {7.1}{\ignorespaces Highlights in the results from simulations. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used. The PHOC vector method is the only method we tested able to transcribe words at a rate faster than manual transcription.\relax }}{69}{table.caption.46}
+\contentsline {table}{\numberline {7.2}{\ignorespaces Results from simulations of CATTSS using user approval on subword spotting results. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used.\relax }}{70}{table.caption.47}
+\contentsline {table}{\numberline {7.3}{\ignorespaces Results from simulations using character probability vectors derived from subword spotting resutls. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used.\relax }}{72}{table.caption.49}
 \addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {9.1}{\ignorespaces Optimal sliding window widths for spotting and estimated visual widths for each n-gram of interest.\relax }}{78}{table.caption.50}
