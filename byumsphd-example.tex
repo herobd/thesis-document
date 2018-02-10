@@ -601,7 +601,7 @@ We use a sliding window over word images with a word spotting CNN to perform sub
 
 \subsection{Architecture}
 
-Our subword spotting is built on the segmentation based word spotting method PHOCNet \cite{sudholt2016, sudholt2017} which we adapted to perform a sliding window over the word images. \cite{sudholt2017} uses a deep convolutional network trained on word images with pyramidal histogram of characters (PHOC) \cite{Almazan2014} as the target vectors. This method can word spot using both query-by-string (QbS) and query-by-example (QbE), that is a query may be a text word or a word image. Searches are performed simply by comparing vector similarities, the query vector either being a word's PHOC vector if searching with text or found from running its image throught the network. See Section \ref{relatedwork_wordspotting} for the details of PHOC vectors. We follow \cite{sudholt2017} and use a PHOC vector where the alphabet is case insensitive, includes digits (0-9) and does not include bigrams (unlike \cite{Almazan2014} which uses bigrams in the first two layers) . %We note that the bigrams used in the PHOC vector overlap with, but are not identical with the bigrams we spot; changing this so that they were identical did not improve results. 
+Our subword spotting is built on the segmentation based word spotting method PHOCNet \cite{sudholt2016, sudholt2017} which we adapted to perform a sliding window over the word images. \cite{sudholt2017} uses a deep convolutional network trained on word images with pyramidal histogram of characters (PHOC) \cite{Almazan2014} as the target vectors. This method can word spot using both query-by-string (QbS) and query-by-example (QbE), that is a query may be a text word or a word image. Searches are performed simply by comparing vector similarities, the query vector either being a word's PHOC vector if searching with text or found from running its image throught the network. See Section \ref{relatedwork_wordspotting} for the details of PHOC vectors. We follow \cite{sudholt2017} and use a PHOC vector where the alphabet is case insensitive, includes digits (0-9) and does not include bigrams (unlike \cite{Almazan2014} which uses bigrams in the first two layers). For our specific application of subword spotting, we try adapting the PHOC vector in \cite{sudholt2017} so instead of having levels 2,3,4,5 we have 1,2,3. \cite{sudholt2017} was designed for words which require more spatial resolution than subwords. Our PHOC levels directly correspond with the fact we are spotting uni-, bi- and trigrams. We refer to this as our ``adapted PHOC'' in the results.
 
 
 
@@ -691,7 +691,7 @@ To prepare for spotting, we save the output of the network before the TPP layer 
 %This preprocessing allows us to forgo running the network as we merely need
 
 %For performing QbS, one compares the PHOC vector representing the query word or n-gram to the output of the network. For QbE, the outputs of the network are compared against eachother.
-\cite{sudholt2017} uses a cosine similarity to compare PHOC vectors (both string and network generated) and we follow the same procedure.
+\cite{sudholt2017} uses a cosine similarity to compare PHOC vectors (both string and network generated). We used this, but also tested other comparison methods and found that for string generated PHOC vectors, using cross-entropy performs better. This is what the network is optimizing and as the training labels are string generated PHOC vectors it makes sense this should perform well. The query vectors for network generated vectors (QbE queries) are noisy and appear very different. We also found improvements by masking out irrelevant levels of the PHOC for the given n-gram being spotted. For unigram spotting we only use level 1, for bigrams levels 1,2 and for trigrams levels 1,3. This masked-cross-entropy comparison is the measure we use for QbS and we use cosine similarity for QbE.
 % We note that \cite{sudholt2016} (the original PHOCNet) uses the Bray-Curtis similarity, which yields inferior results with our implementation. We believe the change from SPP to TPP is the reason.
 %, however, we found a dot-product similarity, normalizing network outputs, worked better for our implementation.
 %The score for a subwindow is the normalized dot product between the query PHOC vector (the network output of the query image or the actual PHOC vector of the query word) and the network's generated PHOC vector for that subwindow.
@@ -726,10 +726,10 @@ Full word spotting is performed as described in \cite{sudholt2016}, where the ne
   Method & QbS & QbE & QbS & QbE & QbS & QbE\\
   \hline		
   %Old network & 0.755 & 0.683 & 0.762 & 0.811 & 0.525 & 0.511  %results with msfNoLRN/sig-bray IAM:208000  BEN:160000 NAMES(less):144000
-  Our network  &  0.892 & 0.833  &  0.926 & 0.971  &  0.758 & 0.858  %results with phocnetSkinny(Adam,dot) IAM:124000  BEN:X NAMES(less):124000
-  Our network adapted PHOC  &  0.X & 0.X  &  0.888 & 0.912  &  0.X & 0.X
+  Our network  &  0.892 & 0.833  &  0.926 & 0.971  &  0.758 & 0.858  \\%results with phocnetSkinny(Adam,dot) IAM:124000  BEN:X NAMES(less):124000
+  Our network adapted PHOC  &  0.X & 0.X  &  0.888 & 0.912  &  0.731 & 0.773 \\
   %bentham:ben_fixed_corpus.gtp
-  \\
+  
   PHOCNet\cite{sudholt2016} & 0.830 & 0.725 & - & - & - & - \\
   TPP-PHOCNet\cite{sudholt2017} & 0.934 & 0.827 & - & - & - & - \\
   %? & X & X & X & X \\
@@ -741,7 +741,7 @@ Full word spotting is performed as described in \cite{sudholt2016}, where the ne
 
 %We first note that our model significantly under performs \cite{sudholt2016} on the IAM dataset (by 7.5\% on QbS and 4.2\% on QbE). We were unable to reproduce their results, mimicking their model, and the architecture changes we make we expected would have a negative effect on performance. It is likely a better word spotting model could be produced, but this was not the the focus of our work.
 %It is clear that the Census Names dataset is significantly more challenging than the other datasets, however, having above 50\% MAP indicates the network is learning the task to some degree.
-It can be seen that we underperform compared to \cite{sudholt2017}. This is to be expected as we have reduced the number of parameters in the  	CNN model.
+It can be seen that we underperform compared to \cite{sudholt2017}. This is to be expected as we have reduced the number of parameters in the  	CNN model. The adapted PHOC vector performs even worse which is also anticipated as we are reducing its descriptive power for words longer than three characters.
 
 As a note, it is not always meaningful to compare QbS scores to QbE scores, as QbS represents a mean over text queries, one for each possible word label and QbE represents a mean over instance queries, one for each instance of a word in the dataset, meaning it is biased towards the performance of common words (or n-grams in later tests).
 
@@ -765,7 +765,7 @@ Some qualitative results are show in Figures \ref{fig:qualSpot} and \ref{fig:qua
 
 \begin{table}
 \centering
-\begin{tabular}{| l | c c | c c |}
+\begin{tabular}{| r | c c | c c |}
   \hline
    %& \multicolumn{2}{c|}{Bentham} & \multicolumn{2}{c|}{Census Names}\\
    %& QbS & QbE & QbS & QbE \\
@@ -773,40 +773,18 @@ Some qualitative results are show in Figures \ref{fig:qualSpot} and \ref{fig:qua
    %&     & weighted & n-gram & instance &     & weighted & n-gram & instance \\
    & QbS  & QbE    &  QbS &  QbE    \\
   \hline 
+  Original PHOC using cosine similarity & & & & \\
   %cosine similarity
   Unigram &  0.654 &  0.511  & 0.480 &  0.340 \\
   Bigram  &  0.549 &  0.569  & 0.375 &  0.294 \\
   Trigram &  0.522 &  0.571  & 0.271 &  0.285 \\
   \hline
-  %with cross-entropy
-  Unigram &  0.608 &  0.338  & 0.X &  0.X \\
-  Bigram  &  0.641 &  0.429  & 0.X &  0.X \\
-  Trigram &  0.560 &  0.449  & 0.X &  0.X \\
-  \hline  
-  %mask-adapted
-  Unigram &  0.654 &  0.X  & 0.X &  0.X \\ %cosine
-  Bigram  &  0.679 &  0.X  & 0.X &  0.X \\ %drop 3,5
-  Trigram &  0.612 &  0.X  & 0.X &  0.X \\ %drop 2,4,5
-  \hline  
-  %net-adapted + consine sim   old ww
-  Unigram &  0.678 &  0.453  & 0.X &  0.X \\ 
-  Bigram  &  0.643 &  0.535  & 0.X &  0.X \\
-  Trigram &  0.618 &  0.533  & 0.X &  0.X \\
-  \hline 
-  %net-adapted + cross ent   old ww
-  Unigram &  0.691 &  0.318  & 0.X &  0.X \\ 
-  Bigram  &  0.665 &  0.408  & 0.X &  0.X \\
-  Trigram &  0.640 &  0.431  & 0.X &  0.X \\
-  \hline 
-  %net-adapted + masked cosine sim   old ww
-  Unigram &  0.499 &  0.296  & 0.X &  0.X \\ 
-  Bigram  &  0.571 &  0.435  & 0.X &  0.X \\
-  Trigram &  0.586 &  0.497  & 0.X &  0.X \\
-  \hline 
+  
+  Adapted PHOC using masked cross entropy & & & & \\
   %net-adapted + masked cross ent   old ww
-  Unigram &  0.691 &  0.318  & 0.497 &  0.203 \\ 
-  Bigram  &  0.665 &  0.408  & 0.402 &  0.179 \\
-  Trigram &  0.659 &  0.438  & 0.363 &  0.170 \\
+  Unigram &  0.677 &  0.327  & 0.497 &  0.203 \\ 
+  Bigram  &  0.682 &  0.426  & 0.402 &  0.179 \\
+  Trigram &  0.705 &  0.441  & 0.363 &  0.170 \\
   \hline 
 \end{tabular}
 \caption{MAP for subword spotting results on the Bentham and Census Names datasets, reported for query-by-string (QbS) and, query-by-example (QbE).}
@@ -820,6 +798,7 @@ Some qualitative results are show in Figures \ref{fig:qualSpot} and \ref{fig:qua
    & \multicolumn{3}{c|}{\cite{sudholt2017} PHOC} & \multicolumn{4}{c|}{Adapted PHOC}\\
    %&     & weighted & n-gram & instance &     & weighted & n-gram & instance \\
    & Cosine & CE & Masked CE & Cosine & CE & Masked cosine & Masked CE   \\
+  \hline   
   \hline 
   QbS & & & & & & & \\
   \hline
@@ -858,6 +837,23 @@ Trigram &  0.571 &  0.449 &  0.X &  0.533 &  0.431  &  0.497 &  0.438 \\
     \label{fig:qualSpotNames}
 \end{figure}
 
+In Table \ref{tab:distmetrics} we show a comparison of using cosine similarity and cross-entropy (CE) for PHOC vector comparison using both the original and adapted PHOC vectors. We also show the effect of masking the PHOC vector. For QbS, using cross-entropy shows a large improvement over cosine similarity, but cosine similarity always out performs in QbE.
+
+We note that for QbS that the relative performance of unigrams, bigrams, and trigrams is reversed for the Census Names dataset. This occurs becuase of a common error where windows containing only part of the desired n-gram (e.g.~a single character of a bigram) are scored highly. For example...
+This exists in the Bentham dataset as well.
+The problem becomes most agrevated when trying to spotting n-grams with double letters. As these errors do not occur at all in unigrams, it's MAP is higher. It can occur more freqently in the trigram case than bigram.
+We investigated vector comparitors other than cosine similarity becuase of this problem, which is amplified by the fact that cosine-similarity ignores the network's predictions of characters not present in the query; they are multiplied by zero, though they do effect the overall normalization. Cross-entropy reduces the problem as directly penelizes for false positive character predictions.
+
+We note that QbE seems to be relatively immune to this. It is likely due to the fuzziness of the query vector.
+
+
+%On better QbE with old PHOC:
+It is interesting that the best QbE performance is achieved with the original PHOC vector. While it is not totally clear why this is the case, we believe it is becuse a query based on an image is able to more richly describe the word visually with the larger PHOC vector. In a n-gram, different characters have different widths, meaning the location each character in one trigram is slightly different than another trigram. While QbS cannot capture this, QbE with a large enought PHOC vector can.
+
+
+%We notice in Table \ref{tab:subwordspotting} that on the Census names, unigrams out perform bigrams and trigrams. This immediately seems counterintuitive, as trigrams and bigrams have more context than unigrams. However, n-grams which occur less frequently tend to produce greater error, and the higher n is, the less the n-gram occurs. 
+%This can be seen in Figures \ref{fig:benthamsub} and \ref{fig:namessub} and we additionally demonstrated it in Figure \ref{fig:remove}, where trigrams which occur infrequently are removed from our testing set and the MAP increases. This is potentially because there are fewer examples seen in training (training is balanced at a word, not n-gram, level).
+
 %Effect of window size
 In Section \ref{detirminewindowsize} we explained how we found the window sizes we used. We show in Figure \ref{fig:windowsizes} the change in MAP as the window size varies for some selected n-grams; an example word image with some windows of varying sizes can be seen in Figure \ref{fig:exampleWindows} to help the reader get a relative estimation of what the window sizes are. As can be seen by the peaks in the data, performance can be dependent on having an optimal window size. We cannot assume however that this is simply becuse the n-grams are becoming fully enclosed in the window; for example, the n-gram ``ery'' (maroon x) has two approximately equal peaks for widths 100 pixels apart. Thus simply measuring the width of the n-grams may yield non-optimal window sizes, we must test the actual performance as done in Section \ref{detirminewindowsize}.
 
@@ -871,8 +867,27 @@ In Section \ref{detirminewindowsize} we explained how we found the window sizes 
 
 %\begin{figure}
     \centering
-    \includegraphics[width=.98\textwidth]{windowsizes}
-    \caption{This shows the QbS MAP for 18 n-grams on the Bentham dataset for varying sliding window sizes (in pixels). Figure \ref{fig:exampleWindows} shows examples of what these windows might look like.
+    \begin{subfigure}{.99\textwidth}
+  \centering
+  \includegraphics[width=.6\linewidth]{windowsizes1}
+  %\caption{Unigrams}
+  %\label{fig:benthamUniSpot}
+\end{subfigure}
+\\
+\begin{subfigure}{.99\textwidth}
+  \centering
+  \includegraphics[width=.6\linewidth]{windowsizes2}
+  %\caption{Bigrams}
+  %\label{fig:benthamBiSpot}
+\end{subfigure}
+\\
+\begin{subfigure}{.99\textwidth}
+  \centering
+  \includegraphics[width=.6\linewidth]{windowsizes3}
+  %\caption{Trigrams}
+  %\label{fig:benthamBiSpot}
+\end{subfigure}
+    \caption{These shows the QbS MAP for 18 n-grams on the Bentham dataset for varying sliding window sizes (in pixels). Figure \ref{fig:exampleWindows} shows examples of what these windows might look like.
     }
     \label{fig:windowsizes}
 \end{figure}
@@ -963,28 +978,16 @@ In Figures \ref{fig:benthamsub}, \ref{fig:benthamsub2}, \ref{fig:namessub} and \
 \label{fig:namessub2}
 \end{figure}
 
-!!!!!THE NEW STUFF
-We note that for QbS that the relative performance of unigrams, bigrams, and trigrams is reversed. This occurs becuase of an error where windows containing only part of the desired n-gram (e.g.~a single character of a bigram) are scored highly. For example...
-The problem becomes most agrevated when tryign to spotting n-grams with double letters. As these errors do not occur at all in unigrams, it's MAP is higher. It can occur more freqently in the trigram case than bigram.
-
-We note that QbE seems to be relatively immune to this. It is likely due to the fuzziness of the query vector.
 
 
-On better QbE with old PHOC:
-It is interesting that the best QbE performance is achieved with the original PHOC vector. While it is not totally clear why this is the case, we believe it is becuse a query based on an image is able to more richly describe the word visually with the larger PHOC vector. In a n-gram, different characters have different widths, meaning the location each character in one trigram is slightly different than another trigram. While QbS cannot capture this, QbE with a large enought PHOC vector can.
-!!!!
-We notice in Table \ref{tab:subwordspotting} that on the Census names, unigrams out perform bigrams and trigrams. This immediately seems counterintuitive, as trigrams and bigrams have more context than unigrams. However, n-grams which occur less frequently tend to produce greater error, and the higher n is, the less the n-gram occurs. 
-This can be seen in Figures \ref{fig:benthamsub} and \ref{fig:namessub} and we additionally demonstrated it in Figure \ref{fig:remove}, where trigrams which occur infrequently are removed from our testing set and the MAP increases. This is potentially because there are fewer examples seen in training (training is balanced at a word, not n-gram, level).
-!!!!!!
 
-
-\begin{figure}
-    \centering
-    \includegraphics[width=.75\textwidth]{removengrams}
-    \caption{MAP for QbS subword spotting results for trigrams where we only use queries which have an occurrence count above a threshold (in the testing sets). MAP increases as the threshold increases, demonstrating the least frequent n-grams are more difficult. Only trigrams are shown as the effect is more dramatic in these cases. An opposite trend is not observed for uni- or bigrams.
-    }
-    \label{fig:remove}
-\end{figure}
+%\begin{figure}
+%    \centering
+%    \includegraphics[width=.75\textwidth]{removengrams}
+%    \caption{MAP for QbS subword spotting results for trigrams where we only use queries which have an occurrence count above a threshold (in the testing sets). MAP increases as the threshold increases, demonstrating the least frequent n-grams are more difficult. Only trigrams are shown as the effect is more dramatic in these cases. An opposite trend is not observed for uni- or bigrams.
+%    }
+%    \label{fig:remove}
+%\end{figure}
 
 
 

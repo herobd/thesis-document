@@ -208,6 +208,10 @@
 \citation{sudholt2017}
 \citation{Almazan2014}
 \citation{Almazan2014}
+\citation{sudholt2017}
+\citation{sudholt2017}
+\citation{sudholt2017}
+\citation{sudholt2017}
 \@writefile{toc}{\contentsline {chapter}{\numberline {4}Subword Spotting}{25}{chapter.4}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
@@ -229,18 +233,21 @@
 \citation{adam}
 \citation{sudholt2017}
 \citation{sudholt2017}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.2}Training}{26}{subsection.4.1.2}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Network architecture for embedding images as PHOC vectors. The numbers beneath each layer represent the number of channels. As the network uses temporal pyramid pooling before the fully connected layers, it can accept images of any size. Our architecture differs from \cite  {sudholt2017} only in the number of channels of the last convolutional layer.\relax }}{27}{figure.caption.18}}
 \newlabel{fig:network}{{4.1}{27}{Network architecture for embedding images as PHOC vectors. The numbers beneath each layer represent the number of channels. As the network uses temporal pyramid pooling before the fully connected layers, it can accept images of any size. Our architecture differs from \cite {sudholt2017} only in the number of channels of the last convolutional layer.\relax }{figure.caption.18}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.2}Training}{27}{subsection.4.1.2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1.3}Determining Window Widths}{27}{subsection.4.1.3}}
 \newlabel{detirminewindowsize}{{4.1.3}{27}{Determining Window Widths}{subsection.4.1.3}{}}
 \citation{sudholt2017}
-\citation{sudholt2017}
-\citation{Zagoris2015}
-\citation{Zagoris2015}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces What temporal pyramid pooling (TPP) looks like visually. The same network features (large blocks) is divided into even horizontal windows of different counts (1,2,3,4,5 here). The result of pooling each of these windows (max pooling in our implementation) is appended together as an output vector. This is the red vector in Figure \ref  {fig:network}.\relax }}{28}{figure.caption.19}}
 \newlabel{fig:TPP_example}{{4.2}{28}{What temporal pyramid pooling (TPP) looks like visually. The same network features (large blocks) is divided into even horizontal windows of different counts (1,2,3,4,5 here). The result of pooling each of these windows (max pooling in our implementation) is appended together as an output vector. This is the red vector in Figure \ref {fig:network}.\relax }{figure.caption.19}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1.4}Running}{28}{subsection.4.1.4}}
+\citation{sudholt2017}
+\citation{Zagoris2015}
+\citation{Zagoris2015}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.5}Combining QbE Results}{29}{subsection.4.1.5}}
+\newlabel{combine}{{4.1.5}{29}{Combining QbE Results}{subsection.4.1.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}Analysis of Subword Spotting}{29}{section.4.2}}
 \citation{sudholt2016}
 \citation{sudholt2016}
 \citation{sudholt2016,sudholt2017}
@@ -252,13 +259,9 @@
 \citation{sudholt2017}
 \citation{sudholt2017}
 \citation{sudholt2017}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.5}Combining QbE Results}{29}{subsection.4.1.5}}
-\newlabel{combine}{{4.1.5}{29}{Combining QbE Results}{subsection.4.1.5}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.2}Analysis of Subword Spotting}{29}{section.4.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}Full Word Spotting}{29}{subsection.4.2.1}}
 \@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces MAP for full word spotting results, reported for both query-by-string (QbS) and query-by-example (QbE).\relax }}{30}{table.caption.20}}
 \newlabel{tab:wordspottingresults}{{4.1}{30}{MAP for full word spotting results, reported for both query-by-string (QbS) and query-by-example (QbE).\relax }{table.caption.20}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}Subword Spotting}{30}{subsection.4.2.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}Full Word Spotting}{30}{subsection.4.2.1}}
 \citation{sudholt2017}
 \citation{sudholt2017}
 \citation{sudholt2017}
@@ -267,53 +270,52 @@
 \citation{sudholt2017}
 \@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces MAP for subword spotting results on the Bentham and Census Names datasets, reported for query-by-string (QbS) and, query-by-example (QbE).\relax }}{31}{table.caption.21}}
 \newlabel{tab:subwordspotting}{{4.2}{31}{MAP for subword spotting results on the Bentham and Census Names datasets, reported for query-by-string (QbS) and, query-by-example (QbE).\relax }{table.caption.21}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}Subword Spotting}{31}{subsection.4.2.2}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces Qualitative results for QbS subword spotting on the Bentham Dataset. Spottings show the top results for the various n-gram queries. We selected some of the better n-grams (`n', `pr', `sed') and worse n-grams (`z', `et', `tte') by MAP. Red boxes indicate incorrect spottings. \relax }}{32}{figure.caption.23}}
 \newlabel{fig:qualSpot}{{4.3}{32}{Qualitative results for QbS subword spotting on the Bentham Dataset. Spottings show the top results for the various n-gram queries. We selected some of the better n-grams (`n', `pr', `sed') and worse n-grams (`z', `et', `tte') by MAP. Red boxes indicate incorrect spottings. \relax }{figure.caption.23}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces Qualitative results for QbS subword spotting on the Census Names Dataset. Spottings show the top results for the various n-gram queries. We selected some of the better n-grams (`m', `il', `hic') and worse n-grams (`y', `ss', `wer') by MAP. Red boxes indicate incorrect spottings. \relax }}{33}{figure.caption.24}}
 \newlabel{fig:qualSpotNames}{{4.4}{33}{Qualitative results for QbS subword spotting on the Census Names Dataset. Spottings show the top results for the various n-gram queries. We selected some of the better n-grams (`m', `il', `hic') and worse n-grams (`y', `ss', `wer') by MAP. Red boxes indicate incorrect spottings. \relax }{figure.caption.24}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces This shows a word image with windows of various widths: 200-red, 150-green, 100-blue, 50-yellow, 25-cyan. \relax }}{34}{figure.caption.25}}
-\newlabel{fig:exampleWindows}{{4.5}{34}{This shows a word image with windows of various widths: 200-red, 150-green, 100-blue, 50-yellow, 25-cyan. \relax }{figure.caption.25}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.6}{\ignorespaces This shows the QbS MAP for 18 n-grams on the Bentham dataset for varying sliding window sizes (in pixels). Figure \ref  {fig:exampleWindows} shows examples of what these windows might look like. \relax }}{34}{figure.caption.25}}
-\newlabel{fig:windowsizes}{{4.6}{34}{This shows the QbS MAP for 18 n-grams on the Bentham dataset for varying sliding window sizes (in pixels). Figure \ref {fig:exampleWindows} shows examples of what these windows might look like. \relax }{figure.caption.25}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.3}{\ignorespaces MAP for subword spotting results on the Bentham dataset using cosine similarity and cross-entropy (CE) similarity and networks trained with the PHOC used in \cite  {sudholt2017} and an adapted PHOC for subword spotting. In some experiments parts of the PHOC vectors were masked which were uninformative to the given task.\relax }}{35}{table.caption.22}}
-\newlabel{tab:distmetrics}{{4.3}{35}{MAP for subword spotting results on the Bentham dataset using cosine similarity and cross-entropy (CE) similarity and networks trained with the PHOC used in \cite {sudholt2017} and an adapted PHOC for subword spotting. In some experiments parts of the PHOC vectors were masked which were uninformative to the given task.\relax }{table.caption.22}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.3}{\ignorespaces MAP for subword spotting results on the Bentham dataset using cosine similarity and cross-entropy (CE) similarity and networks trained with the PHOC used in \cite  {sudholt2017} and an adapted PHOC for subword spotting. In some experiments parts of the PHOC vectors were masked which were uninformative to the given task.\relax }}{34}{table.caption.22}}
+\newlabel{tab:distmetrics}{{4.3}{34}{MAP for subword spotting results on the Bentham dataset using cosine similarity and cross-entropy (CE) similarity and networks trained with the PHOC used in \cite {sudholt2017} and an adapted PHOC for subword spotting. In some experiments parts of the PHOC vectors were masked which were uninformative to the given task.\relax }{table.caption.22}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2.3}Respotting Subwords}{35}{subsection.4.2.3}}
-\newlabel{fig:benthamUniSpot}{{4.7a}{36}{Unigrams\relax }{figure.caption.26}{}}
-\newlabel{sub@fig:benthamUniSpot}{{a}{36}{Unigrams\relax }{figure.caption.26}{}}
-\newlabel{fig:benthamBiSpot}{{4.7b}{36}{Bigrams\relax }{figure.caption.26}{}}
-\newlabel{sub@fig:benthamBiSpot}{{b}{36}{Bigrams\relax }{figure.caption.26}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.7}{\ignorespaces Results for QbS unigram and bigram spotting on the Bentham dataset. N-grams are arrange in descending order of frequency in test set.\relax }}{36}{figure.caption.26}}
-\newlabel{fig:benthamsub}{{4.7}{36}{Results for QbS unigram and bigram spotting on the Bentham dataset. N-grams are arrange in descending order of frequency in test set.\relax }{figure.caption.26}{}}
-\newlabel{fig:benthamTri1Spot}{{\caption@xref {fig:benthamTri1Spot}{ on input line 905}}{37}{Subword Spotting}{figure.caption.27}{}}
-\newlabel{sub@fig:benthamTri1Spot}{{}{37}{Subword Spotting}{figure.caption.27}{}}
-\newlabel{fig:benthamTri2Spot}{{\caption@xref {fig:benthamTri2Spot}{ on input line 911}}{37}{Subword Spotting}{figure.caption.27}{}}
-\newlabel{sub@fig:benthamTri2Spot}{{}{37}{Subword Spotting}{figure.caption.27}{}}
-\newlabel{fig:benthamTri3Spot}{{\caption@xref {fig:benthamTri3Spot}{ on input line 917}}{37}{Subword Spotting}{figure.caption.27}{}}
-\newlabel{sub@fig:benthamTri3Spot}{{}{37}{Subword Spotting}{figure.caption.27}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.8}{\ignorespaces Results for QbS trigram spotting on the Bentham dataset. N-grams are arrange in descending order of frequency in test set.\relax }}{37}{figure.caption.27}}
-\newlabel{fig:benthamsub2}{{4.8}{37}{Results for QbS trigram spotting on the Bentham dataset. N-grams are arrange in descending order of frequency in test set.\relax }{figure.caption.27}{}}
-\newlabel{fig:namesUniSpot}{{4.9a}{38}{Unigrams\relax }{figure.caption.28}{}}
-\newlabel{sub@fig:namesUniSpot}{{a}{38}{Unigrams\relax }{figure.caption.28}{}}
-\newlabel{fig:namesBiSpot}{{4.9b}{38}{Bigrams\relax }{figure.caption.28}{}}
-\newlabel{sub@fig:namesBiSpot}{{b}{38}{Bigrams\relax }{figure.caption.28}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.9}{\ignorespaces Results for QbS unigram and bigram spotting on the Census Names dataset. N-grams are arrange in descending order of frequency in test set.\relax }}{38}{figure.caption.28}}
-\newlabel{fig:namessub}{{4.9}{38}{Results for QbS unigram and bigram spotting on the Census Names dataset. N-grams are arrange in descending order of frequency in test set.\relax }{figure.caption.28}{}}
-\newlabel{fig:namesTri1Spot}{{\caption@xref {fig:namesTri1Spot}{ on input line 947}}{39}{Subword Spotting}{figure.caption.29}{}}
-\newlabel{sub@fig:namesTri1Spot}{{}{39}{Subword Spotting}{figure.caption.29}{}}
-\newlabel{fig:namesTri2Spot}{{\caption@xref {fig:namesTri2Spot}{ on input line 953}}{39}{Subword Spotting}{figure.caption.29}{}}
-\newlabel{sub@fig:namesTri2Spot}{{}{39}{Subword Spotting}{figure.caption.29}{}}
-\newlabel{fig:namesTri3Spot}{{\caption@xref {fig:namesTri3Spot}{ on input line 959}}{39}{Subword Spotting}{figure.caption.29}{}}
-\newlabel{sub@fig:namesTri3Spot}{{}{39}{Subword Spotting}{figure.caption.29}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.10}{\ignorespaces Results for QbS trigram spotting on the Census Names dataset. N-grams are arrange in descending order of frequency in test set.\relax }}{39}{figure.caption.29}}
-\newlabel{fig:namessub2}{{4.10}{39}{Results for QbS trigram spotting on the Census Names dataset. N-grams are arrange in descending order of frequency in test set.\relax }{figure.caption.29}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.11}{\ignorespaces MAP for QbS subword spotting results for trigrams where we only use queries which have an occurrence count above a threshold (in the testing sets). MAP increases as the threshold increases, demonstrating the least frequent n-grams are more difficult. Only trigrams are shown as the effect is more dramatic in these cases. An opposite trend is not observed for uni- or bigrams. \relax }}{40}{figure.caption.30}}
-\newlabel{fig:remove}{{4.11}{40}{MAP for QbS subword spotting results for trigrams where we only use queries which have an occurrence count above a threshold (in the testing sets). MAP increases as the threshold increases, demonstrating the least frequent n-grams are more difficult. Only trigrams are shown as the effect is more dramatic in these cases. An opposite trend is not observed for uni- or bigrams. \relax }{figure.caption.30}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.12}{\ignorespaces Unigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.\relax }}{41}{figure.caption.31}}
-\newlabel{fig:unigram_respot}{{4.12}{41}{Unigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.\relax }{figure.caption.31}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.13}{\ignorespaces Bigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.\relax }}{41}{figure.caption.32}}
-\newlabel{fig:bigram_respot}{{4.13}{41}{Bigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.\relax }{figure.caption.32}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.14}{\ignorespaces Trigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.\relax }}{42}{figure.caption.33}}
-\newlabel{fig:trigram_respot}{{4.14}{42}{Trigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.\relax }{figure.caption.33}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces This shows a word image with windows of various widths: 200-red, 150-green, 100-blue, 50-yellow, 25-cyan. \relax }}{36}{figure.caption.25}}
+\newlabel{fig:exampleWindows}{{4.5}{36}{This shows a word image with windows of various widths: 200-red, 150-green, 100-blue, 50-yellow, 25-cyan. \relax }{figure.caption.25}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.6}{\ignorespaces These shows the QbS MAP for 18 n-grams on the Bentham dataset for varying sliding window sizes (in pixels). Figure \ref  {fig:exampleWindows} shows examples of what these windows might look like. \relax }}{36}{figure.caption.25}}
+\newlabel{fig:windowsizes}{{4.6}{36}{These shows the QbS MAP for 18 n-grams on the Bentham dataset for varying sliding window sizes (in pixels). Figure \ref {fig:exampleWindows} shows examples of what these windows might look like. \relax }{figure.caption.25}{}}
+\newlabel{fig:benthamUniSpot}{{4.7a}{37}{Unigrams\relax }{figure.caption.26}{}}
+\newlabel{sub@fig:benthamUniSpot}{{a}{37}{Unigrams\relax }{figure.caption.26}{}}
+\newlabel{fig:benthamBiSpot}{{4.7b}{37}{Bigrams\relax }{figure.caption.26}{}}
+\newlabel{sub@fig:benthamBiSpot}{{b}{37}{Bigrams\relax }{figure.caption.26}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.7}{\ignorespaces Results for QbS unigram and bigram spotting on the Bentham dataset. N-grams are arrange in descending order of frequency in test set.\relax }}{37}{figure.caption.26}}
+\newlabel{fig:benthamsub}{{4.7}{37}{Results for QbS unigram and bigram spotting on the Bentham dataset. N-grams are arrange in descending order of frequency in test set.\relax }{figure.caption.26}{}}
+\newlabel{fig:benthamTri1Spot}{{\caption@xref {fig:benthamTri1Spot}{ on input line 921}}{38}{Subword Spotting}{figure.caption.27}{}}
+\newlabel{sub@fig:benthamTri1Spot}{{}{38}{Subword Spotting}{figure.caption.27}{}}
+\newlabel{fig:benthamTri2Spot}{{\caption@xref {fig:benthamTri2Spot}{ on input line 927}}{38}{Subword Spotting}{figure.caption.27}{}}
+\newlabel{sub@fig:benthamTri2Spot}{{}{38}{Subword Spotting}{figure.caption.27}{}}
+\newlabel{fig:benthamTri3Spot}{{\caption@xref {fig:benthamTri3Spot}{ on input line 933}}{38}{Subword Spotting}{figure.caption.27}{}}
+\newlabel{sub@fig:benthamTri3Spot}{{}{38}{Subword Spotting}{figure.caption.27}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.8}{\ignorespaces Results for QbS trigram spotting on the Bentham dataset. N-grams are arrange in descending order of frequency in test set.\relax }}{38}{figure.caption.27}}
+\newlabel{fig:benthamsub2}{{4.8}{38}{Results for QbS trigram spotting on the Bentham dataset. N-grams are arrange in descending order of frequency in test set.\relax }{figure.caption.27}{}}
+\newlabel{fig:namesUniSpot}{{4.9a}{39}{Unigrams\relax }{figure.caption.28}{}}
+\newlabel{sub@fig:namesUniSpot}{{a}{39}{Unigrams\relax }{figure.caption.28}{}}
+\newlabel{fig:namesBiSpot}{{4.9b}{39}{Bigrams\relax }{figure.caption.28}{}}
+\newlabel{sub@fig:namesBiSpot}{{b}{39}{Bigrams\relax }{figure.caption.28}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.9}{\ignorespaces Results for QbS unigram and bigram spotting on the Census Names dataset. N-grams are arrange in descending order of frequency in test set.\relax }}{39}{figure.caption.28}}
+\newlabel{fig:namessub}{{4.9}{39}{Results for QbS unigram and bigram spotting on the Census Names dataset. N-grams are arrange in descending order of frequency in test set.\relax }{figure.caption.28}{}}
+\newlabel{fig:namesTri1Spot}{{\caption@xref {fig:namesTri1Spot}{ on input line 963}}{40}{Subword Spotting}{figure.caption.29}{}}
+\newlabel{sub@fig:namesTri1Spot}{{}{40}{Subword Spotting}{figure.caption.29}{}}
+\newlabel{fig:namesTri2Spot}{{\caption@xref {fig:namesTri2Spot}{ on input line 969}}{40}{Subword Spotting}{figure.caption.29}{}}
+\newlabel{sub@fig:namesTri2Spot}{{}{40}{Subword Spotting}{figure.caption.29}{}}
+\newlabel{fig:namesTri3Spot}{{\caption@xref {fig:namesTri3Spot}{ on input line 975}}{40}{Subword Spotting}{figure.caption.29}{}}
+\newlabel{sub@fig:namesTri3Spot}{{}{40}{Subword Spotting}{figure.caption.29}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.10}{\ignorespaces Results for QbS trigram spotting on the Census Names dataset. N-grams are arrange in descending order of frequency in test set.\relax }}{40}{figure.caption.29}}
+\newlabel{fig:namessub2}{{4.10}{40}{Results for QbS trigram spotting on the Census Names dataset. N-grams are arrange in descending order of frequency in test set.\relax }{figure.caption.29}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.11}{\ignorespaces Unigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.\relax }}{41}{figure.caption.30}}
+\newlabel{fig:unigram_respot}{{4.11}{41}{Unigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.\relax }{figure.caption.30}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.12}{\ignorespaces Bigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.\relax }}{42}{figure.caption.31}}
+\newlabel{fig:bigram_respot}{{4.12}{42}{Bigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.\relax }{figure.caption.31}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.13}{\ignorespaces Trigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.\relax }}{42}{figure.caption.32}}
+\newlabel{fig:trigram_respot}{{4.13}{42}{Trigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.\relax }{figure.caption.32}{}}
 \@writefile{toc}{\contentsline {chapter}{\numberline {5}Applications of Subword Spotting}{43}{chapter.5}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
@@ -321,12 +323,12 @@
 \newlabel{applications}{{5}{43}{Applications of Subword Spotting}{chapter.5}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {5.1}Manual Transcription Assistant}{43}{section.5.1}}
 \@writefile{toc}{\contentsline {section}{\numberline {5.2}Suffix Spotting}{44}{section.5.2}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces Transcription assistance using subword spotting. (a) The user selects an unknown character (``G'', red box) to search the documents. (b) The results of a QbE search are displayed, strength of highlight relative to spotting score. (c) A ranked list of matches is shown (best match at top). The user selects another instance to refine the results (blue arrow). (d) Combined QbE results. Exemplars are highlighted in blue. (e) Ranked combined results, a more common word, ``Grace'' (red arrow), has moved up to a more visible position.\relax }}{45}{figure.caption.34}}
-\newlabel{fig:assist_demo}{{5.1}{45}{Transcription assistance using subword spotting. (a) The user selects an unknown character (``G'', red box) to search the documents. (b) The results of a QbE search are displayed, strength of highlight relative to spotting score. (c) A ranked list of matches is shown (best match at top). The user selects another instance to refine the results (blue arrow). (d) Combined QbE results. Exemplars are highlighted in blue. (e) Ranked combined results, a more common word, ``Grace'' (red arrow), has moved up to a more visible position.\relax }{figure.caption.34}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Suffix spotting AP of individual suffixes for the IAM dataset. Arranged in descending order of frequency in test set.\relax }}{46}{figure.caption.35}}
-\newlabel{fig:IAM_suffix}{{5.2}{46}{Suffix spotting AP of individual suffixes for the IAM dataset. Arranged in descending order of frequency in test set.\relax }{figure.caption.35}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces Suffix spotting AP of individual suffixes for the Census Names dataset. Arranged in descending order of frequency in test set.\relax }}{47}{figure.caption.36}}
-\newlabel{fig:names_suffix}{{5.3}{47}{Suffix spotting AP of individual suffixes for the Census Names dataset. Arranged in descending order of frequency in test set.\relax }{figure.caption.36}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces Transcription assistance using subword spotting. (a) The user selects an unknown character (``G'', red box) to search the documents. (b) The results of a QbE search are displayed, strength of highlight relative to spotting score. (c) A ranked list of matches is shown (best match at top). The user selects another instance to refine the results (blue arrow). (d) Combined QbE results. Exemplars are highlighted in blue. (e) Ranked combined results, a more common word, ``Grace'' (red arrow), has moved up to a more visible position.\relax }}{45}{figure.caption.33}}
+\newlabel{fig:assist_demo}{{5.1}{45}{Transcription assistance using subword spotting. (a) The user selects an unknown character (``G'', red box) to search the documents. (b) The results of a QbE search are displayed, strength of highlight relative to spotting score. (c) A ranked list of matches is shown (best match at top). The user selects another instance to refine the results (blue arrow). (d) Combined QbE results. Exemplars are highlighted in blue. (e) Ranked combined results, a more common word, ``Grace'' (red arrow), has moved up to a more visible position.\relax }{figure.caption.33}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Suffix spotting AP of individual suffixes for the IAM dataset. Arranged in descending order of frequency in test set.\relax }}{46}{figure.caption.34}}
+\newlabel{fig:IAM_suffix}{{5.2}{46}{Suffix spotting AP of individual suffixes for the IAM dataset. Arranged in descending order of frequency in test set.\relax }{figure.caption.34}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces Suffix spotting AP of individual suffixes for the Census Names dataset. Arranged in descending order of frequency in test set.\relax }}{47}{figure.caption.35}}
+\newlabel{fig:names_suffix}{{5.3}{47}{Suffix spotting AP of individual suffixes for the Census Names dataset. Arranged in descending order of frequency in test set.\relax }{figure.caption.35}{}}
 \citation{krishnan2016}
 \citation{krishnan2016}
 \@writefile{toc}{\contentsline {chapter}{\numberline {6}Application of Subword Spotting to Transcription}{49}{chapter.6}}
@@ -335,59 +337,59 @@
 \@writefile{loa}{\addvspace {10\p@ }}
 \newlabel{transcription}{{6}{49}{Application of Subword Spotting to Transcription}{chapter.6}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {6.1}Baseline: CAT Through PHOC Vectors}{49}{section.6.1}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6.1}{\ignorespaces An overview of the CAT system which uses approved subword spottings. The arrows represent the flow of data. (a) Subword spotting is performed. (b) Spotting results are sorted an distributed as batches. (c) Users classify the spottings. (d) The spottings are aggregated into a regular expression. This yields a set of possible transcriptions in the lexicon. These are scored with word spotting on the word image. (e) The (reduced) list of possible transcriptions is sent to a user to selects the correct one.\relax }}{50}{figure.caption.37}}
-\newlabel{fig:flow}{{6.1}{50}{An overview of the CAT system which uses approved subword spottings. The arrows represent the flow of data. (a) Subword spotting is performed. (b) Spotting results are sorted an distributed as batches. (c) Users classify the spottings. (d) The spottings are aggregated into a regular expression. This yields a set of possible transcriptions in the lexicon. These are scored with word spotting on the word image. (e) The (reduced) list of possible transcriptions is sent to a user to selects the correct one.\relax }{figure.caption.37}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6.1}{\ignorespaces An overview of the CAT system which uses approved subword spottings. The arrows represent the flow of data. (a) Subword spotting is performed. (b) Spotting results are sorted an distributed as batches. (c) Users classify the spottings. (d) The spottings are aggregated into a regular expression. This yields a set of possible transcriptions in the lexicon. These are scored with word spotting on the word image. (e) The (reduced) list of possible transcriptions is sent to a user to selects the correct one.\relax }}{50}{figure.caption.36}}
+\newlabel{fig:flow}{{6.1}{50}{An overview of the CAT system which uses approved subword spottings. The arrows represent the flow of data. (a) Subword spotting is performed. (b) Spotting results are sorted an distributed as batches. (c) Users classify the spottings. (d) The spottings are aggregated into a regular expression. This yields a set of possible transcriptions in the lexicon. These are scored with word spotting on the word image. (e) The (reduced) list of possible transcriptions is sent to a user to selects the correct one.\relax }{figure.caption.36}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {6.2}CAT Through Approved Subword Spottings}{50}{section.6.2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.2.1}Subword Spotting}{51}{subsection.6.2.1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.2.2}User Tasks and Interface}{51}{subsection.6.2.2}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.2.1}Approval}{52}{subsubsection.6.2.2.1}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.2.2}Transcription Selection}{52}{subsubsection.6.2.2.2}}
 \newlabel{transtask}{{6.2.2.2}{52}{Transcription Selection}{subsubsection.6.2.2.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6.2}{\ignorespaces Spotting approval UI. Instance being classified is at the bottom of the interface (dark border). The desired label ``and'' is below it. The next label ``ing'' can be seen above it with its associated instances above it. \relax }}{53}{figure.caption.38}}
-\newlabel{fig:spottingapproval}{{6.2}{53}{Spotting approval UI. Instance being classified is at the bottom of the interface (dark border). The desired label ``and'' is below it. The next label ``ing'' can be seen above it with its associated instances above it. \relax }{figure.caption.38}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6.2}{\ignorespaces Spotting approval UI. Instance being classified is at the bottom of the interface (dark border). The desired label ``and'' is below it. The next label ``ing'' can be seen above it with its associated instances above it. \relax }}{53}{figure.caption.37}}
+\newlabel{fig:spottingapproval}{{6.2}{53}{Spotting approval UI. Instance being classified is at the bottom of the interface (dark border). The desired label ``and'' is below it. The next label ``ing'' can be seen above it with its associated instances above it. \relax }{figure.caption.37}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.2.3}Word Completion / Regular Expression Generation}{54}{subsection.6.2.3}}
 \newlabel{wordcompletion}{{6.2.3}{54}{Word Completion / Regular Expression Generation}{subsection.6.2.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6.3}{\ignorespaces Transcription selection UI. Both ``her'' and ``for'' have been spotted in the image. The user can remove spottings if they are incorrect (red `x's). The possible transcriptions are ordered according to their word spotting score; in many instances this puts the correct transcription at the top of the list. \relax }}{55}{figure.caption.39}}
-\newlabel{fig:transcriptionselection}{{6.3}{55}{Transcription selection UI. Both ``her'' and ``for'' have been spotted in the image. The user can remove spottings if they are incorrect (red `x's). The possible transcriptions are ordered according to their word spotting score; in many instances this puts the correct transcription at the top of the list. \relax }{figure.caption.39}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6.3}{\ignorespaces Transcription selection UI. Both ``her'' and ``for'' have been spotted in the image. The user can remove spottings if they are incorrect (red `x's). The possible transcriptions are ordered according to their word spotting score; in many instances this puts the correct transcription at the top of the list. \relax }}{55}{figure.caption.38}}
+\newlabel{fig:transcriptionselection}{{6.3}{55}{Transcription selection UI. Both ``her'' and ``for'' have been spotted in the image. The user can remove spottings if they are incorrect (red `x's). The possible transcriptions are ordered according to their word spotting score; in many instances this puts the correct transcription at the top of the list. \relax }{figure.caption.38}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.2.4}Receiving Transcription}{56}{subsection.6.2.4}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.2.5}Batch Distribution}{57}{subsection.6.2.5}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6.4}{\ignorespaces A histogram of spotting instances for the bigram ``nd'' divided into true and false spottings. The true spottings forms a distribution distinct from the false. \relax }}{58}{figure.caption.40}}
-\newlabel{fig:two_dist_ex}{{6.4}{58}{A histogram of spotting instances for the bigram ``nd'' divided into true and false spottings. The true spottings forms a distribution distinct from the false. \relax }{figure.caption.40}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6.5}{\ignorespaces A histogram of spotting instances for the unigram ``g'' divided into true and false spottings. The true spottings are almost inline with the false distribution making them indistinguishable. \relax }}{58}{figure.caption.41}}
-\newlabel{fig:one_dist_ex}{{6.5}{58}{A histogram of spotting instances for the unigram ``g'' divided into true and false spottings. The true spottings are almost inline with the false distribution making them indistinguishable. \relax }{figure.caption.41}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6.6}{\ignorespaces A histogram of spotting instances for the bigram ``nd'' with a curve (red) representing the data as a single distribution. The green circle shows that the estimation greatly underestimates the tail indicating there is likely a strong true instance distribution present. \relax }}{59}{figure.caption.42}}
-\newlabel{fig:tail_dist_ex}{{6.6}{59}{A histogram of spotting instances for the bigram ``nd'' with a curve (red) representing the data as a single distribution. The green circle shows that the estimation greatly underestimates the tail indicating there is likely a strong true instance distribution present. \relax }{figure.caption.42}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6.4}{\ignorespaces A histogram of spotting instances for the bigram ``nd'' divided into true and false spottings. The true spottings forms a distribution distinct from the false. \relax }}{58}{figure.caption.39}}
+\newlabel{fig:two_dist_ex}{{6.4}{58}{A histogram of spotting instances for the bigram ``nd'' divided into true and false spottings. The true spottings forms a distribution distinct from the false. \relax }{figure.caption.39}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6.5}{\ignorespaces A histogram of spotting instances for the unigram ``g'' divided into true and false spottings. The true spottings are almost inline with the false distribution making them indistinguishable. \relax }}{58}{figure.caption.40}}
+\newlabel{fig:one_dist_ex}{{6.5}{58}{A histogram of spotting instances for the unigram ``g'' divided into true and false spottings. The true spottings are almost inline with the false distribution making them indistinguishable. \relax }{figure.caption.40}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6.6}{\ignorespaces A histogram of spotting instances for the bigram ``nd'' with a curve (red) representing the data as a single distribution. The green circle shows that the estimation greatly underestimates the tail indicating there is likely a strong true instance distribution present. \relax }}{59}{figure.caption.41}}
+\newlabel{fig:tail_dist_ex}{{6.6}{59}{A histogram of spotting instances for the bigram ``nd'' with a curve (red) representing the data as a single distribution. The green circle shows that the estimation greatly underestimates the tail indicating there is likely a strong true instance distribution present. \relax }{figure.caption.41}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.2.6}Receiving Spotting Approvals}{60}{subsection.6.2.6}}
 \citation{Retsinas2015}
 \citation{Retsinas2015}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.2.7}Alternate Mode: Don't Wait to Transcribe}{61}{subsection.6.2.7}}
 \@writefile{toc}{\contentsline {section}{\numberline {6.3}CAT Through Approved Subword Spottings Using Clustering}{61}{section.6.3}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.3.1}Clustering}{61}{subsection.6.3.1}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6.7}{\ignorespaces The cluster spotting approval UI with a true cluster. One outlier has been identified by the user (darkened instance).\relax }}{62}{figure.caption.43}}
-\newlabel{fig:clustergood}{{6.7}{62}{The cluster spotting approval UI with a true cluster. One outlier has been identified by the user (darkened instance).\relax }{figure.caption.43}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6.7}{\ignorespaces The cluster spotting approval UI with a true cluster. One outlier has been identified by the user (darkened instance).\relax }}{62}{figure.caption.42}}
+\newlabel{fig:clustergood}{{6.7}{62}{The cluster spotting approval UI with a true cluster. One outlier has been identified by the user (darkened instance).\relax }{figure.caption.42}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.3.2}Spotting Approval Batch Distribution}{62}{subsection.6.3.2}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6.8}{\ignorespaces The cluster spotting approval UI with a false cluster. No outliers are present.\relax }}{63}{figure.caption.44}}
-\newlabel{fig:clusterbad}{{6.8}{63}{The cluster spotting approval UI with a false cluster. No outliers are present.\relax }{figure.caption.44}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6.8}{\ignorespaces The cluster spotting approval UI with a false cluster. No outliers are present.\relax }}{63}{figure.caption.43}}
+\newlabel{fig:clusterbad}{{6.8}{63}{The cluster spotting approval UI with a false cluster. No outliers are present.\relax }{figure.caption.43}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.3.3}Spotting Approval UI}{64}{subsection.6.3.3}}
 \@writefile{toc}{\contentsline {section}{\numberline {6.4}CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment}{64}{section.6.4}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6.9}{\ignorespaces An example of a character probability vector for the word ``adultery''. The relative probability of each character (`a'-`z') at each horizontal position is represented both by the height and color of the graph. The discontinuities occuring at the begining and end of the word (e.g. see `x') occur due to the merging of unigram, bigram, and trigram scores.\relax }}{66}{figure.caption.45}}
-\newlabel{fig:cpv}{{6.9}{66}{An example of a character probability vector for the word ``adultery''. The relative probability of each character (`a'-`z') at each horizontal position is represented both by the height and color of the graph. The discontinuities occuring at the begining and end of the word (e.g. see `x') occur due to the merging of unigram, bigram, and trigram scores.\relax }{figure.caption.45}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6.9}{\ignorespaces An example of a character probability vector for the word ``adultery''. The relative probability of each character (`a'-`z') at each horizontal position is represented both by the height and color of the graph. The discontinuities occuring at the begining and end of the word (e.g. see `x') occur due to the merging of unigram, bigram, and trigram scores.\relax }}{66}{figure.caption.44}}
+\newlabel{fig:cpv}{{6.9}{66}{An example of a character probability vector for the word ``adultery''. The relative probability of each character (`a'-`z') at each horizontal position is represented both by the height and color of the graph. The discontinuities occuring at the begining and end of the word (e.g. see `x') occur due to the merging of unigram, bigram, and trigram scores.\relax }{figure.caption.44}{}}
 \@writefile{toc}{\contentsline {chapter}{\numberline {7}Evaluation of Transcription Strategies}{67}{chapter.7}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{loa}{\addvspace {10\p@ }}
 \@writefile{toc}{\contentsline {section}{\numberline {7.1}Evaluation Method}{67}{section.7.1}}
 \@writefile{toc}{\contentsline {section}{\numberline {7.2}Results}{68}{section.7.2}}
-\@writefile{lot}{\contentsline {table}{\numberline {7.1}{\ignorespaces Highlights in the results from simulations. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used. The PHOC vector method is the only method we tested able to transcribe words at a rate faster than manual transcription.\relax }}{69}{table.caption.46}}
-\newlabel{tab:finalresults}{{7.1}{69}{Highlights in the results from simulations. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used. The PHOC vector method is the only method we tested able to transcribe words at a rate faster than manual transcription.\relax }{table.caption.46}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {7.1}{\ignorespaces Highlights in the results from simulations. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used. The PHOC vector method is the only method we tested able to transcribe words at a rate faster than manual transcription.\relax }}{69}{table.caption.45}}
+\newlabel{tab:finalresults}{{7.1}{69}{Highlights in the results from simulations. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used. The PHOC vector method is the only method we tested able to transcribe words at a rate faster than manual transcription.\relax }{table.caption.45}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {7.2.1}CAT Through PHOC Vectors Results}{69}{subsection.7.2.1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {7.2.2}CAT Through Approved Subword Spottings Results}{69}{subsection.7.2.2}}
-\@writefile{lot}{\contentsline {table}{\numberline {7.2}{\ignorespaces Results from simulations of CATTSS using user approval on subword spotting results. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used.\relax }}{70}{table.caption.47}}
-\newlabel{tab:appresults}{{7.2}{70}{Results from simulations of CATTSS using user approval on subword spotting results. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used.\relax }{table.caption.47}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7.1}{\ignorespaces Part of a page of the Bentham dataset after running the CATTSS system with subword spotting approval being distributied using a two-distribution model with only bigrams. The pink boxes represent approved bigram spottings. The red text represents a transcription made by the system.\relax }}{71}{figure.caption.48}}
-\newlabel{fig:aftercattss}{{7.1}{71}{Part of a page of the Bentham dataset after running the CATTSS system with subword spotting approval being distributied using a two-distribution model with only bigrams. The pink boxes represent approved bigram spottings. The red text represents a transcription made by the system.\relax }{figure.caption.48}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {7.3}{\ignorespaces Results from simulations using character probability vectors derived from subword spotting resutls. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used.\relax }}{72}{table.caption.49}}
-\newlabel{tab:dtwresults}{{7.3}{72}{Results from simulations using character probability vectors derived from subword spotting resutls. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used.\relax }{table.caption.49}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {7.2}{\ignorespaces Results from simulations of CATTSS using user approval on subword spotting results. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used.\relax }}{70}{table.caption.46}}
+\newlabel{tab:appresults}{{7.2}{70}{Results from simulations of CATTSS using user approval on subword spotting results. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used.\relax }{table.caption.46}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7.1}{\ignorespaces Part of a page of the Bentham dataset after running the CATTSS system with subword spotting approval being distributied using a two-distribution model with only bigrams. The pink boxes represent approved bigram spottings. The red text represents a transcription made by the system.\relax }}{71}{figure.caption.47}}
+\newlabel{fig:aftercattss}{{7.1}{71}{Part of a page of the Bentham dataset after running the CATTSS system with subword spotting approval being distributied using a two-distribution model with only bigrams. The pink boxes represent approved bigram spottings. The red text represents a transcription made by the system.\relax }{figure.caption.47}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {7.3}{\ignorespaces Results from simulations using character probability vectors derived from subword spotting resutls. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used.\relax }}{72}{table.caption.48}}
+\newlabel{tab:dtwresults}{{7.3}{72}{Results from simulations using character probability vectors derived from subword spotting resutls. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used.\relax }{table.caption.48}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {7.2.3}CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment Results}{72}{subsection.7.2.3}}
 \@writefile{toc}{\contentsline {chapter}{\numberline {8}Conclusion}{73}{chapter.8}}
 \@writefile{lof}{\addvspace {10\p@ }}
@@ -401,8 +403,8 @@
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{loa}{\addvspace {10\p@ }}
-\@writefile{lot}{\contentsline {table}{\numberline {9.1}{\ignorespaces Optimal sliding window widths for spotting and estimated visual widths for each n-gram of interest.\relax }}{78}{table.caption.50}}
-\newlabel{tab:customwidths}{{9.1}{78}{Optimal sliding window widths for spotting and estimated visual widths for each n-gram of interest.\relax }{table.caption.50}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {9.1}{\ignorespaces Optimal sliding window widths for spotting and estimated visual widths for each n-gram of interest.\relax }}{78}{table.caption.49}}
+\newlabel{tab:customwidths}{{9.1}{78}{Optimal sliding window widths for spotting and estimated visual widths for each n-gram of interest.\relax }{table.caption.49}{}}
 \bibcite{Aldavert2015}{{1}{2015}{{Aldavert et~al.}}{{Aldavert, Rusi\={n}ol, Toledo, and Llad\'{o}s}}}
 \bibcite{Almazan2012}{{2}{2012}{{Almaz\'{a}n et~al.}}{{Almaz\'{a}n, Fern\'{a}ndez, Forn\'{e}s, Llados, and Valveny}}}
 \bibcite{Almazan2014}{{3}{2014}{{Almaz\'{a}n et~al.}}{{Almaz\'{a}n, Gordo, Forn\'{e}s, and Valveny}}}
