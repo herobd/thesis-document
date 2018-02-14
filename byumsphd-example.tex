@@ -824,7 +824,7 @@ Trigram &  0.571 &  0.449 &  0.X &  0.533 &  0.431  &  0.497 &  0.438 \\
 \begin{figure}
     \centering
     \includegraphics[width=.75\textwidth]{qualSpot}
-    \caption{Qualitative results for QbS subword spotting on the Bentham Dataset. Spottings show the top results for the various n-gram queries. We selected some of the better n-grams (`n', `pr', `sed') and worse n-grams (`z', `et', `tte') by MAP. Red boxes indicate incorrect spottings. %TODO comment on tte-te phenom?
+    \caption{Qualitative results for QbS subword spotting on the Bentham Dataset. Spottings show the top results for the various n-gram queries. We selected some of the better n-grams (`s', `th', `but') and worse n-grams (`j', `et', `tin') by MAP. Red boxes indicate incorrect spottings.
     }
     \label{fig:qualSpot}
 \end{figure}
@@ -832,7 +832,7 @@ Trigram &  0.571 &  0.449 &  0.X &  0.533 &  0.431  &  0.497 &  0.438 \\
 \begin{figure}
     \centering
     \includegraphics[width=.6\textwidth]{qualSpotNames}
-    \caption{Qualitative results for QbS subword spotting on the Census Names Dataset. Spottings show the top results for the various n-gram queries. We selected some of the better n-grams (`m', `il', `hic') and worse n-grams (`y', `ss', `wer') by MAP. Red boxes indicate incorrect spottings. %TODO comment on ss-s phenom?
+    \caption{Qualitative results for QbS subword spotting on the Census Names Dataset. Spottings show the top results for the various n-gram queries. We selected some of the better n-grams (`i', `el', `int') and worse n-grams (`v', `ts', `pre') by MAP. Red boxes indicate incorrect spottings. %TODO comment on ss-s phenom?
     }
     \label{fig:qualSpotNames}
 \end{figure}
@@ -892,7 +892,7 @@ In Section \ref{detirminewindowsize} we explained how we found the window sizes 
     \label{fig:windowsizes}
 \end{figure}
 
-In Figures \ref{fig:benthamsub}, \ref{fig:benthamsub2}, \ref{fig:namessub} and \ref{fig:namessub2} we show, for the Bentham and Census Names datasets, the average precision of n-grams individually, arranged in descending order of frequency. While there is a general trend of more frequent n-grams being spotted better, there is a wide variance indicating that the distinctiveness of character shape likely plays an important role. 
+In Figures \ref{fig:benthamsub}, \ref{fig:benthamsub2}, \ref{fig:namessub} and \ref{fig:namessub2} we show, for the Bentham and Census Names datasets, the average precision of n-grams individually, arranged in descending order of frequency. While there is a general trend of more frequent n-grams being spotted better, there is a wide variance indicating that the distinctiveness of character shape likely plays an important role. We note that many less frequent trigrams are spotted with perfect precision. This is due to there being so few instances (e.g. 4) that with a little bit of luck they can all end up with the top scores. The reverse is also true for the same reason; many less frequent trigrams are spotted with very poor average precision.
 
 \begin{figure}
 \centering
@@ -998,9 +998,9 @@ In Figures \ref{fig:benthamsub}, \ref{fig:benthamsub2}, \ref{fig:namessub} and \
 
 \subsection{Respotting Subwords}
 
-We had hoped to use approved spottings as new exemplars for an iterative CAT (computer assisted transcription) system. To verify the validity of this approach we created an experiment where we continually refine spotting results by spotting with new exemplars and merging the results (see Section \ref{combine}). We show the MAP at each iteration out to 50 iterations in Figures \ref{fig:unigram_respot}, \ref{fig:bigram_respot}, and \ref{fig:trigram_respot}, for uni-, bi-, and trigrams respectively. The first exemplar for an n-gram was selected as the middle score of positive instances from a QbS spotting. The following exemplars were the middle score of the previous QbE spotting's positive instances. We choose to do this as there is a variety of qualities of exemplar images. Taking the middle score should roughly give us a middle quality.
+We had hoped to use approved spottings as new exemplars for an iterative CAT (computer assisted transcription) system. To verify the validity of this approach we created an experiment where we continually refine spotting results by spotting with new exemplars and merging the results (see Section \ref{combine}). We use the original PHOC vector with cosine similarity as that achieved the best QbE. We show the MAP at each iteration out to 50 iterations in Figures \ref{fig:unigram_respot}, \ref{fig:bigram_respot}, and \ref{fig:trigram_respot}, for uni-, bi-, and trigrams respectively on the Bentham dataset. The first exemplar for an n-gram was selected as the middle score of positive instances from a QbS spotting. The following exemplars were the middle score of the previous QbE spotting's positive instances. We choose to do this as there is a variety of qualities of exemplar images. Taking the middle score should roughly give us a middle quality.
 The overall quality of MAP is higher in these experiments as we only used n-grams which occur at least 100 times, which tend to be the easier instances.
-We can see that the iterative refinement leads to better results compared to the average of all the QbE scores for the individual 50 queries, except in the case of trigrams. This is unusual given the average QbE scores are relatively high compared to the QbS score. However, for all n-grams the combine QbE results underperforms QbS.
+We can see that the iterative refinement leads to better results compared to the average of all the QbE scores for the individual 50 queries, except in the case of trigrams. This is unusual given the average QbE scores are relatively high compared to the QbS score. However, for all n-grams the combine QbE results underperforms QbS; we do not include QbE as part of our CAT system.
 %It appears that aggregating multiple queries tends to stabilized the bad queries.%, though it does not out perform QbS (except with trigrams) or individual good QbE queries (as the spikes in performance are not at the end).
 
 \begin{figure}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2017.8.25)  9 FEB 2018 14:41
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2017.8.25)  12 FEB 2018 12:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1050,6 +1050,9 @@ Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2133.
 
 Package rerunfilecheck Info: File `byumsphd-example.out' has not changed.
 (rerunfilecheck)             Checksum: 31D32B11819E591A090BB08150F1B20C;4273.
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2133.
  )
 (\end occurred inside a group at level 2)
@@ -1060,7 +1063,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2133.
 Here is how much of TeX's memory you used:
  12447 strings out of 494989
  190029 string characters out of 6180577
- 500012 words of memory out of 5000000
+ 500013 words of memory out of 5000000
  15100 multiletter control sequences out of 15000+600000
  18299 words of font info for 97 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
@@ -1078,7 +1081,7 @@ y8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb
 ></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share
 /texmf/fonts/type1/public/tex-gyre/qagr.pfb>
-Output written on byumsphd-example.pdf (98 pages, 17158323 bytes).
+Output written on byumsphd-example.pdf (98 pages, 17158822 bytes).
 PDF statistics:
  1354 PDF objects out of 1440 (max. 8388607)
  257 named destinations out of 1000 (max. 500000)
