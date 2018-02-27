@@ -1308,7 +1308,7 @@ Looking at a graph of true and false spotting instances in Figure \ref{fig:two_d
 
 We model the distributions as normal distributions, the false spottings being only half of the distribution (as we discard the worst scores for effiency).
 
-We begin by doing a check to see whether we will model the spotting scores as one or two normal distributions. We model the scores as a single distribution to see if there are large amount of outlier instances at it's ``tail'' (Figure \ref{fig:tail_dist_ex} green circle). This should indicate that a distictive true distribution is present. We measure this by the difference between the probability density of the model and actual density of scores in the tail of the distrubution. The ``tail'' is defined by a threshold density.
+We begin by doing a check to see whether we will model the spotting scores as one or two normal distributions. We model the scores as a single distribution to see if there are large amount of outlier instances at it's ``tail'' (Figure \ref{fig:tail_dist_ex} green circle). This should indicate that a distictive true distribution is present. We measure this by the difference between the probability density of the model and actual density of scores in the tail of the distrubution. The ``tail'' is defined by a threshold on the probability density.
 
 %TODO replace this image too, mention that it is a normal distribution curve
 \begin{figure}
@@ -1319,7 +1319,7 @@ We begin by doing a check to see whether we will model the spotting scores as on
     \label{fig:tail_dist_ex}
 \end{figure}
 
-If we select two distributions, we estimate an initial split between true and false scores using the Otsu threshold. We model the two distributions assuming all spottings is true or false based on this threshold.
+If we select two distributions, we estimate an initial split between true and false scores using the Otsu threshold. We initally model the two distributions assuming all spottings are true or false based on this threshold.
 
 The distributions are constantly modeled using expectation maximization, an iteration of it being applied each time a batch is recieved. If a user label isn't known for a score, it's class is estimated using the current model.
 
