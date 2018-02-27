@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2017.8.25)  20 NOV 2017 16:17
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2017.8.25)  9 FEB 2018 14:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -61,36 +61,12 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 \Gm@layoutvoffset=\dimen110
 \Gm@dimlist=\toks15
 )
-(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
-\lst@mode=\count91
-\lst@gtempboxa=\box26
-\lst@token=\toks16
-\lst@length=\count92
-\lst@currlwidth=\dimen111
-\lst@column=\count93
-\lst@pos=\count94
-\lst@lostspace=\dimen112
-\lst@width=\dimen113
-\lst@newlines=\count95
-\lst@lineno=\count96
-\lst@maxwidth=\dimen114
-
-(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
-File: lstmisc.sty 2013/08/26 1.5b (Carsten Heinz)
-\c@lstnumber=\count97
-\lst@skipnumbers=\count98
-\lst@framebox=\box27
-)
-(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
-File: listings.cfg 2013/08/26 1.5b listings configuration
-))
-Package: listings 2013/08/26 1.5b (Carsten Heinz)
 \@assumedcharwidth=\skip43
 \@defaultindent=\skip44
 \@blankline=\skip45
 \@prefacemargingapsingle=\skip46
 \@prefacemargingapdouble=\skip47
-\c@toclistings=\count99
+\c@toclistings=\count91
 )
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2012/11/06 v6.83m Hypertext links for LaTeX
@@ -144,14 +120,14 @@ Package: auxhook 2011/03/04 v1.3 Hooks for auxiliary files (HO)
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
 Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
 )
-\@linkdim=\dimen115
-\Hy@linkcounter=\count100
-\Hy@pagecounter=\count101
+\@linkdim=\dimen111
+\Hy@linkcounter=\count92
+\Hy@pagecounter=\count93
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
 )
-\Hy@SavedSpaceFactor=\count102
+\Hy@SavedSpaceFactor=\count94
 
 (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
@@ -170,17 +146,17 @@ Package hyperref Info: Plain pages OFF on input line 4458.
 Package hyperref Info: Backreferencing OFF on input line 4463.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4688.
-\c@Hy@tempcnt=\count103
+\c@Hy@tempcnt=\count95
 
 (/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip10
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 5041.
-\XeTeXLinkMargin=\dimen116
-\Fld@menulength=\count104
-\Field@Width=\dimen117
-\Fld@charsize=\dimen118
+\XeTeXLinkMargin=\dimen112
+\Fld@menulength=\count96
+\Field@Width=\dimen113
+\Fld@charsize=\dimen114
 Package hyperref Info: Hyper figures OFF on input line 6295.
 Package hyperref Info: Link nesting OFF on input line 6300.
 Package hyperref Info: Hyper index ON on input line 6303.
@@ -190,17 +166,17 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6320.
 Package hyperref Info: PDF/A mode OFF on input line 6325.
 LaTeX Info: Redefining \ref on input line 6365.
 LaTeX Info: Redefining \pageref on input line 6369.
-\Hy@abspage=\count105
-\c@Item=\count106
-\c@Hfootnote=\count107
+\Hy@abspage=\count97
+\c@Item=\count98
+\c@Hfootnote=\count99
 )
 
 Package hyperref Message: Driver (autodetected): hpdftex.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2012/11/06 v6.83m Hyperref driver for pdfTeX
-\Fld@listcount=\count108
-\c@bookmark@seq@number=\count109
+\Fld@listcount=\count100
+\c@bookmark@seq@number=\count101
 
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
 Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
@@ -225,10 +201,10 @@ Package graphics Info: Driver file: pdftex.def on input line 91.
 
 (/usr/share/texlive/texmf-dist/tex/latex/pdftex-def/pdftex.def
 File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
-\Gread@gobject=\count110
+\Gread@gobject=\count102
 ))
-\Gin@req@height=\dimen119
-\Gin@req@width=\dimen120
+\Gin@req@height=\dimen115
+\Gin@req@width=\dimen116
 )
 (/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
 Package: caption 2013/05/02 v3.3-89 Customizing captions (AR)
@@ -236,30 +212,29 @@ Package: caption 2013/05/02 v3.3-89 Customizing captions (AR)
 (/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
 Package: caption3 2013/05/02 v1.6-88 caption3 kernel (AR)
 Package caption3 Info: TeX engine: e-TeX on input line 57.
-\captionmargin=\dimen121
-\captionmargin@=\dimen122
-\captionwidth=\dimen123
-\caption@tempdima=\dimen124
-\caption@indent=\dimen125
-\caption@parindent=\dimen126
-\caption@hangindent=\dimen127
+\captionmargin=\dimen117
+\captionmargin@=\dimen118
+\captionwidth=\dimen119
+\caption@tempdima=\dimen120
+\caption@indent=\dimen121
+\caption@parindent=\dimen122
+\caption@hangindent=\dimen123
 )
-\c@ContinuedFloat=\count111
+\c@ContinuedFloat=\count103
 Package caption Info: hyperref package is loaded.
-Package caption Info: listings package is loaded.
 )
 (/usr/share/texlive/texmf-dist/tex/latex/caption/subcaption.sty
 Package: subcaption 2013/02/03 v1.1-62 Sub-captions (AR)
-\c@subfigure=\count112
-\c@subtable=\count113
+\c@subfigure=\count104
+\c@subtable=\count105
 )
 (/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count114
-\float@exts=\toks17
-\float@box=\box28
-\@float@everytoks=\toks18
-\@floatcapt=\box29
+\c@float@type=\count106
+\float@exts=\toks16
+\float@box=\box26
+\@float@everytoks=\toks17
+\@floatcapt=\box27
 )
 (/usr/share/texlive/texmf-dist/tex/latex/koma-script/scrextend.sty
 Package: scrextend 2013/12/19 v3.12 KOMA-Script KOMA-Script package (extend oth
@@ -286,19 +261,19 @@ LaTeX Warning: Command \@footnotemark  has changed.
 
 ) (/usr/share/texlive/texmf-dist/tex/latex/titlesec/titlesec.sty
 Package: titlesec 2011/12/15 v2.10.0 Sectioning titles
-\ttl@box=\box30
+\ttl@box=\box28
 \beforetitleunit=\skip49
 \aftertitleunit=\skip50
-\ttl@plus=\dimen128
-\ttl@minus=\dimen129
-\ttl@toksa=\toks19
-\titlewidth=\dimen130
-\titlewidthlast=\dimen131
-\titlewidthfirst=\dimen132
+\ttl@plus=\dimen124
+\ttl@minus=\dimen125
+\ttl@toksa=\toks18
+\titlewidth=\dimen126
+\titlewidthlast=\dimen127
+\titlewidthfirst=\dimen128
 )
 (/usr/share/texlive/texmf-dist/tex/latex/algorithm2e/algorithm2e.sty
 Package: algorithm2e 2013/01/06 v5.00 algorithms environments
-\c@AlgoLine=\count115
+\c@AlgoLine=\count107
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
@@ -324,31 +299,31 @@ subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
 \skiplength=\skip56
 \algomargin=\skip57
 \skipalgocfslide=\skip58
-\algowidth=\dimen133
-\inoutsize=\dimen134
-\inoutindent=\dimen135
-\interspacetitleruled=\dimen136
-\interspacealgoruled=\dimen137
-\interspacetitleboxruled=\dimen138
-\algocf@inoutbox=\box31
-\algocf@inputbox=\box32
+\algowidth=\dimen129
+\inoutsize=\dimen130
+\inoutindent=\dimen131
+\interspacetitleruled=\dimen132
+\interspacealgoruled=\dimen133
+\interspacetitleboxruled=\dimen134
+\algocf@inoutbox=\box29
+\algocf@inputbox=\box30
 \AlCapSkip=\skip59
 \AlCapHSkip=\skip60
 \algoskipindent=\skip61
-\algocf@nlbox=\box33
-\algocf@hangingbox=\box34
-\algocf@untilbox=\box35
+\algocf@nlbox=\box31
+\algocf@hangingbox=\box32
+\algocf@untilbox=\box33
 \algocf@skipuntil=\skip62
-\algocf@capbox=\box36
+\algocf@capbox=\box34
 \algoheightruledefault=\skip63
 \algoheightrule=\skip64
 \algotitleheightruledefault=\skip65
 \algotitleheightrule=\skip66
-\c@algocfline=\count116
-\c@algocfproc=\count117
-\c@algocf=\count118
-\algocf@algoframe=\box37
-\algocf@algobox=\box38
+\c@algocfline=\count108
+\c@algocfproc=\count109
+\c@algocf=\count110
+\algocf@algoframe=\box35
+\algocf@algobox=\box36
 ) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2013/01/14 v2.14 AMS math features
 \@mathmargin=\skip67
@@ -359,51 +334,51 @@ Package: amstext 2000/06/29 v2.01
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0
-\@emptytoks=\toks20
-\ex@=\dimen139
+\@emptytoks=\toks19
+\ex@=\dimen135
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d
-\pmbraise@=\dimen140
+\pmbraise@=\dimen136
 )
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 1999/12/14 v2.01 operator names
 )
-\inf@bad=\count119
+\inf@bad=\count111
 LaTeX Info: Redefining \frac on input line 210.
-\uproot@=\count120
-\leftroot@=\count121
+\uproot@=\count112
+\leftroot@=\count113
 LaTeX Info: Redefining \overline on input line 306.
-\classnum@=\count122
-\DOTSCASE@=\count123
+\classnum@=\count114
+\DOTSCASE@=\count115
 LaTeX Info: Redefining \ldots on input line 378.
 LaTeX Info: Redefining \dots on input line 381.
 LaTeX Info: Redefining \cdots on input line 466.
-\Mathstrutbox@=\box39
-\strutbox@=\box40
-\big@size=\dimen141
+\Mathstrutbox@=\box37
+\strutbox@=\box38
+\big@size=\dimen137
 LaTeX Font Info:    Redeclaring font encoding OML on input line 566.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
-\macc@depth=\count124
-\c@MaxMatrixCols=\count125
+\macc@depth=\count116
+\c@MaxMatrixCols=\count117
 \dotsspace@=\muskip11
-\c@parentequation=\count126
-\dspbrk@lvl=\count127
-\tag@help=\toks21
-\row@=\count128
-\column@=\count129
-\maxfields@=\count130
-\andhelp@=\toks22
-\eqnshift@=\dimen142
-\alignsep@=\dimen143
-\tagshift@=\dimen144
-\tagwidth@=\dimen145
-\totwidth@=\dimen146
-\lineht@=\dimen147
-\@envbody=\toks23
+\c@parentequation=\count118
+\dspbrk@lvl=\count119
+\tag@help=\toks20
+\row@=\count120
+\column@=\count121
+\maxfields@=\count122
+\andhelp@=\toks21
+\eqnshift@=\dimen138
+\alignsep@=\dimen139
+\tagshift@=\dimen140
+\tagwidth@=\dimen141
+\totwidth@=\dimen142
+\lineht@=\dimen143
+\@envbody=\toks22
 \multlinegap=\skip68
 \multlinetaggap=\skip69
-\mathdisplay@stack=\toks24
+\mathdisplay@stack=\toks23
 LaTeX Info: Redefining \[ on input line 2665.
 LaTeX Info: Redefining \] on input line 2666.
 )
@@ -415,19 +390,19 @@ Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibhang=\skip70
 \bibsep=\skip71
 LaTeX Info: Redefining \cite on input line 694.
-\c@NAT@ctr=\count131
+\c@NAT@ctr=\count123
 )
 (/usr/share/texlive/texmf-dist/tex/latex/hypernat/hypernat.sty
 Package: hypernat 2001/07/09 v1.0b hyperref and natbib compatibility (jb)
 )
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/microtype.sty
 Package: microtype 2013/05/23 v2.5a Micro-typographical refinements (RS)
-\MT@toks=\toks25
-\MT@count=\count132
+\MT@toks=\toks24
+\MT@count=\count124
 LaTeX Info: Redefining \textls on input line 766.
-\MT@outer@kern=\dimen148
+\MT@outer@kern=\dimen144
 LaTeX Info: Redefining \textmicrotypecontext on input line 1285.
-\MT@listname@count=\count133
+\MT@listname@count=\count125
 
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/microtype-pdftex.def
 File: microtype-pdftex.def 2013/05/23 v2.5a Definitions specific to pdftex (RS)
@@ -444,20 +419,20 @@ File: microtype.cfg 2013/05/23 v2.5a microtype main configuration file (RS)
 (./byumsphd-example.aux)
 \openout1 = `byumsphd-example.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 244.
-LaTeX Font Info:    ... okay on input line 244.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 244.
-LaTeX Font Info:    ... okay on input line 244.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 244.
-LaTeX Font Info:    ... okay on input line 244.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 244.
-LaTeX Font Info:    ... okay on input line 244.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 244.
-LaTeX Font Info:    ... okay on input line 244.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 244.
-LaTeX Font Info:    ... okay on input line 244.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 244.
-LaTeX Font Info:    ... okay on input line 244.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 245.
+LaTeX Font Info:    ... okay on input line 245.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 245.
+LaTeX Font Info:    ... okay on input line 245.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 245.
+LaTeX Font Info:    ... okay on input line 245.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 245.
+LaTeX Font Info:    ... okay on input line 245.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 245.
+LaTeX Font Info:    ... okay on input line 245.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 245.
+LaTeX Font Info:    ... okay on input line 245.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 245.
+LaTeX Font Info:    ... okay on input line 245.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -494,20 +469,19 @@ LaTeX Font Info:    ... okay on input line 244.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-\c@lstlisting=\count134
-\AtBeginShipoutBox=\box41
-Package hyperref Info: Link coloring OFF on input line 244.
+\AtBeginShipoutBox=\box39
+Package hyperref Info: Link coloring OFF on input line 245.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count135
+\c@section@level=\count126
 )
-LaTeX Info: Redefining \ref on input line 244.
-LaTeX Info: Redefining \pageref on input line 244.
-LaTeX Info: Redefining \nameref on input line 244.
+LaTeX Info: Redefining \ref on input line 245.
+LaTeX Info: Redefining \pageref on input line 245.
+LaTeX Info: Redefining \nameref on input line 245.
 
 (./byumsphd-example.out) (./byumsphd-example.out)
 \@outlinefile=\write3
@@ -516,23 +490,23 @@ LaTeX Info: Redefining \nameref on input line 244.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count136
-\scratchdimen=\dimen149
-\scratchbox=\box42
-\nofMPsegments=\count137
-\nofMParguments=\count138
-\everyMPshowfont=\toks26
-\MPscratchCnt=\count139
-\MPscratchDim=\dimen150
-\MPnumerator=\count140
-\makeMPintoPDFobject=\count141
-\everyMPtoPDFconversion=\toks27
+\scratchcounter=\count127
+\scratchdimen=\dimen145
+\scratchbox=\box40
+\nofMPsegments=\count128
+\nofMParguments=\count129
+\everyMPshowfont=\toks25
+\MPscratchCnt=\count130
+\MPscratchDim=\dimen146
+\MPnumerator=\count131
+\makeMPintoPDFobject=\count132
+\everyMPtoPDFconversion=\toks26
 )
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: hypcap package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Info: Redefining \microtypecontext on input line 244.
+LaTeX Info: Redefining \microtypecontext on input line 245.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -546,63 +520,59 @@ Package microtype Info: No adjustment of character kerning.
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 249.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 250.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 249.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 250.
  [1
 
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (18.39798pt too wide) in paragraph at lines 249--249
-[]\OT1/cmr/m/n/12 (-20) Note that there is a blank line be-tween para-graphs, h
-ere. X==================
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 250--250
+
  []
 
-[2
 
-] [3
+Underfull \hbox (badness 10000) in paragraph at lines 250--250
+
+ []
+
+[3
 
 ] [4
 
 
-] (./byumsphd-example.toc [5])
+] (./byumsphd-example.toc [5] [6])
 \tf@toc=\write4
 \openout4 = `byumsphd-example.toc'.
 
- [6] (./byumsphd-example.lof
+ [7] [8
+
+
+] (./byumsphd-example.lof
 Package microtype Info: Loading generic settings for font family
 (microtype)             `cmtt' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
- [7
 
-
-]
-[8])
+[9] [10] [11] [12] [13])
 \tf@lof=\write5
 \openout5 = `byumsphd-example.lof'.
 
- [9] [10
-
-
-] (./byumsphd-example.lot)
+ [14] (./byumsphd-example.lot)
 \tf@lot=\write6
 \openout6 = `byumsphd-example.lot'.
 
- [11] [12
+ [15
 
 
-] (./byumsphd-example.lol)
-\tf@lol=\write7
-\openout7 = `byumsphd-example.lol'.
-
-
-[13] [14
+] [16
 
 
 ]
@@ -610,49 +580,49 @@ Chapter 1.
 [1
 
 
-] <spotting_explination_pay.png, id=409, 244.63396pt x 115.27065pt>
+] <spotting_explination_pay.png, id=588, 244.63396pt x 115.27065pt>
 File: spotting_explination_pay.png Graphic file (type png)
 
 <use spotting_explination_pay.png>
-Package pdftex.def Info: spotting_explination_pay.png used on input line 271.
+Package pdftex.def Info: spotting_explination_pay.png used on input line 272.
 (pdftex.def)             Requested size: 216.09044pt x 101.82367pt.
 
-<spotting_explination_payment.png, id=411, 244.63396pt x 115.27065pt>
+<spotting_explination_payment.png, id=590, 244.63396pt x 115.27065pt>
 File: spotting_explination_payment.png Graphic file (type png)
 
 <use spotting_explination_payment.png>
 Package pdftex.def Info: spotting_explination_payment.png used on input line 27
-7.
+8.
 (pdftex.def)             Requested size: 216.09044pt x 101.82367pt.
 
-<spotting_explination_sub_pay.png, id=412, 244.63396pt x 115.27065pt>
+<spotting_explination_sub_pay.png, id=591, 244.63396pt x 115.27065pt>
 File: spotting_explination_sub_pay.png Graphic file (type png)
 
 <use spotting_explination_sub_pay.png>
 Package pdftex.def Info: spotting_explination_sub_pay.png used on input line 28
-7.
+8.
 (pdftex.def)             Requested size: 216.09044pt x 101.82367pt.
 
-<spotting_explination_sub_pa.png, id=413, 244.63396pt x 115.27065pt>
+<spotting_explination_sub_pa.png, id=592, 244.63396pt x 115.27065pt>
 File: spotting_explination_sub_pa.png Graphic file (type png)
 
 <use spotting_explination_sub_pa.png>
-Package pdftex.def Info: spotting_explination_sub_pa.png used on input line 293
+Package pdftex.def Info: spotting_explination_sub_pa.png used on input line 294
 .
 (pdftex.def)             Requested size: 216.09044pt x 101.82367pt.
  [2 <./spotting_explination_pay.png> <./spotting_explination_payment.png> <./sp
 otting_explination_sub_pay.png> <./spotting_explination_sub_pa.png>] <ei.png, i
-d=430, 36.135pt x 23.1264pt>
+d=609, 36.135pt x 23.1264pt>
 File: ei.png Graphic file (type png)
  <use ei.png>
-Package pdftex.def Info: ei.png used on input line 322.
+Package pdftex.def Info: ei.png used on input line 323.
 (pdftex.def)             Requested size: 211.3883pt x 135.32559pt.
 
-[3] <spotting_completion_payment.png, id=439, 153.57375pt x 152.12836pt>
+[3] <spotting_completion_payment.png, id=619, 153.57375pt x 152.12836pt>
 File: spotting_completion_payment.png Graphic file (type png)
 
 <use spotting_completion_payment.png>
-Package pdftex.def Info: spotting_completion_payment.png used on input line 335
+Package pdftex.def Info: spotting_completion_payment.png used on input line 336
 .
 (pdftex.def)             Requested size: 258.36667pt x 255.95224pt.
  [4 <./ei.png>] [5 <./spotting_completion_payment.png>] [6
@@ -660,109 +630,109 @@ Package pdftex.def Info: spotting_completion_payment.png used on input line 335
 
 ]
 Chapter 2.
-<vertwind.png, id=459, 187.4202pt x 126.9543pt>
+<vertwind.png, id=638, 203.8014pt x 126.9543pt>
 File: vertwind.png Graphic file (type png)
  <use vertwind.png>
-Package pdftex.def Info: vertwind.png used on input line 362.
-(pdftex.def)             Requested size: 422.77661pt x 286.40001pt.
- [7] [8 <./vertwind.png>] <phoc.png, id=485, 715.67375pt x 339.2675pt>
+Package pdftex.def Info: vertwind.png used on input line 363.
+(pdftex.def)             Requested size: 465.06001pt x 289.72806pt.
+ [7] [8 <./vertwind.png>] <phoc.png, id=664, 715.67375pt x 369.38pt>
 File: phoc.png Graphic file (type png)
  <use phoc.png>
-Package pdftex.def Info: phoc.png used on input line 376.
-(pdftex.def)             Requested size: 305.33788pt x 144.74846pt.
-LaTeX Font Info:    Try loading font information for OML+cmr on input line 386.
+Package pdftex.def Info: phoc.png used on input line 377.
+(pdftex.def)             Requested size: 305.33788pt x 157.59595pt.
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 387.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omlcmr.fd
 File: omlcmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <12> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 386.
- [9 <./phoc.png (PNG copy)>] <german_lines.png, id=508, 1100.11pt x 285.065pt>
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 387.
+ [9 <./phoc.png>]
+<german_lines.png, id=690, 1100.11pt x 285.065pt>
 File: german_lines.png Graphic file (type png)
  <use german_lines.png>
-Package pdftex.def Info: german_lines.png used on input line 397.
+Package pdftex.def Info: german_lines.png used on input line 398.
 (pdftex.def)             Requested size: 460.35788pt x 119.28716pt.
 
-[10 <./german_lines.png>]
-<Toselli_multimodalCAT.png, id=528, 837.1275pt x 261.97874pt>
+[10] <Toselli_multimodalCAT.png, id=709, 837.1275pt x 261.97874pt>
 File: Toselli_multimodalCAT.png Graphic file (type png)
 
 <use Toselli_multimodalCAT.png>
-Package pdftex.def Info: Toselli_multimodalCAT.png used on input line 420.
+Package pdftex.def Info: Toselli_multimodalCAT.png used on input line 421.
 (pdftex.def)             Requested size: 446.2658pt x 139.65556pt.
- [11]
-<ii_ex_a.png, id=545, 219.26718pt x 152.92332pt>
+ [11 <./german_lines.png>]
+<ii_ex_a.png, id=725, 219.26718pt x 152.92332pt>
 File: ii_ex_a.png Graphic file (type png)
  <use ii_ex_a.png>
-Package pdftex.def Info: ii_ex_a.png used on input line 437.
+Package pdftex.def Info: ii_ex_a.png used on input line 438.
 (pdftex.def)             Requested size: 216.09044pt x 150.70618pt.
 
-<ii_ex_b.png, id=546, 218.68903pt x 152.92332pt>
+<ii_ex_b.png, id=726, 218.68903pt x 152.92332pt>
 File: ii_ex_b.png Graphic file (type png)
  <use ii_ex_b.png>
-Package pdftex.def Info: ii_ex_b.png used on input line 443.
+Package pdftex.def Info: ii_ex_b.png used on input line 444.
 (pdftex.def)             Requested size: 216.09044pt x 151.1052pt.
- [12 <./Toselli_multimodalCAT.png>] <zagoris.png, id=565, 725.71124pt x 346.293
+ [12 <./Toselli_multimodalCAT.png>] <zagoris.png, id=745, 725.71124pt x 346.293
 75pt>
 File: zagoris.png Graphic file (type png)
 
 <use zagoris.png>
-Package pdftex.def Info: zagoris.png used on input line 457.
+Package pdftex.def Info: zagoris.png used on input line 458.
 (pdftex.def)             Requested size: 399.2946pt x 190.53612pt.
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no ™ in font cmr12!
  [13 <./ii_ex_a.png> <./ii_ex_b.png>]
-<carpet.png, id=577, 337.7418pt x 218.2554pt>
+<carpet.png, id=758, 337.7418pt x 218.2554pt>
 File: carpet.png Graphic file (type png)
  <use carpet.png>
-Package pdftex.def Info: carpet.png used on input line 466.
+Package pdftex.def Info: carpet.png used on input line 467.
 (pdftex.def)             Requested size: 399.2946pt x 258.04866pt.
-
+ [14 <./zagoris.png>]
 
 pdfTeX warning: pdflatex (file ./retsinas_ex.pdf): PDF inclusion: found PDF ver
 sion <1.5>, but at most version <1.4> allowed
-<retsinas_ex.pdf, id=586, 162.96886pt x 86.84445pt>
+<retsinas_ex.pdf, id=772, 162.96886pt x 86.84445pt>
 File: retsinas_ex.pdf Graphic file (type pdf)
  <use retsinas_ex.pdf>
-Package pdftex.def Info: retsinas_ex.pdf used on input line 476.
+Package pdftex.def Info: retsinas_ex.pdf used on input line 477.
 (pdftex.def)             Requested size: 187.89912pt x 100.13802pt.
 
-[14 <./zagoris.png>] [15 <./carpet.png> <./retsinas_ex.pdf>] [16]
+[15 <./carpet.png> <./retsinas_ex.pdf>] [16]
 Chapter 3.
-<IAM_examples.png, id=611, 2077.7625pt x 949.5475pt>
+<IAM_examples.png, id=793, 2077.7625pt x 949.5475pt>
 File: IAM_examples.png Graphic file (type png)
  <use IAM_examples.png>
-Package pdftex.def Info: IAM_examples.png used on input line 505.
+Package pdftex.def Info: IAM_examples.png used on input line 506.
 (pdftex.def)             Requested size: 422.77661pt x 193.2096pt.
 
 [17
 
 
-] <bentham_examples.png, id=621, 420.6114pt x 330.7557pt>
+] <bentham_examples.png, id=802, 420.6114pt x 330.7557pt>
 File: bentham_examples.png Graphic file (type png)
 
 <use bentham_examples.png>
-Package pdftex.def Info: bentham_examples.png used on input line 524.
+Package pdftex.def Info: bentham_examples.png used on input line 526.
 (pdftex.def)             Requested size: 422.77661pt x 332.47083pt.
- [18 <./IAM_examples.png>] [19 <./bentham_examples.png>] <makenames.png, id=640
+ [18 <./IAM_examples.png>] [19 <./bentham_examples.png>] <makenames.png, id=823
 , 2083.785pt x 2619.7875pt>
 File: makenames.png Graphic file (type png)
  <use makenames.png>
-Package pdftex.def Info: makenames.png used on input line 544.
+Package pdftex.def Info: makenames.png used on input line 557.
 (pdftex.def)             Requested size: 422.77661pt x 531.50345pt.
 
-<names_examples.png, id=641, 407.5225pt x 752.8125pt>
+<names_examples.png, id=824, 407.5225pt x 752.8125pt>
 File: names_examples.png Graphic file (type png)
  <use names_examples.png>
-Package pdftex.def Info: names_examples.png used on input line 551.
+Package pdftex.def Info: names_examples.png used on input line 564.
 (pdftex.def)             Requested size: 234.87749pt x 433.88617pt.
 
-<charseg.png, id=643, 78.2925pt x 32.0397pt>
+<charseg.png, id=826, 78.2925pt x 32.0397pt>
 File: charseg.png Graphic file (type png)
  <use charseg.png>
-Package pdftex.def Info: charseg.png used on input line 562.
+Package pdftex.def Info: charseg.png used on input line 575.
 (pdftex.def)             Requested size: 234.87749pt x 96.13252pt.
  [20] [21 <./makenames.png>] [22 <./names_examples.png> <./charseg.png>] [23] [
 24
@@ -770,32 +740,24 @@ Package pdftex.def Info: charseg.png used on input line 562.
 
 ]
 Chapter 4.
-[25] <thesis-phocnet.png, id=684, 1306.8825pt x 367.3725pt>
+[25] <thesis-phocnet.png, id=882, 1343.0175pt x 367.3725pt>
 File: thesis-phocnet.png Graphic file (type png)
 
 <use thesis-phocnet.png>
-Package pdftex.def Info: thesis-phocnet.png used on input line 600.
-(pdftex.def)             Requested size: 460.35788pt x 129.40631pt.
- [26 <./thesis-phocnet.png>]
-<Captain_unwarped.png, id=697, 417.56pt x 120.45pt>
-File: Captain_unwarped.png Graphic file (type png)
- <use Captain_unwarped.png>
-Package pdftex.def Info: Captain_unwarped.png used on input line 625.
-(pdftex.def)             Requested size: 216.09044pt x 62.33476pt.
+Package pdftex.def Info: thesis-phocnet.png used on input line 619.
+(pdftex.def)             Requested size: 460.35788pt x 125.92522pt.
+ <TPP_example.png, id=885, 649.42625pt x 663.47874pt>
+File: TPP_example.png Graphic file (type png)
 
-<Captain_warped.png, id=698, 417.56pt x 120.45pt>
-File: Captain_warped.png Graphic file (type png)
- <use Captain_warped.png>
-Package pdftex.def Info: Captain_warped.png used on input line 631.
-(pdftex.def)             Requested size: 216.09044pt x 62.33476pt.
-
-[27 <./Captain_unwarped.png> <./Captain_warped.png (PNG copy)>]
+<use TPP_example.png>
+Package pdftex.def Info: TPP_example.png used on input line 626.
+(pdftex.def)             Requested size: 258.36667pt x 263.95932pt.
+ [26] [27 <./thesis-phocnet.png>] [28 <./TPP_example.png>]
 Package microtype Info: Loading generic settings for font family
 (microtype)             `cmss' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-LaTeX Font Info:    Try loading font information for OT1+qag on input line 661.
-
+LaTeX Font Info:    Try loading font information for OT1+qag on input line 705.
 
 (/usr/share/texmf/tex/latex/tex-gyre/ot1qag.fd
 File: ot1qag.fd 2009/09/25 v1.2 font definition file for OT1/qag
@@ -804,149 +766,321 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             `qag' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
- [28] [29]
+ [29] [30]
+<qualSpot.png, id=935, 1384.17125pt x 2000.47375pt>
+File: qualSpot.png Graphic file (type png)
+ <use qualSpot.png>
+Package pdftex.def Info: qualSpot.png used on input line 826.
+(pdftex.def)             Requested size: 352.31624pt x 509.18306pt.
 
-LaTeX Warning: Reference `TODO' on page 30 undefined on input line 717.
+<qualSpotNames.png, id=936, 807.015pt x 1119.18124pt>
+File: qualSpotNames.png Graphic file (type png)
+ <use qualSpotNames.png>
+Package pdftex.def Info: qualSpotNames.png used on input line 834.
+(pdftex.def)             Requested size: 281.85585pt x 390.8825pt.
+
+[31] [32 <./qualSpot.png>] [33 <./qualSpotNames.png>] [34]
+<exampleWindows.png, id=961, 250.9375pt x 97.36375pt>
+File: exampleWindows.png Graphic file (type png)
+ <use exampleWindows.png>
+Package pdftex.def Info: exampleWindows.png used on input line 862.
+(pdftex.def)             Requested size: 155.02pt x 60.15096pt.
+
+<windowsizes1.png, id=962, 745.78625pt x 460.72125pt>
+File: windowsizes1.png Graphic file (type png)
+ <use windowsizes1.png>
+Package pdftex.def Info: windowsizes1.png used on input line 872.
+(pdftex.def)             Requested size: 279.03883pt x 172.37636pt.
+
+<windowsizes2.png, id=963, 744.7825pt x 460.72125pt>
+File: windowsizes2.png Graphic file (type png)
+ <use windowsizes2.png>
+Package pdftex.def Info: windowsizes2.png used on input line 879.
+(pdftex.def)             Requested size: 279.03883pt x 172.61537pt.
+
+<windowsizes3.png, id=964, 744.7825pt x 460.72125pt>
+File: windowsizes3.png Graphic file (type png)
+ <use windowsizes3.png>
+Package pdftex.def Info: windowsizes3.png used on input line 886.
+(pdftex.def)             Requested size: 279.03883pt x 172.61537pt.
 
 
-LaTeX Warning: Reference `fig:windowsizes' on page 30 undefined on input line 7
-21.
+LaTeX Warning: Float too large for page by 22.82802pt on input line 893.
 
-[30] <removengrams.png, id=732, 867.24pt x 536.0025pt>
-File: removengrams.png Graphic file (type png)
- <use removengrams.png>
-Package pdftex.def Info: removengrams.png used on input line 784.
-(pdftex.def)             Requested size: 352.31624pt x 217.75047pt.
+<benthamUniSpot.png, id=971, 893.3375pt x 552.0625pt>
+File: benthamUniSpot.png Graphic file (type png)
+ <use benthamUniSpot.png>
+Package pdftex.def Info: benthamUniSpot.png used on input line 901.
+(pdftex.def)             Requested size: 348.795pt x 215.54779pt.
 
+<benthamBiSpot.png, id=972, 1786.675pt x 555.07375pt>
+File: benthamBiSpot.png Graphic file (type png)
+ <use benthamBiSpot.png>
+Package pdftex.def Info: benthamBiSpot.png used on input line 908.
+(pdftex.def)             Requested size: 460.41196pt x 143.03683pt.
 
-LaTeX Warning: Reference `fig:unigram' on page 31 undefined on input line 789.
+<benthamTri1Spot.png, id=973, 1791.69376pt x 574.145pt>
+File: benthamTri1Spot.png Graphic file (type png)
 
+<use benthamTri1Spot.png>
+Package pdftex.def Info: benthamTri1Spot.png used on input line 920.
+(pdftex.def)             Requested size: 460.41196pt x 147.53079pt.
 
-LaTeX Warning: Reference `fig:??' on page 31 undefined on input line 789.
+<benthamTri2Spot.png, id=974, 1791.69376pt x 574.145pt>
+File: benthamTri2Spot.png Graphic file (type png)
 
+<use benthamTri2Spot.png>
+Package pdftex.def Info: benthamTri2Spot.png used on input line 926.
+(pdftex.def)             Requested size: 460.41196pt x 147.53079pt.
 
-LaTeX Warning: Reference `fig:??' on page 31 undefined on input line 789.
+<benthamTri3Spot.png, id=975, 1791.69376pt x 574.145pt>
+File: benthamTri3Spot.png Graphic file (type png)
 
-[31] <unigram_respot_chart.png, id=741, 885.3075pt x 547.04375pt>
+<use benthamTri3Spot.png>
+Package pdftex.def Info: benthamTri3Spot.png used on input line 932.
+(pdftex.def)             Requested size: 460.41196pt x 147.53079pt.
+ <namesUniSpot.png, id=976, 893.3375pt x 552.0625pt>
+File: namesUniSpot.png Graphic file (type png)
+
+<use namesUniSpot.png>
+Package pdftex.def Info: namesUniSpot.png used on input line 943.
+(pdftex.def)             Requested size: 348.795pt x 215.54779pt.
+ <namesBiSpot.png, id=977, 1786.675pt x 555.07375pt>
+File: namesBiSpot.png Graphic file (type png)
+
+<use namesBiSpot.png>
+Package pdftex.def Info: namesBiSpot.png used on input line 950.
+(pdftex.def)             Requested size: 460.41196pt x 143.03683pt.
+ <namesTri1Spot.png, id=978, 1791.69376pt x 574.145pt>
+File: namesTri1Spot.png Graphic file (type png)
+
+<use namesTri1Spot.png>
+Package pdftex.def Info: namesTri1Spot.png used on input line 962.
+(pdftex.def)             Requested size: 460.41196pt x 147.53079pt.
+ <namesTri2Spot.png, id=979, 1791.69376pt x 574.145pt>
+File: namesTri2Spot.png Graphic file (type png)
+
+<use namesTri2Spot.png>
+Package pdftex.def Info: namesTri2Spot.png used on input line 968.
+(pdftex.def)             Requested size: 460.41196pt x 147.53079pt.
+ <namesTri3Spot.png, id=980, 1791.69376pt x 574.145pt>
+File: namesTri3Spot.png Graphic file (type png)
+
+<use namesTri3Spot.png>
+Package pdftex.def Info: namesTri3Spot.png used on input line 974.
+(pdftex.def)             Requested size: 460.41196pt x 147.53079pt.
+ [35] [36 <./exampleWindows.png> <./windowsizes1.png (PNG copy)> <./windowsizes
+2.png (PNG copy)> <./windowsizes3.png (PNG copy)>]
+[37 <./benthamUniSpot.png (PNG copy)> <./benthamBiSpot.png (PNG copy)>]
+[38 <./benthamTri1Spot.png (PNG copy)> <./benthamTri2Spot.png (PNG copy)> <./be
+nthamTri3Spot.png (PNG copy)>] [39 <./namesUniSpot.png (PNG copy)> <./namesBiSp
+ot.png (PNG copy)>] [40 <./namesTri1Spot.png (PNG copy)> <./namesTri2Spot.png (
+PNG copy)> <./namesTri3Spot.png (PNG copy)>]
+<unigram_respot_chart.png, id=1011, 885.3075pt x 547.04375pt>
 File: unigram_respot_chart.png Graphic file (type png)
 
 <use unigram_respot_chart.png>
-Package pdftex.def Info: unigram_respot_chart.png used on input line 817.
+Package pdftex.def Info: unigram_respot_chart.png used on input line 1008.
 (pdftex.def)             Requested size: 352.31624pt x 217.70343pt.
 
-<bigram_respot_chart.png, id=742, 881.2925pt x 545.03625pt>
+<bigram_respot_chart.png, id=1012, 881.2925pt x 545.03625pt>
 File: bigram_respot_chart.png Graphic file (type png)
 
 <use bigram_respot_chart.png>
-Package pdftex.def Info: bigram_respot_chart.png used on input line 823.
+Package pdftex.def Info: bigram_respot_chart.png used on input line 1014.
 (pdftex.def)             Requested size: 352.31624pt x 217.8859pt.
 
-<trigram_respot_chart.png, id=743, 878.28125pt x 543.02875pt>
+<trigram_respot_chart.png, id=1013, 878.28125pt x 543.02875pt>
 File: trigram_respot_chart.png Graphic file (type png)
 
 <use trigram_respot_chart.png>
-Package pdftex.def Info: trigram_respot_chart.png used on input line 829.
+Package pdftex.def Info: trigram_respot_chart.png used on input line 1020.
 (pdftex.def)             Requested size: 352.31624pt x 217.83737pt.
- [32 <./removengrams.png (PNG copy)>] [33 <./unigram_respot_chart.png (PNG copy
-)> <./bigram_respot_chart.png (PNG copy)>]
-[34 <./trigram_respot_chart.png (PNG copy)>]
+ [41 <./unigram_respot_chart.png (PNG copy)>]
+[42 <./bigram_respot_chart.png (PNG copy)> <./trigram_respot_chart.png (PNG cop
+y)>]
 Chapter 5.
-[35
+[43
 
 
-] <suffix_IAM_ap.png, id=763, 785.93625pt x 699.61375pt>
+] <assist_demo.png, id=1028, 563.10374pt x 930.47626pt>
+File: assist_demo.png Graphic file (type png)
+
+<use assist_demo.png>
+Package pdftex.def Info: assist_demo.png used on input line 1045.
+(pdftex.def)             Requested size: 305.33788pt x 504.53679pt.
+ <suffix_IAM_ap.png, id=1033, 785.93625pt x 699.61375pt>
 File: suffix_IAM_ap.png Graphic file (type png)
 
 <use suffix_IAM_ap.png>
-Package pdftex.def Info: suffix_IAM_ap.png used on input line 956.
-(pdftex.def)             Requested size: 232.53pt x 206.99275pt.
- <suffix_IAM_count.png, id=764, 786.94pt x 699.61375pt>
-File: suffix_IAM_count.png Graphic file (type png)
+Package pdftex.def Info: suffix_IAM_ap.png used on input line 1083.
+(pdftex.def)             Requested size: 352.31624pt x 313.62766pt.
 
-<use suffix_IAM_count.png>
-Package pdftex.def Info: suffix_IAM_count.png used on input line 962.
-(pdftex.def)             Requested size: 232.53pt x 206.72588pt.
- [36] [37 <./suffix_IAM_ap.png (PNG copy)> <./suffix_IAM_count.png (PNG copy)>]
- <flow6.png, id=775, 1220.27895pt x 722.7pt>
+<suffix_names_ap.png, id=1034, 785.93625pt x 699.61375pt>
+File: suffix_names_ap.png Graphic file (type png)
+
+<use suffix_names_ap.png>
+Package pdftex.def Info: suffix_names_ap.png used on input line 1090.
+(pdftex.def)             Requested size: 352.31624pt x 313.62766pt.
+ [44] [45 <./assist_demo.png>] [46 <./suffix_IAM_ap.png (PNG copy)>] [47 <./suf
+fix_names_ap.png (PNG copy)>] [48]
+Chapter 6.
+[49
+
+
+] <flow6.png, id=1065, 1003.1076pt x 562.2606pt>
 File: flow6.png Graphic file (type png)
+ <use flow6.png>
+Package pdftex.def Info: flow6.png used on input line 1125.
+(pdftex.def)             Requested size: 422.77661pt x 236.97147pt.
+ [50 <./flow6.png>] [51] <spottingapproval.png, id=1080, 703.62875pt x 850.1762
+5pt>
+File: spottingapproval.png Graphic file (type png)
 
-<use flow6.png>
-Package pdftex.def Info: flow6.png used on input line 993.
-(pdftex.def)             Requested size: 422.77661pt x 250.3904pt.
- [38 <./flow6.png>] [39] [40]
-Overfull \vbox (85.71928pt too high) has occurred while \output is active []
+<use spottingapproval.png>
+Package pdftex.def Info: spottingapproval.png used on input line 1162.
+(pdftex.def)             Requested size: 352.31624pt x 425.68382pt.
+
+<transcriptionselection.png, id=1082, 705.63625pt x 850.17625pt>
+File: transcriptionselection.png Graphic file (type png)
+
+<use transcriptionselection.png>
+Package pdftex.def Info: transcriptionselection.png used on input line 1193.
+(pdftex.def)             Requested size: 352.31624pt x 424.47737pt.
+ [52] [53 <./spottingapproval.png (PNG copy)>]
+[54] [55 <./transcriptionselection.png (PNG copy)>] [56]
+<two_dist_ex.png, id=1111, 888.31876pt x 549.05125pt>
+File: two_dist_ex.png Graphic file (type png)
+ <use two_dist_ex.png>
+Package pdftex.def Info: two_dist_ex.png used on input line 1290.
+(pdftex.def)             Requested size: 352.31624pt x 217.75673pt.
+
+<one_dist_ex.png, id=1112, 888.31876pt x 549.05125pt>
+File: one_dist_ex.png Graphic file (type png)
+ <use one_dist_ex.png>
+Package pdftex.def Info: one_dist_ex.png used on input line 1297.
+(pdftex.def)             Requested size: 352.31624pt x 217.75673pt.
+
+[57] [58 <./two_dist_ex.png (PNG copy)> <./one_dist_ex.png (PNG copy)>]
+<tail_dist_ex.png, id=1123, 889.3225pt x 550.055pt>
+File: tail_dist_ex.png Graphic file (type png)
+ <use tail_dist_ex.png>
+Package pdftex.def Info: tail_dist_ex.png used on input line 1309.
+(pdftex.def)             Requested size: 352.31624pt x 217.9114pt.
+
+[59 <./tail_dist_ex.png>] [60] [61]
+<clustergood2.png, id=1141, 794.97pt x 848.16875pt>
+File: clustergood2.png Graphic file (type png)
+ <use clustergood2.png>
+Package pdftex.def Info: clustergood2.png used on input line 1389.
+(pdftex.def)             Requested size: 375.80542pt x 400.96892pt.
+
+<clusterbad.png, id=1142, 794.97pt x 847.165pt>
+File: clusterbad.png Graphic file (type png)
+ <use clusterbad.png>
+Package pdftex.def Info: clusterbad.png used on input line 1395.
+(pdftex.def)             Requested size: 375.80542pt x 400.4944pt.
+ [62 <./clustergood2.png (PNG copy)>] [63 <./clusterbad.png (PNG copy)>]
+<cpv.png, id=1155, 526.96875pt x 1203.49625pt>
+File: cpv.png Graphic file (type png)
+ <use cpv.png>
+Package pdftex.def Info: cpv.png used on input line 1428.
+(pdftex.def)             Requested size: 234.87749pt x 536.42644pt.
+ [64] [65] [66 <./cpv.png (PNG copy)>]
+Chapter 7.
+[67
 
 
-[41]
-Overfull \hbox (8.24495pt too wide) in paragraph at lines 1100--1100
+]
+Overfull \hbox (24.76997pt too wide) in paragraph at lines 1478--1515
+ [][] 
+ []
+
+[68]
+Overfull \hbox (43.95728pt too wide) in paragraph at lines 1534--1575
+ [][] 
+ []
+
+[69] <aftercattss.png, id=1185, 892.33376pt x 1078.0275pt>
+File: aftercattss.png Graphic file (type png)
+
+<use aftercattss.png>
+Package pdftex.def Info: aftercattss.png used on input line 1586.
+(pdftex.def)             Requested size: 465.06001pt x 561.84413pt.
+
+Overfull \hbox (8.24495pt too wide) in paragraph at lines 1594--1594
  |[]\OT1/cmr/bx/n/12 CAT Through Unas-sisted Sub-word Spot-ting Us-ing Dy-namic
  Time-Warping
  []
 
-<cpv.png, id=809, 526.96875pt x 1203.49625pt>
-File: cpv.png Graphic file (type png)
- <use cpv.png>
-Package pdftex.def Info: cpv.png used on input line 1106.
-(pdftex.def)             Requested size: 234.87749pt x 536.42644pt.
- [42] [43 <./cpv.png (PNG copy)>] [44
+[70] [71 <./aftercattss.png>]
+Overfull \hbox (4.97437pt too wide) in paragraph at lines 1608--1625
+ [][] 
+ []
+
+[72]
+Chapter 8.
+[73
+
+
+] [74] [75] [76
 
 
 ]
-Chapter 6.
-(./byumsphd-example.bbl [45] [46
+Chapter 9.
 
+LaTeX Warning: Float too large for page by 5595.76343pt on input line 2125.
 
-]
+(./byumsphd-example.bbl [77] [78]
 Missing character: There is no Ã in font cmr12!
 Missing character: There is no ¡ in font cmr12!
- [47] [48] [49]
+ [79
+
+
+] [80] [81]
 Missing character: There is no Ã in font cmr12!
 Missing character: There is no ¡ in font cmr12!
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1151.
- [50]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1151.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2133.
+ [82]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2133.
  (./byumsphd-example.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1151.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1151.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2133.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2133.
 
 Package rerunfilecheck Info: File `byumsphd-example.out' has not changed.
-(rerunfilecheck)             Checksum: 0992E02852A6782BAB796F1ED2E51B69;2987.
-
-LaTeX Warning: There were undefined references.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1151.
+(rerunfilecheck)             Checksum: 31D32B11819E591A090BB08150F1B20C;4273.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2133.
  )
 (\end occurred inside a group at level 2)
 
-### semi simple group (level 2) entered at line 1149 (\begingroup)
-### semi simple group (level 1) entered at line 244 (\begingroup)
+### semi simple group (level 2) entered at line 2131 (\begingroup)
+### semi simple group (level 1) entered at line 245 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 13385 strings out of 494989
- 203392 string characters out of 6180577
- 388791 words of memory out of 5000000
- 16116 multiletter control sequences out of 15000+600000
- 18933 words of font info for 98 fonts, out of 8000000 for 9000
+ 12447 strings out of 494989
+ 190029 string characters out of 6180577
+ 500012 words of memory out of 5000000
+ 15100 multiletter control sequences out of 15000+600000
+ 18299 words of font info for 97 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 36i,16n,41p,1590b,1529s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,8n,41p,1605b,1531s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/tex-gyre/q-rm.enc}</usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmss12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
-10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texmf/
-fonts/type1/public/tex-gyre/qagr.pfb>
-Output written on byumsphd-example.pdf (64 pages, 12063405 bytes).
+mf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmss12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cms
+y8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share
+/texmf/fonts/type1/public/tex-gyre/qagr.pfb>
+Output written on byumsphd-example.pdf (98 pages, 17158323 bytes).
 PDF statistics:
- 947 PDF objects out of 1000 (max. 8388607)
- 187 named destinations out of 1000 (max. 500000)
- 16372 words of extra memory for PDF output out of 17280 (max. 10000000)
+ 1354 PDF objects out of 1440 (max. 8388607)
+ 257 named destinations out of 1000 (max. 500000)
+ 15583 words of extra memory for PDF output out of 17280 (max. 10000000)
 

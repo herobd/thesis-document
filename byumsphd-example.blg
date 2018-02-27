@@ -3,44 +3,44 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: byumsphd-example.aux
 The style file: plainnat.bst
 Database file #1: bib.bib
-You've used 35 entries,
+You've used 37 entries,
             2773 wiz_defined-function locations,
-            839 strings with 12652 characters,
-and the built_in function-call counts, 19537 in all, are:
-= -- 1737
-> -- 1216
-< -- 22
-+ -- 406
-- -- 371
-* -- 1619
-:= -- 2919
-add.period$ -- 137
-call.type$ -- 35
-change.case$ -- 228
-chr.to.int$ -- 35
-cite$ -- 70
-duplicate$ -- 894
-empty$ -- 1552
-format.name$ -- 420
-if$ -- 4232
+            845 strings with 12841 characters,
+and the built_in function-call counts, 20323 in all, are:
+= -- 1801
+> -- 1258
+< -- 24
++ -- 420
+- -- 383
+* -- 1667
+:= -- 3035
+add.period$ -- 143
+call.type$ -- 37
+change.case$ -- 238
+chr.to.int$ -- 37
+cite$ -- 74
+duplicate$ -- 940
+empty$ -- 1632
+format.name$ -- 438
+if$ -- 4404
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 34
-newline$ -- 206
-num.names$ -- 142
-pop$ -- 470
+missing$ -- 36
+newline$ -- 216
+num.names$ -- 150
+pop$ -- 498
 preamble$ -- 1
-purify$ -- 193
+purify$ -- 201
 quote$ -- 0
-skip$ -- 700
+skip$ -- 732
 stack$ -- 0
-substring$ -- 672
-swap$ -- 172
+substring$ -- 676
+swap$ -- 176
 text.length$ -- 13
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 385
+type$ -- 407
 warning$ -- 0
-while$ -- 144
+while$ -- 150
 width$ -- 0
-write$ -- 510
+write$ -- 534
