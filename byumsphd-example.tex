@@ -727,7 +727,7 @@ Full word spotting is performed as described in \cite{sudholt2016}, where the ne
   \hline		
   %Old network & 0.755 & 0.683 & 0.762 & 0.811 & 0.525 & 0.511  %results with msfNoLRN/sig-bray IAM:208000  BEN:160000 NAMES(less):144000
   Our network  &  0.892 & 0.833  &  0.926 & 0.971  &  0.758 & 0.858  \\%results with phocnetSkinny(Adam,dot) IAM:124000  BEN:X NAMES(less):124000
-  Our network adapted PHOC  &  0.X & 0.X  &  0.888 & 0.912  &  0.731 & 0.773 \\
+  Our network adapted PHOC  &  0.868 & 0.809  &  0.935 & 0.975  &  0.755 & 0.864 \\
   %bentham:ben_fixed_corpus.gtp
   
   PHOCNet\cite{sudholt2016} & 0.830 & 0.725 & - & - & - & - \\
@@ -741,7 +741,8 @@ Full word spotting is performed as described in \cite{sudholt2016}, where the ne
 
 %We first note that our model significantly under performs \cite{sudholt2016} on the IAM dataset (by 7.5\% on QbS and 4.2\% on QbE). We were unable to reproduce their results, mimicking their model, and the architecture changes we make we expected would have a negative effect on performance. It is likely a better word spotting model could be produced, but this was not the the focus of our work.
 %It is clear that the Census Names dataset is significantly more challenging than the other datasets, however, having above 50\% MAP indicates the network is learning the task to some degree.
-It can be seen that we underperform compared to \cite{sudholt2017}. This is to be expected as we have reduced the number of parameters in the  	CNN model. The adapted PHOC vector performs even worse which is also anticipated as we are reducing its descriptive power for words longer than three characters.
+It can be seen that we underperform compared to \cite{sudholt2017}. This is to be expected as we have reduced the number of parameters in the  	CNN model. The adapted PHOC vector performs variably against compared to the original,  performing better in some cases which is suprising as we have reduced its descriptive power for words longer than three characters. It may be the reduced description was easier for our reduced network to learn.
+%The adapted PHOC vector performs even worse which is also anticipated as we are reducing its descriptive power for words longer than three characters.
 
 As a note, it is not always meaningful to compare QbS scores to QbE scores, as QbS represents a mean over text queries, one for each possible word label and QbE represents a mean over instance queries, one for each instance of a word in the dataset, meaning it is biased towards the performance of common words (or n-grams in later tests).
 
@@ -780,7 +781,7 @@ Some qualitative results are show in Figures \ref{fig:qualSpot} and \ref{fig:qua
   Trigram &  0.522 &  0.571  & 0.271 &  0.285 \\
   \hline
   
-  Adapted PHOC using masked cross entropy & & & & \\
+  Adapted PHOC using cross entropy & & & & \\
   %net-adapted + masked cross ent   old ww
   Unigram &  0.677 &  0.327  & 0.497 &  0.203 \\ 
   Bigram  &  0.682 &  0.426  & 0.402 &  0.179 \\
@@ -795,25 +796,32 @@ Some qualitative results are show in Figures \ref{fig:qualSpot} and \ref{fig:qua
 \centering
 \begin{tabular}{| l | c c c | c c c c |}
   \hline
-   & \multicolumn{3}{c|}{\cite{sudholt2017} PHOC} & \multicolumn{4}{c|}{Adapted PHOC}\\
+   & \multicolumn{3}{c|}{PHOC \cite{sudholt2017}} & \multicolumn{4}{c|}{Adapted PHOC}\\
    %&     & weighted & n-gram & instance &     & weighted & n-gram & instance \\
    & Cosine & CE & Masked CE & Cosine & CE & Masked cosine & Masked CE   \\
   \hline   
   \hline 
   QbS & & & & & & & \\
   \hline
-Unigram &  0.654 &  0.608 &  0.654 &  0.678 &  0.691 &  0.499 &  0.691 \\
-Bigram  &  0.549 &  0.641 &  0.679 &  0.643 &  0.665 &  0.571 &  0.665 \\
-Trigram &  0.522 &  0.560 &  0.612 &  0.618 &  0.640 &  0.586 &  0.659 \\
+%                                                                         redo CE, final final2(uni, no mask)
+%Unigram &  0.654 &  0.608 &  0.654 &  0.678 &  0.691 &  0.499 &  0.691 \\,0.677  0.570, 0.677,
+%Bigram  &  0.549 &  0.641 &  0.679 &  0.643 &  0.665 &  0.571 &  0.665 \\,0.682  0.663, 0.663,
+%Trigram &  0.522 &  0.560 &  0.612 &  0.618 &  0.640 &  0.586 &  0.659 \\,0.705  0.697, 0.697,
+Unigram &  0.654 &  0.608 &  0.654 &  \textbf{0.678} &  \textbf{0.677} &  0.499 &  0.570 \\
+Bigram  &  0.549 &  0.641 &  0.679 &  0.643 &  \textbf{0.682} &  0.571 &  0.663 \\
+Trigram &  0.522 &  0.560 &  0.612 &  0.618 &  \textbf{0.705} &  0.586 &  0.697 \\
 \hline
 
 
 \hline 
   QbE & & & & & & & \\
   \hline
-Unigram &  0.511 &  0.338 &  0.X &  0.453 &  0.318  &  0.296 &  0.318 \\
-Bigram  &  0.569 &  0.429 &  0.X &  0.535 &  0.408  &  0.435 &  0.408 \\
-Trigram &  0.571 &  0.449 &  0.X &  0.533 &  0.431  &  0.497 &  0.438 \\
+%Unigram &  0.511 &  0.338 &  0.X &  0.453 &  0.318  &  0.296 &  0.318 \\0.329, 0.283, 0.328
+%Bigram  &  0.569 &  0.429 &  0.X &  0.535 &  0.408  &  0.435 &  0.408 \\0.426, 0.395, 0.395
+%Trigram &  0.571 &  0.449 &  0.X &  0.533 &  0.431  &  0.497 &  0.438 \\0.441, 0.437, 0.437
+Unigram &  \textbf{0.511} &  0.338 & 0.321 &  0.453 &  0.329  &  0.296 &  0.283 \\
+Bigram  &  \textbf{0.569} &  0.429 & 0.425 &  0.535 &  0.426  &  0.435 &  0.395 \\
+Trigram &  \textbf{0.571} &  0.449 & 0.431 &  0.533 &  0.441  &  0.497 &  0.437 \\
 \hline
 
 \end{tabular}
@@ -832,12 +840,12 @@ Trigram &  0.571 &  0.449 &  0.X &  0.533 &  0.431  &  0.497 &  0.438 \\
 \begin{figure}
     \centering
     \includegraphics[width=.6\textwidth]{qualSpotNames}
-    \caption{Qualitative results for QbS subword spotting on the Census Names Dataset. Spottings show the top results for the various n-gram queries. We selected some of the better n-grams (`i', `el', `int') and worse n-grams (`v', `ts', `pre') by MAP. Red boxes indicate incorrect spottings. %TODO comment on ss-s phenom?
+    \caption{Qualitative results for QbS subword spotting on the Census Names Dataset. Spottings show the top results for the various n-gram queries. We selected some of the better n-grams (`i', `el', `int') and worse n-grams (`v', `ts', `pre') by MAP. Red boxes indicate incorrect spottings.
     }
     \label{fig:qualSpotNames}
 \end{figure}
 
-In Table \ref{tab:distmetrics} we show a comparison of using cosine similarity and cross-entropy (CE) for PHOC vector comparison using both the original and adapted PHOC vectors. We also show the effect of masking the PHOC vector. For QbS, using cross-entropy shows a large improvement over cosine similarity, but cosine similarity always out performs in QbE.
+In Table \ref{tab:distmetrics} we show a comparison of using cosine similarity and cross-entropy (CE) for PHOC vector comparison using both the original and adapted PHOC vectors. We also show the effect of masking the PHOC vector, where divisions of the word which do not divide evenly with the number of characters being spotted are masked out (e.g.!~division of thirds is masked for spotting bigrams). For QbS, using cross-entropy shows a large improvement over cosine similarity, but cosine similarity always out performs in QbE.
 
 We note that for QbS that the relative performance of unigrams, bigrams, and trigrams is reversed for the Census Names dataset. This occurs becuase of a common error where windows containing only part of the desired n-gram (e.g.~a single character of a bigram) are scored highly. For example...
 This exists in the Bentham dataset as well.
@@ -1058,7 +1066,7 @@ We identified a list of 41 suffixes and evaluate spotting the suffixes present f
  The window size for a given suffix query is found by identifying all n-grams we have window estimates for (see Section \ref{detirminewindowsize}) which compose the query and averaging their window widths according to which characters they contribute to.
 We are able to make the assumption that the spottings only occur at the end of the word which reduces the number of possible subwindows significantly. We additionally don't need to consider window overlap in our evaluation as the goal is whole word retrieval.
 
-We evaluate QbS suffix spotting on the IAM and Census Names datasets as these have a reasonable number of instances of our suffixes. We achieved a MAP of 0.550 for the IAM dataset and a MAP of 0.297 for the Census Names dataset. We show the AP for the suffixes individually in Figures \ref{fig:IAM_suffix} and \ref{fig:names_suffix}.
+We evaluate QbS suffix spotting on the IAM and Census Names datasets as these have a reasonable number of instances of our suffixes. We achieved a MAP of 0.583 for the IAM dataset and a MAP of 0.488 for the Census Names dataset. We show the AP for the suffixes individually in Figures \ref{fig:IAM_suffix} and \ref{fig:names_suffix}. Note that the suffixes achieving 100\% AP occur only once or twice. For the IAM dataset the suffixes occur about half the time as the whole words, meaning it may not represent subword spotting as well as the Census Names dataset, which had only one instance of a subword being a whole word (name).
 
 
 
@@ -1092,7 +1100,7 @@ We evaluate QbS suffix spotting on the IAM and Census Names datasets as these ha
     \label{fig:names_suffix}
 \end{figure}
 
-The MAP for the Census Names dataset reflects its subword spotting performance. We can see in Figures \ref{fig:IAM_suffix} and \ref{fig:names_suffix} that more frequent suffixes perform more consistently, while less frequent suffixes have more variability in performance.
+%The MAP for the Census Names dataset reflects its subword spotting performance. We can see in Figures \ref{fig:IAM_suffix} and \ref{fig:names_suffix} that more frequent suffixes perform more consistently, while less frequent suffixes have more variability in performance.
 
 
 

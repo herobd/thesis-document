@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2017.8.25)  12 FEB 2018 12:01
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2017.8.25)  21 FEB 2018 10:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -770,104 +770,104 @@ Package microtype Info: Loading generic settings for font family
 <qualSpot.png, id=935, 1384.17125pt x 2000.47375pt>
 File: qualSpot.png Graphic file (type png)
  <use qualSpot.png>
-Package pdftex.def Info: qualSpot.png used on input line 826.
+Package pdftex.def Info: qualSpot.png used on input line 834.
 (pdftex.def)             Requested size: 352.31624pt x 509.18306pt.
 
 <qualSpotNames.png, id=936, 807.015pt x 1119.18124pt>
 File: qualSpotNames.png Graphic file (type png)
  <use qualSpotNames.png>
-Package pdftex.def Info: qualSpotNames.png used on input line 834.
+Package pdftex.def Info: qualSpotNames.png used on input line 842.
 (pdftex.def)             Requested size: 281.85585pt x 390.8825pt.
 
 [31] [32 <./qualSpot.png>] [33 <./qualSpotNames.png>] [34]
 <exampleWindows.png, id=961, 250.9375pt x 97.36375pt>
 File: exampleWindows.png Graphic file (type png)
  <use exampleWindows.png>
-Package pdftex.def Info: exampleWindows.png used on input line 862.
+Package pdftex.def Info: exampleWindows.png used on input line 870.
 (pdftex.def)             Requested size: 155.02pt x 60.15096pt.
 
 <windowsizes1.png, id=962, 745.78625pt x 460.72125pt>
 File: windowsizes1.png Graphic file (type png)
  <use windowsizes1.png>
-Package pdftex.def Info: windowsizes1.png used on input line 872.
+Package pdftex.def Info: windowsizes1.png used on input line 880.
 (pdftex.def)             Requested size: 279.03883pt x 172.37636pt.
 
 <windowsizes2.png, id=963, 744.7825pt x 460.72125pt>
 File: windowsizes2.png Graphic file (type png)
  <use windowsizes2.png>
-Package pdftex.def Info: windowsizes2.png used on input line 879.
+Package pdftex.def Info: windowsizes2.png used on input line 887.
 (pdftex.def)             Requested size: 279.03883pt x 172.61537pt.
 
 <windowsizes3.png, id=964, 744.7825pt x 460.72125pt>
 File: windowsizes3.png Graphic file (type png)
  <use windowsizes3.png>
-Package pdftex.def Info: windowsizes3.png used on input line 886.
+Package pdftex.def Info: windowsizes3.png used on input line 894.
 (pdftex.def)             Requested size: 279.03883pt x 172.61537pt.
 
 
-LaTeX Warning: Float too large for page by 22.82802pt on input line 893.
+LaTeX Warning: Float too large for page by 22.82802pt on input line 901.
 
 <benthamUniSpot.png, id=971, 893.3375pt x 552.0625pt>
 File: benthamUniSpot.png Graphic file (type png)
  <use benthamUniSpot.png>
-Package pdftex.def Info: benthamUniSpot.png used on input line 901.
+Package pdftex.def Info: benthamUniSpot.png used on input line 909.
 (pdftex.def)             Requested size: 348.795pt x 215.54779pt.
 
 <benthamBiSpot.png, id=972, 1786.675pt x 555.07375pt>
 File: benthamBiSpot.png Graphic file (type png)
  <use benthamBiSpot.png>
-Package pdftex.def Info: benthamBiSpot.png used on input line 908.
+Package pdftex.def Info: benthamBiSpot.png used on input line 916.
 (pdftex.def)             Requested size: 460.41196pt x 143.03683pt.
 
 <benthamTri1Spot.png, id=973, 1791.69376pt x 574.145pt>
 File: benthamTri1Spot.png Graphic file (type png)
 
 <use benthamTri1Spot.png>
-Package pdftex.def Info: benthamTri1Spot.png used on input line 920.
+Package pdftex.def Info: benthamTri1Spot.png used on input line 928.
 (pdftex.def)             Requested size: 460.41196pt x 147.53079pt.
 
 <benthamTri2Spot.png, id=974, 1791.69376pt x 574.145pt>
 File: benthamTri2Spot.png Graphic file (type png)
 
 <use benthamTri2Spot.png>
-Package pdftex.def Info: benthamTri2Spot.png used on input line 926.
+Package pdftex.def Info: benthamTri2Spot.png used on input line 934.
 (pdftex.def)             Requested size: 460.41196pt x 147.53079pt.
 
 <benthamTri3Spot.png, id=975, 1791.69376pt x 574.145pt>
 File: benthamTri3Spot.png Graphic file (type png)
 
 <use benthamTri3Spot.png>
-Package pdftex.def Info: benthamTri3Spot.png used on input line 932.
+Package pdftex.def Info: benthamTri3Spot.png used on input line 940.
 (pdftex.def)             Requested size: 460.41196pt x 147.53079pt.
  <namesUniSpot.png, id=976, 893.3375pt x 552.0625pt>
 File: namesUniSpot.png Graphic file (type png)
 
 <use namesUniSpot.png>
-Package pdftex.def Info: namesUniSpot.png used on input line 943.
+Package pdftex.def Info: namesUniSpot.png used on input line 951.
 (pdftex.def)             Requested size: 348.795pt x 215.54779pt.
  <namesBiSpot.png, id=977, 1786.675pt x 555.07375pt>
 File: namesBiSpot.png Graphic file (type png)
 
 <use namesBiSpot.png>
-Package pdftex.def Info: namesBiSpot.png used on input line 950.
+Package pdftex.def Info: namesBiSpot.png used on input line 958.
 (pdftex.def)             Requested size: 460.41196pt x 143.03683pt.
  <namesTri1Spot.png, id=978, 1791.69376pt x 574.145pt>
 File: namesTri1Spot.png Graphic file (type png)
 
 <use namesTri1Spot.png>
-Package pdftex.def Info: namesTri1Spot.png used on input line 962.
+Package pdftex.def Info: namesTri1Spot.png used on input line 970.
 (pdftex.def)             Requested size: 460.41196pt x 147.53079pt.
  <namesTri2Spot.png, id=979, 1791.69376pt x 574.145pt>
 File: namesTri2Spot.png Graphic file (type png)
 
 <use namesTri2Spot.png>
-Package pdftex.def Info: namesTri2Spot.png used on input line 968.
+Package pdftex.def Info: namesTri2Spot.png used on input line 976.
 (pdftex.def)             Requested size: 460.41196pt x 147.53079pt.
  <namesTri3Spot.png, id=980, 1791.69376pt x 574.145pt>
 File: namesTri3Spot.png Graphic file (type png)
 
 <use namesTri3Spot.png>
-Package pdftex.def Info: namesTri3Spot.png used on input line 974.
+Package pdftex.def Info: namesTri3Spot.png used on input line 982.
 (pdftex.def)             Requested size: 460.41196pt x 147.53079pt.
  [35] [36 <./exampleWindows.png> <./windowsizes1.png (PNG copy)> <./windowsizes
 2.png (PNG copy)> <./windowsizes3.png (PNG copy)>]
@@ -880,21 +880,21 @@ PNG copy)> <./namesTri3Spot.png (PNG copy)>]
 File: unigram_respot_chart.png Graphic file (type png)
 
 <use unigram_respot_chart.png>
-Package pdftex.def Info: unigram_respot_chart.png used on input line 1008.
+Package pdftex.def Info: unigram_respot_chart.png used on input line 1016.
 (pdftex.def)             Requested size: 352.31624pt x 217.70343pt.
 
 <bigram_respot_chart.png, id=1012, 881.2925pt x 545.03625pt>
 File: bigram_respot_chart.png Graphic file (type png)
 
 <use bigram_respot_chart.png>
-Package pdftex.def Info: bigram_respot_chart.png used on input line 1014.
+Package pdftex.def Info: bigram_respot_chart.png used on input line 1022.
 (pdftex.def)             Requested size: 352.31624pt x 217.8859pt.
 
 <trigram_respot_chart.png, id=1013, 878.28125pt x 543.02875pt>
 File: trigram_respot_chart.png Graphic file (type png)
 
 <use trigram_respot_chart.png>
-Package pdftex.def Info: trigram_respot_chart.png used on input line 1020.
+Package pdftex.def Info: trigram_respot_chart.png used on input line 1028.
 (pdftex.def)             Requested size: 352.31624pt x 217.83737pt.
  [41 <./unigram_respot_chart.png (PNG copy)>]
 [42 <./bigram_respot_chart.png (PNG copy)> <./trigram_respot_chart.png (PNG cop
@@ -907,84 +907,84 @@ Chapter 5.
 File: assist_demo.png Graphic file (type png)
 
 <use assist_demo.png>
-Package pdftex.def Info: assist_demo.png used on input line 1045.
+Package pdftex.def Info: assist_demo.png used on input line 1053.
 (pdftex.def)             Requested size: 305.33788pt x 504.53679pt.
  <suffix_IAM_ap.png, id=1033, 785.93625pt x 699.61375pt>
 File: suffix_IAM_ap.png Graphic file (type png)
 
 <use suffix_IAM_ap.png>
-Package pdftex.def Info: suffix_IAM_ap.png used on input line 1083.
+Package pdftex.def Info: suffix_IAM_ap.png used on input line 1091.
 (pdftex.def)             Requested size: 352.31624pt x 313.62766pt.
-
-<suffix_names_ap.png, id=1034, 785.93625pt x 699.61375pt>
+ [44] [45 <./assist_demo.png>]
+<suffix_names_ap.png, id=1044, 785.93625pt x 699.61375pt>
 File: suffix_names_ap.png Graphic file (type png)
 
 <use suffix_names_ap.png>
-Package pdftex.def Info: suffix_names_ap.png used on input line 1090.
+Package pdftex.def Info: suffix_names_ap.png used on input line 1098.
 (pdftex.def)             Requested size: 352.31624pt x 313.62766pt.
- [44] [45 <./assist_demo.png>] [46 <./suffix_IAM_ap.png (PNG copy)>] [47 <./suf
-fix_names_ap.png (PNG copy)>] [48]
+ [46 <./suffix_IAM_ap.png (PNG copy)>] [47 <./suffix_names_ap.png (PNG copy)>] 
+[48
+
+
+]
 Chapter 6.
-[49
-
-
-] <flow6.png, id=1065, 1003.1076pt x 562.2606pt>
+[49] <flow6.png, id=1063, 1003.1076pt x 562.2606pt>
 File: flow6.png Graphic file (type png)
  <use flow6.png>
-Package pdftex.def Info: flow6.png used on input line 1125.
+Package pdftex.def Info: flow6.png used on input line 1133.
 (pdftex.def)             Requested size: 422.77661pt x 236.97147pt.
- [50 <./flow6.png>] [51] <spottingapproval.png, id=1080, 703.62875pt x 850.1762
+ [50 <./flow6.png>] [51] <spottingapproval.png, id=1078, 703.62875pt x 850.1762
 5pt>
 File: spottingapproval.png Graphic file (type png)
 
 <use spottingapproval.png>
-Package pdftex.def Info: spottingapproval.png used on input line 1162.
+Package pdftex.def Info: spottingapproval.png used on input line 1170.
 (pdftex.def)             Requested size: 352.31624pt x 425.68382pt.
 
-<transcriptionselection.png, id=1082, 705.63625pt x 850.17625pt>
+<transcriptionselection.png, id=1080, 705.63625pt x 850.17625pt>
 File: transcriptionselection.png Graphic file (type png)
 
 <use transcriptionselection.png>
-Package pdftex.def Info: transcriptionselection.png used on input line 1193.
+Package pdftex.def Info: transcriptionselection.png used on input line 1201.
 (pdftex.def)             Requested size: 352.31624pt x 424.47737pt.
  [52] [53 <./spottingapproval.png (PNG copy)>]
 [54] [55 <./transcriptionselection.png (PNG copy)>] [56]
-<two_dist_ex.png, id=1111, 888.31876pt x 549.05125pt>
+<two_dist_ex.png, id=1109, 888.31876pt x 549.05125pt>
 File: two_dist_ex.png Graphic file (type png)
  <use two_dist_ex.png>
-Package pdftex.def Info: two_dist_ex.png used on input line 1290.
+Package pdftex.def Info: two_dist_ex.png used on input line 1298.
 (pdftex.def)             Requested size: 352.31624pt x 217.75673pt.
 
-<one_dist_ex.png, id=1112, 888.31876pt x 549.05125pt>
+<one_dist_ex.png, id=1110, 888.31876pt x 549.05125pt>
 File: one_dist_ex.png Graphic file (type png)
  <use one_dist_ex.png>
-Package pdftex.def Info: one_dist_ex.png used on input line 1297.
+Package pdftex.def Info: one_dist_ex.png used on input line 1305.
 (pdftex.def)             Requested size: 352.31624pt x 217.75673pt.
 
 [57] [58 <./two_dist_ex.png (PNG copy)> <./one_dist_ex.png (PNG copy)>]
-<tail_dist_ex.png, id=1123, 889.3225pt x 550.055pt>
+<tail_dist_ex.png, id=1121, 889.3225pt x 550.055pt>
 File: tail_dist_ex.png Graphic file (type png)
  <use tail_dist_ex.png>
-Package pdftex.def Info: tail_dist_ex.png used on input line 1309.
+Package pdftex.def Info: tail_dist_ex.png used on input line 1317.
 (pdftex.def)             Requested size: 352.31624pt x 217.9114pt.
 
 [59 <./tail_dist_ex.png>] [60] [61]
-<clustergood2.png, id=1141, 794.97pt x 848.16875pt>
+<clustergood2.png, id=1139, 794.97pt x 848.16875pt>
 File: clustergood2.png Graphic file (type png)
  <use clustergood2.png>
-Package pdftex.def Info: clustergood2.png used on input line 1389.
+Package pdftex.def Info: clustergood2.png used on input line 1397.
 (pdftex.def)             Requested size: 375.80542pt x 400.96892pt.
 
-<clusterbad.png, id=1142, 794.97pt x 847.165pt>
+<clusterbad.png, id=1140, 794.97pt x 847.165pt>
 File: clusterbad.png Graphic file (type png)
  <use clusterbad.png>
-Package pdftex.def Info: clusterbad.png used on input line 1395.
+Package pdftex.def Info: clusterbad.png used on input line 1403.
 (pdftex.def)             Requested size: 375.80542pt x 400.4944pt.
  [62 <./clustergood2.png (PNG copy)>] [63 <./clusterbad.png (PNG copy)>]
-<cpv.png, id=1155, 526.96875pt x 1203.49625pt>
+<cpv.png, id=1153, 526.96875pt x 1203.49625pt>
 File: cpv.png Graphic file (type png)
  <use cpv.png>
-Package pdftex.def Info: cpv.png used on input line 1428.
+Package pdftex.def Info: cpv.png used on input line 1436.
 (pdftex.def)             Requested size: 234.87749pt x 536.42644pt.
  [64] [65] [66 <./cpv.png (PNG copy)>]
 Chapter 7.
@@ -992,29 +992,29 @@ Chapter 7.
 
 
 ]
-Overfull \hbox (24.76997pt too wide) in paragraph at lines 1478--1515
+Overfull \hbox (24.76997pt too wide) in paragraph at lines 1486--1523
  [][] 
  []
 
 [68]
-Overfull \hbox (43.95728pt too wide) in paragraph at lines 1534--1575
+Overfull \hbox (43.95728pt too wide) in paragraph at lines 1542--1583
  [][] 
  []
 
-[69] <aftercattss.png, id=1185, 892.33376pt x 1078.0275pt>
+[69] <aftercattss.png, id=1183, 892.33376pt x 1078.0275pt>
 File: aftercattss.png Graphic file (type png)
 
 <use aftercattss.png>
-Package pdftex.def Info: aftercattss.png used on input line 1586.
+Package pdftex.def Info: aftercattss.png used on input line 1594.
 (pdftex.def)             Requested size: 465.06001pt x 561.84413pt.
 
-Overfull \hbox (8.24495pt too wide) in paragraph at lines 1594--1594
+Overfull \hbox (8.24495pt too wide) in paragraph at lines 1602--1602
  |[]\OT1/cmr/bx/n/12 CAT Through Unas-sisted Sub-word Spot-ting Us-ing Dy-namic
  Time-Warping
  []
 
 [70] [71 <./aftercattss.png>]
-Overfull \hbox (4.97437pt too wide) in paragraph at lines 1608--1625
+Overfull \hbox (4.97437pt too wide) in paragraph at lines 1616--1633
  [][] 
  []
 
@@ -1029,7 +1029,7 @@ Chapter 8.
 ]
 Chapter 9.
 
-LaTeX Warning: Float too large for page by 5595.76343pt on input line 2125.
+LaTeX Warning: Float too large for page by 5595.76343pt on input line 2133.
 
 (./byumsphd-example.bbl [77] [78]
 Missing character: There is no Ã in font cmr12!
@@ -1041,23 +1041,23 @@ Missing character: There is no ¡ in font cmr12!
 Missing character: There is no Ã in font cmr12!
 Missing character: There is no ¡ in font cmr12!
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2133.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2141.
  [82]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 2133.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2141.
  (./byumsphd-example.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2133.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2133.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2141.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2141.
 
 Package rerunfilecheck Info: File `byumsphd-example.out' has not changed.
 (rerunfilecheck)             Checksum: 31D32B11819E591A090BB08150F1B20C;4273.
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2133.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2141.
  )
 (\end occurred inside a group at level 2)
 
-### semi simple group (level 2) entered at line 2131 (\begingroup)
+### semi simple group (level 2) entered at line 2139 (\begingroup)
 ### semi simple group (level 1) entered at line 245 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
@@ -1081,9 +1081,9 @@ y8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb
 ></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share
 /texmf/fonts/type1/public/tex-gyre/qagr.pfb>
-Output written on byumsphd-example.pdf (98 pages, 17158822 bytes).
+Output written on byumsphd-example.pdf (98 pages, 17159485 bytes).
 PDF statistics:
- 1354 PDF objects out of 1440 (max. 8388607)
+ 1352 PDF objects out of 1440 (max. 8388607)
  257 named destinations out of 1000 (max. 500000)
  15583 words of extra memory for PDF output out of 17280 (max. 10000000)
 
