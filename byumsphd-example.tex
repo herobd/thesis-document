@@ -110,9 +110,10 @@
 \usepackage{url}
 %\usepackage{courier}
 \usepackage{titlesec}
-\usepackage[]{algorithm2e}
+\usepackage[ruled]{algorithm2e}
 \usepackage{amsmath}
 \usepackage{titlesec}
+\usepackage{longtable}
 
 \setcounter{secnumdepth}{4}
 
@@ -402,7 +403,7 @@ The state-of-the-art for handwriting recognition relies heavily on recursive neu
 
 %copied from proposal [!]
 
-\section{Computer Assisted Transcription} %TODO, brand corrective/directive
+\section{Computer Assisted Transcription} 
 
 %Due to the limitations of current handwriting recognition methods, we believe that a fully automated handwriting transcription is out of reach with the present of technology. We thus turn our attention to semi-automated recognition approaches, where we are still using a human to transcribe, but also some intelligent recognition technology. A semi-automated solution will outperform a fully automated system in terms of accuracy and is still far more effective than completely manual transcription. 
 There tends to be two primary CAT (Computer Assisted Transcription) methodologies: corrective and directive. Corrective CAT methods rely on handwriting recognition to do most of the work, and then users provide feedback correcting some errors of the recognition, where the gain comes from other errors being automatically corrected or being assisted so that corrections are easier to make.
@@ -482,9 +483,6 @@ We attempt to use clustering in our own CAT method, however we cannot perform th
 While we have not seen it done, it would be relatively easy to transfer the results of RNN/CTC-based automatic transcription method to CAT by extracting the top-N transcriptions from the network output. These could then be fed to a user for approval and quick correction for most errors. Given the strength of these automatic methods by themselves, we expect a CAT version of them would outperform the older CAT methods discussed in this section. 
 
 
-
-%\section{Other Transcription Assistants}
-%TODO
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Datasets}\label{datasets}
@@ -612,7 +610,6 @@ Our network architecture varies slightly from \cite{sudholt2017} and is outlined
 TPP is a slight modification of spatial pyramid pooling (SPP) \cite{SPP}, which is a method of allowing a network with fully connected layers to handle images of arbitrary size. This is accomplished by performing a pooling (max in our implementation) over windows of the feature map (image). The first level is a window that encompasses the full image. The second level is four windows dividing the image into fourths (each the size of half the image width and half the image height). The proceeding levels follow a simlar pattern. TPP uses the same idea, but only divides windows horizontally as verticle information is not useful once word images are featurized. We use 5 layers (dividing the image into 1, 2, 3, 4, and 5 even windows). Figure \ref{fig:TPP_example} shows what TPP looks like visually. %for all datasets except the Census Names dataset, which has smaller characters. We use 4 layers for the Census Names dataset to allow the network to operate on smaller images. 
 We modify TPP slightly to handle the corner case of small images such that the windows are adjusted to be slightly overlapping at a particular level if a window had a width of zero at that level.
 
-%TODO image for TPP
 
 \begin{figure}[t]
     \centering
@@ -681,7 +678,6 @@ We note that refining the window size during spotting to maximize the score for 
 
 Our optimal sizes are reported in the Appendix in Table \ref{tab:customwidths}.
 
-%We report the optimal widths we found in \ref{appendiX} %TODO
 
 \subsection{Running}
 
@@ -1216,47 +1212,86 @@ We rely on the word image width, estimated character width, and the locations of
 Spottings are estimated to be a width calculated using the process described in Section \ref{detirminewindowsize}, but without the clustering.
 We average these as an approximation of the character width of an unknown character.
 
-The procedure to create the regular expression is as follows. First we measure the number of pixels between each confirmed spotting and divide this by the estimated character width, providing an estimated number of characters $\text(gap_width)/\text(char_width) = \epsilon$ (with fractional characters). The range of characters used in the expression is 
+The procedure to create the regular expression is as follows. First we measure the number of pixels between each confirmed spotting and divide this by the estimated character width, providing an estimated number of characters $\text(gapWidth)/\text(charWidth) = \epsilon$ (with fractional characters). The range of characters used in the expression is 
 [ $\epsilon-0.8$ to $\epsilon+0.8$ ] (rounded to nearest whole character).
 %0.8 subtracted and added to the count estimate, rounded.
  The first and last characters are similarly computed, using the beginning and end of the image boundaries as the previous and next spottings, but we additionaly allow each of those ranges to have one less character than the range computed to account for the fact that frequently first and last letters are longer than others (e.g.~capital letters at the beginning of a word, or a long tail on the last character of a word). If spottings overlap by less than 0.15 the estimated character width, we allow a character to possibly be between them.
 If spottings overlap and share boundary characters, for example `al' and `le' sharing `l', they could be either `alle' or `ale'. However, becuse overlap is far more common (`ale' case) we choose to always merege the characters.  Allowing both cases causes the resulting regular expression to becoem bloated and empircally perform worse.
 %If spottings overlap and share boundary characters (e.g.~`al' and `le' sharing `l') we permit either a double letter (`alle') or single (`ale') as the spotting methods we use would have trouble distinguishing these situations. 
- %Pseudo code is shown in Algorithm \ref{regex}.
+Pseudo code is shown in Algorithm 1.%\ref{regex}.
 
-%%%%Should be in appendix ?
-%\begin{algorithm}\label{regex}
-% \KwData{Word image width: $W$, List of spottings in word image: $S$ (where $S_i^L$ and $S_i^R$ are the leftmost and rightmost boundary of the $i$th spotting for a word and $S_i^T$ is the n-gram of the spotting), Estimate character width: $C$}
-% \KwResult{regular expression for possible transcriptions}
-% $i$:=$0$\;
-% $p$:=$0$\;
-% $r$:=`` ''; (return string)\\
-% \While{$i < \text{length of }S$}{
-% 
-%  $\delta$:=$S_i^L - p$\;
-%  $\epsilon$:=$\delta / C$; (estimated number of characters as a float)\\
-%  
-%  \eIf{$\epsilon > 0$}{
-%   $l$:=$\text{floor}(\epsilon)$\;
-%   $m$:=$\text{ceiling}(\epsilon)$\;
-%   \If{$\epsilon - l < 0.3$ and $l>0$}{
-%     $l$:=$l-1$\;
-%   }
-%   \If{$m - \epsilon < 0.3$}{
-%     $m$:=$m+1$\;
-%   }
-%   $r$=$r$..``[a-zA-Z0-9]\{$l$,$m$\}''\;
-%   }{
-%   (Handling possible overlaps)\\
-%   $o$:=$\text{length of }S_i^T$\;
-%   \While{$o>0$}{
-%     ....\;
-%     $o$:=$o+1$\;
-%   }
-%  }
-% }
-% \caption{Regular expression generation from spottings.}
+%\begin{algorithm}
+%\SetKwData{Left}{left}\SetKwData{This}{this}\SetKwData{Up}{up}
+%\SetKwData{Ret}{regularExp}\SetKwData{Ep}{charsInGap}\SetKwData{LenGap}{length of gap to previous spotting or beggining of image}\SetKwData{Spotting}{spotting}\SetKwData{CharW}{char width}
+%\SetKwFunction{Union}{Union}\SetKwFunction{FindCompress}{FindCompress}
+%\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+%\Input{A bitmap $Im$ of size $w\times l$}
+%\Output{A partition of the bitmap}
+%\BlankLine
+%\emph{special treatment of the first line}\;
+%\For{$i\leftarrow 2$ \KwTo $l$}{
+%\Ret$\leftarrow$ \LenGap\;
+%\emph{special treatment of the first element of line $i$}\;
+%\For{$j\leftarrow 2$ \KwTo $w$}{\label{forins}
+%\Left$\leftarrow$ \FindCompress{$Im[i,j-1]$}\;
+%\Up$\leftarrow$ \FindCompress{$Im[i-1,]$}\;
+%\This$\leftarrow$ \FindCompress{$Im[i,j]$}\;
+%\If(\tcp*[h]{O(\Left,\This)==1}){\Left compatible with \This}{\label{lt}
+%\lIf{\Left $<$ \This}{\Union{\Left,\This}}
+%\lElse{\Union{\This,\Left}}
+%}
+%\If(\tcp*[f]{O(\Up,\This)==1}){\Up compatible with \This}{\label{ut}
+%\lIf{\Up $<$ \This}{\Union{\Up,\This}}
+%\tcp{\This is put under \Up to keep tree as flat as possible}\label{cmt}
+%\lElse{\Union{\This,\Up}}\tcp*[h]{\This linked to \Up}\label{lelse}
+%}
+%}
+%\lForEach{element $e$ of the line $i$}{\FindCompress{p}}
+%}
+%\caption{disjoint decomposition}\label{regex2}
 %\end{algorithm}
+%%%%Should be in appendix ?
+\begin{algorithm}
+\caption{Regular expression generation from spottings}\label{regex}
+\SetKwData{Ret}{regularExp}\SetKwData{Ep}{charsInGap}\SetKwData{LenGap}{length of gap to previous spotting or beggining of image}\SetKwData{Spotting}{spotting}\SetKwData{CharW}{charWidth}\SetKwData{MinN}{minNumOfChars}\SetKwData{MaxN}{maxNumOfChars}
+\SetKwFunction{Round}{round}\SetKwFunction{Max}{max}
+\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+ \Input{spottings for the given word, consisting of the n-gram and boundaries}
+ \Output{regular expression identifying possible transcriptions}
+ %\Begin{
+ \BlankLine
+ \Ret $ := $ ``''\tcc*[r]{to return}
+ \ForEach{spotting}{
+   \Ep $:=$ length of gap to previous spotting or beggining of image $ / $ \CharW\tcc*[r]{using float division}
+   
+   \eIf{\Ep $> 0$}{
+     \MinN $:=$ \Round{\Ep$- 0.8$}\;
+     \MaxN $:=$ \Round{\Ep$+ 0.8$}\;
+     \If{no previous spotting or no next spotting}{
+       \MinN := \Max(\MinN-1,0)\;
+     }
+     \Ret $:=$ \Ret + ``{\textbackslash}w\{\MinN,\MaxN\}'' + current spotting's n-gram\;
+   }{
+     \eIf{n-gram shares characters with previous ngram}{
+       \Ret := \Ret + characters of current spotting's n-gram not overlapping with previous\;
+     }{
+       \MinN $:= 0$\;
+       \eIf{\Ep > -0.15}{
+         \MaxN $:= 1$\;
+       }{
+         \MaxN $:= 0$\;
+       }
+       \Ret $:=$ \Ret + ``{\textbackslash}w\{\MinN,\MaxN\}'' + current spotting's n-gram\;
+     }
+   }
+   
+ }
+ 
+ return \Ret\;
+
+ %}
+ 
+\end{algorithm}
 
 
 
@@ -1264,7 +1299,7 @@ Once we have the regular expression, we find all matches in our lexicon.
 
 If there are no matches there are three possible scenarios: the word is not in the lexicon, there is an incorrectly approved spotting, or the spottings and unlabeled characters' count or alignment didn't transfer to the regular expression properly.
 To account for the second scenario, we iteratively try removing individual spottings, regenerating the regular expression, and requerying the lexicon to see if matches are found. We make the assumption that only one spotting will be incorrect and union the matching lexicon results. We first only remove spottings that have no overlap (overlap meaning two or more spottings identified a mutual character) and then those that do.
-If this fails to yield any lexicon matches, we try to account for the third scenario by regenerating the regular expression in a ``loose'' mode, where each range of unknown characters is expanded by one to allow matches initally constrained by a bad alignment estimation.
+If this fails to yield any lexicon matches, we try to account for the third scenario by regenerating the regular expression in a ``loose'' mode, where each range of unknown characters is expanded by one to allow matches initially constrained by a bad alignment estimation.
 If there are no matches and we are already using the ``loose'' regular expression we simply skip the word. It will be manually transcribed eventually.
 
 If there are matches, and less than 49 of them (threshold to mean ``not too many''), we score each possible transcription against the image using word spotting.
@@ -1272,7 +1307,64 @@ If there are matches, and less than 49 of them (threshold to mean ``not too many
 As the possible transcriptions are based only on the regular expression, some will be obviously wrong from a visual point of view (e.g.~missing descenders). Following this intuition, we perform an Otsu threshold on the scores to attempt to discard the obviously wrong possibilties. This thresholding is only applied if there are more than 5 possibilities, or if the threshold falls less than half the distance between the highest and lowest score (we're confident we're discarding something poor).
 If the resulting number of possible transcriptions is less than 7, we package them into a transcription selection task, ordered by spotting score, and enqueue it for a user to complete.
 
+This full batch creation process is described in Algorithm 2.
+
 %TODO psuedo-code
+\begin{algorithm}
+\caption{Transcription batch generation}\label{batchGen}
+\SetKwData{Ret}{regularExp}\SetKwData{RetTmp}{regularExpTmp}\SetKwData{Possible}{possibleWords}\SetKwData{Scores}{possibleScores}\SetKwData{MinScore}{minScore}\SetKwData{MaxScore}{maxScore}\SetKwData{Thresh}{thresholdScore}\SetKwData{MinN}{minNumOfChars}\SetKwData{MaxN}{maxNumOfChars}
+\SetKwFunction{Algorithm}{Algorithm1}\SetKwFunction{WordSpot}{WordSpot}\SetKwFunction{Otsu}{FindOtsuThreshold}\SetKwFunction{PerformThresh}{PerformThresh}\SetKwFunction{CreateBatch}{CreateBatch}
+\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+ \Input{spottings and image for the given word}
+ \Output{transcription batch for word or no batch}
+ %\Begin{
+ \BlankLine
+ \Ret $:=$ \Algorithm{spottings}\;
+ \Possible $:=$ matches of \Ret from lexicon
+ 
+ \If{no words in \Possible}{
+    \ForEach{spotting that does not overlap with any others}{
+    	  temporarily remove the spotting\;
+    	  \RetTmp $:=$ \Algorithm{new spotting set}\;
+    	  \Possible $:=$ \Possible $\bigcup$ matches of \RetTmp from lexicon\;
+    	}
+ }
+ 
+ \If{no words in \Possible}{
+    \ForEach{spotting that do overlap with others}{
+    	  temporarily remove the spotting\;
+    	  \RetTmp $:=$ \Algorithm{new spotting set}\;
+    	  \Possible $:=$ \Possible $\bigcup$ matches of \RetTmp from lexicon\;
+    	}
+ }
+
+ \If{no words in \Possible}{
+   \RetTmp $:=$ \Algorithm{original spotting set}, but \MinN and \MinN always expanded by one\;
+   \Possible $:=$ \Possible $\bigcup$ matches of \RetTmp from lexicon\;
+ }
+ 
+\If{number of words in \Possible $< 49$}{
+  \Scores $:= []$\;
+  \ForEach{word in \Possible}{
+    \Scores $\leftarrow$ \WordSpot{word image, possible word}\tcc*[r]{insert score into \Scores}
+  }
+  \Thresh $:=$ \Otsu{\Scores}\;
+  \MinScore $:=$ minimum score in \Scores\;
+  \MaxScore $:=$ maximum score in \Scores\;
+  \If{number of words in \Possible $> 5$ OR \MinScore $+($ \MaxScore $-$ \MinScore $)/2 <$ \Thresh}{
+    \Possible $:=$ \PerformThresh{\Thresh,\Scores,\Possible}\;
+  }
+  
+  \If{number of words in \Possible $< 7$}{
+    return \CreateBatch{\Possible,\Scores}\;
+  }
+  
+  do not return batch\;
+} 
+ 
+ %}
+ 
+\end{algorithm}
 
 
 \subsection{Receiving Transcription}
@@ -1288,71 +1380,93 @@ If the user indicates an error we first attempt to loosen the regular expression
 \subsection{Batch Distribution}
 When approving spottings it is a non-trivial task to distribute the spottings to users in an efficient manner. We would like to maximize the humans efforts, ideally quickly finding thresholds for each n-gram that can be used to automatically label the remaining spottings. We tried several approaches to this.
 
-The simplest method is to simply start with the spotting with the highest score until the user begins to classify enough as false that  we can assume we are at a good thresholding location to reject the remaining spottings. 
+The simplest method is to simply start with the spotting with the lowest score until the user begins to classify enough as false that  we can assume we are at a good thresholding location to reject the remaining spottings. 
 %In our implementation we make this decision after a running average of true classifications falls below 0.3, where the window is X. 
 This has the downside of not looking for a possible threshold to accept spottings, every spotting must be approved, which is an inefficiency.
 
 
+Looking at a graph of true and false spotting instances in Figure \ref{fig:two_dist_ex}, one can see a distinctive between the true and false spottings. If we can identify the boudary between them, it would give us a useful tool to create both an accept and reject threshold. However, there is not always a clean division. In Figure \ref{fig:one_dist_ex} we see that the distrubution of false spottings (yellow line) overlaps significantly with the true spottings (magenta line) making it difficult to distinguish a division boundary when viewed combined (blue line).
 
 
-Looking at a graph of true and false spotting instances in Figure \ref{fig:two_dist_ex}, one can see that each of the groups forms a distinctive distribution. If we can model these, or at least identify the boudary between them, it would give us a useful tool to create both an accept and reject threshold. However, it is not always easy to do so. In Figure \ref{fig:one_dist_ex} we see that the false spottings almost subsumes the true spottings making them difficult to distinguish. We thus allow it to model the spottings either as two distributions or one.
+
+%Looking at a graph of true and false spotting instances in Figure \ref{fig:two_dist_ex}, one can see that each of the groups forms a distinctive distribution. If we can model these, or at least identify the boudary between them, it would give us a useful tool to create both an accept and reject threshold. However, it is not always easy to do so. In Figure \ref{fig:one_dist_ex} we see that the false spottings almost subsumes the true spottings making them difficult to distinguish. We thus allow it to model the spottings either as two distributions or one.
 
 
-%TODO replace these images
 \begin{figure}
-    \centering
-    \includegraphics[width=.75\textwidth]{two_dist_ex}
-    \caption{A histogram of spotting instances for the bigram ``nd'' divided into true and false spottings. The true spottings forms a distribution distinct from the false.
+\centering
+    \begin{subfigure}{.89\textwidth}
+  		\centering
+  		\includegraphics[width=.99\linewidth]{two_dist_ex_All}
+	\end{subfigure}
+	\begin{subfigure}{.89\textwidth}
+  		\centering
+  		\includegraphics[width=.99\linewidth]{two_dist_ex_TF}
+	\end{subfigure}
+    \caption{Histograms of spotting instances for the trigram ``and''. The left chart shows the instances aggregated as well as the fitted parabola. The right chart shows the true and false spottings seperated. Note the clear seperation being modeled by the parabola.
     }
     \label{fig:two_dist_ex}
 \end{figure}
+
 \begin{figure}
     \centering
-    \includegraphics[width=.75\textwidth]{one_dist_ex}
-    \caption{A histogram of spotting instances for the unigram ``g'' divided into true and false spottings. The true spottings are almost inline with the false distribution making them indistinguishable.
+    \begin{subfigure}{.89\textwidth}
+  		\centering
+  		\includegraphics[width=.99\linewidth]{one_dist_ex_All}
+	\end{subfigure}
+	\begin{subfigure}{.89\textwidth}
+  		\centering
+  		\includegraphics[width=.99\linewidth]{one_dist_ex_TF}
+	\end{subfigure}
+    \caption{Histograms of spotting instances for the bigram ``ti''. The left chart shows the instances aggregated as well as the fitted parabola. The right chart shows the true and false spottings seperated. Note that there is no clean division and the parabola's vertex falls outside the data range.
     }
     \label{fig:one_dist_ex}
 \end{figure}
 
-We model the distributions as normal distributions, the false spottings being only half of the distribution (as we discard the worst scores for effiency).
+We identify the true/false boundary by the following procedure. We sample the best scores, those below 13, and perform a least-squares fitting of a parabola to a histogram of the data (e.g.~Figures \ref{fig:two_dist_ex} and \ref{fig:one_dist_ex}). The threshold 13 was heuristically choosen as the peak of the false distibution occurs higher than 13 (generaly). This parabola should roughly match the curve of the data and is shown as the X line in Figures \ref{fig:two_dist_ex} and \ref{fig:one_dist_ex}. We use the x-position of the vertex to detirmine where the true/false split is. In a clean split, as in Figure \ref{fig:two_dist_ex}, we can see how the parabola matches to two raising distributions meaning the vertex is a rough mid point between them. In a case where there is clean seperation, as in Figure \ref{fig:one_dist_ex}, we see the parabola half matches the data, causing the vertex to be past the data (or at least very near the minimum score).
 
-We begin by doing a check to see whether we will model the spotting scores as one or two normal distributions. We model the scores as a single distribution to see if there are large amount of outlier instances at it's ``tail'' (Figure \ref{fig:tail_dist_ex} green circle). This should indicate that a distictive true distribution is present. We measure this by the difference between the probability density of the model and actual density of scores in the tail of the distrubution. The ``tail'' is defined by a threshold on the probability density.
+While fitting a parabola may seem strange, its simplicity makes it effective. We tried more complicated methods of modeling the data, but these failed too freqently.
 
-%TODO replace this image too, mention that it is a normal distribution curve
-\begin{figure}
-    \centering
-    \includegraphics[width=.75\textwidth]{tail_dist_ex}
-    \caption{A histogram of spotting instances for the bigram ``nd'' with a curve (red) representing the data as a single distribution. The green circle shows that the estimation greatly underestimates the tail indicating there is likely a strong true instance distribution present.
-    }
-    \label{fig:tail_dist_ex}
-\end{figure}
+When creating a batch we select instances starting at the estimated true/false boudary and alternately selecting the next instance (ordered by score) on the true and false sides. Intuitively this means we are beginning with the instances in which we are least confident about our classification and working towards those in which we are more confidient.
 
-If we select two distributions, we estimate an initial split between true and false scores using the Otsu threshold. We initally model the two distributions assuming all spottings are true or false based on this threshold.
+%We model the distributions as normal distributions, the false spottings being only half of the distribution (as we discard the worst scores for effiency).
 
-The distributions are constantly modeled using expectation maximization, an iteration of it being applied each time a batch is recieved. If a user label isn't known for a score, it's class is estimated using the current model.
+%We begin by doing a check to see whether we will model the spotting scores as one or two normal distributions. We model the scores as a single distribution to see if there are large amount of outlier instances at it's ``tail'' (Figure \ref{fig:tail_dist_ex} green circle). This should indicate that a distictive true distribution is present. We measure this by the difference between the probability density of the model and actual density of scores in the tail of the distrubution. The ``tail'' is defined by a threshold on the probability density.
 
 
-
-For single distribution mode:
-The accept threshold is the top score (i.e.~none).
-The reject threshold is the end of the ``tail'' (density threshold on estimated distribution).
-
-For dual distribution mode:
-The accept threshold is a certain density threshold on the estimated true distribution.
-The reject threshold is where the densities of the two distributions cross after the accept threshold.
-
-This method is a bit fragile and can behave badly, particularly when it poorly models the true distribution in the two distribution scenario. There are several additional things to smooth its behavoir: 
-There is are max accept and reject thresholds based on the current model of the false scores.
-Reject threshold is brought to be closer to accept threshold.
-The accept threshold is  shifted towards the better scores according to a runnning average of true classifications by users falls below 0.5.
-For the single distribution the reject threshold is similarly shifted.
-If the reject and accept threshold end up on the wrong side of eachother, the accept threshold is put at the top score and the reject threshold is set a number of instances down the sorted score list, the number being dependent on the running true classification average.
-
-When creating a new batch, scores are sampled from a uniform distribution between the accept and reject thresholds and the closest unlabeled spottings are placed in the batch.
-
-We also test with only using the single or dual distributions and not trying to guess which one is better.
-
-When there are no instances left between the reject and accept thresholds, the n-gram is finished. All instances above the accept threshold are accepted and all below the reject threshold are rejected.
+%\begin{figure}
+%    \centering
+%    \includegraphics[width=.75\textwidth]{tail_dist_ex}
+%    \caption{A histogram of spotting instances for the bigram ``nd'' with a curve (red) representing the data as a single distribution. The green circle shows that the estimation greatly underestimates the tail indicating there is likely a strong true instance distribution present.
+%    }
+%    \label{fig:tail_dist_ex}
+%\end{figure}
+%
+%If we select two distributions, we estimate an initial split between true and false scores using the Otsu threshold. We initially model the two distributions assuming all spottings are true or false based on this threshold.
+%
+%The distributions are constantly modeled using expectation maximization, an iteration of it being applied each time a batch is recieved. If a user label isn't known for a score, it's class is estimated using the current model.
+%
+%
+%
+%For single distribution mode:
+%The accept threshold is the top score (i.e.~none).
+%The reject threshold is the end of the ``tail'' (density threshold on estimated distribution).
+%
+%For dual distribution mode:
+%The accept threshold is a certain density threshold on the estimated true distribution.
+%The reject threshold is where the densities of the two distributions cross after the accept threshold.
+%
+%This method is a bit fragile and can behave badly, particularly when it poorly models the true distribution in the two distribution scenario. There are several additional things to smooth its behavoir: 
+%There is are max accept and reject thresholds based on the current model of the false scores.
+%Reject threshold is brought to be closer to accept threshold.
+%The accept threshold is  shifted towards the better scores according to a runnning average of true classifications by users falls below 0.5.
+%For the single distribution the reject threshold is similarly shifted.
+%If the reject and accept threshold end up on the wrong side of eachother, the accept threshold is put at the top score and the reject threshold is set a number of instances down the sorted score list, the number being dependent on the running true classification average.
+%
+%When creating a new batch, scores are sampled from a uniform distribution between the accept and reject thresholds and the closest unlabeled spottings are placed in the batch.
+%
+%We also test with only using the single or dual distributions and not trying to guess which one is better.
+%
+%When there are no instances left between the reject and accept thresholds, the n-gram is finished. All instances above the accept threshold are accepted and all below the reject threshold are rejected.
 
 %ordered list
 %attempt to find thresholds to accept/reject
@@ -1367,21 +1481,25 @@ When there are no instances left between the reject and accept thresholds, the n
 
 \subsection{Receiving Spotting Approvals}
 
-Every 5 updates we recheck whether it would be better to model the data as one or two distributions.
-As a hard rule, if we've had over 2 ``bad'' batches, we switch to a single distribution modeling.
+When user labeling is revieced we update running averages of approval for instances of the true side and false side of the split. If either of these pass a threshold, we accept or reject all remaining instances on the respective side. We accept remaining true-side instances if the average approval rate exceeds X. We reject the remaining false-side instances if the average approval rate falls below X.
+%TODO fill in Xs
 
-We then perform an expectation maximization step including the new spotting labels.
+For each approved spotting, we add the spotting to the word and execute the procedure described in Section \ref{wordcompletion}.
+%Every 5 updates we recheck whether it would be better to model the data as one or two distributions.
+%As a hard rule, if we've had over 2 ``bad'' batches, we switch to a single distribution modeling.
+
+%We then perform an expectation maximization step including the new spotting labels.
 
 
 
 %\subsubsection{Exemplar extraction}
 
-\subsection{Alternate Mode: Don't Wait to Transcribe}
-After word spotting lexicon look up (Section \ref{wordcompletion}), return top 7
-sdtore others
-lexicon lookup
+%\subsection{Alternate Mode: Don't Wait to Transcribe}
+%After word spotting lexicon look up (Section \ref{wordcompletion}), return top 7
+%sdtore others
+%lexicon lookup
 
-when error on trans, just enqueue next batch
+%when error on trans, just enqueue next batch
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1389,13 +1507,14 @@ when error on trans, just enqueue next batch
 
 \section{CAT Through Approved Subword Spottings Using Clustering}
 
-The approval of spottings is a bottle-neck for the previous transcription strategy. In \cite{Retsinas2015}, they sped up approval by clustering printed characters together and presenting the user with a composite of a cluster. While handwriting it too noisy to composite, we follow a similar method of clustering n-gram spottings together and presenting users with (part of) a cluster to approve or disapprove. Classifying a group of spottings which belong to the same class should take as long as a single instance, the catch is that we don't know if a group of spottings is all right or all wrong. It's likely our clustering is imperfect so that there is a mix. However, in the case where only a few instances in the cluster are outliers, they should be quickly identified by a user (see Figures \ref{fig:clustergood} and \ref{fig:clusterbad}). In the case where the cluster is totall mixed (50\%/50\%) one can classify each instance individually.% (see Figure ??).
+The approval of spottings is a bottle-neck for the previous transcription strategy. In \cite{Retsinas2015}, they sped up approval by clustering printed characters together and presenting the user with a composite of a cluster. While handwriting it too noisy to composite, we follow a similar method of clustering n-gram spottings together and presenting users with (part of) a cluster to approve or disapprove. Classifying a group of spottings which belong to the same class should take as long as a single instance; the catch is that we don't know if a group of spottings is all right or all wrong. It's likely our clustering is imperfect so that there is a mix. However, in the case where only a few instances in the cluster are outliers, they should be quickly identified by a user (see Figures \ref{fig:clustergood} and \ref{fig:clusterbad}). This follows the same spirit as the UI for \cite{Clawson2014} which also leveraged humans ability to quickly identify outliers. In the case where the cluster is totall mixed (50\%/50\%) one can classify each instance individually, which is what was being done in the above method.
+% (see Figure ??).
 
 In this transcription strategy we use the same method as above, but change how spotting batches are distrubuted and don't use QbE in the same way. We will desribe the steps of this process next.
 
 \subsection{Clustering}
 
-We first perform a dense QbE comparison for the results of each initail n-gram QbS spotting. This gives us a similarity for all instances. We then perform a hierarchical complete-linkage agglomerative clustering (two clusters are merged if their two most dissimlar spottings are more similar than any other cluster pair). We choose a hierarchical method as this allows us to tune the ``purity'' of clusters as we recieve human feedback. ``Purity'' is the measure of how much the clusters are of one class ($2*max(T,F)/(T+F)-1$ where $T$ and $F$ are the count of true or false spottings in the cluseter). The initial level in the hierarchy is the first level where the average cluster size is above 10, which is roughly what we feel an ideal batch size is.
+We first perform a dense QbE comparison for the results of each initial n-gram QbS spotting. This gives us a similarity for all instances. We then perform a hierarchical complete-linkage agglomerative clustering (two clusters are merged if their two most dissimilar spottings are more similar than any other cluster pair). We choose a hierarchical method as this allows us to tune the ``purity'' of clusters as we recieve human feedback. ``Purity'' is the measure of how much the clusters are of one class ($2*max(T,F)/(T+F)-1$ where $T$ and $F$ are the count of true or false spottings in the cluster). The initial level in the hierarchy is the first level where the average cluster size is above 10, which is roughly what we feel an ideal batch size is.
 
 
 
@@ -1408,7 +1527,7 @@ We first perform a dense QbE comparison for the results of each initail n-gram Q
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{clusterbad}
-    \caption{The cluster spotting approval UI with a false cluster. No outliers are present.}
+    \caption{The cluster spotting approval UI with a false cluster. No outliers are present, all instances are incorrect.}
     \label{fig:clusterbad}
 \end{figure}
 
@@ -1416,20 +1535,20 @@ We first perform a dense QbE comparison for the results of each initail n-gram Q
 
 We evaluated two methods of distributing clusters.
 One simply takes the cluster with the next highest average score.
-The other method attempts to identify good clusters based on their similarity to approved spottings. To do this we save each approved spotting in a queue. When finding a new cluster to distribute, we take the next instance off of the queue. We then find the cluster with that is closest using the complete-linkage metric, that is the cluster where the instance with the furthest distance from our exemplar is minimized.
+The other method attempts to identify good clusters based on their similarity to approved spottings. To do this we save each approved spotting in a queue. When finding a new cluster to distribute, we take the next instance off of the queue. We then find the cluster that is closest using the complete-linkage metric, that is the cluster where the instance with the furthest distance from our exemplar is minimized.
 
 In both methods, if a selected cluster is too large (maximum size of 15) we split it and send each piece as a seperate batch.
 
-We have a goal ``purity'' of 0.9 (rougly 1 or 2 outliers per batch). When our moving average purity varies from this (over an $\epsilon$ threshold) we either move up a level in the heirarchy (we are too pure) or mode down a level in the heirarchy (we are not pure enough).
+We have a ``purity'' goal of 0.9 (rougly 1 or 2 outliers per batch). When our moving average purity varies from this (over an $\epsilon$ threshold) we either move up a level in the heirarchy (we are too pure) or move down a level in the heirarchy (we are not pure enough). If the goal were too high (e.g.~1.0), we would quickly move to a level where the clusters are very small, which would decrease efficiency.
 
 When our moving average accuracy (the portion of instances classified as true by the user) falls below a threshold (0.3) we stop sending batches for that n-gram.
 %TODO test 0.4 threshold
 
 \subsection{Spotting Approval UI}
 
-Examples of the UI are shown in Figures \ref{fig:clustergood} and \ref{fig:clusterbad}. The idea is to allow the user to recognize whether the majority of the instances are correct or incorrect and then select the outliers. When a user selects an instance it is darkened. There are two buttons at the bottom which are used to both indicate the cluster type (correct/incorrect) and that they have selected all the outliers (they are finished).
+Examples of the UI are shown in Figures \ref{fig:clustergood} and \ref{fig:clusterbad}. The idea is to allow the user to recognize whether the majority of the instances are correct or incorrect and then select the outliers. When a user selects an instance it is darkened. There are two buttons at the bottom which are used to both indicate the cluster type (correct/incorrect) and that they have selected all the outliers (they are finished). This is similar to the UI in \cite{Clawson2014}, however, in ours we also handle the bad cluster scenario.
 
-This is a minimalist interface placing a fair amount of cognitive load onto the user in exchange for efficency. One can imagine a slightly simpiler interface where the cluster type is identified as a button prior to a ``done'' button.
+This is a minimalist interface placing a fair amount of cognitive load onto the user in exchange for efficency. One can imagine a slightly simpler interface where the cluster type is identified as a button prior to a ``done'' button.
 
 
 %%%%
@@ -1455,7 +1574,7 @@ We then perform a soft-max at each horizontal position over the characters. This
 The individual n-specific vectors are summed and each letter normalized according to how many n-specific vectors contributed to it.
 This summed result has another soft-max applied to it to yield the final character probability vector.
 
-We then use dynamic time warping to score the character probability vectors agains the lexicon words, the lexicon words being one-hot vectors. Similar to the transcription via PHOC method we can then return the top 7 matches to the user to select the correct transcription.
+We then use dynamic time warping to score the character probability vectors agains the lexicon words, the lexicon words being a series of one-hot character vectors. Similar to the transcription via PHOC method we can then return the top 7 matches to the user to select the correct transcription.
 
 
 
@@ -1467,7 +1586,7 @@ In this chapter we will explain our procedure for testing the transcription stra
 
 \section{Evaluation Method}
 
-We evaluate all our transcription strategies as CAT (computer assisted transcription) methods. However, rather than having users use the systems we simulate approximate user behavoir using collected statistics. While the statistics may not give results as accurate as a user study, it allows us to easily compare the performance of different transcription strategies using consistent timing data.
+We evaluate all our transcription strategies as CAT (computer assisted transcription) methods. However, rather than having users use the systems we simulate approximate user behavior using collected statistics. While the statistics may not give results as accurate as a user study, it allows us to easily compare the performance of different transcription strategies using consistent timing data.
 
 The statistics were collected from four reseachers
 %, who were moderetly to tagently involved in this project, 
@@ -1476,13 +1595,13 @@ using the system. We collected timing information regarding how quickly they com
 We fit linear models to predict the time needed to complete a batch based on its ``difficulty''. We also did this for errors.
 We collected data for both spotting approval methods (instance and cluster).
 
-In more detail, we measured which ``difficulty'' measure best modeled the data and used that. For transcription selection, there is a fixed time predicted if the correct transcription is not preset, otherwise a linear model based the transctions position in the list predicts time. Two fixed values predict the error the two transcription situations. 
+In more detail, we measured which ``difficulty'' measure best modeled the data and used that. For transcription selection, there is a fixed time predicted if the correct transcription is not present, otherwise a linear model based the transcription's position in the list is used to predict time. Two fixed values predict the error for the two transcription situations. 
 %For manual transcription a linear model based on length predicts time and a fixed value predicts error (on the word level).  
-For the Bentham dataset, instance spotting approval timing is based on whether the previous batch is the same n-gram. For the Census Names dataset, instance spotting approval timing is based on the number of true instances. For both datasets, error is based in the number of true instances in the batch. For both datasets, cluster spotting approval timing and error is based on the number of instances in the batch.
+For the Bentham dataset, instance spotting approval timing is based on whether the previous batch is the same n-gram. For the Census Names dataset, instance spotting approval timing is based on the number of true instances. For both datasets, error is based on the number of true instances in the batch. For both datasets, cluster spotting approval timing and error is based on the number of instances in the batch.
 
-We also collected how long it took to manual transcribe line images so we can see if the CAT actually speeds up the transcription process.
+We also measured how long it took to manual transcribe line images so we can see if the CAT actually speeds up the transcription process.
 
-To evaluate, we ran each strategy as a CAT system with a single simulated user. When the simulated user recieved a batch, it found the correct response and then measured the probabilty of error and introduced an error if a random value between [0,1] fell below that probability. The simulated user then computed the estimated time based on the appropriate model and waited that long before returning its answer. For many of the transcription strategies, there comes a point where the strategy must be abandon and the remaining words manual transcribed. We terminate our simulations at this point, but report how much was transcribed.
+To evaluate, we ran each strategy as a CAT system with a single simulated user. When the simulated user recieved a batch, it found the correct response and then measured the probabilty of error and introduced an error if a random value between [0,1] fell below that probability. The simulated user then computed the estimated time based on the appropriate model and waited that long before returning its answer. For many of the transcription strategies, there comes a point where the strategy must be abandoned and the remaining words manual transcribed. We terminate our simulations at this point, but report how much was transcribed.
 
 \section{Results}
 
@@ -1663,7 +1782,7 @@ We now summarize what we feel our contributions are with this work and then disc
 %3. Transcription (RegEx, combining 1,2,3)
 %4. Crowd source
 
-Our primary contribution is the exploration of subword spotting, a previously unexamined area. We have shown that while word spotting has achieved good results with modern techniques, applying similar techniques to subword spotting does not yield as percise of results.
+Our primary contribution is the exploration of subword spotting, a previously unexamined area. We have shown that while word spotting has achieved good results with modern techniques, applying similar techniques to subword spotting does not yield as precise of results.
 Some insights from our subword spotting experiments that we feel are important are that 
 size estimation of subwords is important if using a sliding window
 and that
@@ -1686,458 +1805,458 @@ We attempt to apply subword spotting to CAT, but fail to achieve usable results.
 %regex search/spotting
 %CPV to regex
 
-There are several things that could have improved the subword spotting. We did not perform any preprocessing. State-of-the-art word spotting methods do not deslant word images. However, for subword spotting, deslanting the word images could have made localization better as the character boundaries would be more defined. While we attempted to refine individual spotting results to improve score and localization, we did not have success. However, they may be a refinment method we did not try which would succeed.
+There are several things that could have improved the subword spotting. We did not perform any preprocessing. State-of-the-art word spotting methods do not deslant word images. However, for subword spotting, deslanting the word images could have made localization better as the character boundaries would be more defined. While we attempted to refine individual spotting results to improve score and localization, we did not have success. However, there may be a refinment method we did not try which would succeed.
 
-Everything we did in this work was based on word segmentation. However, it would not be difficult to extend what we have done to a segmentation-free scenario. One would need to be able to distinguish the situation of letters having a space between them, but after this it should extended quite straightforwardly.
+Everything we did in this work was based on word segmentation. However, it would not be difficult to extend what we have done to a segmentation-free scenario. One would need to be able to distinguish the situation of letters having a space between them, but after this  the extension shoudl be straightforward.
 
-While we aggregated spottings into regular expressions, an extension of suffix spotting would be regular expression spotting. That is, the user supplies a regular expression and the system returns all word images which match the expression. With some work, subword spotting should be able to achieve this. One could spot all n-grams in the expression and then use the structure of the expression to aggregate the scores accroding to their spatial relationships.
+While we aggregated spottings into regular expressions, an extension of suffix spotting would be regular expression spotting. That is, the user supplies a regular expression and the system returns all word images which match the expression. With some work, subword spotting should be able to achieve this. One could spot all n-grams in the expression and then use the structure of the expression to aggregate the scores according to their spatial relationships.
 
-Our CAT strategies were not successfull, and if they were they would need to be competitive with modern automatic handwriting recognition methods (CNN+RNN) to be applicable. However, there is a slightly different application our method has the potential to work in.
-Both our spotting method (PHOCNet) and modern automatic handwriting recognition methods (CNN+RNN) require traning data from a corpus before they can begin to work effectively. In a real workflow this will be a part of the corpus that must be manually transcribed. However, given an effective QbE subword spotting method that does not require corpus specific training, the CATTSS methods described in Chapter \ref{transcription} should work with few adjustments. Rather than the system initailly spotting a set of n-grams, a user would need to crop a few from the corpus to seed the system. After this, however, it should be able to proceed as outlined in Chapter \ref{transcription}.
+Our CAT strategies were not successful, and if they were they would need to be competitive with modern automatic handwriting recognition methods (CNN+RNN) to be applicable. However, there is a slightly different application our method has the potential to work in.
+Both our spotting method (PHOCNet) and modern automatic handwriting recognition methods (CNN+RNN) require traning data from a corpus before they can begin to work effectively. In a real workflow this will be a part of the corpus that must be manually transcribed. However, given an effective QbE subword spotting method that does not require corpus specific training, the CATTSS methods described in Chapter \ref{transcription} should work with few adjustments. Rather than the system initially spotting a set of n-grams, a user would need to crop a few from the corpus to seed the system. After this, however, it should be able to proceed as outlined in Chapter \ref{transcription}.
 The key is that the untrained QbE spotting method must be better than the QbS spotting we have demonstrated. Currently such a method does not exist.
 
 
 \chapter{Appendix}
-
-\begin{table}
-\centering
-\begin{tabular}{| l | c c | c c |}
+\singlespacing
+\begin{longtable}{| l | c c | c c |}
+%\centering
+%\begin{tabular}{| l | c c | c c |}
   \hline
   & \multicolumn{2}{c|}{Bentham} & \multicolumn{2}{c|}{Census Names}\\
    %& QbS & QbE & QbS & QbE \\
   n-gram & Spotting width & Predicted width & Spotting width & Predicted width \\
   \hline
-  a & 38 & 48 & 20 & 20 \\
-  b & 33 & 36 & 27 & 28 \\
-  c & 30 & 36 & 42 & 60 \\
-  d & 48 & 64 & 23 & 20 \\
-  e & 34 & 48 & 17 & 20 \\
-  f & 35 & 48 & 44 & 60 \\
-  g & 38 & 48 & 33 & 40 \\
-  h & 31 & 36 & 26 & 28 \\
-  i & 26 & 36 & 16 & 20 \\
-  j & 42 & 64 & 41 & 60 \\
-  k & 48 & 64 & 28 & 28 \\
-  l & 30 & 36 & 20 & 20 \\
-  m & 58 & 64 & 28 & 20 \\
-  n & 45 & 48 & 32 & 40 \\
-  o & 31 & 36 & 24 & 28 \\
-  p & 38 & 36 & 38 & 56 \\
-  q & 57 & 76 & 40 & 56 \\
-  r & 31 & 36 & 17 & 20 \\
-  s & 36 & 48 & 21 & 20 \\
-  t & 32 & 36 & 17 & 20 \\
-  u & 39 & 48 & 20 & 20 \\
-  v & 42 & 48 & 35 & 44 \\
-  w & 53 & 64 & 39 & 44 \\
-  x & 52 & 64 & 18 & 20 \\
-  y & 44 & 64 & 30 & 40 \\
-  z & 48 & 64 & 39 & 60 \\
-  ac & 58 & 64 & 46 & 44 \\
-  ad & 72 & 76 & 49 & 44 \\
-  ai & 59 & 64 & 46 & 56 \\
-  al & 59 & 64 & 44 & 44 \\
-  an & 69 & 64 & 48 & 44 \\
-  ar & 58 & 64 & 39 & 40 \\
-  as & 60 & 64 & 51 & 56 \\
-  at & 67 & 76 & 61 & 84 \\
-  be & 66 & 76 & 50 & 56 \\
-  ca & 58 & 64 & 60 & 72 \\
-  ce & 62 & 76 & 42 & 44 \\
-  ch & 55 & 64 & 61 & 72 \\
-  co & 51 & 48 & 49 & 56 \\
-  ct & 54 & 64 & 42 & 44 \\
-  de & 68 & 76 & 33 & 20 \\
-  di & 74 & 96 & 32 & 20 \\
-  ea & 55 & 48 & 53 & 68 \\
-  ec & 54 & 64 & 42 & 44 \\
-  ed & 64 & 64 & 63 & 84 \\
-  ee & 63 & 76 & 49 & 68 \\
-  el & 67 & 84 & 54 & 72 \\
-  em & 81 & 76 & 58 & 60 \\
-  en & 61 & 64 & 50 & 56 \\
-  er & 56 & 64 & 46 & 56 \\
-  es & 48 & 48 & 29 & 20 \\
-  et & 57 & 64 & 28 & 20 \\
-  fo & 48 & 48 & 46 & 44 \\
-  ge & 58 & 64 & 40 & 40 \\
-  ha & 69 & 76 & 46 & 40 \\
-  he & 49 & 48 & 40 & 40 \\
-  hi & 63 & 76 & 31 & 20 \\
-  ho & 58 & 64 & 41 & 40 \\
-  ic & 60 & 76 & 53 & 68 \\
-  ie & 39 & 36 & 26 & 20 \\
-  il & 41 & 36 & 33 & 28 \\
-  im & 61 & 48 & 45 & 40 \\
-  in & 71 & 84 & 31 & 20 \\
-  io & 49 & 48 & 37 & 40 \\
-  is & 54 & 64 & 40 & 44 \\
-  it & 61 & 76 & 57 & 84 \\
-  la & 57 & 64 & 40 & 40 \\
-  le & 55 & 64 & 36 & 40 \\
-  li & 61 & 76 & 35 & 40 \\
-  ll & 55 & 64 & 29 & 20 \\
-  lo & 47 & 48 & 29 & 20 \\
-  ly & 55 & 48 & 32 & 20 \\
-  ma & 95 & 96 & 54 & 44 \\
-  me & 83 & 84 & 42 & 28 \\
-  mi & 93 & 108 & 43 & 28 \\
-  mo & 89 & 96 & 39 & 20 \\
-  na & 81 & 96 & 42 & 28 \\
-  nc & 69 & 76 & 55 & 60 \\
-  nd & 75 & 76 & 60 & 68 \\
-  ne & 59 & 64 & 52 & 60 \\
-  ng & 73 & 76 & 61 & 68 \\
-  ni & 67 & 76 & 59 & 72 \\
-  no & 70 & 76 & 47 & 44 \\
-  ns & 63 & 64 & 42 & 40 \\
-  nt & 73 & 84 & 51 & 56 \\
-  of & 64 & 76 & 55 & 68 \\
-  ol & 55 & 64 & 45 & 56 \\
-  om & 77 & 76 & 39 & 20 \\
-  on & 78 & 96 & 33 & 20 \\
-  or & 56 & 64 & 29 & 20 \\
-  ot & 59 & 64 & 37 & 40 \\
-  ou & 66 & 76 & 40 & 40 \\
-  ow & 84 & 96 & 59 & 68 \\
-  pa & 75 & 76 & 48 & 44 \\
-  pe & 69 & 76 & 61 & 84 \\
-  po & 69 & 76 & 44 & 44 \\
-  pr & 68 & 76 & 43 & 44 \\
-  ra & 60 & 64 & 43 & 44 \\
-  re & 44 & 36 & 28 & 20 \\
-  ri & 58 & 64 & 27 & 20 \\
-  ro & 52 & 48 & 33 & 28 \\
-  rs & 57 & 64 & 34 & 28 \\
-  rt & 54 & 64 & 28 & 20 \\
-  se & 48 & 48 & 31 & 28 \\
-  sh & 61 & 64 & 54 & 60 \\
-  si & 54 & 64 & 56 & 72 \\
-  so & 53 & 48 & 34 & 28 \\
-  ss & 66 & 76 & 49 & 56 \\
-  st & 64 & 76 & 30 & 20 \\
-  ta & 55 & 48 & 39 & 40 \\
-  te & 43 & 36 & 30 & 28 \\
-  th & 57 & 64 & 43 & 40 \\
-  ti & 59 & 76 & 35 & 40 \\
-  to & 57 & 64 & 29 & 20 \\
-  tr & 46 & 36 & 28 & 20 \\
-  ts & 60 & 64 & 30 & 20 \\
-  ul & 60 & 64 & 48 & 56 \\
-  un & 80 & 84 & 56 & 60 \\
-  ur & 53 & 48 & 47 & 56 \\
-  us & 61 & 64 & 47 & 44 \\
-  ut & 52 & 48 & 33 & 28 \\
-  ve & 62 & 64 & 52 & 68 \\
-  wa & 79 & 76 & 69 & 84 \\
-  we & 75 & 76 & 52 & 56 \\
-  wh & 76 & 76 & 57 & 56 \\
-  wi & 75 & 84 & 59 & 68 \\
-  abl & 102 & 120 & 55 & 40 \\
-  abo & 85 & 76 & 69 & 68 \\
-  ace & 73 & 64 & 65 & 68 \\
-  ach & 75 & 64 & 69 & 68 \\
-  act & 89 & 96 & 66 & 68 \\
-  ade & 87 & 76 & 70 & 68 \\
-  age & 89 & 84 & 54 & 40 \\
-  ain & 88 & 84 & 57 & 44 \\
-  ake & 85 & 76 & 76 & 84 \\
-  ali & 109 & 140 & 49 & 40 \\
-  all & 89 & 96 & 57 & 56 \\
-  als & 79 & 76 & 65 & 68 \\
-  ame & 111 & 108 & 68 & 56 \\
-  anc & 99 & 108 & 73 & 72 \\
-  and & 111 & 120 & 80 & 84 \\
-  ang & 87 & 76 & 75 & 72 \\
-  ans & 93 & 84 & 82 & 84 \\
-  ant & 96 & 96 & 65 & 60 \\
-  any & 118 & 140 & 73 & 72 \\
-  app & 101 & 96 & 71 & 72 \\
-  ard & 94 & 96 & 62 & 56 \\
-  are & 92 & 96 & 56 & 56 \\
-  ari & 74 & 64 & 49 & 40 \\
-  art & 78 & 76 & 62 & 68 \\
-  ary & 94 & 96 & 75 & 84 \\
-  ase & 81 & 76 & 64 & 68 \\
-  ass & 92 & 96 & 65 & 68 \\
-  ast & 89 & 96 & 64 & 68 \\
-  ate & 89 & 96 & 61 & 60 \\
-  ati & 89 & 96 & 60 & 60 \\
-  att & 73 & 64 & 66 & 72 \\
-  ave & 87 & 84 & 66 & 68 \\
-  ber & 75 & 64 & 77 & 84 \\
-  ble & 90 & 96 & 81 & 100 \\
-  but & 115 & 140 & 68 & 68 \\
-  cal & 73 & 64 & 67 & 68 \\
-  can & 107 & 120 & 73 & 72 \\
-  cat & 73 & 64 & 66 & 68 \\
-  cen & 89 & 96 & 84 & 100 \\
-  ces & 84 & 96 & 63 & 68 \\
-  cha & 113 & 140 & 75 & 72 \\
-  che & 75 & 76 & 54 & 40 \\
-  chi & 85 & 96 & 66 & 68 \\
-  cia & 89 & 96 & 64 & 68 \\
-  com & 111 & 120 & 78 & 72 \\
-  con & 86 & 84 & 69 & 68 \\
-  cou & 74 & 64 & 67 & 68 \\
-  cti & 87 & 108 & 59 & 60 \\
-  ded & 94 & 96 & 73 & 72 \\
-  den & 81 & 64 & 61 & 44 \\
-  der & 82 & 76 & 56 & 44 \\
-  des & 82 & 76 & 67 & 68 \\
-  din & 91 & 84 & 70 & 68 \\
-  dis & 84 & 84 & 66 & 68 \\
-  duc & 95 & 96 & 74 & 72 \\
-  ead & 89 & 84 & 70 & 68 \\
-  ear & 76 & 64 & 54 & 44 \\
-  eas & 79 & 76 & 64 & 68 \\
-  eat & 75 & 64 & 56 & 56 \\
-  eco & 77 & 76 & 61 & 60 \\
-  ect & 81 & 84 & 61 & 60 \\
-  een & 118 & 140 & 59 & 56 \\
-  eir & 68 & 64 & 55 & 60 \\
-  ell & 103 & 140 & 48 & 40 \\
-  ely & 85 & 84 & 62 & 68 \\
-  eme & 115 & 120 & 72 & 72 \\
-  enc & 91 & 96 & 70 & 72 \\
-  end & 101 & 108 & 72 & 72 \\
-  ene & 80 & 76 & 59 & 56 \\
-  ens & 81 & 76 & 69 & 72 \\
-  ent & 102 & 120 & 64 & 68 \\
-  era & 84 & 84 & 61 & 60 \\
-  ere & 76 & 76 & 46 & 40 \\
-  eri & 88 & 108 & 59 & 68 \\
-  ern & 113 & 140 & 77 & 84 \\
-  ers & 78 & 76 & 54 & 56 \\
-  ert & 80 & 84 & 53 & 56 \\
-  ery & 84 & 84 & 61 & 60 \\
-  ese & 73 & 64 & 58 & 60 \\
-  ess & 120 & 164 & 60 & 60 \\
-  est & 77 & 76 & 50 & 44 \\
-  eve & 85 & 84 & 78 & 100 \\
-  exp & 111 & 120 & 62 & 68 \\
-  fer & 75 & 76 & 64 & 68 \\
-  ffe & 71 & 64 & 70 & 68 \\
-  fic & 88 & 108 & 66 & 68 \\
-  for & 78 & 76 & 52 & 40 \\
-  fro & 84 & 84 & 65 & 68 \\
-  gen & 93 & 96 & 70 & 68 \\
-  ght & 89 & 96 & 72 & 72 \\
-  gra & 78 & 64 & 68 & 68 \\
-  gre & 86 & 84 & 63 & 68 \\
-  had & 81 & 64 & 77 & 72 \\
-  han & 108 & 120 & 76 & 72 \\
-  har & 85 & 76 & 55 & 40 \\
-  has & 111 & 140 & 71 & 72 \\
-  hat & 94 & 96 & 69 & 68 \\
-  hav & 105 & 120 & 72 & 72 \\
-  hea & 88 & 84 & 54 & 40 \\
-  hei & 88 & 96 & 61 & 60 \\
-  hem & 116 & 120 & 79 & 72 \\
-  hen & 88 & 84 & 56 & 40 \\
-  her & 83 & 84 & 55 & 44 \\
-  hes & 99 & 120 & 53 & 40 \\
-  hey & 98 & 108 & 68 & 68 \\
-  hic & 71 & 64 & 66 & 68 \\
-  hin & 78 & 64 & 55 & 40 \\
-  his & 81 & 84 & 64 & 68 \\
-  hou & 97 & 108 & 70 & 68 \\
-  how & 101 & 96 & 77 & 72 \\
-  ial & 77 & 76 & 61 & 60 \\
-  ica & 75 & 76 & 64 & 68 \\
-  ice & 67 & 64 & 68 & 84 \\
-  ich & 75 & 76 & 83 & 100 \\
-  ide & 75 & 64 & 63 & 68 \\
-  ien & 74 & 64 & 50 & 40 \\
-  ies & 75 & 76 & 57 & 60 \\
-  igh & 73 & 64 & 62 & 56 \\
-  ill & 77 & 84 & 77 & 100 \\
-  ime & 97 & 96 & 70 & 68 \\
-  imp & 101 & 84 & 76 & 72 \\
-  ina & 90 & 84 & 65 & 68 \\
-  inc & 77 & 76 & 59 & 56 \\
-  ind & 93 & 96 & 68 & 68 \\
-  ine & 78 & 76 & 72 & 84 \\
-  ing & 87 & 84 & 54 & 40 \\
-  ini & 72 & 64 & 57 & 56 \\
-  ins & 77 & 64 & 70 & 72 \\
-  int & 86 & 84 & 72 & 84 \\
-  ion & 90 & 96 & 63 & 68 \\
-  ire & 82 & 96 & 55 & 60 \\
-  ish & 75 & 76 & 64 & 68 \\
-  ist & 69 & 64 & 58 & 60 \\
-  ite & 73 & 76 & 55 & 60 \\
-  ith & 88 & 96 & 68 & 72 \\
-  iti & 65 & 64 & 70 & 84 \\
-  its & 75 & 76 & 58 & 60 \\
-  ity & 81 & 84 & 60 & 60 \\
-  ive & 87 & 96 & 47 & 40 \\
-  kin & 109 & 120 & 67 & 68 \\
-  lan & 86 & 76 & 63 & 56 \\
-  lar & 74 & 64 & 73 & 84 \\
-  lat & 77 & 76 & 51 & 40 \\
-  lea & 79 & 76 & 80 & 100 \\
-  led & 75 & 64 & 57 & 44 \\
-  les & 87 & 96 & 59 & 60 \\
-  lic & 67 & 64 & 79 & 100 \\
-  lin & 94 & 108 & 51 & 40 \\
-  lit & 87 & 108 & 56 & 60 \\
-  lle & 97 & 120 & 54 & 56 \\
-  lly & 91 & 96 & 64 & 68 \\
-  low & 108 & 120 & 86 & 100 \\
-  man & 124 & 120 & 89 & 84 \\
-  mar & 98 & 76 & 78 & 72 \\
-  mat & 107 & 96 & 78 & 72 \\
-  men & 122 & 120 & 79 & 72 \\
-  mer & 92 & 76 & 81 & 84 \\
-  min & 100 & 84 & 83 & 84 \\
-  mon & 122 & 120 & 85 & 84 \\
-  mor & 115 & 120 & 74 & 72 \\
-  mpl & 133 & 140 & 79 & 72 \\
-  nal & 98 & 96 & 79 & 84 \\
-  nat & 102 & 108 & 69 & 68 \\
-  nce & 77 & 64 & 62 & 56 \\
-  nde & 105 & 108 & 85 & 100 \\
-  ndi & 119 & 140 & 70 & 68 \\
-  ned & 95 & 96 & 72 & 72 \\
-  ner & 93 & 96 & 73 & 84 \\
-  nes & 85 & 76 & 61 & 56 \\
-  nge & 85 & 76 & 70 & 68 \\
-  nin & 106 & 120 & 55 & 40 \\
-  not & 116 & 140 & 65 & 68 \\
-  now & 135 & 164 & 82 & 84 \\
-  nsi & 89 & 96 & 64 & 68 \\
-  nst & 95 & 96 & 67 & 68 \\
-  nta & 92 & 84 & 69 & 68 \\
-  nte & 82 & 76 & 81 & 100 \\
-  nti & 86 & 84 & 62 & 68 \\
-  ntr & 81 & 76 & 64 & 68 \\
-  nts & 99 & 108 & 67 & 68 \\
-  ome & 106 & 108 & 73 & 72 \\
-  omm & 154 & 164 & 90 & 84 \\
-  omp & 126 & 140 & 71 & 60 \\
-  ona & 106 & 120 & 63 & 56 \\
-  ond & 88 & 76 & 73 & 72 \\
-  one & 82 & 76 & 74 & 84 \\
-  ong & 94 & 96 & 71 & 72 \\
-  ons & 90 & 84 & 67 & 68 \\
-  ont & 82 & 76 & 66 & 68 \\
-  ope & 76 & 64 & 72 & 84 \\
-  ord & 88 & 84 & 59 & 56 \\
-  ore & 77 & 76 & 51 & 44 \\
-  orm & 131 & 164 & 74 & 72 \\
-  ort & 87 & 96 & 58 & 60 \\
-  ose & 87 & 96 & 49 & 40 \\
-  ost & 109 & 140 & 71 & 84 \\
-  oth & 78 & 76 & 70 & 72 \\
-  oug & 88 & 84 & 71 & 72 \\
-  oul & 87 & 84 & 64 & 68 \\
-  oun & 87 & 76 & 65 & 60 \\
-  our & 88 & 84 & 63 & 68 \\
-  ous & 86 & 84 & 60 & 56 \\
-  out & 91 & 96 & 63 & 68 \\
-  ove & 73 & 64 & 61 & 60 \\
-  owe & 106 & 120 & 69 & 68 \\
-  own & 115 & 120 & 74 & 68 \\
-  par & 92 & 84 & 67 & 68 \\
-  pec & 97 & 108 & 65 & 68 \\
-  per & 88 & 84 & 76 & 84 \\
-  pla & 93 & 96 & 67 & 68 \\
-  ple & 81 & 76 & 80 & 100 \\
-  por & 99 & 108 & 63 & 68 \\
-  pos & 91 & 96 & 65 & 68 \\
-  pre & 90 & 96 & 61 & 60 \\
-  pri & 102 & 120 & 60 & 60 \\
-  pro & 101 & 108 & 63 & 68 \\
-  rac & 82 & 76 & 66 & 68 \\
-  ral & 92 & 96 & 63 & 68 \\
-  ran & 97 & 96 & 61 & 56 \\
-  rat & 92 & 96 & 62 & 68 \\
-  rea & 84 & 84 & 58 & 56 \\
-  rec & 84 & 96 & 61 & 60 \\
-  red & 86 & 84 & 74 & 84 \\
-  ree & 88 & 96 & 46 & 40 \\
-  rel & 82 & 84 & 67 & 84 \\
-  ren & 77 & 64 & 51 & 40 \\
-  res & 78 & 76 & 52 & 44 \\
-  ric & 84 & 96 & 56 & 56 \\
-  rie & 72 & 76 & 53 & 56 \\
-  rin & 123 & 164 & 50 & 40 \\
-  ris & 100 & 120 & 55 & 56 \\
-  rit & 96 & 120 & 52 & 56 \\
-  rom & 125 & 140 & 74 & 72 \\
-  rou & 88 & 84 & 63 & 68 \\
-  rti & 68 & 64 & 55 & 60 \\
-  sed & 86 & 84 & 67 & 68 \\
-  see & 83 & 84 & 58 & 60 \\
-  sel & 73 & 64 & 79 & 100 \\
-  sen & 81 & 76 & 83 & 100 \\
-  ser & 80 & 76 & 59 & 60 \\
-  ses & 76 & 76 & 61 & 60 \\
-  she & 79 & 76 & 66 & 68 \\
-  sho & 98 & 108 & 67 & 68 \\
-  sin & 89 & 96 & 64 & 68 \\
-  sio & 91 & 108 & 58 & 60 \\
-  sit & 69 & 64 & 58 & 60 \\
-  som & 103 & 96 & 76 & 72 \\
-  son & 84 & 76 & 70 & 72 \\
-  spe & 83 & 76 & 64 & 68 \\
-  sse & 100 & 120 & 61 & 60 \\
-  ssi & 88 & 96 & 65 & 72 \\
-  sta & 81 & 76 & 64 & 68 \\
-  ste & 75 & 76 & 48 & 40 \\
-  sti & 87 & 96 & 58 & 60 \\
-  sto & 71 & 64 & 55 & 56 \\
-  str & 72 & 64 & 60 & 60 \\
-  sur & 83 & 76 & 64 & 68 \\
-  tai & 85 & 96 & 60 & 60 \\
-  tal & 81 & 76 & 51 & 40 \\
-  tan & 86 & 76 & 69 & 68 \\
-  tat & 73 & 64 & 62 & 68 \\
-  ted & 85 & 84 & 65 & 68 \\
-  ten & 76 & 64 & 64 & 68 \\
-  ter & 76 & 76 & 55 & 56 \\
-  tes & 77 & 76 & 59 & 60 \\
-  tha & 86 & 84 & 65 & 60 \\
-  the & 84 & 84 & 81 & 100 \\
-  thi & 78 & 76 & 62 & 68 \\
-  tho & 80 & 76 & 65 & 68 \\
-  tic & 73 & 76 & 59 & 60 \\
-  tim & 93 & 84 & 71 & 72 \\
-  tin & 88 & 96 & 52 & 44 \\
-  tio & 68 & 64 & 56 & 60 \\
-  tiv & 97 & 120 & 58 & 60 \\
-  tor & 83 & 84 & 58 & 60 \\
-  tra & 80 & 76 & 62 & 68 \\
-  tri & 84 & 96 & 46 & 40 \\
-  tte & 69 & 64 & 55 & 56 \\
-  tur & 79 & 76 & 62 & 68 \\
-  ual & 88 & 84 & 67 & 68 \\
-  uch & 128 & 164 & 73 & 72 \\
-  ugh & 96 & 96 & 59 & 40 \\
-  uld & 90 & 84 & 71 & 72 \\
-  und & 106 & 108 & 77 & 72 \\
-  uni & 93 & 96 & 67 & 68 \\
-  unt & 91 & 84 & 67 & 68 \\
-  ure & 81 & 76 & 61 & 60 \\
-  use & 78 & 64 & 64 & 68 \\
-  ust & 82 & 76 & 60 & 56 \\
-  ven & 97 & 96 & 83 & 100 \\
-  ver & 88 & 96 & 57 & 56 \\
-  was & 99 & 96 & 76 & 72 \\
-  wer & 99 & 96 & 69 & 68 \\
-  whe & 88 & 76 & 76 & 72 \\
-  whi & 106 & 120 & 74 & 72 \\
-  who & 109 & 120 & 77 & 72 \\
-  wil & 112 & 140 & 68 & 68 \\
-  wit & 100 & 108 & 67 & 68 \\
-  wor & 99 & 96 & 70 & 68 \\
-  you & 131 & 164 & 67 & 68 \\
+    a & 44 & 39 & 20 & 22 \\
+  b & 32 & 34 & 40 & 31 \\
+  c & 44 & 32 & 56 & 40 \\
+  d & 56 & 46 & 28 & 31 \\
+  e & 64 & 43 & 20 & 21 \\
+  f & 32 & 30 & 28 & 28 \\
+  g & 32 & 30 & 44 & 35 \\
+  h & 56 & 41 & 44 & 36 \\
+  i & 96 & 61 & 60 & 38 \\
+  j & 96 & 62 & 56 & 37 \\
+  k & 64 & 52 & 40 & 32 \\
+  l & 44 & 35 & 28 & 24 \\
+  m & 44 & 49 & 56 & 48 \\
+  n & 56 & 47 & 20 & 24 \\
+  o & 32 & 27 & 60 & 40 \\
+  p & 64 & 51 & 44 & 34 \\
+  q & 84 & 62 & 60 & 44 \\
+  r & 32 & 32 & 28 & 23 \\
+  s & 32 & 32 & 20 & 21 \\
+  t & 56 & 41 & 44 & 31 \\
+  u & 64 & 52 & 56 & 40 \\
+  v & 96 & 64 & 28 & 25 \\
+  w & 56 & 49 & 56 & 43 \\
+  x & 96 & 68 & 56 & 38 \\
+  y & 32 & 31 & 40 & 30 \\
+  z & 84 & 57 & 60 & 39 \\
+  ac & 56 & 57 & 56 & 50 \\
+  ad & 56 & 63 & 40 & 47 \\
+  ai & 44 & 49 & 60 & 50 \\
+  al & 64 & 63 & 28 & 38 \\
+  an & 44 & 58 & 40 & 44 \\
+  ar & 44 & 54 & 40 & 41 \\
+  as & 44 & 53 & 40 & 41 \\
+  at & 64 & 63 & 60 & 53 \\
+  be & 44 & 50 & 56 & 48 \\
+  ca & 56 & 57 & 44 & 48 \\
+  ce & 32 & 43 & 40 & 38 \\
+  ch & 44 & 47 & 44 & 49 \\
+  co & 56 & 53 & 40 & 41 \\
+  ct & 32 & 43 & 44 & 42 \\
+  de & 64 & 61 & 40 & 41 \\
+  di & 64 & 59 & 28 & 38 \\
+  ea & 44 & 51 & 20 & 31 \\
+  ec & 44 & 49 & 44 & 42 \\
+  ed & 56 & 59 & 28 & 39 \\
+  ee & 72 & 61 & 84 & 57 \\
+  el & 64 & 55 & 28 & 32 \\
+  em & 84 & 81 & 56 & 56 \\
+  en & 56 & 58 & 40 & 40 \\
+  er & 44 & 48 & 40 & 38 \\
+  es & 32 & 43 & 28 & 33 \\
+  et & 44 & 45 & 28 & 32 \\
+  fo & 56 & 55 & 84 & 63 \\
+  ge & 56 & 55 & 40 & 42 \\
+  ha & 56 & 60 & 20 & 36 \\
+  he & 56 & 56 & 40 & 40 \\
+  hi & 56 & 54 & 56 & 47 \\
+  ho & 32 & 44 & 44 & 45 \\
+  ic & 32 & 39 & 84 & 59 \\
+  ie & 32 & 41 & 20 & 26 \\
+  il & 32 & 39 & 60 & 49 \\
+  im & 44 & 61 & 60 & 57 \\
+  in & 64 & 60 & 20 & 31 \\
+  io & 84 & 68 & 28 & 33 \\
+  is & 32 & 43 & 20 & 28 \\
+  it & 32 & 41 & 28 & 31 \\
+  la & 32 & 47 & 20 & 32 \\
+  le & 56 & 53 & 28 & 34 \\
+  li & 56 & 49 & 44 & 39 \\
+  ll & 56 & 51 & 28 & 33 \\
+  lo & 44 & 46 & 20 & 29 \\
+  ly & 44 & 51 & 28 & 38 \\
+  ma & 96 & 93 & 56 & 60 \\
+  me & 72 & 79 & 40 & 46 \\
+  mi & 84 & 81 & 72 & 65 \\
+  mo & 72 & 80 & 40 & 49 \\
+  na & 84 & 80 & 40 & 46 \\
+  nc & 44 & 55 & 60 & 55 \\
+  nd & 44 & 61 & 44 & 50 \\
+  ne & 72 & 70 & 20 & 32 \\
+  ng & 44 & 59 & 56 & 55 \\
+  ni & 64 & 64 & 56 & 49 \\
+  no & 64 & 66 & 20 & 33 \\
+  ns & 64 & 63 & 56 & 52 \\
+  nt & 32 & 48 & 28 & 37 \\
+  of & 96 & 77 & 84 & 63 \\
+  ol & 56 & 52 & 44 & 41 \\
+  om & 32 & 58 & 56 & 57 \\
+  on & 56 & 60 & 28 & 39 \\
+  or & 32 & 45 & 28 & 33 \\
+  ot & 44 & 48 & 20 & 29 \\
+  ou & 32 & 47 & 84 & 62 \\
+  ow & 84 & 76 & 84 & 67 \\
+  pa & 32 & 51 & 56 & 50 \\
+  pe & 32 & 49 & 60 & 53 \\
+  po & 44 & 56 & 28 & 38 \\
+  pr & 44 & 54 & 44 & 45 \\
+  ra & 64 & 60 & 28 & 37 \\
+  re & 56 & 54 & 20 & 28 \\
+  ri & 56 & 52 & 20 & 27 \\
+  ro & 44 & 49 & 56 & 47 \\
+  rs & 44 & 50 & 20 & 30 \\
+  rt & 44 & 46 & 20 & 28 \\
+  se & 32 & 45 & 40 & 37 \\
+  sh & 56 & 55 & 56 & 50 \\
+  si & 32 & 41 & 56 & 44 \\
+  so & 44 & 49 & 20 & 30 \\
+  ss & 72 & 66 & 44 & 43 \\
+  st & 32 & 45 & 28 & 36 \\
+  ta & 44 & 51 & 20 & 31 \\
+  te & 56 & 53 & 60 & 48 \\
+  th & 44 & 50 & 56 & 51 \\
+  ti & 32 & 39 & 56 & 45 \\
+  to & 72 & 64 & 40 & 37 \\
+  tr & 32 & 42 & 20 & 28 \\
+  ts & 44 & 49 & 28 & 34 \\
+  ul & 32 & 48 & 28 & 38 \\
+  un & 56 & 63 & 44 & 48 \\
+  ur & 32 & 49 & 40 & 41 \\
+  us & 44 & 56 & 72 & 59 \\
+  ut & 32 & 48 & 20 & 31 \\
+  ve & 32 & 47 & 20 & 30 \\
+  wa & 64 & 70 & 40 & 47 \\
+  we & 64 & 70 & 20 & 36 \\
+  wh & 72 & 76 & 20 & 41 \\
+  wi & 64 & 68 & 28 & 39 \\
+  abl & 132 & 109 & 40 & 55 \\
+  abo & 64 & 77 & 68 & 69 \\
+  ace & 72 & 79 & 68 & 65 \\
+  ach & 96 & 92 & 84 & 79 \\
+  act & 72 & 79 & 68 & 66 \\
+  ade & 84 & 87 & 68 & 70 \\
+  age & 108 & 99 & 40 & 54 \\
+  ain & 96 & 96 & 56 & 59 \\
+  ake & 108 & 101 & 56 & 62 \\
+  ali & 64 & 72 & 56 & 57 \\
+  all & 132 & 104 & 72 & 69 \\
+  als & 64 & 77 & 68 & 65 \\
+  ame & 108 & 116 & 96 & 90 \\
+  anc & 84 & 90 & 72 & 73 \\
+  and & 84 & 98 & 44 & 64 \\
+  ang & 84 & 92 & 72 & 75 \\
+  ans & 84 & 94 & 84 & 78 \\
+  ant & 64 & 80 & 84 & 79 \\
+  any & 72 & 90 & 72 & 73 \\
+  app & 108 & 108 & 68 & 71 \\
+  ard & 84 & 88 & 40 & 56 \\
+  are & 84 & 83 & 60 & 60 \\
+  ari & 64 & 73 & 56 & 55 \\
+  art & 96 & 91 & 84 & 74 \\
+  ary & 72 & 83 & 56 & 59 \\
+  ase & 72 & 79 & 68 & 64 \\
+  ass & 108 & 99 & 68 & 67 \\
+  ast & 84 & 87 & 68 & 64 \\
+  ate & 96 & 90 & 60 & 61 \\
+  ati & 64 & 74 & 60 & 60 \\
+  att & 64 & 74 & 84 & 72 \\
+  ave & 84 & 87 & 96 & 82 \\
+  ber & 84 & 82 & 72 & 67 \\
+  ble & 64 & 73 & 96 & 81 \\
+  but & 84 & 90 & 68 & 68 \\
+  cal & 84 & 83 & 68 & 67 \\
+  can & 64 & 80 & 72 & 73 \\
+  cat & 64 & 73 & 72 & 69 \\
+  cen & 64 & 76 & 40 & 54 \\
+  ces & 64 & 71 & 60 & 63 \\
+  cha & 84 & 84 & 72 & 75 \\
+  che & 72 & 76 & 40 & 54 \\
+  chi & 108 & 94 & 68 & 66 \\
+  cia & 108 & 93 & 68 & 64 \\
+  com & 108 & 106 & 72 & 78 \\
+  con & 64 & 76 & 40 & 55 \\
+  cou & 64 & 75 & 68 & 67 \\
+  cti & 64 & 67 & 60 & 59 \\
+  ded & 84 & 93 & 72 & 73 \\
+  den & 64 & 82 & 40 & 57 \\
+  der & 72 & 82 & 40 & 52 \\
+  des & 64 & 77 & 68 & 67 \\
+  din & 108 & 100 & 40 & 56 \\
+  dis & 72 & 79 & 68 & 66 \\
+  duc & 132 & 120 & 72 & 74 \\
+  ead & 64 & 79 & 68 & 70 \\
+  ear & 64 & 75 & 44 & 52 \\
+  eas & 64 & 75 & 68 & 64 \\
+  eat & 72 & 80 & 84 & 70 \\
+  eco & 84 & 78 & 60 & 61 \\
+  ect & 84 & 81 & 60 & 61 \\
+  een & 84 & 86 & 96 & 81 \\
+  eir & 84 & 77 & 60 & 55 \\
+  ell & 84 & 80 & 84 & 72 \\
+  ely & 84 & 84 & 60 & 62 \\
+  eme & 132 & 116 & 68 & 72 \\
+  enc & 84 & 86 & 60 & 66 \\
+  end & 84 & 94 & 68 & 72 \\
+  ene & 72 & 80 & 56 & 59 \\
+  ens & 84 & 90 & 68 & 67 \\
+  ent & 84 & 86 & 68 & 64 \\
+  era & 64 & 77 & 60 & 61 \\
+  ere & 72 & 75 & 56 & 52 \\
+  eri & 84 & 77 & 96 & 75 \\
+  ern & 108 & 101 & 84 & 71 \\
+  ers & 72 & 78 & 56 & 54 \\
+  ert & 64 & 71 & 40 & 47 \\
+  ery & 108 & 95 & 60 & 61 \\
+  ese & 64 & 71 & 60 & 58 \\
+  ess & 84 & 81 & 68 & 64 \\
+  est & 72 & 75 & 72 & 64 \\
+  eve & 96 & 91 & 40 & 48 \\
+  exp & 132 & 117 & 60 & 62 \\
+  fer & 64 & 72 & 68 & 64 \\
+  ffe & 108 & 98 & 68 & 70 \\
+  fic & 96 & 84 & 68 & 66 \\
+  for & 64 & 72 & 96 & 80 \\
+  fro & 84 & 80 & 68 & 65 \\
+  gen & 96 & 96 & 68 & 70 \\
+  ght & 84 & 86 & 68 & 70 \\
+  gra & 64 & 78 & 84 & 78 \\
+  gre & 72 & 80 & 96 & 81 \\
+  had & 84 & 92 & 72 & 77 \\
+  han & 84 & 93 & 72 & 77 \\
+  har & 160 & 129 & 56 & 63 \\
+  has & 64 & 78 & 68 & 71 \\
+  hat & 72 & 80 & 60 & 65 \\
+  hav & 96 & 96 & 68 & 72 \\
+  hea & 84 & 88 & 56 & 62 \\
+  hei & 160 & 122 & 40 & 50 \\
+  hem & 72 & 92 & 72 & 79 \\
+  hen & 108 & 103 & 96 & 82 \\
+  her & 96 & 87 & 84 & 73 \\
+  hes & 160 & 118 & 44 & 57 \\
+  hey & 64 & 76 & 56 & 60 \\
+  hic & 160 & 116 & 68 & 66 \\
+  hin & 160 & 123 & 40 & 55 \\
+  his & 72 & 76 & 68 & 64 \\
+  hou & 84 & 86 & 84 & 75 \\
+  how & 64 & 83 & 84 & 84 \\
+  ial & 64 & 72 & 60 & 61 \\
+  ica & 84 & 81 & 68 & 64 \\
+  ice & 64 & 67 & 72 & 64 \\
+  ich & 64 & 70 & 40 & 53 \\
+  ide & 72 & 77 & 60 & 63 \\
+  ien & 96 & 88 & 60 & 62 \\
+  ies & 64 & 69 & 60 & 57 \\
+  igh & 64 & 74 & 72 & 70 \\
+  ill & 64 & 68 & 84 & 71 \\
+  ime & 96 & 102 & 68 & 70 \\
+  imp & 108 & 110 & 72 & 76 \\
+  ina & 84 & 88 & 56 & 59 \\
+  inc & 84 & 86 & 60 & 63 \\
+  ind & 84 & 90 & 44 & 60 \\
+  ine & 64 & 74 & 40 & 50 \\
+  ing & 64 & 78 & 44 & 58 \\
+  ini & 84 & 84 & 96 & 77 \\
+  ins & 64 & 76 & 44 & 56 \\
+  int & 72 & 80 & 40 & 50 \\
+  ion & 84 & 85 & 60 & 63 \\
+  ire & 64 & 69 & 60 & 55 \\
+  ish & 84 & 82 & 68 & 64 \\
+  ist & 64 & 69 & 60 & 58 \\
+  ite & 64 & 68 & 60 & 55 \\
+  ith & 64 & 70 & 56 & 58 \\
+  iti & 108 & 88 & 56 & 52 \\
+  its & 64 & 69 & 60 & 58 \\
+  ity & 72 & 76 & 60 & 60 \\
+  ive & 72 & 77 & 40 & 47 \\
+  kin & 108 & 106 & 96 & 85 \\
+  lan & 72 & 86 & 56 & 61 \\
+  lar & 64 & 75 & 68 & 65 \\
+  lat & 64 & 74 & 40 & 51 \\
+  lea & 72 & 80 & 96 & 80 \\
+  led & 64 & 75 & 40 & 53 \\
+  les & 72 & 75 & 40 & 49 \\
+  lic & 64 & 67 & 96 & 75 \\
+  lin & 96 & 88 & 56 & 59 \\
+  lit & 64 & 68 & 40 & 46 \\
+  lle & 132 & 106 & 40 & 48 \\
+  lly & 132 & 108 & 68 & 64 \\
+  low & 96 & 99 & 44 & 60 \\
+  man & 96 & 110 & 96 & 91 \\
+  mar & 64 & 91 & 84 & 83 \\
+  mat & 84 & 102 & 96 & 91 \\
+  men & 160 & 142 & 72 & 79 \\
+  mer & 84 & 97 & 96 & 87 \\
+  min & 108 & 110 & 84 & 81 \\
+  mon & 108 & 113 & 44 & 67 \\
+  mor & 84 & 95 & 40 & 58 \\
+  mpl & 108 & 114 & 72 & 79 \\
+  nal & 96 & 98 & 72 & 73 \\
+  nat & 96 & 96 & 40 & 55 \\
+  nce & 84 & 88 & 40 & 54 \\
+  nde & 132 & 118 & 84 & 79 \\
+  ndi & 160 & 126 & 68 & 70 \\
+  ned & 108 & 108 & 68 & 72 \\
+  ner & 72 & 83 & 72 & 67 \\
+  nes & 96 & 96 & 56 & 59 \\
+  nge & 72 & 86 & 68 & 70 \\
+  nin & 132 & 119 & 96 & 85 \\
+  not & 84 & 89 & 68 & 65 \\
+  now & 96 & 105 & 72 & 76 \\
+  nsi & 72 & 80 & 68 & 64 \\
+  nst & 84 & 86 & 68 & 67 \\
+  nta & 84 & 92 & 68 & 69 \\
+  nte & 64 & 78 & 84 & 71 \\
+  nti & 160 & 120 & 60 & 62 \\
+  ntr & 64 & 77 & 68 & 64 \\
+  nts & 84 & 86 & 68 & 67 \\
+  ome & 84 & 98 & 72 & 73 \\
+  omm & 160 & 146 & 84 & 90 \\
+  omp & 132 & 126 & 72 & 79 \\
+  ona & 84 & 93 & 60 & 65 \\
+  ond & 64 & 82 & 72 & 73 \\
+  one & 72 & 83 & 84 & 74 \\
+  ong & 64 & 82 & 68 & 71 \\
+  ons & 64 & 78 & 68 & 67 \\
+  ont & 64 & 77 & 40 & 52 \\
+  ope & 72 & 80 & 40 & 50 \\
+  ord & 96 & 95 & 44 & 55 \\
+  ore & 72 & 77 & 60 & 59 \\
+  orm & 84 & 99 & 72 & 74 \\
+  ort & 64 & 73 & 60 & 58 \\
+  ose & 64 & 72 & 60 & 59 \\
+  ost & 64 & 74 & 60 & 59 \\
+  oth & 64 & 75 & 96 & 82 \\
+  oug & 64 & 79 & 40 & 55 \\
+  oul & 64 & 77 & 68 & 64 \\
+  oun & 132 & 120 & 56 & 63 \\
+  our & 72 & 80 & 60 & 63 \\
+  ous & 64 & 77 & 44 & 56 \\
+  out & 64 & 75 & 60 & 63 \\
+  ove & 64 & 74 & 60 & 61 \\
+  owe & 160 & 131 & 56 & 63 \\
+  own & 132 & 121 & 84 & 84 \\
+  par & 84 & 89 & 72 & 69 \\
+  pec & 96 & 91 & 68 & 65 \\
+  per & 84 & 85 & 72 & 66 \\
+  pla & 108 & 102 & 68 & 67 \\
+  ple & 108 & 96 & 40 & 50 \\
+  por & 84 & 89 & 60 & 63 \\
+  pos & 72 & 82 & 56 & 58 \\
+  pre & 72 & 81 & 40 & 50 \\
+  pri & 64 & 77 & 40 & 49 \\
+  pro & 84 & 85 & 60 & 61 \\
+  rac & 96 & 88 & 68 & 66 \\
+  ral & 96 & 91 & 56 & 57 \\
+  ran & 72 & 85 & 96 & 85 \\
+  rat & 72 & 79 & 60 & 62 \\
+  rea & 64 & 75 & 56 & 58 \\
+  rec & 84 & 80 & 60 & 61 \\
+  red & 96 & 90 & 40 & 52 \\
+  ree & 108 & 99 & 60 & 56 \\
+  rel & 132 & 101 & 96 & 73 \\
+  ren & 96 & 93 & 44 & 53 \\
+  res & 84 & 82 & 68 & 62 \\
+  ric & 160 & 120 & 72 & 64 \\
+  rie & 108 & 91 & 40 & 45 \\
+  rin & 160 & 119 & 84 & 74 \\
+  ris & 132 & 102 & 40 & 47 \\
+  rit & 96 & 87 & 84 & 66 \\
+  rom & 108 & 107 & 72 & 74 \\
+  rou & 64 & 76 & 60 & 63 \\
+  rti & 72 & 73 & 60 & 55 \\
+  sed & 84 & 89 & 68 & 67 \\
+  see & 108 & 95 & 72 & 66 \\
+  sel & 84 & 79 & 84 & 73 \\
+  sen & 64 & 78 & 84 & 75 \\
+  ser & 72 & 76 & 96 & 74 \\
+  ses & 64 & 75 & 60 & 61 \\
+  she & 72 & 78 & 68 & 66 \\
+  sho & 84 & 82 & 68 & 67 \\
+  sin & 72 & 82 & 68 & 64 \\
+  sio & 64 & 70 & 60 & 58 \\
+  sit & 64 & 69 & 60 & 58 \\
+  som & 96 & 102 & 40 & 60 \\
+  son & 84 & 90 & 96 & 82 \\
+  spe & 64 & 77 & 56 & 59 \\
+  sse & 132 & 107 & 60 & 61 \\
+  ssi & 132 & 111 & 60 & 59 \\
+  sta & 72 & 79 & 96 & 78 \\
+  ste & 108 & 93 & 96 & 74 \\
+  sti & 72 & 75 & 44 & 51 \\
+  sto & 84 & 82 & 44 & 51 \\
+  str & 64 & 72 & 56 & 55 \\
+  sur & 64 & 77 & 40 & 52 \\
+  tai & 84 & 82 & 60 & 60 \\
+  tal & 72 & 80 & 40 & 51 \\
+  tan & 64 & 80 & 68 & 69 \\
+  tat & 72 & 80 & 60 & 62 \\
+  ted & 64 & 75 & 68 & 65 \\
+  ten & 72 & 80 & 68 & 64 \\
+  ter & 64 & 71 & 44 & 51 \\
+  tes & 72 & 77 & 60 & 59 \\
+  tha & 72 & 80 & 68 & 69 \\
+  the & 64 & 72 & 68 & 65 \\
+  thi & 72 & 74 & 60 & 62 \\
+  tho & 72 & 77 & 72 & 68 \\
+  tic & 64 & 67 & 60 & 59 \\
+  tim & 84 & 94 & 68 & 71 \\
+  tin & 64 & 74 & 40 & 50 \\
+  tio & 132 & 98 & 60 & 56 \\
+  tiv & 108 & 93 & 60 & 58 \\
+  tor & 64 & 71 & 60 & 58 \\
+  tra & 84 & 87 & 40 & 50 \\
+  tri & 64 & 71 & 56 & 54 \\
+  tte & 132 & 110 & 96 & 77 \\
+  tur & 108 & 96 & 60 & 62 \\
+  ual & 84 & 91 & 68 & 67 \\
+  uch & 64 & 77 & 72 & 73 \\
+  ugh & 64 & 81 & 72 & 77 \\
+  uld & 72 & 86 & 68 & 71 \\
+  und & 96 & 101 & 72 & 77 \\
+  uni & 84 & 91 & 68 & 67 \\
+  unt & 96 & 95 & 40 & 55 \\
+  ure & 96 & 94 & 60 & 61 \\
+  use & 72 & 80 & 40 & 51 \\
+  ust & 64 & 78 & 44 & 56 \\
+  ven & 64 & 80 & 72 & 69 \\
+  ver & 64 & 74 & 72 & 65 \\
+  was & 64 & 86 & 72 & 76 \\
+  wer & 96 & 95 & 68 & 69 \\
+  whe & 84 & 95 & 40 & 59 \\
+  whi & 96 & 97 & 72 & 74 \\
+  who & 72 & 89 & 72 & 77 \\
+  wil & 96 & 96 & 72 & 70 \\
+  wit & 96 & 92 & 68 & 67 \\
+  wor & 108 & 106 & 68 & 70 \\
+  you & 96 & 93 & 84 & 74 \\
   \hline 
-\end{tabular}
+%\end{tabular}
 \caption{Optimal sliding window widths for spotting and estimated visual widths for each n-gram of interest.}
 \label{tab:customwidths}
-\end{table}
+\end{longtable}
 
 
 %\nocite{testentry}
