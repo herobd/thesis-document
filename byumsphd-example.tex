@@ -721,9 +721,9 @@ Full word spotting is performed as described in \cite{sudholt2016}, where the ne
    & \multicolumn{2}{c|}{IAM} & \multicolumn{2}{c|}{Bentham} & \multicolumn{2}{c|}{Census Names}\\
   Method & QbS & QbE & QbS & QbE & QbS & QbE\\
   \hline		
-  %Old network & 0.755 & 0.683 & 0.762 & 0.811 & 0.525 & 0.511  %results with msfNoLRN/sig-bray IAM:208000  BEN:160000 NAMES(less):144000
-  Our network  &  0.892 & 0.833  &  0.926 & 0.971  &  0.758 & 0.858  \\%results with phocnetSkinny(Adam,dot) IAM:124000  BEN:X NAMES(less):124000
-  Our network adapted PHOC  &  0.868 & 0.809  &  0.935 & 0.975  &  0.755 & 0.864 \\
+  %Old network & 0.755 & 0.683 & 0.238 & 0.811 & 0.525 & 0.489  %results with msfNoLRN/sig-bray IAM:208000  BEN:160000 NAMES(less):144000
+  Our network  &  0.892 & 0.833  &  0.074 & 0.971  &  0.758 & 0.142  \\%results with phocnetSkinny(Adam,dot) IAM:124000  BEN:X NAMES(less):124000
+  Our network adapted PHOC  &  0.868 & 0.809  &  0.065 & 0.975  &  0.755 & 0.136 \\
   %bentham:ben_fixed_corpus.gtp
   
   PHOCNet\cite{sudholt2016} & 0.830 & 0.725 & - & - & - & - \\
@@ -800,9 +800,9 @@ Some qualitative results are show in Figures \ref{fig:qualSpot} and \ref{fig:qua
   QbS & & & & & & & \\
   \hline
 %                                                                         redo CE, final final2(uni, no mask)
-%Unigram &  0.654 &  0.608 &  0.654 &  0.678 &  0.691 &  0.499 &  0.691 \\,0.677  0.570, 0.677,
-%Bigram  &  0.549 &  0.641 &  0.679 &  0.643 &  0.665 &  0.571 &  0.665 \\,0.682  0.663, 0.663,
-%Trigram &  0.522 &  0.560 &  0.612 &  0.618 &  0.640 &  0.586 &  0.659 \\,0.705  0.697, 0.697,
+%Unigram &  0.654 &  0.608 &  0.654 &  0.322 &  0.691 &  0.499 &  0.309 \\,0.677  0.570, 0.677,
+%Bigram  &  0.549 &  0.641 &  0.679 &  0.357 &  0.665 &  0.571 &  0.335 \\,0.682  0.663, 0.663,
+%Trigram &  0.522 &  0.560 &  0.612 &  0.382 &  0.640 &  0.586 &  0.341 \\,0.705  0.697, 0.697,
 Unigram &  0.654 &  0.608 &  0.654 &  \textbf{0.678} &  \textbf{0.677} &  0.499 &  0.570 \\
 Bigram  &  0.549 &  0.641 &  0.679 &  0.643 &  \textbf{0.682} &  0.571 &  0.663 \\
 Trigram &  0.522 &  0.560 &  0.612 &  0.618 &  \textbf{0.705} &  0.586 &  0.697 \\
@@ -815,9 +815,9 @@ Trigram &  0.522 &  0.560 &  0.612 &  0.618 &  \textbf{0.705} &  0.586 &  0.697 
 %Unigram &  0.511 &  0.338 &  0.X &  0.453 &  0.318  &  0.296 &  0.318 \\0.329, 0.283, 0.328
 %Bigram  &  0.569 &  0.429 &  0.X &  0.535 &  0.408  &  0.435 &  0.408 \\0.426, 0.395, 0.395
 %Trigram &  0.571 &  0.449 &  0.X &  0.533 &  0.431  &  0.497 &  0.438 \\0.441, 0.437, 0.437
-Unigram &  \textbf{0.511} &  0.338 & 0.321 &  0.453 &  0.329  &  0.296 &  0.283 \\
-Bigram  &  \textbf{0.569} &  0.429 & 0.425 &  0.535 &  0.426  &  0.435 &  0.395 \\
-Trigram &  \textbf{0.571} &  0.449 & 0.431 &  0.533 &  0.441  &  0.497 &  0.437 \\
+Unigram &  \textbf{0.511} &  0.338 & 0.321 &  0.547 &  0.329  &  0.296 &  0.717 \\
+Bigram  &  \textbf{0.569} &  0.429 & 0.425 &  0.465 &  0.426  &  0.435 &  0.605 \\
+Trigram &  \textbf{0.571} &  0.449 & 0.431 &  0.467 &  0.441  &  0.497 &  0.563 \\
 \hline
 
 \end{tabular}
@@ -1216,9 +1216,9 @@ The procedure to create the regular expression is as follows. First we measure t
 [ $\epsilon-0.8$ to $\epsilon+0.8$ ] (rounded to nearest whole character).
 %0.8 subtracted and added to the count estimate, rounded.
  The first and last characters are similarly computed, using the beginning and end of the image boundaries as the previous and next spottings, but we additionaly allow each of those ranges to have one less character than the range computed to account for the fact that frequently first and last letters are longer than others (e.g.~capital letters at the beginning of a word, or a long tail on the last character of a word). If spottings overlap by less than 0.15 the estimated character width, we allow a character to possibly be between them.
-If spottings overlap and share boundary characters, for example `al' and `le' sharing `l', they could be either `alle' or `ale'. However, becuse overlap is far more common (`ale' case) we choose to always merege the characters.  Allowing both cases causes the resulting regular expression to becoem bloated and empircally perform worse.
+If spottings overlap and share boundary characters, for example `al' and `le' sharing `l', they could be either `alle' or `ale'. However, becuse overlap is far more common (`ale' case) we choose to always merege the characters.  Allowing both cases causes the resulting regular expression to become bloated and empircally perform worse.
 %If spottings overlap and share boundary characters (e.g.~`al' and `le' sharing `l') we permit either a double letter (`alle') or single (`ale') as the spotting methods we use would have trouble distinguishing these situations. 
-Pseudo code is shown in Algorithm 1.%\ref{regex}.
+Pseudo code for this process is shown in Algorithm 1.%\ref{regex}.
 
 %\begin{algorithm}
 %\SetKwData{Left}{left}\SetKwData{This}{this}\SetKwData{Up}{up}
@@ -1276,7 +1276,7 @@ Pseudo code is shown in Algorithm 1.%\ref{regex}.
        \Ret := \Ret + characters of current spotting's n-gram not overlapping with previous\;
      }{
        \MinN $:= 0$\;
-       \eIf{\Ep > -0.15}{
+       \eIf{\Ep $> -0.15$}{
          \MaxN $:= 1$\;
        }{
          \MaxN $:= 0$\;
@@ -1307,16 +1307,15 @@ If there are matches, and less than 49 of them (threshold to mean ``not too many
 As the possible transcriptions are based only on the regular expression, some will be obviously wrong from a visual point of view (e.g.~missing descenders). Following this intuition, we perform an Otsu threshold on the scores to attempt to discard the obviously wrong possibilties. This thresholding is only applied if there are more than 5 possibilities, or if the threshold falls less than half the distance between the highest and lowest score (we're confident we're discarding something poor).
 If the resulting number of possible transcriptions is less than 7, we package them into a transcription selection task, ordered by spotting score, and enqueue it for a user to complete.
 
-This full batch creation process is described in Algorithm 2.
+This full transcription batch creation process is described in Algorithm 2.
 
-%TODO psuedo-code
 \begin{algorithm}
 \caption{Transcription batch generation}\label{batchGen}
-\SetKwData{Ret}{regularExp}\SetKwData{RetTmp}{regularExpTmp}\SetKwData{Possible}{possibleWords}\SetKwData{Scores}{possibleScores}\SetKwData{MinScore}{minScore}\SetKwData{MaxScore}{maxScore}\SetKwData{Thresh}{thresholdScore}\SetKwData{MinN}{minNumOfChars}\SetKwData{MaxN}{maxNumOfChars}
+\SetKwData{Ret}{regularExp}\SetKwData{RetTmp}{regularExpTmp}\SetKwData{Possible}{possibleWords}\SetKwData{Scores}{possibleScores}\SetKwData{MinScore}{minScore}\SetKwData{MaxScore}{maxScore}\SetKwData{Thresh}{thresholdScore}\SetKwData{MinN}{minNumOfChars}\SetKwData{MaxN}{maxNumOfChars}\SetKwData{WW}{w}
 \SetKwFunction{Algorithm}{Algorithm1}\SetKwFunction{WordSpot}{WordSpot}\SetKwFunction{Otsu}{FindOtsuThreshold}\SetKwFunction{PerformThresh}{PerformThresh}\SetKwFunction{CreateBatch}{CreateBatch}
 \SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
  \Input{spottings and image for the given word}
- \Output{transcription batch for word or no batch}
+ \Output{transcription batch for word, or no batch}
  %\Begin{
  \BlankLine
  \Ret $:=$ \Algorithm{spottings}\;
@@ -1331,7 +1330,7 @@ This full batch creation process is described in Algorithm 2.
  }
  
  \If{no words in \Possible}{
-    \ForEach{spotting that do overlap with others}{
+    \ForEach{spotting that does overlap with others}{
     	  temporarily remove the spotting\;
     	  \RetTmp $:=$ \Algorithm{new spotting set}\;
     	  \Possible $:=$ \Possible $\bigcup$ matches of \RetTmp from lexicon\;
@@ -1340,13 +1339,13 @@ This full batch creation process is described in Algorithm 2.
 
  \If{no words in \Possible}{
    \RetTmp $:=$ \Algorithm{original spotting set}, but \MinN and \MinN always expanded by one\;
-   \Possible $:=$ \Possible $\bigcup$ matches of \RetTmp from lexicon\;
+   \Possible $:=$ matches of \RetTmp from lexicon\;
  }
  
-\If{number of words in \Possible $< 49$}{
-  \Scores $:= []$\;
-  \ForEach{word in \Possible}{
-    \Scores $\leftarrow$ \WordSpot{word image, possible word}\tcc*[r]{insert score into \Scores}
+\If{$0 <$ number of words in \Possible $< 49$}{
+  \Scores $:= []$\tcc*[r]{empty list}
+  \ForEach{word \WW in \Possible}{
+    \Scores $\leftarrow$ \WordSpot{word image, \WW}\tcc*[r]{insert score into \Scores}
   }
   \Thresh $:=$ \Otsu{\Scores}\;
   \MinScore $:=$ minimum score in \Scores\;
@@ -1356,11 +1355,12 @@ This full batch creation process is described in Algorithm 2.
   }
   
   \If{number of words in \Possible $< 7$}{
-    return \CreateBatch{\Possible,\Scores}\;
+    return \CreateBatch{\Possible}\;
   }
   
-  do not return batch\;
+  
 } 
+do not return batch\;
  
  %}
  
@@ -1631,22 +1631,23 @@ We measure the speed of the transcriptions using a words-per-minute metric. This
   
   \hline		
 
-  Manual             & -   & 24.27 & 0.927 &  -   & 20.92 & 0.840 \\
-  PHOC vectors 100\% & 0.869 & 25.41 & 0.978 &  0.706 & 11.95 & 0.936 \\
-  PHOC vectors 75\%  & 0.671 & 27.50 & 0.981 &  0.531 & 11.95 & 0.938 \\
-  PHOC vectors 50\%  & 0.447 & 27.01 & 0.981 &  0.405 & 15.11 & 0.964 \\
+  Manual             & -   & 24.27 & 0.073 &  -   & 20.92 & 0.160 \\
+  \cite{Zagoris2015} & 1.0   & 14.2 & - &  -   & -& - \\
+  \hline	
+  PHOC vectors 100\% & 0.872 & 12.52 & 0.021 &  0.691 & 11.53 & 0.070 \\
+  PHOC vectors 75\%  & 0.687 & 14.44 & 0.015 &  0.531 & 11.27 & 0.070 \\
+  PHOC vectors 50\%  & 0.458 & 14.85 & 0.016 &  0.386 & 13.88 & 0.043 \\
   \hline	
   \multicolumn{7}{|l|}{CAT through approved subword spottings} \\
-  Two-distributions B & 0.324 & 6.07 & 0.979 & 0.184 & 1.94 & 0.916 \\
-  Two-distributions UB & 0.459 & 5.50 & 0.980 & 0.387 & 3.17 & 0.915 \\
-  Closest cluster next B & 0.673 & 3.01 & 0.969 & 0.499 & 1.16 & 0.938 \\
+  Normal UBT & 0.588 & 3.245 & 0.024 &  0.354 & 2.51 & 0.058 \\
+  Closest cluster next UBT & 0.685 & 1.30 & 0.019 & 0.532 & 1.14 & 0.075 \\
   \hline	
   \multicolumn{7}{|l|}{CAT through unassisted subword spotting using DTW} \\
-  CPV+DTW UBT & 0.738 & 15.52 & 0.955 & 0.391 & 5.05 & 0.822 \\
+  CPV+DTW UB & 0.563 & 4.44 & 0.082 & 0.337 & 4.17 & 0.219  \\
   %? & X & X & X & X \\
   \hline  
 \end{tabular}
-\caption{Highlights in the results from simulations. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used. The PHOC vector method is the only method we tested able to transcribe words at a rate faster than manual transcription.}
+\caption{Highlights in the results from simulations. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used. The PHOC vector method is the only method we tested able to transcribe words at a rate faster than manual transcription. We note that \cite{Zagoris2015} reports manual transcription time of 6.28 words/min. The difference is likely due to experimental setup.}
 \label{tab:finalresults}
 \end{table}
 
@@ -1670,47 +1671,38 @@ We show more detailed results in Table \ref{tab:appresults} for the following fi
    & \multicolumn{3}{c|}{Bentham} & \multicolumn{3}{c|}{Census Names}\\
   Method & Transcribed & Words/Min & WER & Transcribed & Words/Min & WER\\
   %Method & Portion transcribed & Speed (w/m) & WER & Portion transcribed & Speed (w/m) & WER\\
-%  \hline %old
-%  Switch-distributions B & 0.324 & 5.3 &  0.098 & 2.2 \\
-%  Switch-distributions BT & 0.504 & 3.0 &  0.185 & 1.6 \\
-%  Switch-distributions UBT & 0.596 & 3.0 & 0.193 & 1.6 \\
-%  Single-distributions B & 0.307 & 4.5 & 0.097 & 2.1 \\
-%  Single-distributions BT & 0.512 & 2.8 & 0.185 & 1.6 \\
-%  Single-distributions UBT & 0.597 & 2.7 & 0.192 & 1.5 \\
-%  Two-distributions B & 0.319 & 5.7 & 0.108 & 2.8 \\
-%  Two-distributions UB & 0.453 & 5.2 & 0.206 & 4.1 \\
-%  Two-distributions BT & 0.498 & 3.8 & 0.181 & 2.1 \\
-%  Two-distributions UBT & 0.594 & 3.6 & 0.265 & 2.8 \\
-%  Closest cluster next B & 0.669 & 2.7 & 0.220 & 1.1 \\
-%  Closest cluster next BT & 0.667& 2.7 & 0.220 & 1.1 \\
-%  Closest cluster next UBT & 0.661 & 2.7 & 0.222 & 1.1 \\
-%  Top cluster next B & 0.667 & 2.7 & 0.220 & 1.0 \\
-%  Top cluster next BT & 0.671 & 2.7 & 0.222 & 1.1 \\
-%  Top cluster next UBT & 0.657 & 2.7 & 0.220 & 1.0 \\
+%  \hline  
+%  Switch-distributions B & 0.329 & 5.39 & 0.043 &  0.195 & 1.74 & 0.094 \\
+%  Switch-distributions BT & 0.519 & 3.06 & 0.038 & 2.93 & 1.21 & 0.085  \\
+%  Switch-distributions UBT & 0.602 & 2.99 & 0.028 & 0.453 & 1.54 & 0.066 \\
+%  Single-distributions B & 0.312 & 4.72 & 0.029 & 0.188 & 1.56 & 0.088 \\
+%  Single-distributions BT & XX & XX & X & 0.301 & 1.13 & 0.922 \\
+%  Single-distributions UBT & 0.602 & 2.85 & 0.029 & 0.458 & 1.44 & 0.072 \\
+%  Two-distributions B & 0.324 & 6.07 & 0.021 & 0.184 & 1.94 & 0.084 \\
+%  Two-distributions UB & 0.459 & 5.50 & 0.02 & 0.387 & 3.17 & 0.085 \\
+%  Two-distributions BT & 0.504 & 3.68 & 0.048 & 0.261 & 1.41 & 0.078 \\
+%  Two-distributions UBT & 0.594 & 3.71 & 0.028 & 0.455 & 2.12 & 0.082 \\
+%  Closest cluster next B & 0.673 & 3.01 & 0.031 & 0.499 & 1.16 & 0.062 \\
+%  Closest cluster next BT & 0.670 & 2.80 & 0.031 & 0.500 & 1.16 & 0.068 \\
+%  Closest cluster next UBT & 0.669 & 2.78 & 0.032 & 0.500 & 1.16 & 0.065 \\
+%  Top cluster next B & 0.670 & 2.82 & 0.033 & 0.498 & 1.15 & 0.057 \\
+%  Top cluster next BT & 0.672 & 2.82 & 0.033 & 0.500 & 1.15 & 0.064 \\
+%  Top cluster next UBT & 0.675 & 2.81 & 0.031 & 0.502 & 1.16 & 0.071 \\
   \hline  
-  Switch-distributions B & 0.329 & 5.39 & 0.957 &  0.195 & 1.74 & 0.906 \\
-  Switch-distributions BT & 0.519 & 3.06 & 0.962 & 2.93 & 1.21 & 0.915  \\
-  Switch-distributions UBT & 0.602 & 2.99 & 0.972 & 0.453 & 1.54 & 0.934 \\
-  Single-distributions B & 0.312 & 4.72 & 0.971 & 0.188 & 1.56 & 0.912 \\
-  Single-distributions BT & XX & XX & X & 0.301 & 1.13 & 0.922 \\
-  Single-distributions UBT & 0.602 & 2.85 & 0.971 & 0.458 & 1.44 & 0.928 \\
-  Two-distributions B & 0.324 & 6.07 & 0.979 & 0.184 & 1.94 & 0.916 \\
-  Two-distributions UB & 0.459 & 5.50 & 0.980 & 0.387 & 3.17 & 0.915 \\
-  Two-distributions BT & 0.504 & 3.68 & 0.952 & 0.261 & 1.41 & 0.922 \\
-  Two-distributions UBT & 0.594 & 3.71 & 0.972 & 0.455 & 2.12 & 0.918 \\
-  Closest cluster next B & 0.673 & 3.01 & 0.969 & 0.499 & 1.16 & 0.938 \\
-  Closest cluster next BT & 0.670 & 2.80 & 0.969 & 0.500 & 1.16 & 0.932 \\
-  Closest cluster next UBT & 0.669 & 2.78 & 0.968 & 0.500 & 1.16 & 0.935 \\
-  Top cluster next B & 0.670 & 2.82 & 0.967 & 0.498 & 1.15 & 0.943 \\
-  Top cluster next BT & 0.672 & 2.82 & 0.967 & 0.500 & 1.15 & 0.936 \\
-  Top cluster next UBT & 0.675 & 2.81 & 0.969 & 0.502 & 1.16 & 0.929 \\
+  Normal UBT & 0.588 & 3.245 & 0.024 &  0.354 & 2.51 & 0.058 \\
+  Closest cluster next U & 0.266 & 2.502 & 0.047 & 0.171 & 4.17 & 0.036 \\
+  Closest cluster next BT & 0.686 & 1.30 & 0.018 & 0.532 & 1.16 & 0.080 \\
+  Closest cluster next UBT & 0.685 & 1.30 & 0.019 & 0.532 & 1.14 & 0.075 \\
+  Top cluster next U & 0.274 & 2.563 & 0.050 & 0.172 & 4.34 & 0.033 \\
+  Top cluster next BT & 0.693 & 1.28 & 0.020 & 0.529 & 1.15 & 0.076 \\
+  Top cluster next UBT & 0.689 & 1.29 & 0.019 & 0.530 & 1.15 & 0.073 \\
   \hline  
 \end{tabular}
 \caption{Results from simulations of CATTSS using user approval on subword spotting results. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used.}
 \label{tab:appresults}
 \end{table}
 
-All of these methods perform far below manual transcription. In the best variation for the Bentham dataset (two-distributions with just bigrams) the simulated user spent 80\% of its time approving spottings. The effort required for the user to supervise the subword spotting represents a large slowdown to the system's speed. The Census Names dataset is consistently much slower than the Bentham dataset as the handwritting in it is more difficult and thus requires even more user supervision in approving subword spottings.
+All of these methods perform far below manual transcription. In the best variation for the Bentham dataset the simulated user spent 56\% of its time approving spottings. The effort required for the user to supervise the subword spotting represents a large slowdown to the system's speed. The Census Names dataset is consistently much slower than the Bentham dataset as the handwritting in it is more difficult and thus requires even more user supervision in approving subword spottings.
 
 An part of a page of the testing corpus of the Bentham dataset is show in Figure \ref{fig:aftercattss} annotated with the spottings which were approved as well as the transcribed words.
 
@@ -1744,17 +1736,17 @@ Both the PHOC vector approach and the subword spotting approach use the same net
    & \multicolumn{3}{c|}{Bentham} & \multicolumn{3}{c|}{Census Names}\\
   Method & Transcribed & Words/Min & WER & Transcribed & Words/Min & WER\\
   %Method & Portion transcribed & Speed (w/m) & Portion transcribed & Speed (w/m)\\
-  %\hline %old
-  %CPV+DTW B & 0.491 & 8.0 & 0.179 & 4.7 \\
-  %CPV+DTW BT & 0.603 & 10.8 & 0.252 & 6.8 \\
-  %CPV+DTW UB & 0.679 & 12.6 & 0.292 & 7.9 \\
-  %CPV+DTW UBT & 0.700 & 13.6 & 0.331 & 9.1 \\
-  \hline  
-  CPV+DTW B & 0.539 & 8.55 & 0.916 & 0.252 & 2.99 & 0.683 \\
-  CPV+DTW BT & 0.649 & 11.85 & 0.935 & 0.315 & 3.90 & 0.769 \\
-  CPV+DTW UB & 0.717 & 13.96 & 0.954 & 0.356 & 4.49 & 0.796 \\
-  CPV+DTW UBT & 0.738 & 15.52 & 0.955 & 0.391 & 5.05 & 0.822 \\
-  \hline  
+%  \hline  
+%  CPV+DTW B & 0.539 & 8.55 & 0.084 & 0.252 & 2.99 & 0.317 \\
+%  CPV+DTW BT & 0.649 & 11.85 & 0.065 & 0.315 & 3.90 & 0.231 \\
+%  CPV+DTW UB & 0.717 & 13.96 & 0.046 & 0.356 & 4.49 & 0.204 \\
+%  CPV+DTW UBT & 0.738 & 15.52 & 0.045 & 0.391 & 5.05 & 0.178 \\
+  \hline
+  CPV+DTW U & 0.570 & 4.34 & 0.080 & 0.325 & 3.98 & 0.219  \\
+  CPV+DTW UB & 0.563 & 4.44 & 0.082 & 0.337 & 4.17 & 0.219  \\
+  CPV+DTW UT	 & 0.428 & 2.99 & 0.121 & 0.285915 & 3.44 & 0.274  \\
+  CPV+DTW UBT & 0.489 & 3.61 & 0.107 & 0.318 & 3.89 & 0.238  \\
+  \hline    
 \end{tabular}
 \caption{Results from simulations using character probability vectors derived from subword spotting resutls. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used.}
 \label{tab:dtwresults}

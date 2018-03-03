@@ -48,7 +48,7 @@
 \contentsline {section}{\numberline {7.2}Results}{72}{section.7.2}
 \contentsline {subsection}{\numberline {7.2.1}CAT Through PHOC Vectors Results}{73}{subsection.7.2.1}
 \contentsline {subsection}{\numberline {7.2.2}CAT Through Approved Subword Spottings Results}{73}{subsection.7.2.2}
-\contentsline {subsection}{\numberline {7.2.3}CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment Results}{76}{subsection.7.2.3}
+\contentsline {subsection}{\numberline {7.2.3}CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment Results}{74}{subsection.7.2.3}
 \contentsline {chapter}{\numberline {8}Conclusion}{77}{chapter.8}
 \contentsline {section}{\numberline {8.1}Contributions}{77}{section.8.1}
 \contentsline {section}{\numberline {8.2}Future Work}{78}{section.8.2}
