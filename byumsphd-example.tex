@@ -202,9 +202,9 @@
 \yearcopyrighted{\GraduationYear}
 
 \documentabstract{%
-We propose subword spotting, a generalization of word spotting where the search may be for groups of characters within words. We present a method for performing subword spotting based on state-of-the-art word spotting techniques and evaluate its performance at three granularitires (unigrams, bigrams and trigrams) on two datasets.
+We propose subword spotting, a generalization of word spotting where the search is for groups of characters within words. We present a method for performing subword spotting based on state-of-the-art word spotting techniques and evaluate its performance at three granularitires (unigrams, bigrams and trigrams) on two datasets.
 
-We demonstrate three applications of subword spotting, though others may exits. The first is assisting human transcribers identify unrecognized characters by locating them in other words. The second is searching for suffixes directly in word images (suffix spotting). And the third is computer assisted transcription (semi-automated transcription). We investigate several variations of computer assisted transcription, but none achieve transcription speeds above manual transcription. We investigate the causes.
+We demonstrate three applications of subword spotting, though others may exist. The first is assisting human transcribers identify unrecognized characters by locating them in other words. The second is searching for suffixes directly in word images (suffix spotting). And the third is computer assisted transcription (semi-automated transcription). We investigate several variations of computer assisted transcription, but none achieve transcription speeds above manual transcription. We investigate the causes.
 }
 
 \documentkeywords{%
@@ -212,7 +212,7 @@ We demonstrate three applications of subword spotting, though others may exits. 
 }
 
 \acknowledgments{%
-    I would like to thank my wife Sarah for her patience with and support of my endeavors.
+    I would like to thank my wife Sarah for her support of, and patience with, my endeavors.
     \\
     \\
     
@@ -316,9 +316,6 @@ The original motivation for exploring subword spotting came from the observation
 
 An individual primitive has two desirable properties: distinctiveness and frequency. Without distinctiveness it will be very difficult to discriminate between different primitive instances. Frequency is valuable as it allows us to get more out of the effort required to discriminate, or potentially the effort required to learn how to discriminate.
 
-Subwords provide an interesting middle ground between individual characters and complete words. %, each of these having flaws improved upon by subwords.
-Individual characters can be very similar to one another (i.e.~not distinctive). For example, in cursive an ``i'' missing it's dot frequently looks like an ``e'', as seen in Figure \ref{fig:ei}, making discriminating between characters in isolation very difficult. On the other hand, words are generally much more distinctive than characters. However, while individual characters occur many times throughout a corpus, a given word may appear less frequently. In the extreme, words such as names, may occur only once. However, subwords, such as ``th'', ``ed'', ``ion'', ``ing'', etc., occur very frequently (in English) as they are used in many words. And while being more frequent than words, subwords also provide more distinctiveness and discernibility than individual characters.
-
 \begin{figure}
     \centering
     \includegraphics[width=0.45\textwidth]{ei}
@@ -326,11 +323,14 @@ Individual characters can be very similar to one another (i.e.~not distinctive).
     \label{fig:ei}
 \end{figure}
 
+Subwords provide an interesting middle ground between individual characters and complete words. %, each of these having flaws improved upon by subwords.
+Individual characters can be very similar to one another (i.e.~not distinctive). For example, in cursive an ``i'' missing it's dot frequently looks like an ``e'', as seen in Figure \ref{fig:ei}, making discriminating between characters in isolation very difficult. On the other hand, words are generally much more distinctive than characters. However, while individual characters occur many times throughout a corpus, a given word may appear less frequently. In the extreme, words such as names, may occur only once. However, subwords, such as ``th'', ``ed'', ``ion'', ``ing'', etc., occur very frequently (in English) as they are used in many words. And while being more frequent than words, subwords also provide more distinctiveness and discernibility than individual characters.
+
+
+
 Important use cases for subword spotting include searches (1) where a root is desired to be searched, such as querying ``pay'' wanting to find instances of ``payment'', ``payments'', ``prepay'', etc., (2) where only part of the desired word, such as a name, is known, such as ``Chr.'', (3) where there are character(s) which a human transcriber cannot initially recognize, but if instances elsewhere in the document in familiar words could be found in context, would become discernible to the transcriber.
 
 An additional appeal of subword spotting lies in computer assisted transcription (CAT). In character-level recognition schemes, a lexicon is frequently used to correct erroneous character predictions if other characters in the word are transcribed correctly. Similarly a lexicon can also be used to fill in untranscribed characters, assuming significant other characters are transcribed. This is useful in a transcription by iteratively spotting subwords. While the spotting results may not cover every character, they can cover a sufficient number of characters for each particular word.
-
-In Figure \ref{fig:subtransexample} we see an example of the word ``payment'', where ``pa'' and ``men'' have been spotted; this covers 71\% of the characters in the word. However, if we estimate that there are 1-2 characters between ``pa'' and ``men'' and estimate 1-2 characters after ``men'' the regular expression \texttt{pa..?men..?} matchs only ``pavement'', ``pavements'', ``payment'', and ``payments'' in our large lexicon (described in Chapter \ref{datasets}). This is a particularly potent tool with longer words, which typically may require more effort to automatically transcribe, but tend to be more distinctive from a lexical perspective.
 
 \begin{figure}
     \centering
@@ -339,12 +339,16 @@ In Figure \ref{fig:subtransexample} we see an example of the word ``payment'', w
     \label{fig:subtransexample}
 \end{figure}
 
+In Figure \ref{fig:subtransexample} we see an example of the word ``payment'', where ``pa'' and ``men'' have been spotted; this covers 71\% of the characters in the word. However, if we estimate that there are 1-2 characters between ``pa'' and ``men'' and estimate 1-2 characters after ``men'' the regular expression \texttt{pa..?men..?} matches only ``pavement'', ``pavements'', ``payment'', and ``payments'' in our large lexicon (described in Chapter \ref{datasets}). This is a particularly potent tool with longer words, which typically may require more effort to automatically transcribe, but tend to be more distinctive from a lexical perspective.
+
+
+
 %While these previous motivations are based on transcription, subword spotting has a the potential to be a more flexible search tool than word spotting is. In this work we show this in the application of searching for words with specific suffixes.
 
 \section{Main Contributions}
 
 The primary scope of this work is to provide an exploration of the performance of subword spotting, extending state-of-the-art word spotting methods.
-We show that reasonable levels of mean average precision (MAP) can be achieved for character tri-, bi-, and unigram spotting. We demonstrate the variability in performance between different character n-grams (referred to simply as n-grams hereafter).
+We show that reasonable levels of mean average precision (mAP) can be achieved for character tri-, bi-, and unigram spotting. We demonstrate the variability in performance between different character n-grams (referred to simply as n-grams hereafter).
 
 Additionally, we demonstrate several applications of subword spotting: user directed searching to aid in human transcription, suffix searching/spotting, and CAT using word completion from aggregated subword spottings.
 
@@ -383,7 +387,7 @@ The PHOC vector and pyramidal bag-of-visual-words are used to find a new space i
 %PHOCNet
 Sudholt and Fink \cite{sudholt2016,sudholt2017} expanded on \cite{Almazan2014} by training a deep convolutional neural network to produce the PHOC vector from a word image. This, and following improvements \cite{krishnan2016, retsinasTrans2017}, have yielded the state-of-the-art for segmentation based spotting. We base our spotting method on \cite{sudholt2017}.
 
-There are also techniques for segmentation-free word spotting, where spotting is performed on a full page without any segmentation information \cite{wilkinson2017}. While we used word image segmentations in our work to narrow its scope, we note that it could be applied, with some adjustments, in a segmentation-free setting.
+There are also techniques for segmentation-free word spotting, where spotting is performed on a full page without any segmentation information \cite{wilkinson2017}. While we used word image segmentation in our work to narrow its scope, we note that it could be applied, with some adjustments, in a segmentation-free setting.
 
 In this thesis we are interested in spotting character n-grams (uni-, bi- and trigrams) rather than words. While this hasn't explicitly been done, we feel examining the performance of other methods on short words (2 to 3 letters) is instructive. For Rothacker et al.'s \cite{Rothacker2013} segmentation-free HMM based method, they report $\sim$46\% and $\sim$55\% mean Average Precision (mAP) for two- and three-lettered words respectively, a drop by $\sim$15\% and $\sim$6\% from the mAP for all words they tested (61\%). Fischer et al.~\cite{Fischer2012} report $\sim$70\% and $\sim$83\% mAP for two and three lettered words, compared to {\textgreater}90\% mAP for words of length 5 or longer, for their line segmentation dependent, character HMM based method. While neither of these numbers are very promising, Almazan et al.~\cite{Almazan2012} observe that sliding window approaches can frequently find false positives of short words inside other words (e.g.~finding the word ``the'' inside the word ``weather''). As this is precisely what we want to have happen in n-gram spotting (that is, we \textit{want} to find groups of letters in the middle of words), we expect we should have more success spotting character n-grams than other methods in spotting short words, assuming we have good sliding windows. However, part of the poor accuracy in spotting short words is simply the fact that there is less information with which to discriminate.%; this is an obstacle we still must overcome.
 
@@ -391,15 +395,17 @@ In this thesis we are interested in spotting character n-grams (uni-, bi- and tr
 
 \section{Automatic Handwriting Recognition}
 
-%[!] Should this be here, or only in introduction?
-The state-of-the-art for handwriting recognition relies heavily on recursive neural networks (RNNs) paired with convolutional neural networks (CNNs). The key component is the connectionist temporal classification (CTC) loss which allows the network to be trained given a line image and the ground truth text for that line without any alignment \cite{CTC}. In a recent competition on historical German documents \cite{icdarComp2017} (see Figure \ref{fig:germanlines}), the leading contestants used a bidirectional RNN on top of a CNN. The best results had word error rates of 19.1\% and character error rates of 7.0\%. This is impressively low given the diversity of the data, and deep learning methods are continuing to improve \cite{wigington2017,puigcerver2017}.
-
-\begin{figure}[t]
+\begin{figure}[b]
     \centering
     \includegraphics[width=.98\textwidth]{german_lines}
     \caption{Example of lines extracted from the dataset of the ICDAR HTR competition \cite{icdarComp2017}.}
     \label{fig:germanlines}
 \end{figure}
+
+%[!] Should this be here, or only in introduction?
+The state-of-the-art for handwriting recognition relies heavily on recursive neural networks (RNNs) paired with convolutional neural networks (CNNs). The key component is the connectionist temporal classification (CTC) loss which allows the network to be trained given a line image and the ground truth text for that line without any alignment \cite{CTC}. In a recent competition on historical German documents \cite{icdarComp2017} (see Figure \ref{fig:germanlines}), the leading contestants used a bidirectional RNN on top of a CNN. The best results had word error rates of 19.1\% and character error rates of 7.0\%. This is impressively low given the diversity of the data, and deep learning methods are continuing to improve \cite{wigington2017,puigcerver2017}.
+
+
 
 %copied from proposal [!]
 
@@ -491,6 +497,13 @@ We use three datasets in our evaluations: the IAM handwriting dataset, the Benth
 
 \section{IAM Dataset}
 
+\begin{figure}
+    \centering
+    \includegraphics[width=.9\textwidth]{IAM_examples}
+    \caption{Examples of lines from the IAM dataset.}
+    \label{fig:IAMExamples}
+\end{figure}
+
 The IAM handwriting dataset \cite{IAM} is a dataset collected by having human subjects copy certain paragraphs of printed text into handwriting. They were instructed to keep lines well separated and the dataset is very clean as a result. It contains annotations to the word level. We used the provided test set split, the combine training and validation 2 splits as our training set, and the validation 1 set as our validation set.
 Example lines from the IAM dataset can be seen in Figure \ref{fig:IAMExamples}.
 The test set has 96.1\% of its contents in our lexicon.
@@ -499,14 +512,16 @@ These sets have the respective sizes and number of (exclusive) authors:\\
 \indent \indent Validation: 7089 words, 46 authors\\
 \indent \indent Testing: 14600 words, 128 authors
 
-\begin{figure}
-    \centering
-    \includegraphics[width=.9\textwidth]{IAM_examples}
-    \caption{Examples of lines from the IAM dataset.}
-    \label{fig:IAMExamples}
-\end{figure}
+
 
 \section{Bentham Dataset}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.9\textwidth]{bentham_examples}
+    \caption{Excerpts from the Bentham dataset.}
+    \label{fig:BenthamExamples}
+\end{figure}
 
 The Bentham dataset \cite{bentham} is a collection of documents written by the 17th century philosopher Jeremy Bentham. While there are a plethora of errors we corrected in the ground truth, that ground truth we use differs significantly from that which is officially released, though it is based on it. 
 Our training, validation, and test sets are based on the official split, but are not identical.
@@ -519,12 +534,7 @@ These sets have the respective sizes:\\
 \indent \indent Validation: 1071 words\\
 \indent \indent Testing: 860 words
 
-\begin{figure}
-    \centering
-    \includegraphics[width=.9\textwidth]{bentham_examples}
-    \caption{Excerpts from the Bentham dataset.}
-    \label{fig:BenthamExamples}
-\end{figure}
+
 
 \section{Census Names Dataset}
 
@@ -534,7 +544,7 @@ The Census Names dataset is an extraction of names from the United Stated of Ame
  \item Average the registered images (Figure \ref{fig:makenames} a).
  \item Manually enhance the contrast of the resulting image (Figure \ref{fig:makenames} b). 
  \item Hand annotate the average image with the lines of the form, using straight lines (Figure \ref{fig:makenames} c). 
- \item For each form image peform a more refined registration %individually by doing a second registration with the hand annotated form lines by the following. 
+ \item For each form image perform a more refined registration %individually by doing a second registration with the hand annotated form lines by the following. 
  \begin{enumerate}
   \item Globally move all the form lines together to maximize the summed inverse pixel intensity (darker is better) along the form lines. This is done by scanning 50 pixels in the four cardinal directions separately (Figure \ref{fig:makenames} d). 
   \item Do a more dense scan of all positions in a $7\times 7$ neighborhood around the combined the best x and y positions from the separate horizontal and vertical scans (previous step). %(Figure \ref{fig:makenames} f)
@@ -553,7 +563,7 @@ These sets have the respective sizes:\\
 \begin{figure}
     \centering
     \includegraphics[width=.9\textwidth]{makenames}
-    \caption{Process for extracting names from US 1930 census forms for Census Names data set. We begin with registered forms (a). Then we average the images together (b). The average image is used to mark form boundaries manually (c). The lines are registered to specific census image (d). At each cell a peojection profile is computed around the cell boundaries (dark blue) (e). The cell boundaries are snapped to the histogram peaks (f). Word boundaries were manually annotated for each cell (g).}
+    \caption{Process for extracting names from US 1930 census forms for Census Names data set. We begin with registered forms (a). Then we average the images together (b). The average image is used to mark form boundaries manually (c). The lines are registered to specific census image (d). At each cell a projection profile is computed around the cell boundaries (dark blue) (e). The cell boundaries are snapped to the histogram peaks (f). Word boundaries were manually annotated for each cell (g).}
     \label{fig:makenames}
 \end{figure}
 
@@ -601,40 +611,41 @@ We use a sliding window over word images with a word spotting CNN to perform sub
 
 Our subword spotting is built on the segmentation based word spotting method PHOCNet \cite{sudholt2016, sudholt2017} which we adapted to perform a sliding window over the word images. \cite{sudholt2017} uses a deep convolutional network trained on word images with pyramidal histogram of characters (PHOC) \cite{Almazan2014} as the target vectors. This method can word spot using both query-by-string (QbS) and query-by-example (QbE), that is a query may be a text word or a word image. Searches are performed simply by comparing vector similarities, the query vector either being a word's PHOC vector if searching with text or found from running its image throught the network. See Section \ref{relatedwork_wordspotting} for the details of PHOC vectors. We follow \cite{sudholt2017} and use a PHOC vector where the alphabet is case insensitive, includes digits (0-9) and does not include bigrams (unlike \cite{Almazan2014} which uses bigrams in the first two layers). For our specific application of subword spotting, we try adapting the PHOC vector in \cite{sudholt2017} so instead of having levels 2,3,4,5 we have 1,2,3. \cite{sudholt2017} was designed for words which require more spatial resolution than subwords. Our PHOC levels directly correspond with the fact we are spotting uni-, bi- and trigrams. We refer to this as our ``adapted PHOC'' in the results.
 
-
-
-Our network architecture varies slightly from \cite{sudholt2017} and is outlined in Figure \ref{fig:network}. We note the reduction in the number of channels in the layer before the temporal pyramid pooling (TPP) and fully connected layers (from 512 to 128); this is to reduce the size of featurized images (which are saved after this layer).  We used Sudholts's code available on GitHub (\url{https://github.com/ssudholt/phocnet}), which uses the Caffe framework \cite{caffe}.
-
-%SPP \cite{SPP} is a method of allowing a network with fully connected layers to handle images of arbitrary size. This is accomplished by performing a pooling (max in our implementation) over windows of the image. The first window encompasses the full image and then it proceeds by dividing the windows into 4 at each level down. We use 3 levels for all datasets except the Census Names dataset, which has smaller characters. We use 2 levels for the Census Names dataset to allow the network to operate on smaller images (the SPP won't be creating windows of subpixel size).
-
-TPP is a slight modification of spatial pyramid pooling (SPP) \cite{SPP}, which is a method of allowing a network with fully connected layers to handle images of arbitrary size. This is accomplished by performing a pooling (max in our implementation) over windows of the feature map (image). The first level is a window that encompasses the full image. The second level is four windows dividing the image into fourths (each the size of half the image width and half the image height). The proceeding levels follow a simlar pattern. TPP uses the same idea, but only divides windows horizontally as verticle information is not useful once word images are featurized. We use 5 layers (dividing the image into 1, 2, 3, 4, and 5 even windows). Figure \ref{fig:TPP_example} shows what TPP looks like visually. %for all datasets except the Census Names dataset, which has smaller characters. We use 4 layers for the Census Names dataset to allow the network to operate on smaller images. 
-We modify TPP slightly to handle the corner case of small images such that the windows are adjusted to be slightly overlapping at a particular level if a window had a width of zero at that level.
-
-
-\begin{figure}[t]
+\begin{figure}
     \centering
     \includegraphics[width=.98\textwidth]{thesis-phocnet}
     \caption{Network architecture for embedding images as PHOC vectors. The numbers beneath each layer represent the number of channels. As the network uses temporal pyramid pooling before the fully connected layers, it can accept images of any size. Our architecture differs from \cite{sudholt2017} only in the number of channels of the last convolutional layer.}
     \label{fig:network}
 \end{figure}
 
-\begin{figure}[t]
+Our network architecture varies slightly from \cite{sudholt2017} and is outlined in Figure \ref{fig:network}. We note the reduction in the number of channels in the layer before the temporal pyramid pooling (TPP) and fully connected layers (from 512 to 128); this is to reduce the size of featurized images (which are saved after this layer).  We used Sudholts's code available on GitHub (\url{https://github.com/ssudholt/phocnet}), which uses the Caffe framework \cite{caffe}.
+
+%SPP \cite{SPP} is a method of allowing a network with fully connected layers to handle images of arbitrary size. This is accomplished by performing a pooling (max in our implementation) over windows of the image. The first window encompasses the full image and then it proceeds by dividing the windows into 4 at each level down. We use 3 levels for all datasets except the Census Names dataset, which has smaller characters. We use 2 levels for the Census Names dataset to allow the network to operate on smaller images (the SPP won't be creating windows of subpixel size).
+
+
+\begin{figure}
     \centering
     \includegraphics[width=.55\textwidth]{TPP_example}
     \caption{What temporal pyramid pooling (TPP) looks like visually. The same network features (large blocks) is divided into even horizontal windows of different counts (1,2,3,4,5 here). The result of pooling each of these windows (max pooling in our implementation) is appended together as an output vector. This is the red vector in Figure \ref{fig:network}.}
     \label{fig:TPP_example}
 \end{figure}
 
+TPP is a slight modification of spatial pyramid pooling (SPP) \cite{SPP}, which is a method of allowing a network with fully connected layers to handle images of arbitrary size. This is accomplished by performing a pooling (max in our implementation) over windows of the feature map (image). The first level is a window that encompasses the full image. The second level is four windows dividing the image into fourths (each the size of half the image width and half the image height). The proceeding levels follow a similar pattern. TPP uses the same idea, but only divides windows horizontally as vertical information is not useful once word images are featurized. We use 5 layers (dividing the image into 1, 2, 3, 4, and 5 even windows). Figure \ref{fig:TPP_example} shows what TPP looks like visually. %for all datasets except the Census Names dataset, which has smaller characters. We use 4 layers for the Census Names dataset to allow the network to operate on smaller images. 
+We modify TPP slightly to handle the corner case of small images such that the windows are adjusted to be slightly overlapping at a particular level if a window had a width of zero at that level.
+
+
+
+
 \subsection{Training}
 
 In training, we used a batch size of 10, a learning rate of $10^{-4}$, weight decay of 0.00005, and the Adam optimizer \cite{adam}.
 %decay the learning rate so that the learning rate at iteration $i$ is $r_i = r_0 (1 + 0.0001 i)^{-0.75}$ (``inv'' policy in Caffe).
 %We train until out validation loss begins to increase (passes a minimum), indicating overfit, or flatlines for a significant number of iterations.
-%We then test the validation set MAP for various iterations to find the maximum performance, as MAP generally peaks differently than the loss.
-We train the model out 240,000 iterations, droping the learning rate by a factor of 10 for the last 10,000 iterations. We note that the model does not appear to overfit at this point, but gains at this point in training are minimal.
+%We then test the validation set mAP for various iterations to find the maximum performance, as mAP generally peaks differently than the loss.
+We train the model out 240,000 iterations, dropping the learning rate by a factor of 10 for the last 10,000 iterations. We note that the model does not appear to overfit at this point, but gains at this point in training are minimal.
 %The final iterations for our trained models are as follows. IAM:X, Bentham:X, Census Names:X.
-%We then begin training with a learning rate of $10^{-5}$ 4000 iterations prior to the MAP peak, stopping again when the validation loss begins to increase. 
-%We then repeat the process of finding the validation MAP peak.
+%We then begin training with a learning rate of $10^{-5}$ 4000 iterations prior to the mAP peak, stopping again when the validation loss begins to increase. 
+%We then repeat the process of finding the validation mAP peak.
 
 We use the same data augmentation as \cite{sudholt2017}, which consists of balancing the training set according to word occurances (by their text) and distorting duplicate instances with random affine transformations.
 
@@ -672,7 +683,7 @@ We use the same data augmentation as \cite{sudholt2017}, which consists of balan
 \subsection{Determining Window Widths}\label{detirminewindowsize}
 Because the neural network takes in some context, it is difficult to measure what the optimal sliding window size should be, based on visual width.
 Additionally each n-gram is likely to have a different optimal window size. We determine the optimal window size for each n-gram as follows.
-We first compute the MAP for a range of window sizes (stepping 4 pixels), smoothing these results and taking the max. We smooth by averaging a window of 3 steps (average MAP from 3 window sizes), using 2 steps on the edges. For efficiency we cluster all the resulting window sizes (from each n-gram) into 10 clusters using k-means, assigning each n-gram the cluster mean as its width. This allows us to pre-compute PHOC vectors of only 10 window sizes.% for all n-gram.
+We first compute the mAP for a range of window sizes (stepping 4 pixels), smoothing these results and taking the max. We smooth by averaging a window of 3 steps (average mAP from 3 window sizes), using 2 steps on the edges. For efficiency we cluster all the resulting window sizes (from each n-gram) into 10 clusters using k-means, assigning each n-gram the cluster mean as its width. This allows us to pre-compute PHOC vectors of only 10 window sizes.% for all n-gram.
 
 We note that refining the window size during spotting to maximize the score for a specific word image does not give improvements overall.
 
@@ -698,7 +709,7 @@ To prepare for spotting, we save the output of the network before the TPP layer 
 
 \subsection{Combining QbE Results}\label{combine}
 
-In one of our tests, we perform aggregation of QbE results by merging results from different queries. To do this we check for potential overlapping spottings between two sets of results, where overlap is defined as when the predicted bounding boxes overlap by at least 20\%. If there is an overlap we discard the result with the worse score. This can be trivially be repeated for multiple queries as we essentailly are finding the max score. Merging by taking the better score follows what \cite{Zagoris2015} found to be most effective when combining full word spotting results. As further justification, one can think of each n-gram or word as having several prototypical ways it can appear (e.g.~an `a' appearing with or without the tail on top, `\textsf{a}' or `{\fontfamily{qag}\selectfont\footnotesize a}'). By selecting the best score you select the score computed on the exemplar image with the prototype closest to the instance of interest's prototype.
+In one of our tests, we perform aggregation of QbE results by merging results from different queries. To do this we check for potential overlapping spottings between two sets of results, where overlap is defined as when the predicted bounding boxes overlap by at least 20\%. If there is an overlap we discard the result with the worse score. This can be trivially be repeated for multiple queries as we essentially are finding the max score. Merging by taking the better score follows what \cite{Zagoris2015} found to be most effective when combining full word spotting results. As further justification, one can think of each n-gram or word as having several prototypical ways it can appear (e.g.~an `a' appearing with or without the tail on top, `\textsf{a}' or `{\fontfamily{qag}\selectfont\footnotesize a}'). By selecting the best score you select the score computed on the exemplar image with the prototype closest to the instance of interest's prototype.
 
 %In the following section we show results of this network's performance on unigrams, bigrams, trigrams and whole words.
 
@@ -712,7 +723,7 @@ As a baseline, we show our network's performance on full word spotting. We evalu
 
 \subsection{Full Word Spotting}
 
-Full word spotting is performed as described in \cite{sudholt2016}, where the neural network is used to generate a PHOC vector of each word image in the corpus. For QbS, each word (string) in the corpus's PHOC representation is used as a query. For QbE, each image which has at least one of image with the same label is used as a query. We compare using mean average precision (MAP). Our results are shown in Table \ref{tab:wordspottingresults} for the Bentham dataset, the Census Names dataset, and, for comparison with PHOCNet \cite{sudholt2016,sudholt2017}, the IAM dataset.
+Full word spotting is performed as described in \cite{sudholt2016}, where the neural network is used to generate a PHOC vector of each word image in the corpus. For QbS, each word (string) in the corpus's PHOC representation is used as a query. For QbE, each image which has at least one of image with the same label is used as a query. We compare using mean average precision (mAP). Our results are shown in Table \ref{tab:wordspottingresults} for the Bentham dataset, the Census Names dataset, and, for comparison with PHOCNet \cite{sudholt2016,sudholt2017}, the IAM dataset.
 
 \begin{table}
 \centering
@@ -731,13 +742,13 @@ Full word spotting is performed as described in \cite{sudholt2016}, where the ne
   %? & X & X & X & X \\
   \hline  
 \end{tabular}
-\caption{MAP for full word spotting results, reported for both query-by-string (QbS) and query-by-example (QbE).}
+\caption{mAP for full word spotting results, reported for both query-by-string (QbS) and query-by-example (QbE).}
 \label{tab:wordspottingresults}
 \end{table}
 
 %We first note that our model significantly under performs \cite{sudholt2016} on the IAM dataset (by 7.5\% on QbS and 4.2\% on QbE). We were unable to reproduce their results, mimicking their model, and the architecture changes we make we expected would have a negative effect on performance. It is likely a better word spotting model could be produced, but this was not the the focus of our work.
-%It is clear that the Census Names dataset is significantly more challenging than the other datasets, however, having above 50\% MAP indicates the network is learning the task to some degree.
-It can be seen that we underperform compared to \cite{sudholt2017}. This is to be expected as we have reduced the number of parameters in the  	CNN model. The adapted PHOC vector performs variably against compared to the original,  performing better in some cases which is suprising as we have reduced its descriptive power for words longer than three characters. It may be the reduced description was easier for our reduced network to learn.
+%It is clear that the Census Names dataset is significantly more challenging than the other datasets, however, having above 50\% mAP indicates the network is learning the task to some degree.
+It can be seen that we underperform compared to \cite{sudholt2017}. This is to be expected as we have reduced the number of parameters in the  	CNN model. The adapted PHOC vector performs variably against compared to the original,  performing better in some cases which is surprising as we have reduced its descriptive power for words longer than three characters. It may be the reduced description was easier for our reduced network to learn.
 %The adapted PHOC vector performs even worse which is also anticipated as we are reducing its descriptive power for words longer than three characters.
 
 As a note, it is not always meaningful to compare QbS scores to QbE scores, as QbS represents a mean over text queries, one for each possible word label and QbE represents a mean over instance queries, one for each instance of a word in the dataset, meaning it is biased towards the performance of common words (or n-grams in later tests).
@@ -749,7 +760,7 @@ We use our sliding window method to evaluate spotting uni-, bi- and trigrams. We
 We spotted each letter of the alphabet, the 100 most frequent bigrams (in the English language), and the 300 most frequent trigrams. Each of these n-grams were spotted using QbS, if there was at least one instance of it in the testing set. All examples of these n-grams in the dataset were used as a QbE query, if there are at least two instances of the n-gram in the test set.
 
 Owing to the fact that a single word may have multiple instances of an n-gram we align the spotting results to their nearest instance. If multiple spottings claim the same instance and are both overlapping enough to be considered a positive match, we only keep the one overlapping the most.
-If an n-gram instance is not claimed by any spotting, we add a psuedo result that with the maximum spotting score to the MAP calculations to ensure it properly reflects the missed n-gram.
+If an n-gram instance is not claimed by any spotting, we add a pseudo-result that with the maximum spotting score to the mAP calculations to ensure it properly reflects the missed n-gram.
 
 Results can be seen in Table \ref{tab:subwordspotting}.
 Some qualitative results are show in Figures \ref{fig:qualSpot} and \ref{fig:qualSpotNames} for the Bentham and Census Names datasets respectively.
@@ -784,7 +795,7 @@ Some qualitative results are show in Figures \ref{fig:qualSpot} and \ref{fig:qua
   Trigram &  0.705 &  0.441  & 0.363 &  0.170 \\
   \hline 
 \end{tabular}
-\caption{MAP for subword spotting results on the Bentham and Census Names datasets, reported for query-by-string (QbS) and, query-by-example (QbE).}
+\caption{mAP for subword spotting results on the Bentham and Census Names datasets, reported for query-by-string (QbS) and, query-by-example (QbE).}
 \label{tab:subwordspotting}
 \end{table}
 
@@ -821,14 +832,14 @@ Trigram &  \textbf{0.571} &  0.449 & 0.431 &  0.467 &  0.441  &  0.497 &  0.563 
 \hline
 
 \end{tabular}
-\caption{MAP for subword spotting results on the Bentham dataset using cosine similarity and cross-entropy (CE) similarity and networks trained with the PHOC used in \cite{sudholt2017} and an adapted PHOC for subword spotting. In some experiments parts of the PHOC vectors were masked which were uninformative to the given task.}
+\caption{mAP for subword spotting results on the Bentham dataset using cosine similarity and cross-entropy (CE) similarity and networks trained with the PHOC used in \cite{sudholt2017} and an adapted PHOC for subword spotting. In some experiments parts of the PHOC vectors were masked which were uninformative to the given task.}
 \label{tab:distmetrics}
 \end{table}
 
 \begin{figure}
     \centering
     \includegraphics[width=.75\textwidth]{qualSpot}
-    \caption{Qualitative results for QbS subword spotting on the Bentham Dataset. Spottings show the top results for the various n-gram queries. We selected some of the better n-grams (`s', `th', `but') and worse n-grams (`j', `et', `tin') by MAP. Red boxes indicate incorrect spottings.
+    \caption{Qualitative results for QbS subword spotting on the Bentham Dataset. Spottings show the top results for the various n-gram queries. We selected some of the better n-grams (`s', `th', `but') and worse n-grams (`j', `et', `tin') by mAP. Red boxes indicate incorrect spottings.
     }
     \label{fig:qualSpot}
 \end{figure}
@@ -836,31 +847,29 @@ Trigram &  \textbf{0.571} &  0.449 & 0.431 &  0.467 &  0.441  &  0.497 &  0.563 
 \begin{figure}
     \centering
     \includegraphics[width=.6\textwidth]{qualSpotNames}
-    \caption{Qualitative results for QbS subword spotting on the Census Names Dataset. Spottings show the top results for the various n-gram queries. We selected some of the better n-grams (`i', `el', `int') and worse n-grams (`v', `ts', `pre') by MAP. Red boxes indicate incorrect spottings.
+    \caption{Qualitative results for QbS subword spotting on the Census Names Dataset. Spottings show the top results for the various n-gram queries. We selected some of the better n-grams (`i', `el', `int') and worse n-grams (`v', `ts', `pre') by mAP. Red boxes indicate incorrect spottings.
     }
     \label{fig:qualSpotNames}
 \end{figure}
 
 In Table \ref{tab:distmetrics} we show a comparison of using cosine similarity and cross-entropy (CE) for PHOC vector comparison using both the original and adapted PHOC vectors. We also show the effect of masking the PHOC vector, where divisions of the word which do not divide evenly with the number of characters being spotted are masked out (e.g.!~division of thirds is masked for spotting bigrams). For QbS, using cross-entropy shows a large improvement over cosine similarity, but cosine similarity always out performs in QbE.
 
-We note that for QbS that the relative performance of unigrams, bigrams, and trigrams is reversed for the Census Names dataset. This occurs becuase of a common error where windows containing only part of the desired n-gram (e.g.~a single character of a bigram) are scored highly. For example...
+We note that for QbS that the relative performance of unigrams, bigrams, and trigrams is reversed for the Census Names dataset. This occurs because of a common error where windows containing only part of the desired n-gram (e.g.~a single character of a bigram) are scored highly. For example...
 This exists in the Bentham dataset as well.
-The problem becomes most agrevated when trying to spotting n-grams with double letters. As these errors do not occur at all in unigrams, it's MAP is higher. It can occur more freqently in the trigram case than bigram.
-We investigated vector comparitors other than cosine similarity becuase of this problem, which is amplified by the fact that cosine-similarity ignores the network's predictions of characters not present in the query; they are multiplied by zero, though they do effect the overall normalization. Cross-entropy reduces the problem as directly penelizes for false positive character predictions.
+The problem becomes most agrevated when trying to spotting n-grams with double letters. As these errors do not occur at all in unigrams, it's mAP is higher. It can occur more freqently in the trigram case than bigram.
+We investigated vector comparison methods other than cosine similarity because of this problem, which is amplified by the fact that cosine-similarity ignores the network's predictions of characters not present in the query; they are multiplied by zero, though they do effect the overall normalization. Cross-entropy reduces the problem as directly penalizes for false positive character predictions.
 
 We note that QbE seems to be relatively immune to this. It is likely due to the fuzziness of the query vector.
 
 
 %On better QbE with old PHOC:
-It is interesting that the best QbE performance is achieved with the original PHOC vector. While it is not totally clear why this is the case, we believe it is becuse a query based on an image is able to more richly describe the word visually with the larger PHOC vector. In a n-gram, different characters have different widths, meaning the location each character in one trigram is slightly different than another trigram. While QbS cannot capture this, QbE with a large enought PHOC vector can.
+It is interesting that the best QbE performance is achieved with the original PHOC vector. While it is not totally clear why this is the case, we believe it is because a query based on an image is able to more richly describe the word visually with the larger PHOC vector. In a n-gram, different characters have different widths, meaning the location each character in one trigram is slightly different than another trigram. While QbS cannot capture this, QbE with a large enough PHOC vector can.
 
 
 %We notice in Table \ref{tab:subwordspotting} that on the Census names, unigrams out perform bigrams and trigrams. This immediately seems counterintuitive, as trigrams and bigrams have more context than unigrams. However, n-grams which occur less frequently tend to produce greater error, and the higher n is, the less the n-gram occurs. 
-%This can be seen in Figures \ref{fig:benthamsub} and \ref{fig:namessub} and we additionally demonstrated it in Figure \ref{fig:remove}, where trigrams which occur infrequently are removed from our testing set and the MAP increases. This is potentially because there are fewer examples seen in training (training is balanced at a word, not n-gram, level).
+%This can be seen in Figures \ref{fig:benthamsub} and \ref{fig:namessub} and we additionally demonstrated it in Figure \ref{fig:remove}, where trigrams which occur infrequently are removed from our testing set and the mAP increases. This is potentially because there are fewer examples seen in training (training is balanced at a word, not n-gram, level).
 
 %Effect of window size
-In Section \ref{detirminewindowsize} we explained how we found the window sizes we used. We show in Figure \ref{fig:windowsizes} the change in MAP as the window size varies for some selected n-grams; an example word image with some windows of varying sizes can be seen in Figure \ref{fig:exampleWindows} to help the reader get a relative estimation of what the window sizes are. As can be seen by the peaks in the data, performance can be dependent on having an optimal window size. We cannot assume however that this is simply becuse the n-grams are becoming fully enclosed in the window; for example, the n-gram ``ery'' (maroon x) has two approximately equal peaks for widths 100 pixels apart. Thus simply measuring the width of the n-grams may yield non-optimal window sizes, we must test the actual performance as done in Section \ref{detirminewindowsize}.
-
 \begin{figure}
     \centering
     \includegraphics[width=.33\textwidth]{exampleWindows}
@@ -891,10 +900,14 @@ In Section \ref{detirminewindowsize} we explained how we found the window sizes 
   %\caption{Trigrams}
   %\label{fig:benthamBiSpot}
 \end{subfigure}
-    \caption{These shows the QbS MAP for 18 n-grams on the Bentham dataset for varying sliding window sizes (in pixels). Figure \ref{fig:exampleWindows} shows examples of what these windows might look like.
+    \caption{These shows the QbS mAP for 18 n-grams on the Bentham dataset for varying sliding window sizes (in pixels). Figure \ref{fig:exampleWindows} shows examples of what these windows might look like.
     }
     \label{fig:windowsizes}
 \end{figure}
+
+In Section \ref{detirminewindowsize} we explained how we found the window sizes we used. We show in Figure \ref{fig:windowsizes} the change in mAP as the window size varies for some selected n-grams; an example word image with some windows of varying sizes can be seen in Figure \ref{fig:exampleWindows} to help the reader get a relative estimation of what the window sizes are. As can be seen by the peaks in the data, performance can be dependent on having an optimal window size. We cannot assume however that this is simply because the n-grams are becoming fully enclosed in the window; for example, the n-gram ``ery'' (maroon x) has two approximately equal peaks for widths 100 pixels apart. Thus simply measuring the width of the n-grams may yield non-optimal window sizes, we must test the actual performance as done in Section \ref{detirminewindowsize}.
+
+
 
 In Figures \ref{fig:benthamsub}, \ref{fig:benthamsub2}, \ref{fig:namessub} and \ref{fig:namessub2} we show, for the Bentham and Census Names datasets, the average precision of n-grams individually, arranged in descending order of frequency. While there is a general trend of more frequent n-grams being spotted better, there is a wide variance indicating that the distinctiveness of character shape likely plays an important role. We note that many less frequent trigrams are spotted with perfect precision. This is due to there being so few instances (e.g. 4) that with a little bit of luck they can all end up with the top scores. The reverse is also true for the same reason; many less frequent trigrams are spotted with very poor average precision.
 
@@ -988,7 +1001,7 @@ In Figures \ref{fig:benthamsub}, \ref{fig:benthamsub2}, \ref{fig:namessub} and \
 %\begin{figure}
 %    \centering
 %    \includegraphics[width=.75\textwidth]{removengrams}
-%    \caption{MAP for QbS subword spotting results for trigrams where we only use queries which have an occurrence count above a threshold (in the testing sets). MAP increases as the threshold increases, demonstrating the least frequent n-grams are more difficult. Only trigrams are shown as the effect is more dramatic in these cases. An opposite trend is not observed for uni- or bigrams.
+%    \caption{mAP for QbS subword spotting results for trigrams where we only use queries which have an occurrence count above a threshold (in the testing sets). mAP increases as the threshold increases, demonstrating the least frequent n-grams are more difficult. Only trigrams are shown as the effect is more dramatic in these cases. An opposite trend is not observed for uni- or bigrams.
 %    }
 %    \label{fig:remove}
 %\end{figure}
@@ -1002,27 +1015,27 @@ In Figures \ref{fig:benthamsub}, \ref{fig:benthamsub2}, \ref{fig:namessub} and \
 
 \subsection{Respotting Subwords}
 
-We had hoped to use approved spottings as new exemplars for an iterative CAT (computer assisted transcription) system. To verify the validity of this approach we created an experiment where we continually refine spotting results by spotting with new exemplars and merging the results (see Section \ref{combine}). We use the original PHOC vector with cosine similarity as that achieved the best QbE. We show the MAP at each iteration out to 50 iterations in Figures \ref{fig:unigram_respot}, \ref{fig:bigram_respot}, and \ref{fig:trigram_respot}, for uni-, bi-, and trigrams respectively on the Bentham dataset. The first exemplar for an n-gram was selected as the middle score of positive instances from a QbS spotting. The following exemplars were the middle score of the previous QbE spotting's positive instances. We choose to do this as there is a variety of qualities of exemplar images. Taking the middle score should roughly give us a middle quality.
-The overall quality of MAP is higher in these experiments as we only used n-grams which occur at least 100 times, which tend to be the easier instances.
-We can see that the iterative refinement leads to better results compared to the average of all the QbE scores for the individual 50 queries, except in the case of trigrams. This is unusual given the average QbE scores are relatively high compared to the QbS score. However, for all n-grams the combine QbE results underperforms QbS; we do not include QbE as part of our CAT system.
+We had hoped to use approved spottings as new exemplars for an iterative CAT (computer assisted transcription) system. To verify the validity of this approach we created an experiment where we continually refine spotting results by spotting with new exemplars and merging the results (see Section \ref{combine}). We use the original PHOC vector with cosine similarity as that achieved the best QbE. We show the mAP at each iteration out to 50 iterations in Figures \ref{fig:unigram_respot}, \ref{fig:bigram_respot}, and \ref{fig:trigram_respot}, for uni-, bi-, and trigrams respectively on the Bentham dataset. The first exemplar for an n-gram was selected as the middle score of positive instances from a QbS spotting. The following exemplars were the middle score of the previous QbE spotting's positive instances. We choose to do this as there is a variety of qualities of exemplar images. Taking the middle score should roughly give us a middle quality.
+The overall quality of mAP is higher in these experiments as we only used n-grams which occur at least 100 times, which tend to be the easier instances.
+We can see that the iterative refinement leads to better results compared to the average of all the QbE scores for the individual 50 queries, except in the case of trigrams. This is unusual given the average QbE scores are relatively high compared to the QbS score. However, for all n-grams the combine QbE results under-performs QbS; we do not include QbE as part of our CAT system.
 %It appears that aggregating multiple queries tends to stabilized the bad queries.%, though it does not out perform QbS (except with trigrams) or individual good QbE queries (as the spikes in performance are not at the end).
 
 \begin{figure}
     \centering
     \includegraphics[width=.75\textwidth]{unigram_respot_chart}
-    \caption{Unigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.}
+    \caption{Unigram mAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.}
     \label{fig:unigram_respot}
 \end{figure}
 \begin{figure}
     \centering
     \includegraphics[width=.75\textwidth]{bigram_respot_chart}
-    \caption{Bigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.}
+    \caption{Bigram mAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.}
     \label{fig:bigram_respot}
 \end{figure}
 \begin{figure}
     \centering
     \includegraphics[width=.75\textwidth]{trigram_respot_chart}
-    \caption{Trigram MAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.}
+    \caption{Trigram mAP when spotting results of consecutive image queries are combine (blue). The red line represents QbS performance and the yellow the average performance of all 50 QbE queries.}
     \label{fig:trigram_respot}
 \end{figure}
 
@@ -1039,11 +1052,8 @@ In this chapter we explain two applications of subword spotting: assisting perso
 \section{Manual Transcription Assistant}
 Frequently when a person is transcribing a handwritten document they come across a handwritten word they do not recognize. A common solution is to scan the document for similar shapes which are present in the difficult word. If the transcriber can find the same letters, written by the same author, in the context of a word they do recognize, the transcriber can identify the letters, thus aiding in the transcription of a difficult word. 
 However, the same letters may be time consuming to find due to the density of the document and rarity of the characters. QbE subword spotting provides a way to automate this scanning task. The user need only to select the portion of the difficult word they wish to query with and the system can return a ranked list of results.
-We are able to achieve real-time results over a handful of pages by using word segmentations and pre-computing PHOC vectors for a set of reasonible window sizes at 16  pixel strid. We snap users query is snapped to. 
+We are able to achieve real-time results over a handful of pages by using word segmentations and pre-computing PHOC vectors for a set of reasonable window sizes at 16  pixel stride. We snap users query is snapped to. 
 
-Figure \ref{fig:assist_demo} demonstrates how the assistant works. First the unrecognizzed characters are selected (a), in this case a  ``G'', and the bounding box is snapped to the precomputed one. This PHOC vector is compared against all others of the same window size. The ranked list is shown to the user both as a list (c) and by highlighting the results with the color intensity representing the strength of the match (b). Suppose that the top results aren't words the user is familiar with, but the user recognizes the ``G'' in the first result (blue arrow, ``Gash''). By selecting it, the system performs a QbE search, combining the results with that of the original query using the method described in Section \ref{combine}. In the combine results (e) the word ``Grace'' (a more recognizible word) has moved to the third spot .
-
-%If further refinement is desired, e.g.~the top true instances returned are in isolation as well,
 \begin{figure}
     \centering
     \includegraphics[width=.65\textwidth]{assist_demo}
@@ -1051,7 +1061,23 @@ Figure \ref{fig:assist_demo} demonstrates how the assistant works. First the unr
     \label{fig:assist_demo}
 \end{figure}
 
-This assistant system is a proof of concept and no testing was done on it. Its performance is directly related to the QbE performance reported in Table \ref{tab:subwordspotting}.
+Figure \ref{fig:assist_demo} demonstrates how the assistant works. First the unrecognized characters are selected (a), in this case a  ``G'', and the bounding box is snapped to the precomputed one. This PHOC vector is compared against all others of the same window size. The ranked list is shown to the user both as a list (c) and by highlighting the results with the color intensity representing the strength of the match (b). Suppose that the top results aren't words the user is familiar with, but the user recognizes the ``G'' in the first result (blue arrow, ``Gash''). By selecting it, the system performs a QbE search, combining the results with that of the original query using the method described in Section \ref{combine}. In the combine results (e) the word ``Grace'' (a more recognizable word) has moved to the third spot.
+
+%If further refinement is desired, e.g.~the top true instances returned are in isolation as well,
+\begin{figure}
+    \centering
+    \includegraphics[width=.99\textwidth]{slider}
+    \caption{Demonstrating spotting results for four different positions of the threshold slider shown below each image. The red box is the query.}
+    \label{fig:slider}
+\end{figure}
+
+Figure \ref{fig:assist_demo} shows the strength of spottings as the strength of the highlight. However, a more interactive means of accomplishing this is a user defined threshold. The user then can slide the threshold until the results they want appear. An example of this is shown in Figure \ref{fig:slider}.
+
+This assistant system is a proof of concept and no formal testing was done with it. Its performance is directly related to the QbE performance reported in Table \ref{tab:subwordspotting}. 
+
+
+
+
 
 %Speed considerations, we optimize, but work is being done on fast CNN execution
 
@@ -1062,7 +1088,7 @@ We identified a list of 41 suffixes and evaluate spotting the suffixes present f
  The window size for a given suffix query is found by identifying all n-grams we have window estimates for (see Section \ref{detirminewindowsize}) which compose the query and averaging their window widths according to which characters they contribute to.
 We are able to make the assumption that the spottings only occur at the end of the word which reduces the number of possible subwindows significantly. We additionally don't need to consider window overlap in our evaluation as the goal is whole word retrieval.
 
-We evaluate QbS suffix spotting on the IAM and Census Names datasets as these have a reasonable number of instances of our suffixes. We achieved a MAP of 0.583 for the IAM dataset and a MAP of 0.488 for the Census Names dataset. We show the AP for the suffixes individually in Figures \ref{fig:IAM_suffix} and \ref{fig:names_suffix}. Note that the suffixes achieving 100\% AP occur only once or twice. For the IAM dataset the suffixes occur about half the time as the whole words, meaning it may not represent subword spotting as well as the Census Names dataset, which had only one instance of a subword being a whole word (name).
+We evaluate QbS suffix spotting on the IAM and Census Names datasets as these have a reasonable number of instances of our suffixes. We achieved a mAP of 0.583 for the IAM dataset and a mAP of 0.488 for the Census Names dataset. We show the AP for the suffixes individually in Figures \ref{fig:IAM_suffix} and \ref{fig:names_suffix}. Note that the suffixes achieving 100\% AP occur only once or twice. For the IAM dataset the suffixes occur about half the time as the whole words, meaning it may not represent subword spotting as well as the Census Names dataset, which had only one instance of a subword being a whole word (name).
 
 
 
@@ -1072,13 +1098,13 @@ We evaluate QbS suffix spotting on the IAM and Census Names datasets as these ha
 %  \hline
 %   & IAM & Census Names\\
 %  \hline			
-%  %oldMAP across queries & 0.481  & 0.271\\
-%  %oldMAP across instances & 0.581 & 0.338\\ 
-%  MAP across queries & 0.550  & 0.297 \\
-%  MAP across instances & 0.660 & 0.403 \\
+%  %oldmAP across queries & 0.481  & 0.271\\
+%  %oldmAP across instances & 0.581 & 0.338\\ 
+%  mAP across queries & 0.550  & 0.297 \\
+%  mAP across instances & 0.660 & 0.403 \\
 %  \hline  
 %\end{tabular}
-%\caption{MAP for suffix spotting results using QbS.}
+%\caption{mAP for suffix spotting results using QbS.}
 %\label{tab:suffixspottingresults}
 %\end{table}
 
@@ -1096,7 +1122,7 @@ We evaluate QbS suffix spotting on the IAM and Census Names datasets as these ha
     \label{fig:names_suffix}
 \end{figure}
 
-%The MAP for the Census Names dataset reflects its subword spotting performance. We can see in Figures \ref{fig:IAM_suffix} and \ref{fig:names_suffix} that more frequent suffixes perform more consistently, while less frequent suffixes have more variability in performance.
+%The mAP for the Census Names dataset reflects its subword spotting performance. We can see in Figures \ref{fig:IAM_suffix} and \ref{fig:names_suffix} that more frequent suffixes perform more consistently, while less frequent suffixes have more variability in performance.
 
 
 
@@ -1112,7 +1138,7 @@ For all methods we used a lexicon. Our primary lexicon consists of 108,028 words
 %Knowledge::Corpus::phocTrans
 We use a nearest-neighbors approach as a baseline to transcription using our spotting network, similar to what \cite{krishnan2016} do for word recognition. The PHOC vectors generated by the network on word image are compared to the PHOC vectors of the  words in our lexicon using a cosine similarity and the top N matches from the lexicon are returned. This does not use subword spotting, and thus provides a baseline for transcription using our PHOCNet based architecture.
 
-To compare it to the other CAT methods, we assume a transcription for a word image is performed by a user selecting the correct transcription from the top 7 returned lexicon words. The 7 words corresponds with the CAT methods which return a list short enough for a user to quicky review. If the correct transcription is not returned in the top 7, it must be manually transcribed.
+To compare it to the other CAT methods, we assume a transcription for a word image is performed by a user selecting the correct transcription from the top 7 returned lexicon words. The 7 words corresponds with the CAT methods which return a list short enough for a user to quickly review. If the correct transcription is not returned in the top 7, it must be manually transcribed.
 To be more efficient, we only return a certain portion of the words to be transcribed in this manner (the remainder needing manual transcription). This portion is selected by ordering words according to the mean score of the top 7 lexical matches (the words that would be returned).
 
 
@@ -1130,18 +1156,18 @@ To be more efficient, we only return a certain portion of the words to be transc
     \caption{An overview of the CAT system which uses approved subword spottings. The arrows represent the flow of data. (a) Subword spotting is performed. (b) Spotting results are sorted and distributed as batches. (c) Users classify the spottings. (d) The spottings are aggregated into a regular expression. This yields a set of possible transcriptions in the lexicon. These are scored by performing word spotting on the word image. (e) The (reduced) list of possible transcriptions is sent to a user to selects the correct one.}
     \label{fig:flow}
 \end{figure}
-An overview of the CAT system using approved subword spotting can be seen in Figure \ref{fig:flow}.  Initially the system spots character n-grams in the corpus of word images (a). These results are pooled and sent to users in batches (b). After the user identifies correct/incorrect spottings (c), the spottings' labels and positions in the word images are used to create regular expressions which are used to query a lexicon for a list of all words matching the constraints set by the spottings (d). These are scored by word spotting each lexically relevent word in the image and lower scores are removed from the list (according to an Otsu threshold). This list is then sent to a user, who selects the correct transcription (e). Information from approved spottings is used in further spottings.
+An overview of the CAT system using approved subword spotting can be seen in Figure \ref{fig:flow}.  Initially the system spots character n-grams in the corpus of word images (a). These results are pooled and sent to users in batches (b). After the user identifies correct/incorrect spottings (c), the spottings' labels and positions in the word images are used to create regular expressions which are used to query a lexicon for a list of all words matching the constraints set by the spottings (d). These are scored by word spotting each lexically relevant word in the image and lower scores are removed from the list (according to an Otsu threshold). This list is then sent to a user, who selects the correct transcription (e). Information from approved spottings is used in further spottings.
 
 When there are no more user tasks the system is finished. Words not transcribed will need to be manually transcribed.
 
 We now go over the individual pieces in greater detail.
 
 \subsection{Subword Spotting}
-We follow the same procedure for subword spotting as outlined in Chapter \ref{subwordspotting}. We begin by spotting the n-grams using QbS. We evenly interleave spotting the n-grams, ordering each n by frequency order. That is, we order all trigrams, bigrams and unigrams individually by frequency order, then interleave these three lists such that each list is evenly disperesed among the resulting list. 
+We follow the same procedure for subword spotting as outlined in Chapter \ref{subwordspotting}. We begin by spotting the n-grams using QbS. We evenly interleave spotting the n-grams, ordering each n by frequency order. That is, we order all trigrams, bigrams and unigrams individually by frequency order, then interleave these three lists such that each list is evenly dispersed among the resulting list. 
 
 We attempted to use QbE after spottings are approved as correct by users. We combine QbE results as described in Section \ref{combine} when we had a certain threshold of approved spottings (to ensure stability). However, this did not enhance performance so we did not include this in our final tests.
 
-To reduce the number of possible n-grams needing approval, we only return the top portion of all subwindows for a spotting: 75\% for unigrams, 25\% for bigrams, and 15\% for trigrams. The differening percentages reflect the general frequencies of the n-grams in English.
+To reduce the number of possible n-grams needing approval, we only return the top portion of all subwindows for a spotting: 75\% for unigrams, 25\% for bigrams, and 15\% for trigrams. The differing percentages reflect the general frequencies of the n-grams in English.
 
 \subsection{User Tasks and Interface}
 
@@ -1157,17 +1183,19 @@ The task that is presented to users most frequently is spotting approval, as mos
 
 %Clustering, refer to previous discussion of this? Of discuss here? \cite{Retsinas2015} inspired
 
-Through some trials, we found presenting the potentail n-gram spottings as a list, grouped by the n-gram label, and having the user classify each instance to be efficient. The grouping of spottings with the same n-gram label minimizes context switching and forcing the user to make a decision about each spotting maintains accuracy.
-
-Figure \ref{fig:spottingapproval} shows the interface. The spottings at the bottom are classified as correct or incorrect either with a swipe gesture or a button press. The spottings shown above the current spotting (bottom) allow the user to look ahead and make decisions about the upcoming spottings. The colors of the highlights change when the n-gram label changes to alert the user to the change.
+Through some trials, we found presenting the potential n-gram spottings as a list, grouped by the n-gram label, and having the user classify each instance to be efficient. The grouping of spottings with the same n-gram label minimizes context switching and forcing the user to make a decision about each spotting maintains accuracy.
 
 \begin{figure}
     \centering
     \includegraphics[width=.75\textwidth]{spottingapproval}
-    \caption{Spotting approval UI. Instance being classified is at the bottom of the interface (dark border). The desired label ``and'' is below it. The first two instances displayed are incorrect and the thrid is correct. The next label ``ing'' can be seen above these with its associated instances above it (two correct instances visible).
+    \caption{Spotting approval UI. Instance being classified is at the bottom of the interface (dark border). The desired label ``and'' is below it. The first two instances displayed are incorrect and the third is correct. The next label ``ing'' can be seen above these with its associated instances above it (two correct instances visible).
     }
     \label{fig:spottingapproval}
 \end{figure}
+
+Figure \ref{fig:spottingapproval} shows the interface. The spottings at the bottom are classified as correct or incorrect either with a swipe gesture or a button press. The spottings shown above the current spotting (bottom) allow the user to look ahead and make decisions about the upcoming spottings. The colors of the highlights change when the n-gram label changes to alert the user to the change.
+
+
 
 %%%%%%%%%%%%%%
 \iffalse
@@ -1177,7 +1205,7 @@ Two modes were developed and tested: a swipe interface and a tap interface. We
 In this mode, a batch of 5 spottings were shown together (Figure \ref{im:?}). The user tapped on any incorrect spottings, and then tapped a submit button, after which another batch would be shown. This means that a user can potentially use one action to complete 5 spottings, though it may take 6 actions in the worse case.
 
 \paragraph{Swipe}
-In this mode, the spottings neededing approval queued in a stack with the desired character n-gram being shown at above the stack. see Figure \ref{im:?}. Users either swiped left or right to either reject or accept the spotting shown on the top of the stack. Unlike the tap mode, this forces users to make a decision about each n-gram, potentially increasing accuracy.
+In this mode, the spottings needing approval queued in a stack with the desired character n-gram being shown at above the stack. see Figure \ref{im:?}. Users either swiped left or right to either reject or accept the spotting shown on the top of the stack. Unlike the tap mode, this forces users to make a decision about each n-gram, potentially increasing accuracy.
 
 
 \paragraph{Evaluating Spotting Approval Modes}
@@ -1187,11 +1215,6 @@ fdsgfdh
 %%%%%%%%%%%%%
 
 \subsubsection{Transcription Selection}\label{transtask}
-This task's interface can be seen in Figure \ref{fig:transcriptionselection}.
-The user is presented with the image of a word, in context, with the spotted n-grams highlighted. Below are the n-gram labels each with an `x' button so the user can indicate an incorrect spotting.
-Below these is the list of possible transcriptions. They are presented in an order according to their word spotting score, as this frequently places the correct transcription at the top.
-At the end of this list an additional ``None/Error'' button allows the user to indicate that the correct transcription is not present, and the spotting n-grams are correct.
-
 \begin{figure}
     \centering
     \includegraphics[width=.75\textwidth]{transcriptionselection}
@@ -1199,6 +1222,13 @@ At the end of this list an additional ``None/Error'' button allows the user to i
     }
     \label{fig:transcriptionselection}
 \end{figure}
+
+This task's interface can be seen in Figure \ref{fig:transcriptionselection}.
+The user is presented with the image of a word, in context, with the spotted n-grams highlighted. Below are the n-gram labels each with an `x' button so the user can indicate an incorrect spotting.
+Below these is the list of possible transcriptions. They are presented in an order according to their word spotting score, as this frequently places the correct transcription at the top.
+At the end of this list an additional ``None/Error'' button allows the user to indicate that the correct transcription is not present, and the spotting n-grams are correct.
+
+
 
 %\subsubsection{Manual Transcription}
 %This task's interface can be seen in Figure \ref{fig:manualtranscription}.
@@ -1215,8 +1245,8 @@ We average these as an approximation of the character width of an unknown charac
 The procedure to create the regular expression is as follows. First we measure the number of pixels between each confirmed spotting and divide this by the estimated character width, providing an estimated number of characters $\text(gapWidth)/\text(charWidth) = \epsilon$ (with fractional characters). The range of characters used in the expression is 
 [ $\epsilon-0.8$ to $\epsilon+0.8$ ] (rounded to nearest whole character).
 %0.8 subtracted and added to the count estimate, rounded.
- The first and last characters are similarly computed, using the beginning and end of the image boundaries as the previous and next spottings, but we additionaly allow each of those ranges to have one less character than the range computed to account for the fact that frequently first and last letters are longer than others (e.g.~capital letters at the beginning of a word, or a long tail on the last character of a word). If spottings overlap by less than 0.15 the estimated character width, we allow a character to possibly be between them.
-If spottings overlap and share boundary characters, for example `al' and `le' sharing `l', they could be either `alle' or `ale'. However, becuse overlap is far more common (`ale' case) we choose to always merege the characters.  Allowing both cases causes the resulting regular expression to become bloated and empircally perform worse.
+ The first and last characters are similarly computed, using the beginning and end of the image boundaries as the previous and next spottings, but we additionally allow each of those ranges to have one less character than the range computed to account for the fact that frequently first and last letters are longer than others (e.g.~capital letters at the beginning of a word, or a long tail on the last character of a word). If spottings overlap by less than 0.15 the estimated character width, we allow a character to possibly be between them.
+If spottings overlap and share boundary characters, for example `al' and `le' sharing `l', they could be either `alle' or `ale'. However, because overlap is far more common (`ale' case) we choose to always merge the characters.  Allowing both cases causes the resulting regular expression to become bloated and empirically perform worse.
 %If spottings overlap and share boundary characters (e.g.~`al' and `le' sharing `l') we permit either a double letter (`alle') or single (`ale') as the spotting methods we use would have trouble distinguishing these situations. 
 Pseudo code for this process is shown in Algorithm 1.%\ref{regex}.
 
@@ -1262,7 +1292,7 @@ Pseudo code for this process is shown in Algorithm 1.%\ref{regex}.
  \BlankLine
  \Ret $ := $ ``''\tcc*[r]{to return}
  \ForEach{spotting}{
-   \Ep $:=$ length of gap to previous spotting or beggining of image $ / $ \CharW\tcc*[r]{using float division}
+   \Ep $:=$ length of gap to previous spotting or beginning of image $ / $ \CharW\tcc*[r]{using float division}
    
    \eIf{\Ep $> 0$}{
      \MinN $:=$ \Round{\Ep$- 0.8$}\;
@@ -1272,7 +1302,7 @@ Pseudo code for this process is shown in Algorithm 1.%\ref{regex}.
      }
      \Ret $:=$ \Ret + ``{\textbackslash}w\{\MinN,\MaxN\}'' + current spotting's n-gram\;
    }{
-     \eIf{n-gram shares characters with previous ngram}{
+     \eIf{n-gram shares characters with previous n-gram}{
        \Ret := \Ret + characters of current spotting's n-gram not overlapping with previous\;
      }{
        \MinN $:= 0$\;
@@ -1298,7 +1328,7 @@ Pseudo code for this process is shown in Algorithm 1.%\ref{regex}.
 Once we have the regular expression, we find all matches in our lexicon.
 
 If there are no matches there are three possible scenarios: the word is not in the lexicon, there is an incorrectly approved spotting, or the spottings and unlabeled characters' count or alignment didn't transfer to the regular expression properly.
-To account for the second scenario, we iteratively try removing individual spottings, regenerating the regular expression, and requerying the lexicon to see if matches are found. We make the assumption that only one spotting will be incorrect and union the matching lexicon results. We first only remove spottings that have no overlap (overlap meaning two or more spottings identified a mutual character) and then those that do.
+To account for the second scenario, we iteratively try removing individual spottings, regenerating the regular expression, and re-querying the lexicon to see if matches are found. We make the assumption that only one spotting will be incorrect and union the matching lexicon results. We first only remove spottings that have no overlap (overlap meaning two or more spottings identified a mutual character) and then those that do.
 If this fails to yield any lexicon matches, we try to account for the third scenario by regenerating the regular expression in a ``loose'' mode, where each range of unknown characters is expanded by one to allow matches initially constrained by a bad alignment estimation.
 If there are no matches and we are already using the ``loose'' regular expression we simply skip the word. It will be manually transcribed eventually.
 
@@ -1368,11 +1398,11 @@ do not return batch\;
 
 
 \subsection{Receiving Transcription}
-The user either returns a transcription selection task in three ways: with a selected transcription, with a spotting marked for removal, or with an error indication (see Section \ref{transtask}). These are handeled in the following ways.
+The user either returns a transcription selection task in three ways: with a selected transcription, with a spotting marked for removal, or with an error indication (see Section \ref{transtask}). These are handled in the following ways.
 
 If a transcription was selected, that is stored as the transcription for the word. We attempted to extract new n-gram image exemplars by interpolating where unspotted n-grams were in the word image, but these generally failed to be good exemplars so we choose not to use them.
 
-If a spotting is marked for removal, it is removed and the process described in Section \ref{wordcompletion} is followed again, potentailly leading to a new task being enqueued.
+If a spotting is marked for removal, it is removed and the process described in Section \ref{wordcompletion} is followed again, potentially leading to a new task being enqueued.
 
 If the user indicates an error we first attempt to loosen the regular expression, as described in Section \ref{wordcompletion}. If no matching words are found, we remove the ``worst'' spotting. The ``worst'' spotting is any spotting labeled by a threshold (not user oversight). If no thresholded spottings are present, the ``worst'' is the determined by the worst spotting score.
 
@@ -1385,7 +1415,7 @@ The simplest method is to simply start with the spotting with the lowest score u
 This has the downside of not looking for a possible threshold to accept spottings, every spotting must be approved, which is an inefficiency.
 
 
-Looking at a graph of true and false spotting instances in Figure \ref{fig:two_dist_ex}, one can see a distinctive between the true and false spottings. If we can identify the boudary between them, it would give us a useful tool to create both an accept and reject threshold. However, there is not always a clean division. In Figure \ref{fig:one_dist_ex} we see that the distrubution of false spottings (yellow line) overlaps significantly with the true spottings (magenta line) making it difficult to distinguish a division boundary when viewed combined (blue line).
+Looking at a graph of true and false spotting instances in Figure \ref{fig:two_dist_ex}, one can see a distinctive between the true and false spottings. If we can identify the boudary between them, it would give us a useful tool to create both an accept and reject threshold. However, there is not always a clean division. In Figure \ref{fig:one_dist_ex} we see that the distribution of false spottings (yellow line) overlaps significantly with the true spottings (magenta line) making it difficult to distinguish a division boundary when viewed combined (blue line).
 
 
 
@@ -1402,7 +1432,7 @@ Looking at a graph of true and false spotting instances in Figure \ref{fig:two_d
   		\centering
   		\includegraphics[width=.99\linewidth]{two_dist_ex_TF}
 	\end{subfigure}
-    \caption{Histograms of spotting instances for the trigram ``and''. The left chart shows the instances aggregated as well as the fitted parabola. The right chart shows the true and false spottings seperated. Note the clear seperation being modeled by the parabola.
+    \caption{Histograms of spotting instances for the trigram ``and''. The left chart shows the instances aggregated as well as the fitted parabola. The right chart shows the true and false spottings separated. Note the clear separation being modeled by the parabola.
     }
     \label{fig:two_dist_ex}
 \end{figure}
@@ -1417,16 +1447,16 @@ Looking at a graph of true and false spotting instances in Figure \ref{fig:two_d
   		\centering
   		\includegraphics[width=.99\linewidth]{one_dist_ex_TF}
 	\end{subfigure}
-    \caption{Histograms of spotting instances for the bigram ``ti''. The left chart shows the instances aggregated as well as the fitted parabola. The right chart shows the true and false spottings seperated. Note that there is no clean division and the parabola's vertex falls outside the data range.
+    \caption{Histograms of spotting instances for the bigram ``ti''. The left chart shows the instances aggregated as well as the fitted parabola. The right chart shows the true and false spottings separated. Note that there is no clean division and the parabola's vertex falls outside the data range.
     }
     \label{fig:one_dist_ex}
 \end{figure}
 
-We identify the true/false boundary by the following procedure. We sample the best scores, those below 13, and perform a least-squares fitting of a parabola to a histogram of the data (e.g.~Figures \ref{fig:two_dist_ex} and \ref{fig:one_dist_ex}). The threshold 13 was heuristically choosen as the peak of the false distibution occurs higher than 13 (generaly). This parabola should roughly match the curve of the data and is shown as the X line in Figures \ref{fig:two_dist_ex} and \ref{fig:one_dist_ex}. We use the x-position of the vertex to detirmine where the true/false split is. In a clean split, as in Figure \ref{fig:two_dist_ex}, we can see how the parabola matches to two raising distributions meaning the vertex is a rough mid point between them. In a case where there is clean seperation, as in Figure \ref{fig:one_dist_ex}, we see the parabola half matches the data, causing the vertex to be past the data (or at least very near the minimum score).
+We identify the true/false boundary by the following procedure. We sample the best scores, those below 13, and perform a least-squares fitting of a parabola to a histogram of the data (e.g.~Figures \ref{fig:two_dist_ex} and \ref{fig:one_dist_ex}). The threshold 13 was heuristically chosen as the peak of the false distibution occurs higher than 13 (generally). This parabola should roughly match the curve of the data and is shown as the X line in Figures \ref{fig:two_dist_ex} and \ref{fig:one_dist_ex}. We use the x-position of the vertex to determine where the true/false split is. In a clean split, as in Figure \ref{fig:two_dist_ex}, we can see how the parabola matches to two raising distributions meaning the vertex is a rough mid point between them. In a case where there is clean separation, as in Figure \ref{fig:one_dist_ex}, we see the parabola half matches the data, causing the vertex to be past the data (or at least very near the minimum score).
 
-While fitting a parabola may seem strange, its simplicity makes it effective. We tried more complicated methods of modeling the data, but these failed too freqently.
+While fitting a parabola may seem strange, its simplicity makes it effective. We tried more complicated methods of modeling the data, but these failed too frequently.
 
-When creating a batch we select instances starting at the estimated true/false boudary and alternately selecting the next instance (ordered by score) on the true and false sides. Intuitively this means we are beginning with the instances in which we are least confident about our classification and working towards those in which we are more confidient.
+When creating a batch we select instances starting at the estimated true/false boundary and alternately selecting the next instance (ordered by score) on the true and false sides. Intuitively this means we are beginning with the instances in which we are least confident about our classification and working towards those in which we are more confident.
 
 %We model the distributions as normal distributions, the false spottings being only half of the distribution (as we discard the worst scores for effiency).
 
@@ -1481,8 +1511,7 @@ When creating a batch we select instances starting at the estimated true/false b
 
 \subsection{Receiving Spotting Approvals}
 
-When user labeling is revieced we update running averages of approval for instances of the true side and false side of the split. If either of these pass a threshold, we accept or reject all remaining instances on the respective side. We accept remaining true-side instances if the average approval rate exceeds X. We reject the remaining false-side instances if the average approval rate falls below X.
-%TODO fill in Xs
+When user labeling is received we update running averages of approval for instances of the true side and false side of the split. If either of these pass a threshold, we accept or reject all remaining instances on the respective side. We accept remaining true-side instances if the average approval rate exceeds 0.92. We reject the remaining false-side instances if the average approval rate falls below 0.75.
 
 For each approved spotting, we add the spotting to the word and execute the procedure described in Section \ref{wordcompletion}.
 %Every 5 updates we recheck whether it would be better to model the data as one or two distributions.
@@ -1507,16 +1536,32 @@ For each approved spotting, we add the spotting to the word and execute the proc
 
 \section{CAT Through Approved Subword Spottings Using Clustering}
 
-The approval of spottings is a bottle-neck for the previous transcription strategy. In \cite{Retsinas2015}, they sped up approval by clustering printed characters together and presenting the user with a composite of a cluster. While handwriting it too noisy to composite, we follow a similar method of clustering n-gram spottings together and presenting users with (part of) a cluster to approve or disapprove. Classifying a group of spottings which belong to the same class should take as long as a single instance; the catch is that we don't know if a group of spottings is all right or all wrong. It's likely our clustering is imperfect so that there is a mix. However, in the case where only a few instances in the cluster are outliers, they should be quickly identified by a user (see Figures \ref{fig:clustergood} and \ref{fig:clusterbad}). This follows the same spirit as the UI for \cite{Clawson2014} which also leveraged humans ability to quickly identify outliers. In the case where the cluster is totall mixed (50\%/50\%) one can classify each instance individually, which is what was being done in the above method.
+The approval of spottings is a bottle-neck for the previous transcription strategy. In \cite{Retsinas2015}, they sped up approval by clustering printed characters together and presenting the user with a composite of a cluster. While handwriting it too noisy to composite, we follow a similar method of clustering n-gram spottings together and presenting users with (part of) a cluster to approve or disapprove. Classifying a group of spottings which belong to the same class should take as long as a single instance; the catch is that we don't know if a group of spottings is all right or all wrong. It's likely our clustering is imperfect so that there is a mix. However, in the case where only a few instances in the cluster are outliers, they should be quickly identified by a user (see Figures \ref{fig:clustergood} and \ref{fig:clusterbad}). This follows the same spirit as the UI for \cite{Clawson2014} which also leveraged humans ability to quickly identify outliers. In the case where the cluster is totally mixed (50\%/50\%) one can classify each instance individually, which is what was being done in the above method.
 % (see Figure ??).
 
-In this transcription strategy we use the same method as above, but change how spotting batches are distrubuted and don't use QbE in the same way. We will desribe the steps of this process next.
+In this transcription strategy we use the same method as above, but change how spotting batches are distributed and don't use QbE in the same way. We will describe the steps of this process next.
 
 \subsection{Clustering}
 
-We first perform a dense QbE comparison for the results of each initial n-gram QbS spotting. This gives us a similarity for all instances. We then perform a hierarchical complete-linkage agglomerative clustering (two clusters are merged if their two most dissimilar spottings are more similar than any other cluster pair). We choose a hierarchical method as this allows us to tune the ``purity'' of clusters as we recieve human feedback. ``Purity'' is the measure of how much the clusters are of one class ($2*max(T,F)/(T+F)-1$ where $T$ and $F$ are the count of true or false spottings in the cluster). The initial level in the hierarchy is the first level where the average cluster size is above 10, which is roughly what we feel an ideal batch size is.
+We first perform a dense QbE comparison for the results of each initial n-gram QbS spotting. This gives us a similarity for all instances. We then perform a hierarchical complete-linkage agglomerative clustering (two clusters are merged if their two most dissimilar spottings are more similar than any other cluster pair). We choose a hierarchical method as this allows us to tune the ``purity'' of clusters as we receive human feedback. ``Purity'' is the measure of how much the clusters are of one class ($2*max(T,F)/(T+F)-1$ where $T$ and $F$ are the count of true or false spottings in the cluster). The initial level in the hierarchy is the first level where the average cluster size is above 10, which is roughly what we feel an ideal batch size is.
 
 
+
+
+
+\subsection{Spotting Approval Batch Distribution}
+
+We evaluated two methods of distributing clusters.
+One simply takes the cluster with the next highest average score.
+The other method attempts to identify good clusters based on their similarity to approved spottings. To do this we save each approved spotting in a queue. When finding a new cluster to distribute, we take the next instance off of the queue. We then find the cluster that is closest using the complete-linkage metric, that is the cluster where the instance with the furthest distance from our exemplar is minimized.
+
+In both methods, if a selected cluster is too large (maximum size of 15) we split it and send each piece as a separate batch.
+
+We have a ``purity'' goal of 0.9 (roughly 1 or 2 outliers per batch). When our moving average purity varies from this (over an $\epsilon$ threshold) we either move up a level in the hierarchy (we are too pure) or move down a level in the hierarchy (we are not pure enough). If the goal were too high (e.g.~1.0), we would quickly move to a level where the clusters are very small, which would decrease efficiency.
+
+When our moving average accuracy (the portion of instances classified as true by the user) falls below a threshold (0.4) we stop sending batches for that n-gram.
+
+\subsection{Spotting Approval UI}
 
 \begin{figure}
     \centering
@@ -1531,41 +1576,28 @@ We first perform a dense QbE comparison for the results of each initial n-gram Q
     \label{fig:clusterbad}
 \end{figure}
 
-\subsection{Spotting Approval Batch Distribution}
-
-We evaluated two methods of distributing clusters.
-One simply takes the cluster with the next highest average score.
-The other method attempts to identify good clusters based on their similarity to approved spottings. To do this we save each approved spotting in a queue. When finding a new cluster to distribute, we take the next instance off of the queue. We then find the cluster that is closest using the complete-linkage metric, that is the cluster where the instance with the furthest distance from our exemplar is minimized.
-
-In both methods, if a selected cluster is too large (maximum size of 15) we split it and send each piece as a seperate batch.
-
-We have a ``purity'' goal of 0.9 (rougly 1 or 2 outliers per batch). When our moving average purity varies from this (over an $\epsilon$ threshold) we either move up a level in the heirarchy (we are too pure) or move down a level in the heirarchy (we are not pure enough). If the goal were too high (e.g.~1.0), we would quickly move to a level where the clusters are very small, which would decrease efficiency.
-
-When our moving average accuracy (the portion of instances classified as true by the user) falls below a threshold (0.3) we stop sending batches for that n-gram.
-%TODO test 0.4 threshold
-
-\subsection{Spotting Approval UI}
-
 Examples of the UI are shown in Figures \ref{fig:clustergood} and \ref{fig:clusterbad}. The idea is to allow the user to recognize whether the majority of the instances are correct or incorrect and then select the outliers. When a user selects an instance it is darkened. There are two buttons at the bottom which are used to both indicate the cluster type (correct/incorrect) and that they have selected all the outliers (they are finished). This is similar to the UI in \cite{Clawson2014}, however, in ours we also handle the bad cluster scenario.
 
-This is a minimalist interface placing a fair amount of cognitive load onto the user in exchange for efficency. One can imagine a slightly simpler interface where the cluster type is identified as a button prior to a ``done'' button.
+This is a minimalist interface placing a fair amount of cognitive load onto the user in exchange for efficiency. One can imagine a slightly simpler interface where the cluster type is identified as a button prior to a ``done'' button.
 
 
 %%%%
 
 \section{CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment} %
 
-We want to avoid having to make decisions about spottings, either by thresholding or having user input, which the previous methods rely on. Thresholding forces a decision between recall and precision, and user input is costly. A way to avoid these is to simply merge all spottings together into a single character probability vector, resulting in something like Figure \ref{fig:cpv}, and then decode this.
-
 \begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{cpv}
-    \caption{An example of a character probability vector for the word ``adultery''. The relative probability of each character (`a'-`z') at each horizontal position is represented both by the height and color of the graph. The discontinuities occuring at the begining and end of the word (e.g. see `x') occur due to the merging of unigram, bigram, and trigram scores.}
+    \caption{An example of a character probability vector for the word ``adultery''. The relative probability of each character (`a'-`z') at each horizontal position is represented both by the height and color of the graph. The discontinuities occurring at the begining and end of the word (e.g. see `x') occur due to the merging of unigram, bigram, and trigram scores.}
     \label{fig:cpv}
 \end{figure}
 
+We want to avoid having to make decisions about spottings, either by thresholding or having user input, which the previous methods rely on. Thresholding forces a decision between recall and precision, and user input is costly. A way to avoid these is to simply merge all spottings together into a single character probability vector, resulting in something like Figure \ref{fig:cpv}, and then decode this.
+
+
+
 The combining happens according to the following procedure.
-We process each n (1, 2, and 3) seperately into an independent vector before combining them.
+We process each n (1, 2, and 3) separately into an independent vector before combining them.
 
 Each spotted n-gram produces a score at each location of the sliding window. For unigrams this gives us a vector for a relative scoring of a character at each location. For bigrams and trigrams we can offset these locations and create vectors for each character present in the bigram or trigram. These can them be summed together for a word image.
 Each n-specific character vector is normalized according to how many n-grams contributed to that character.
@@ -1574,7 +1606,7 @@ We then perform a soft-max at each horizontal position over the characters. This
 The individual n-specific vectors are summed and each letter normalized according to how many n-specific vectors contributed to it.
 This summed result has another soft-max applied to it to yield the final character probability vector.
 
-We then use dynamic time warping to score the character probability vectors agains the lexicon words, the lexicon words being a series of one-hot character vectors. Similar to the transcription via PHOC method we can then return the top 7 matches to the user to select the correct transcription.
+We then use dynamic time warping to score the character probability vectors against the lexicon words, the lexicon words being a series of one-hot character vectors. Similar to the transcription via PHOC method we can then return the top 7 matches to the user to select the correct transcription.
 
 
 
@@ -1588,9 +1620,11 @@ In this chapter we will explain our procedure for testing the transcription stra
 
 We evaluate all our transcription strategies as CAT (computer assisted transcription) methods. However, rather than having users use the systems we simulate approximate user behavior using collected statistics. While the statistics may not give results as accurate as a user study, it allows us to easily compare the performance of different transcription strategies using consistent timing data.
 
-The statistics were collected from four reseachers
+The statistics were collected from four members of our team
 %, who were moderetly to tagently involved in this project, 
-using the system. We collected timing information regarding how quickly they completed batches, whether they were correct (against the corpus ground truth and the author's judgement), as well as information regarding the batch's ``difficulty''. For spottings this was the size of the batch, the number of true instances, and whether the previous batch was the same n-gram. For transcription selection this was the position of the correct transcription (if present). 
+using the system. We collected timing information regarding how quickly they completed batches, whether they were correct (against the corpus ground truth 
+%and the author's judgement
+), as well as information regarding the batch's ``difficulty''. For spottings this was the size of the batch, the number of true instances, and whether the previous batch was the same n-gram. For transcription selection this was the position of the correct transcription (if present). 
 %For manual transcription we recorded the length of the word(s). 
 We fit linear models to predict the time needed to complete a batch based on its ``difficulty''. We also did this for errors.
 We collected data for both spotting approval methods (instance and cluster).
@@ -1601,11 +1635,11 @@ For the Bentham dataset, instance spotting approval timing is based on whether t
 
 We also measured how long it took to manual transcribe line images so we can see if the CAT actually speeds up the transcription process.
 
-To evaluate, we ran each strategy as a CAT system with a single simulated user. When the simulated user recieved a batch, it found the correct response and then measured the probabilty of error and introduced an error if a random value between [0,1] fell below that probability. The simulated user then computed the estimated time based on the appropriate model and waited that long before returning its answer. For many of the transcription strategies, there comes a point where the strategy must be abandoned and the remaining words manual transcribed. We terminate our simulations at this point, but report how much was transcribed.
+To evaluate, we ran each strategy as a CAT system with a single simulated user. When the simulated user received a batch, it found the correct response and then measured the probability of error and introduced an error if a random value between [0,1] fell below that probability. The simulated user then computed the estimated time based on the appropriate model and waited that long before returning its answer. For many of the transcription strategies, there comes a point where the strategy must be abandoned and the remaining words manual transcribed. We terminate our simulations at this point, but report how much was transcribed.
 
 \section{Results}
 
-We measure the speed of the transcriptions using a words-per-minute metric. This is averaged over the time of the system running, as it varies significantly during the running for the spotting approval method. The results are summarized on Table \ref{tab:finalresults}. In the following subsections we analyse the results of each method.
+We measure the speed of the transcriptions using a words-per-minute metric. This is averaged over the time of the system running, as it varies significantly during the running for the spotting approval method. The results are summarized on Table \ref{tab:finalresults}. In the following subsections we analyze the results of each method.
 
 \begin{table}
 \centering
@@ -1632,22 +1666,23 @@ We measure the speed of the transcriptions using a words-per-minute metric. This
   \hline		
 
   Manual             & -   & 24.27 & 0.073 &  -   & 20.92 & 0.160 \\
-  \cite{Zagoris2015} & 1.0   & 14.2 & - &  -   & -& - \\
+  \cite{Zagoris2015} manual & -   & 6.28 & - &  -   & -& - \\
+  \cite{Zagoris2015} CAT & 1.0   & 14.2 & - &  -   & -& - \\
   \hline	
-  PHOC vectors 100\% & 0.872 & 12.52 & 0.021 &  0.691 & 11.53 & 0.070 \\
-  PHOC vectors 75\%  & 0.687 & 14.44 & 0.015 &  0.531 & 11.27 & 0.070 \\
-  PHOC vectors 50\%  & 0.458 & 14.85 & 0.016 &  0.386 & 13.88 & 0.043 \\
+  PHOC vectors 100\% & 0.872 & 24.66 & 0.021 &  0.691 & 11.53 & 0.070 \\
+  PHOC vectors 75\%  & 0.687 & 28.42 & 0.015 &  0.531 & 11.27 & 0.070 \\
+  PHOC vectors 50\%  & 0.458 & 29.22 & 0.016 &  0.386 & 13.88 & 0.043 \\
   \hline	
   \multicolumn{7}{|l|}{CAT through approved subword spottings} \\
-  Normal UBT & 0.588 & 3.245 & 0.024 &  0.354 & 2.51 & 0.058 \\
-  Closest cluster next UBT & 0.685 & 1.30 & 0.019 & 0.532 & 1.14 & 0.075 \\
+  Normal UBT & 0.588 & 6.39 & 0.024 &  0.354 & 2.51 & 0.058 \\
+  Closest cluster next UBT & 0.685 & 2.56 & 0.019 & 0.532 & 1.14 & 0.075 \\
   \hline	
   \multicolumn{7}{|l|}{CAT through unassisted subword spotting using DTW} \\
-  CPV+DTW UB & 0.563 & 4.44 & 0.082 & 0.337 & 4.17 & 0.219  \\
+  CPV+DTW UB & 0.563 & 8.74 & 0.082 & 0.337 & 4.17 & 0.219  \\
   %? & X & X & X & X \\
   \hline  
 \end{tabular}
-\caption{Highlights in the results from simulations. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used. The PHOC vector method is the only method we tested able to transcribe words at a rate faster than manual transcription. We note that \cite{Zagoris2015} reports manual transcription time of 6.28 words/min. The difference is likely due to experimental setup.}
+\caption{Highlights in the results from simulations. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used. The PHOC vector method is the only method we tested that is able to transcribe words at a rate faster than manual transcription. We note that \cite{Zagoris2015} reports manual transcription far below the one we collected. This is probably due to experimental setup. Their CAT system gets almost a 50\% speed up from their reported manual time.}
 \label{tab:finalresults}
 \end{table}
 
@@ -1655,14 +1690,14 @@ We note that all methods have better word-error-rate (WER) than manual. This is 
 
 
 \subsection{CAT Through PHOC Vectors Results}
-This baseline result is the only method to surpass manual transcription time, and it only did for the Bentham dataset. We show results in Table \ref{tab:finalresults} for three variations where the portion of words actually sent to the user is changed. As would be expected, decreasing the number of words sent to the user has a linear relationship with the portion transcribed, however, the speed does not follow this linear relationship. This simply means that the order of good transcription selection batches doesn't correlate directly to score.
+This baseline result is the only method to surpass manual transcription time, and it only did for the Bentham dataset. We show results in Table \ref{tab:finalresults} for three variations where the portion of words actually sent to the user is changed (i.e.~we discard the worst words). As would be expected, decreasing the portion of words sent to the user has a linear relationship with the portion transcribed, however, the speed does not follow this linear relationship. This simply means that the order of good transcription selection batches doesn't correlate directly to score.
 
-We assume that the speed of this method on the Census Names dataset does not surpass manual due to the greater variation in the handwritting. Humans are typically better at handeling variation.
+We assume that the speed of this method on the Census Names dataset does not surpass manual due to the greater variation in the handwriting. Humans are typically better at handling variation. Transcription selection batches without the correct transcription generally take some time to be rejected by users. If the system presents many of these (due to the difficulty of the handwriting) it makes sense that manual transcription would be much faster.
 
 \subsection{CAT Through Approved Subword Spottings Results}
 
 %We show the results of using the following combination of n-grams: bigrams alone, bigrams and trigrams, and unigrams, bigrams and trigrams. Bigrams alone far out performed unigrams or trigrams alone. Unigrams and trigrams only slightly underperforms bigrams and trigrams. %They both significantly outperform unigrams and bigrams. 
-We show more detailed results in Table \ref{tab:appresults} for the following five variations of batch distribution: switch-distribution modeling, single-distribution modeling, two-distribution modeling, clusters returning the closest cluster next and clusters returning the highest scored cluster next. We also expirimented with other methods of distributing batches, however, these far outperformed the other approaches. We don't show an exhustive list of n-gram combinations, but show those that both cover a variety and were the best performing.
+We show more detailed results in Table \ref{tab:appresults} for the following three variations of batch distribution: modeling the ``true-false break point'' (normal), clusters returning the closest cluster next and clusters returning the highest scored cluster next. We also experimented with other methods of distributing batches, however, these outperformed the other approaches. We don't show an exhaustive list of n-gram combinations, but show those that both cover a variety and best performance.
 
 \begin{table}
 \centering
@@ -1689,28 +1724,32 @@ We show more detailed results in Table \ref{tab:appresults} for the following fi
 %  Top cluster next BT & 0.672 & 2.82 & 0.033 & 0.500 & 1.15 & 0.064 \\
 %  Top cluster next UBT & 0.675 & 2.81 & 0.031 & 0.502 & 1.16 & 0.071 \\
   \hline  
-  Normal UBT & 0.588 & 3.245 & 0.024 &  0.354 & 2.51 & 0.058 \\
-  Closest cluster next U & 0.266 & 2.502 & 0.047 & 0.171 & 4.17 & 0.036 \\
-  Closest cluster next BT & 0.686 & 1.30 & 0.018 & 0.532 & 1.16 & 0.080 \\
-  Closest cluster next UBT & 0.685 & 1.30 & 0.019 & 0.532 & 1.14 & 0.075 \\
-  Top cluster next U & 0.274 & 2.563 & 0.050 & 0.172 & 4.34 & 0.033 \\
-  Top cluster next BT & 0.693 & 1.28 & 0.020 & 0.529 & 1.15 & 0.076 \\
-  Top cluster next UBT & 0.689 & 1.29 & 0.019 & 0.530 & 1.15 & 0.073 \\
+  Normal U & 0.121 & 10.78 & 0.107 &  0.130 & 2.53 & 0.032 \\
+  Normal B & 0.337 & 7.28 & 0.026 &  0.076 & 2.53 & 0.093 \\
+  Normal UB & 0.475 & 7.78 & 0.021 &  0.219 & 2.53 & 0.049 \\
+  Normal BT & 0.489 & 5.67 & 0.025 &  0.213 & 2.54 & 0.057 \\  
+  Normal UBT & 0.588 & 6.39 & 0.024 &  0.354 & 2.51 & 0.058 \\
+  Closest cluster next U & 0.266 & 4.93 & 0.047 & 0.171 & 4.17 & 0.036 \\
+  Closest cluster next BT & 0.686 & 2.55 & 0.018 & 0.532 & 1.16 & 0.080 \\
+  Closest cluster next UBT & 0.685 & 2.56 & 0.019 & 0.532 & 1.14 & 0.075 \\
+  Top cluster next U & 0.274 & 5.05 & 0.050 & 0.172 & 4.34 & 0.033 \\
+  Top cluster next BT & 0.693 & 2.52 & 0.020 & 0.529 & 1.15 & 0.076 \\
+  Top cluster next UBT & 0.689 & 2.54 & 0.019 & 0.530 & 1.15 & 0.073 \\
   \hline  
 \end{tabular}
 \caption{Results from simulations of CATTSS using user approval on subword spotting results. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used.}
 \label{tab:appresults}
 \end{table}
 
-All of these methods perform far below manual transcription. In the best variation for the Bentham dataset the simulated user spent 56\% of its time approving spottings. The effort required for the user to supervise the subword spotting represents a large slowdown to the system's speed. The Census Names dataset is consistently much slower than the Bentham dataset as the handwritting in it is more difficult and thus requires even more user supervision in approving subword spottings.
+All of these methods perform far below manual transcription. In the best variation for the Bentham dataset the simulated user spent 56\% of its time approving spottings. The effort required for the user to supervise the subword spotting represents a large slowdown to the system's speed. The Census Names dataset is consistently much slower than the Bentham dataset as the handwriting in it is more difficult and thus requires even more user supervision in approving subword spottings. Additionally, we run into the same slow-down from bad transcription selection batches described in the previous section.
 
-An part of a page of the testing corpus of the Bentham dataset is show in Figure \ref{fig:aftercattss} annotated with the spottings which were approved as well as the transcribed words.
+A page of the testing corpus of the Bentham dataset is show in Figure \ref{fig:aftercattss} annotated with the spottings which were approved as well as the transcribed words. %Almost all words have at least one spotting present.
 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.99\textwidth]{aftercattss}
-    \caption{Part of a page of the Bentham dataset after running the CATTSS system with subword spotting approval being distributied using a two-distribution model with only bigrams. The pink boxes represent approved bigram spottings. The red text represents a transcription made by the system.}
+    \includegraphics[width=0.75\textwidth]{aftercattss}
+    \caption{A page of the Bentham dataset after running the CATTSS system with subword spotting approval being distributed using a two-distribution model with only bigrams. Yellow, pink, and cyan boxes represent, respectively, approved unigram, bigram, and trigram spottings. The colors are blended when there is overlap. Dark-red text below a word represents the transcription made by the system.}
     \label{fig:aftercattss}
 \end{figure}
 
@@ -1724,7 +1763,9 @@ An part of a page of the testing corpus of the Bentham dataset is show in Figure
 In the previous section we saw the subword spotting approval as a major bottleneck. We removed that bottleneck in this method by aggregating all spottings into character probability vectors and comparing these directly to our lexicon words using DTW. We see large gains doing this, but we still fail to beat manual transcription speeds by a wide margin. Details of the results can be seen in Table \ref{tab:dtwresults}. The best results used both unigrams, bigrams and trigrams; as the user does not have to approve any it makes sense that including more information would lead to better results.
 
 Given the similarities between this method of using a character probability vector and the baseline method using PHOC vectors, we think it valuable to describe why this method preforms worse.
-Both the PHOC vector approach and the subword spotting approach use the same network. The subword spotting approach attempts to create more localized information by evaluating the subwindows and using their location. However, PHOCNet uses a 5 level TPP layer and the PHOC vector has 5 levels as well; these provide a fair amount of resolution by themselves. Subword spotting introduces some ambiguity due to its poor localization. Some of this likely is present in the aggregated character probability vector and contributes to its worse behavoir. Additionally, the PHOCNet is trained on full word images, not subwindows. This means it will generally have better performance on word images, which the PHOC vector approach uses.
+Both the PHOC vector approach and the subword spotting approach use the same network.
+This network was trained on full word images; this means it will generally have better performance on word images, which the PHOC vector approach uses. Additionally, there is some ambiguity introduced by the CPV method's sliding windows, which are not precise in their localization.
+%The subword spotting approach attempts to create more localized information by evaluating the subwindows and using their location. However, PHOCNet uses a 5-level TPP layer and the PHOC vector has 5 levels as well; these provide a fair amount of resolution by themselves. Subword spotting introduces some ambiguity due to its poor localization. Some of this likely is present in the aggregated character probability vector and contributes to its worse behavoir. Additionally, the PHOCNet is trained on full word images, not subwindows. This means it will generally have better performance on word images, which the PHOC vector approach uses.
 
 %Can you cut more corners to makes things faster but less accurate? yes, but we can to the same thing for PHOC-based trans
 %Potentially viable method in absence of data-specific trained spotting method (A QbE model, but it would have to be really good).
@@ -1742,13 +1783,13 @@ Both the PHOC vector approach and the subword spotting approach use the same net
 %  CPV+DTW UB & 0.717 & 13.96 & 0.046 & 0.356 & 4.49 & 0.204 \\
 %  CPV+DTW UBT & 0.738 & 15.52 & 0.045 & 0.391 & 5.05 & 0.178 \\
   \hline
-  CPV+DTW U & 0.570 & 4.34 & 0.080 & 0.325 & 3.98 & 0.219  \\
-  CPV+DTW UB & 0.563 & 4.44 & 0.082 & 0.337 & 4.17 & 0.219  \\
-  CPV+DTW UT	 & 0.428 & 2.99 & 0.121 & 0.285915 & 3.44 & 0.274  \\
-  CPV+DTW UBT & 0.489 & 3.61 & 0.107 & 0.318 & 3.89 & 0.238  \\
+  CPV+DTW U & 0.570 & 8.55 & 0.080 & 0.325 & 3.98 & 0.219  \\
+  CPV+DTW UB & 0.563 & 8.74 & 0.082 & 0.337 & 4.17 & 0.219  \\
+  CPV+DTW UT	 & 0.428 & 5.89 & 0.121 & 0.285915 & 3.44 & 0.274  \\
+  CPV+DTW UBT & 0.489 & 7.11 & 0.107 & 0.318 & 3.89 & 0.238  \\
   \hline    
 \end{tabular}
-\caption{Results from simulations using character probability vectors derived from subword spotting resutls. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used.}
+\caption{Results from simulations using character probability vectors derived from subword spotting results. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used.}
 \label{tab:dtwresults}
 \end{table}
 
@@ -1763,7 +1804,7 @@ Both the PHOC vector approach and the subword spotting approach use the same net
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Conclusion}
 
-In this thesis we have introduced subword spotting and a method of doing it leveraging state-of-the-art word spotting techniques. We have presented results of subword spotting at three granularities (uni-, bi- and trigrams) with two datasets and show it to be a more challenging task than word spotting. We showed three applications of subword spotting: manual trancription assisting, suffix spotting and CAT (computer assisted transcription).
+In this thesis we have introduced subword spotting and a method of doing it leveraging state-of-the-art word spotting techniques. We have presented results of subword spotting at three granularities (uni-, bi- and trigrams) with two datasets and show it to be a more challenging task than word spotting. We showed three applications of subword spotting: manual transcription assisting, suffix spotting and CAT (computer assisted transcription).
 
 We now summarize what we feel our contributions are with this work and then discuss potential future work.
 
@@ -1797,14 +1838,14 @@ We attempt to apply subword spotting to CAT, but fail to achieve usable results.
 %regex search/spotting
 %CPV to regex
 
-There are several things that could have improved the subword spotting. We did not perform any preprocessing. State-of-the-art word spotting methods do not deslant word images. However, for subword spotting, deslanting the word images could have made localization better as the character boundaries would be more defined. While we attempted to refine individual spotting results to improve score and localization, we did not have success. However, there may be a refinment method we did not try which would succeed.
+There are several things that could have improved the subword spotting. We did not perform any preprocessing. State-of-the-art word spotting methods do not deslant word images. However, for subword spotting, deslanting the word images could have made localization better as the character boundaries would be more defined. While we attempted to refine individual spotting results to improve score and localization, we did not have success. However, there may be a refinement method we did not try which would succeed.
 
-Everything we did in this work was based on word segmentation. However, it would not be difficult to extend what we have done to a segmentation-free scenario. One would need to be able to distinguish the situation of letters having a space between them, but after this  the extension shoudl be straightforward.
+Everything we did in this work was based on word segmentation. However, it would not be difficult to extend what we have done to a segmentation-free scenario. One would need to be able to distinguish the situation of letters having a space between them, but after this  the extension should be straightforward.
 
 While we aggregated spottings into regular expressions, an extension of suffix spotting would be regular expression spotting. That is, the user supplies a regular expression and the system returns all word images which match the expression. With some work, subword spotting should be able to achieve this. One could spot all n-grams in the expression and then use the structure of the expression to aggregate the scores according to their spatial relationships.
 
 Our CAT strategies were not successful, and if they were they would need to be competitive with modern automatic handwriting recognition methods (CNN+RNN) to be applicable. However, there is a slightly different application our method has the potential to work in.
-Both our spotting method (PHOCNet) and modern automatic handwriting recognition methods (CNN+RNN) require traning data from a corpus before they can begin to work effectively. In a real workflow this will be a part of the corpus that must be manually transcribed. However, given an effective QbE subword spotting method that does not require corpus specific training, the CATTSS methods described in Chapter \ref{transcription} should work with few adjustments. Rather than the system initially spotting a set of n-grams, a user would need to crop a few from the corpus to seed the system. After this, however, it should be able to proceed as outlined in Chapter \ref{transcription}.
+Both our spotting method (PHOCNet) and modern automatic handwriting recognition methods (CNN+RNN) require training data from a corpus before they can begin to work effectively. In a real work-flow this will be a part of the corpus that must be manually transcribed. However, given an effective QbE subword spotting method that does not require corpus specific training, the CATTSS methods described in Chapter \ref{transcription} should work with few adjustments. Rather than the system initially spotting a set of n-grams, a user would need to crop a few from the corpus to seed the system. After this, however, it should be able to proceed as outlined in Chapter \ref{transcription}.
 The key is that the untrained QbE spotting method must be better than the QbS spotting we have demonstrated. Currently such a method does not exist.
 
 
