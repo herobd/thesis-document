@@ -1459,7 +1459,7 @@ We identify the true/false boundary by the following procedure. We sample the be
 While fitting a parabola may seem strange, its simplicity makes it effective. We tried more complicated methods of modeling the data, but these failed too frequently.
 
 When creating a batch, we select instances starting at the estimated true/false boundary and alternately select the next instance (ordered by score) on the true and false sides. Intuitively this means we begin with the instances in which we are least confident about our classification and work towards those in which we are more confident.
-%TODO stop sarahs
+
 
 %We model the distributions as normal distributions, the false spottings being only half of the distribution (as we discard the worst scores for effiency).
 
@@ -1514,7 +1514,7 @@ When creating a batch, we select instances starting at the estimated true/false 
 
 \subsection{Receiving Spotting Approvals}
 
-When user labeling is received we update running averages of approval for instances of the true side and false side of the split. If either of these pass a threshold, we accept or reject all remaining instances on the respective side. We accept remaining true-side instances if the average approval rate exceeds 0.92. We reject the remaining false-side instances if the average approval rate falls below 0.75.
+When user labeling is received, we update running averages of approval for instances of the true side and false side of the split. If either of these pass a threshold, we accept or reject all remaining instances on the respective side. We accept remaining true-side instances if the average approval rate exceeds 0.92. We reject the remaining false-side instances if the average approval rate falls below 0.75.
 
 For each approved spotting, we add the spotting to the word and execute the procedure described in Section \ref{wordcompletion}.
 %Every 5 updates we recheck whether it would be better to model the data as one or two distributions.
@@ -1539,7 +1539,7 @@ For each approved spotting, we add the spotting to the word and execute the proc
 
 \section{CAT Through Approved Subword Spottings Using Clustering}
 
-The approval of spottings is a bottle-neck for the previous transcription strategy. In \cite{Retsinas2015}, they sped up approval by clustering printed characters together and presenting the user with a composite of a cluster. While handwriting it too noisy to composite, we follow a similar method of clustering n-gram spottings together and presenting users with (part of) a cluster to approve or disapprove. Classifying a group of spottings which belong to the same class should take as long as a single instance; the catch is that we don't know if a group of spottings is all right or all wrong. It's likely our clustering is imperfect so that there is a mix. However, in the case where only a few instances in the cluster are outliers, they should be quickly identified by a user (see Figures \ref{fig:clustergood} and \ref{fig:clusterbad}). This follows the same spirit as the UI for \cite{Clawson2014} which also leveraged humans ability to quickly identify outliers. In the case where the cluster is totally mixed (50\%/50\%) one can classify each instance individually, which is what was being done in the above method.
+The approval of spottings is a bottle-neck for the previous transcription strategy. In \cite{Retsinas2015}, they sped up approval by clustering printed characters together and presenting the user with a composite of a cluster. While handwriting is too noisy to composite, we follow a similar method of clustering n-gram spottings together and presenting users with (part of) a cluster to approve or disapprove. Classifying a group of spottings which belong to the same class should take as long as a single instance; the catch is that we don't know if a group of spottings is all right or all wrong. It's likely our clustering is imperfect so that there is a mix. However, in the case where only a few instances in the cluster are outliers, they should be quickly identified by a user (see Figures \ref{fig:clustergood} and \ref{fig:clusterbad}). This follows the same spirit as the UI for \cite{Clawson2014} which also leveraged humans' ability to quickly identify outliers. In the case where the cluster is totally mixed (50\%/50\%) one can classify each instance individually, which is what was being done in the above method.
 % (see Figure ??).
 
 In this transcription strategy we use the same method as above, but change how spotting batches are distributed and don't use QbE in the same way. We will describe the steps of this process next.
@@ -1560,7 +1560,7 @@ The other method attempts to identify good clusters based on their similarity to
 
 In both methods, if a selected cluster is too large (maximum size of 15) we split it and send each piece as a separate batch.
 
-We have a ``purity'' goal of 0.9 (roughly 1 or 2 outliers per batch). When our moving average purity varies from this (over an $\epsilon$ threshold) we either move up a level in the hierarchy (we are too pure) or move down a level in the hierarchy (we are not pure enough). If the goal were too high (e.g.~1.0), we would quickly move to a level where the clusters are very small, which would decrease efficiency.
+We have a ``purity'' goal of 0.9 (roughly 1 or 2 outliers per batch). When our moving average purity varies from this (over an $\epsilon$ threshold) we move up a level in the hierarchy if the purity is too high, or move down a level in the hierarchy if the purity is too low. If the goal were too high (e.g.~1.0), we would quickly move to a level where the clusters are very small, which would decrease efficiency.
 
 When our moving average accuracy (the portion of instances classified as true by the user) falls below a threshold (0.4) we stop sending batches for that n-gram.
 
@@ -1599,15 +1599,60 @@ We want to avoid having to make decisions about spottings, either by thresholdin
 
 
 
-The combining happens according to the following procedure.
-We process each n (1, 2, and 3) separately into an independent vector before combining them.
+The combining happens according to the following procedure, where we process each n (1, 2, and 3) separately into an independent vector before combining them. Each spotted n-gram produces a score at each location of the sliding window. For unigrams this gives us a vector for a relative scoring of a character at each location. For bigrams and trigrams we can offset these locations and create vectors for each character present in the bigram or trigram; these are then summed together.
+Each n-specific character vector is normalized according to how many n-grams contributed to that character. If a character has had no n-grams contribute to it, we set it to the minimum value observed.
+%We then perform a soft-max at each horizontal position over the characters. This is then slightly reduced if some letters did not contribute (no n-grams with that letter) to account for the soft-max being slightly higher on the letters which are present.
 
-Each spotted n-gram produces a score at each location of the sliding window. For unigrams this gives us a vector for a relative scoring of a character at each location. For bigrams and trigrams we can offset these locations and create vectors for each character present in the bigram or trigram. These can them be summed together for a word image.
-Each n-specific character vector is normalized according to how many n-grams contributed to that character.
-We then perform a soft-max at each horizontal position over the characters. This is then slightly reduced if some letters did not contribute (no n-grams with that letter) to account for the soft-max being slightly higher on the letters which are present.
+The individual n-specific character vectors are summed. % and each letter normalized according to how many n-specific vectors contributed to it.
+This summed result has a soft-max applied to each horizontal position (over characters) to yield the final character probability vector.
+There is a little extra work involved given n-grams are spotted at different window sizes; the full process is detailed in Algorithm 3.
 
-The individual n-specific vectors are summed and each letter normalized according to how many n-specific vectors contributed to it.
-This summed result has another soft-max applied to it to yield the final character probability vector.
+\begin{algorithm}
+\caption{Character probability vector creation}\label{alg_cpv}
+\SetKwData{PHOCs}{PHOCs}\SetKwData{Char}{character}\SetKwData{Offset}{offset}\SetKwData{Scores}{possibleScores}\SetKwData{CharacterSums}{characterSums}\SetKwData{CharacterCounts}{characterCounts}\SetKwData{Thresh}{thresholdScore}\SetKwData{FinalCharacterSums}{CPV}\SetKwData{Contrib}{numContributing}\SetKwData{MinValue}{minValue}\SetKwData{Ngram}{n-gram}\SetKwData{Ones}{1s}
+\SetKwFunction{Spot}{DenseSpot}\SetKwFunction{OffsetF}{OffsetVector}\SetKwFunction{GetOffset}{GetOffset}\SetKwFunction{SoftMax}{SoftMax}\SetKwFunction{CreateBatch}{CreateBatch}
+\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+ \Input{word image}
+ \Output{character probability vector for word}
+ %\Begin{
+ \BlankLine
+ \CharacterSums is a matrix tracking the combine scores for each n and character, indexed by n, character, position\;
+ \CharacterCounts is a matrix of the same size as \CharacterSums, but tracks how many spottings contributed at each position\;
+ \ForEach{$n$ in \{$1,2,3$\}}{
+   \ForEach{\Ngram of length $n$}{
+     \PHOCs $:= $ \Spot{\Ngram}\tcc*[r]{Outputs PHOC vector for each window location along the entire word}
+   %}   
+   \ForEach{position $l$ in \Ngram}{
+     \Char $:=$ \Ngram$[l]$\;
+     \Offset $:=$ \GetOffset($l$,$n$,\Ngram)\tcc*[r]{Based on estimated character width and window width}
+     \CharacterSums$[n][$\Char$]$ $:=$ \CharacterSums$[n][$\Char$]$ + \OffsetF{\Offset,\PHOCs}\;
+     \CharacterCounts$[n][$\Char$]$ := \CharacterCounts$[n][$\Char$]$+\OffsetF{\Offset,\Ones}\tcc*[r]{\Ones is a vector of ones of the size and position as \PHOCs.}
+   }
+   }
+ }
+ \FinalCharacterSums is a matrix the same size as \CharacterSums$[n]$\;
+ \ForEach{\Char}{
+   \ForEach{horizontal position along the word $p$}{
+     \Contrib $:= 0$\;
+     \ForEach{$n$ in \{$1,2,3$\}}{
+       \If{\CharacterCounts$[n][$\Char$][p]!=0$}{
+         \Contrib $:=$ \Contrib$+1$\;
+         \FinalCharacterSums$[$\Char$][p] :=$ \FinalCharacterSums$[$\Char$][p] +$\CharacterSums$[n][$\Char$][p]/$\CharacterCounts$[n][$\Char$][p]$\;
+       }
+     }
+     \eIf{\Contrib $==0$}{
+       \FinalCharacterSums$[$\Char$][p] :=$ \MinValue\;
+     }{
+       \FinalCharacterSums$[$\Char$][p] :=$ \FinalCharacterSums$[$\Char$][p] / $\Contrib\;
+     }
+   } 
+ }
+ \ForEach{horizontal position along the word $p$}{
+   \FinalCharacterSums$[*][p] :=$ \SoftMax{\FinalCharacterSums$[*][p]$}\tcc*[r]{Soft-max occurs across characters}
+ }
+ return \FinalCharacterSums
+ 
+\end{algorithm}
 
 We then use dynamic time warping to score the character probability vectors against the lexicon words, the lexicon words being a series of one-hot character vectors. Similar to the transcription via PHOC method we can then return the top seven matches to the user to select the correct transcription.
 
@@ -1621,13 +1666,13 @@ In this chapter we will explain our procedure for testing the transcription stra
 
 \section{Evaluation Method}
 
-We evaluate all our transcription strategies as CAT (computer assisted transcription) methods. However, rather than having users use the systems we simulate approximate user behavior using collected statistics. While the statistics may not give results as accurate as a user study, it allows us to easily compare the performance of different transcription strategies using consistent timing data.
+We evaluate all our transcription strategies as CAT (computer assisted transcription) methods. However, rather than having users use the systems, we simulate approximate user behavior using collected statistics. While the statistics may not give results as accurate as a user study, it allows us to easily compare the performance of different transcription strategies using consistent timing data.
 
 The statistics were collected from four members of our team
 %, who were moderetly to tagently involved in this project, 
-using the system. We collected timing information regarding how quickly they completed batches, whether they were correct (against the corpus ground truth 
+using the system. We collected timing information regarding how quickly they completed batches, whether they were correct (against the corpus ground truth),
 %and the author's judgement
-), as well as information regarding the batch's ``difficulty''. For spottings this was the size of the batch, the number of true instances, and whether the previous batch was the same n-gram. For transcription selection this was the position of the correct transcription (if present). 
+ as well as information regarding the batch's ``difficulty''. For spottings this was the size of the batch, the number of true instances, and whether the previous batch was the same n-gram. For transcription selection this was the position of the correct transcription (if present). 
 %For manual transcription we recorded the length of the word(s). 
 We fit linear models to predict the time needed to complete a batch based on its ``difficulty''. We also did this for errors.
 We collected data for both spotting approval methods (instance and cluster).
@@ -1636,13 +1681,13 @@ In more detail, we measured which ``difficulty'' measure best modeled the data a
 %For manual transcription a linear model based on length predicts time and a fixed value predicts error (on the word level).  
 For the Bentham dataset, instance spotting approval timing is based on whether the previous batch is the same n-gram. For the Census Names dataset, instance spotting approval timing is based on the number of true instances. For both datasets, error is based on the number of true instances in the batch. For both datasets, cluster spotting approval timing and error is based on the number of instances in the batch.
 
-We also measured how long it took to manual transcribe line images so we can see if the CAT actually speeds up the transcription process.
+We also measured how long it took to manually transcribe line images so we could see if the CAT actually sped up the transcription process.
 
-To evaluate, we ran each strategy as a CAT system with a single simulated user. When the simulated user received a batch, it found the correct response and then measured the probability of error and introduced an error if a random value between [0,1] fell below that probability. The simulated user then computed the estimated time based on the appropriate model and waited that long before returning its answer. For many of the transcription strategies, there comes a point where the strategy must be abandoned and the remaining words manual transcribed. We terminate our simulations at this point, but report how much was transcribed.
+To evaluate, we ran each strategy as a CAT system with a single simulated user. When the simulated user received a batch, it found the correct response and then measured the probability of error and introduced an error if a random value between [0,1] fell below that probability. The simulated user then computed the estimated time based on the appropriate model and waited that long before returning its answer. For many of the transcription strategies, there comes a point where the strategy must be abandoned and the remaining words manually transcribed. We terminate our simulations at this point, but report how much was transcribed.
 
 \section{Results}
 
-We measure the speed of the transcriptions using a words-per-minute metric. This is averaged over the time of the system running, as it varies significantly during the running for the spotting approval method. The results are summarized on Table \ref{tab:finalresults}. In the following subsections we analyze the results of each method.
+We measure the speed of the transcriptions using a words-per-minute metric. This is averaged over the time of the system running, as it varies significantly during the running for the spotting approval method. The results are summarized in Table \ref{tab:finalresults}. In the following subsections we analyze the results of each method. The results of \cite{Zagoris2015} are included in Table \ref{tab:finalresults}, however, it is apparent from the differing manual transcription speeds that our experimental set ups are too varied to allow a direct comparison.
 
 \begin{table}
 \centering
@@ -1685,22 +1730,22 @@ We measure the speed of the transcriptions using a words-per-minute metric. This
   %? & X & X & X & X \\
   \hline  
 \end{tabular}
-\caption{Highlights in the results from simulations. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used. The PHOC vector method is the only method we tested that is able to transcribe words at a rate faster than manual transcription. We note that \cite{Zagoris2015} reports manual transcription far below the one we collected. This is probably due to experimental setup. Their CAT system gets almost a 50\% speed up from their reported manual time.}
+\caption{Highlights in the results from simulations. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used. The PHOC vector method is the only method we tested that is able to transcribe words at a rate faster than manual transcription. We note that \cite{Zagoris2015} reports manual transcription far below the one we collected. This is probably due to experimental setup. Their CAT system gets almost a 50\% speed-up from their reported manual time.}
 \label{tab:finalresults}
 \end{table}
 
-We note that all methods have better word-error-rate (WER) than manual. This is because all are aided by the lexicon. One can imagine that the manual transcription method could be augmented by showing users close lexical matches to the word a user is typing. This should make manual transcriptions WER comparable to the other methods at the cost of some speed as users now will spend some time looking at the lexical matches.
+We note that all methods have better word-error-rate (WER) than manual transcription. This is because all are aided by the lexicon. One can imagine that the manual transcription method could be augmented by showing users close lexical matches to the word a user is typing. This should make manual transcriptions WER comparable to the other methods at the cost of some speed as users will spend some time looking at the lexical matches.
 
 
 \subsection{CAT Through PHOC Vectors Results}
-This baseline result is the only method to surpass manual transcription time, and it only did for the Bentham dataset. We show results in Table \ref{tab:finalresults} for three variations where the portion of words actually sent to the user is changed (i.e.~we discard the worst words). As would be expected, decreasing the portion of words sent to the user has a linear relationship with the portion transcribed, however, the speed does not follow this linear relationship. This simply means that the order of good transcription selection batches doesn't correlate directly to score.
+This baseline result is the only method to surpass manual transcription time, and it only did so for the Bentham dataset. We show results in Table \ref{tab:finalresults} for three variations where the portion of words actually sent to the user is changed (i.e.~we discard the worst words). As would be expected, decreasing the portion of words sent to the user has a linear relationship with the portion transcribed, however, the speed does not follow this linear relationship. This simply means that the order of good transcription selection batches doesn't correlate directly to score.
 
-We assume that the speed of this method on the Census Names dataset does not surpass manual due to the greater variation in the handwriting. Humans are typically better at handling variation. Transcription selection batches without the correct transcription generally take some time to be rejected by users. If the system presents many of these (due to the difficulty of the handwriting) it makes sense that manual transcription would be much faster.
+We assume that the speed of this method on the Census Names dataset does not surpass manual transcription due to the greater variation in the handwriting. Humans are typically better at handling variation. Transcription selection batches without the correct transcription generally take some time to be rejected by users. If the system presents many of these (due to the difficulty of the handwriting), it makes sense that manual transcription would be much faster.
 
 \subsection{CAT Through Approved Subword Spottings Results}
 
 %We show the results of using the following combination of n-grams: bigrams alone, bigrams and trigrams, and unigrams, bigrams and trigrams. Bigrams alone far out performed unigrams or trigrams alone. Unigrams and trigrams only slightly underperforms bigrams and trigrams. %They both significantly outperform unigrams and bigrams. 
-We show more detailed results in Table \ref{tab:appresults} for the following three variations of batch distribution: modeling the ``true-false break point'' (normal), clusters returning the closest cluster next and clusters returning the highest scored cluster next. We also experimented with other methods of distributing batches, however, these outperformed the other approaches. We don't show an exhaustive list of n-gram combinations, but show those that both cover a variety and best performance.
+We show more detailed results in Table \ref{tab:appresults} for the following three variations of batch distribution: modeling the ``true-false break point'' (normal), clusters serving closest-cluster-next and clusters serving highest-scored-cluster-next. We also experimented with other methods of distributing batches, however, these outperformed the other approaches. We don't show an exhaustive list of n-gram combinations, but show those that both cover a variety and the best performance.
 
 \begin{table}
 \centering
@@ -1752,7 +1797,7 @@ A page of the testing corpus of the Bentham dataset is show in Figure \ref{fig:a
 \begin{figure}
     \centering
     \includegraphics[width=0.75\textwidth]{aftercattss}
-    \caption{A page of the Bentham dataset after running the CATTSS system with subword spotting approval being distributed using a two-distribution model with only bigrams. Yellow, pink, and cyan boxes represent, respectively, approved unigram, bigram, and trigram spottings. The colors are blended when there is overlap. Dark-red text below a word represents the transcription made by the system.}
+    \caption{A page of the Bentham dataset after running the CATTSS system, with subword spotting approval being distributed using a two-distribution model with only bigrams. Yellow, pink, and cyan boxes represent, respectively, approved unigram, bigram, and trigram spottings. The colors are blended when there is overlap. Text below a word represents the transcription made by the system.}
     \label{fig:aftercattss}
 \end{figure}
 
@@ -1822,10 +1867,10 @@ Our primary contribution is the exploration of subword spotting, a previously un
 Some insights from our subword spotting experiments that we feel are important are that 
 size estimation of subwords is important if using a sliding window
 and that
-the number of characters in a subword  and its frequency in the data set does not directly correlate with the precision one can spot it.
+the number of characters in a subword  and its frequency in the data set does not directly correlate with the precision with which it can be spotted.
 
 A further contribution is our exploration of a few applications of subword spotting.
-We show how subword spotting can be used to assist people manually transcribing documents by helping locate instances of unknown characters. Subword spotting we feel is a good fit for this task as a person may want to search for a group of characters together, or may not even recognize where character boundaries are.
+We show how subword spotting can be used to assist people manually transcribing documents by helping locate instances of unknown characters. We feel subword spotting a good fit for this task as a person may want to search for a group of characters together, or may not even recognize where character boundaries are.
 We evaluate the performance of subword spotting when applied to the task of suffix spotting. 
 %This could easily be extended to include preffix spotting. 
 These searches can achieve results not readily available with word spotting and, as discussed in the next section, can be extended to even more customizable searches.
@@ -1848,7 +1893,7 @@ Everything we did in this work was based on word segmentation. However, it would
 While we aggregated spottings into regular expressions, an extension of suffix spotting would be regular expression spotting. That is, the user supplies a regular expression and the system returns all word images which match the expression. With some work, subword spotting should be able to achieve this. One could spot all n-grams in the expression and then use the structure of the expression to aggregate the scores according to their spatial relationships.
 
 Our CAT strategies were not successful, and if they were they would need to be competitive with modern automatic handwriting recognition methods (CNN+RNN) to be applicable. However, there is a slightly different application our method has the potential to work in.
-Both our spotting method (PHOCNet) and modern automatic handwriting recognition methods (CNN+RNN) require training data from a corpus before they can begin to work effectively. In a real work-flow this will be a part of the corpus that must be manually transcribed. However, given an effective QbE subword spotting method that does not require corpus specific training, the CATTSS methods described in Chapter \ref{transcription} should work with few adjustments. Rather than the system initially spotting a set of n-grams, a user would need to crop a few from the corpus to seed the system. After this, however, it should be able to proceed as outlined in Chapter \ref{transcription}.
+Both our spotting method (PHOCNet) and modern automatic handwriting recognition methods (CNN+RNN) require training data from a corpus before they can begin to work effectively. In a real work-flow this will be a part of the corpus that must be manually transcribed. However, given an effective QbE subword spotting method that does not require corpus specific training, the CATTSS methods described in Chapter \ref{transcription} should work with a few adjustments. Rather than the system initially spotting a set of n-grams, a user would need to crop a few from the corpus to seed the system. After this, however, it should be able to proceed as outlined in Chapter \ref{transcription}.
 The key is that the untrained QbE spotting method must be better than the QbS spotting we have demonstrated. Currently such a method does not exist.
 
 

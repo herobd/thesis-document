@@ -43,14 +43,14 @@
 \contentsline {subsection}{\numberline {6.3.2}Spotting Approval Batch Distribution}{65}{subsection.6.3.2}
 \contentsline {subsection}{\numberline {6.3.3}Spotting Approval UI}{66}{subsection.6.3.3}
 \contentsline {section}{\numberline {6.4}CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment}{66}{section.6.4}
-\contentsline {chapter}{\numberline {7}Evaluation of Transcription Strategies}{71}{chapter.7}
-\contentsline {section}{\numberline {7.1}Evaluation Method}{71}{section.7.1}
-\contentsline {section}{\numberline {7.2}Results}{72}{section.7.2}
-\contentsline {subsection}{\numberline {7.2.1}CAT Through PHOC Vectors Results}{73}{subsection.7.2.1}
-\contentsline {subsection}{\numberline {7.2.2}CAT Through Approved Subword Spottings Results}{74}{subsection.7.2.2}
-\contentsline {subsection}{\numberline {7.2.3}CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment Results}{76}{subsection.7.2.3}
-\contentsline {chapter}{\numberline {8}Conclusion}{77}{chapter.8}
-\contentsline {section}{\numberline {8.1}Contributions}{77}{section.8.1}
-\contentsline {section}{\numberline {8.2}Future Work}{78}{section.8.2}
-\contentsline {chapter}{\numberline {9}Appendix}{81}{chapter.9}
-\contentsline {chapter}{References}{91}{toclistings.3}
+\contentsline {chapter}{\numberline {7}Evaluation of Transcription Strategies}{73}{chapter.7}
+\contentsline {section}{\numberline {7.1}Evaluation Method}{73}{section.7.1}
+\contentsline {section}{\numberline {7.2}Results}{74}{section.7.2}
+\contentsline {subsection}{\numberline {7.2.1}CAT Through PHOC Vectors Results}{75}{subsection.7.2.1}
+\contentsline {subsection}{\numberline {7.2.2}CAT Through Approved Subword Spottings Results}{76}{subsection.7.2.2}
+\contentsline {subsection}{\numberline {7.2.3}CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment Results}{77}{subsection.7.2.3}
+\contentsline {chapter}{\numberline {8}Conclusion}{81}{chapter.8}
+\contentsline {section}{\numberline {8.1}Contributions}{81}{section.8.1}
+\contentsline {section}{\numberline {8.2}Future Work}{82}{section.8.2}
+\contentsline {chapter}{\numberline {9}Appendix}{85}{chapter.9}
+\contentsline {chapter}{References}{95}{toclistings.3}
