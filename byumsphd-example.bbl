@@ -18,22 +18,22 @@ D.~Aldavert, M.~Rusi\={n}ol, R.~Toledo, and J.~Llad\'{o}s.
 J.~Almaz\'{a}n, D.~Fern\'{a}ndez, A.~Forn\'{e}s, J.~Llados, and E.~Valveny.
 \newblock A coarse-to-fine approach for handwritten word spotting in large
   scale historical documents collection.
-\newblock In \emph{Frontiers in Handwriting Recognition (ICFHR), 2012
-  International Conference on}. IEEE, 2012.
+\newblock In \emph{Proceedings of the 13th International Conference on
+  Frontiers in Handwriting Recognition (ICFHR)}. IEEE, 2012.
 
 \bibitem[Almaz\'{a}n et~al.(2014)Almaz\'{a}n, Gordo, Forn\'{e}s, and
   Valveny]{Almazan2014}
 J.~Almaz\'{a}n, A.~Gordo, A.~Forn\'{e}s, and E.~Valveny.
 \newblock Word spotting and recognition with embedded attributes.
-\newblock \emph{IEEE Transactions on Pattern Analysis and Machine
-  Intelligence}, 36\penalty0 (12):\penalty0 2552--2566, 2014.
+\newblock \emph{IEEE Transactions on Pattern Analysis and Machine Intelligence
+  (TPAMI)}, 36\penalty0 (12):\penalty0 2552--2566, 2014.
 
 \bibitem[Bunke et~al.(2004)Bunke, Bengio, and Vinciarelli]{Bunke2004}
 H.~Bunke, S.~Bengio, and A.~Vinciarelli.
 \newblock Offline recognition of unconstrained handwritten texts using hmms and
   statistical language models.
-\newblock \emph{Pattern Analysis and Machine Intelligence, IEEE Transactions
-  on}, 26\penalty0 (6):\penalty0 709--720, 2004.
+\newblock \emph{IEEE Transactions on Pattern Analysis and Machine Intelligence
+  (TPAMI)}, 26\penalty0 (6):\penalty0 709--720, 2004.
 
 \bibitem[Clawson(2014)]{Clawson2014}
 R.~Clawson.
@@ -53,20 +53,22 @@ A.~Fischer, A.~Keller, V.~Frinken, and H.~Bunke.
 B.~Gatos, G.~Louloudis, T.~Causer, K.~Grint, V.~Romero, J.A. S\'{a}nchez, A.H.
   Toselli, and E.~Vidal.
 \newblock Ground-truth production in the transcriptorium project.
-\newblock In \emph{Proceedings of DAS}. IEEE, 2014.
+\newblock In \emph{Proceedings of 11th Interational Workshop on Document
+  Analysis Systems (DAS)}. IEEE, 2014.
 
 \bibitem[Graves et~al.(2006)Graves, Fern\'{a}ndez, and Gomez]{CTC}
 A.~Graves, S.~Fern\'{a}ndez, and F.~Gomez.
 \newblock Connectionist temporal classification: Labelling unsegmented sequence
   data with recurrent neural networks.
-\newblock In \emph{Proceedings of ICML}. PMLR, 2006.
+\newblock In \emph{Proceedings of the 23rd International Conference on Machine
+  Learning (ICML)}. PMLR, 2006.
 
 \bibitem[He et~al.(2015)He, Zhang, Ren, and Sun]{SPP}
 K.~He, X.~Zhang, S.~Ren, and J.~Sun.
 \newblock Spatial pyramid pooling in deep convolutional networks for visual
   recognition.
-\newblock \emph{IEEE Transactions on Pattern Analysis and Machine
-  Intelligence}, 37\penalty0 (9):\penalty0 1904--1916, 2015.
+\newblock \emph{IEEE Transactions on Pattern Analysis and Machine Intelligence
+  (TPAMI)}, 37\penalty0 (9):\penalty0 1904--1916, 2015.
 
 \bibitem[Jia et~al.(2014)Jia, Shelhamer, Donahue, Karayev, Long, Girshick,
   Guadarrama, and Darrell]{caffe}
@@ -78,13 +80,15 @@ Y.~Jia, E.~Shelhamer, J.~Donahue, S.~Karayev, J.~Long, R.~Girshick,
 \bibitem[Kingma and Ba(2015)]{adam}
 D.P. Kingma and J.~Ba.
 \newblock Adam: {A} method for stochastic optimization.
-\newblock In \emph{Proceedings of ICLR}, 2015.
+\newblock In \emph{Proceedings of the 3rd International Conference on Learning
+  Representations (ICLR)}, 2015.
 
 \bibitem[Krishnan et~al.(2016)Krishnan, Dutta, and Jawahar]{krishnan2016}
 P.~Krishnan, K.~Dutta, and C.V. Jawahar.
 \newblock Deep feature embedding for accurate recognition and retrieval of
   handwritten text.
-\newblock In \emph{Proceedings of ICFHR}. IEEE, 2016.
+\newblock In \emph{Proceedings of the 15th International Conference on
+  Frontiers in Handwriting Recognition (ICFHR)}. IEEE, 2016.
 
 \bibitem[Liang et~al.(2012)Liang, Fairhurst, and Guest]{liang2012}
 Y.~Liang, M.C. Fairhurst, and R.M. Guest.
@@ -96,21 +100,22 @@ Y.~Liang, M.C. Fairhurst, and R.M. Guest.
 \bibitem[Manmatha et~al.(1996)Manmatha, Han, and Riseman]{manmatha1996}
 R.~Manmatha, C.~Han, and E.M. Riseman.
 \newblock Word spotting: a new approach to indexing handwriting.
-\newblock In \emph{Proceedings of CVPR}, 1996.
+\newblock In \emph{Proceedings of Conference on Computer Vision and Pattern
+  Recognition (CVPR)}. IEEE, 1996.
 
 \bibitem[Marti and Bunke(2002)]{IAM}
 U.~Marti and H.~Bunke.
 \newblock The {IAM}-database: An english sentence database for off-line
   handwriting recognition.
-\newblock \emph{Int. Journal on Document Analysis and Recognition}, 5:\penalty0
-  39--46, 2002.
+\newblock \emph{International Journal on Document Analysis and Recognition
+  (IJDAR)}, 5:\penalty0 39--46, 2002.
 
 \bibitem[Marti and Bunke(2001)]{Marti2001}
 U.V. Marti and H.~Bunke.
 \newblock Using a statistical language model to improve the performance of an
   hmm-based cursive handwriting recognition system.
-\newblock \emph{International journal of Pattern Recognition and Artificial
-  intelligence}, 14\penalty0 (1):\penalty0 65--90, 2001.
+\newblock \emph{International Journal of Pattern Recognition and Artificial
+  Intelligence (IJPRAI)}, 14\penalty0 (1):\penalty0 65--90, 2001.
 
 \bibitem[Neudecker and Tzadok(2010)]{Neudecker2010}
 C.~Neudecker and A.~Tzadok.
@@ -121,68 +126,74 @@ C.~Neudecker and A.~Tzadok.
 J.~Puigcerver.
 \newblock Are multidimensional recurrent layers really necessary for
   handwritten text recognition?
-\newblock In \emph{Proceedings of ICDAR}. IEEE, 2017.
+\newblock In \emph{Proceedings of the 14th International Conference on Document
+  Analysis and Recognition (ICDAR)}. IEEE, 2017.
 
 \bibitem[Rath and Manmatha(2003)]{Rath2003}
 T.M. Rath and R.~Manmatha.
 \newblock Features for word spotting in historical manuscripts.
-\newblock In \emph{Proceedings Document Analysis and Recognition}, 2003.
+\newblock In \emph{Proceedings of the 7th International Conference on Document
+  Analysis and Recognition (ICDAR)}. IEEE, 2003.
 
 \bibitem[Retsinas et~al.(2015)Retsinas, Gatos, Antonacopoulos, Louloudis, and
   Stamatopoulos]{Retsinas2015}
 G.~Retsinas, B.~Gatos, A.~Antonacopoulos, G.~Louloudis, and N.~Stamatopoulos.
 \newblock Historical typewritten document recognition using minimal user
   interaction.
-\newblock In \emph{Proceedings of HIP}. ACM, 2015.
+\newblock In \emph{Proceedings of the 3rd International Workshop on Historical
+  Document Imaging and Processing (HIP)}. ACM, 2015.
 
 \bibitem[Retsinas et~al.(2017)Retsinas, Sfikas, and Gatos]{retsinasTrans2017}
 G.~Retsinas, G.~Sfikas, and B.~Gatos.
 \newblock Transferable deep features for keyword spotting.
-\newblock In \emph{Proceedings of IWCIM}. IEEE, 2017.
+\newblock In \emph{Proceedings of the 6th International Workshop on
+  Computational Intelligence for Multimedia Understanding (IWCIM)}. IEEE, 2017.
 
 \bibitem[Rodr{\i}guez. and Perronnin(2008)]{Rodrıguez2008}
 J.A. Rodr{\i}guez. and F.~Perronnin.
 \newblock Local gradient histogram features for word spotting in unconstrained
   handwritten documents.
-\newblock In \emph{Int. Conf. on Frontiers in Handwriting Recognition}, 2008.
+\newblock In \emph{Proceedings of the 11th International Conference on
+  Frontiers in Handwriting Recognition (ICFHR)}. IEEE, 2008.
 
 \bibitem[Romero et~al.(2009)Romero, Toselli, Rodriguez, and Vidal]{Toselli2009}
 V.~Romero, A.H. Toselli, L.~Rodriguez, and E.~Vidal.
 \newblock Using mouse feedback in computer assisted transcription of
   handwritten text images.
-\newblock In \emph{Proceedings of ICDAR}. IEEE, 2009.
+\newblock In \emph{Proceedings of the 10th International Conference on Document
+  Analysis and Recognition (ICDAR)}. IEEE, 2009.
 
 \bibitem[Rothacker et~al.(2013)Rothacker, Rusi{\~{n}ol}, and
   Fink]{Rothacker2013}
 L.~Rothacker, M.~Rusi{\~{n}ol}, and G.A. Fink.
 \newblock Bag-of-features hmms for segmentation-free word spotting in
   handwritten documents.
-\newblock In \emph{Proceedings of ICDAR}. IEEE, 2013.
+\newblock In \emph{Proceedings of the 12th International Conference on Document
+  Analysis and Recognition (ICDAR)}. IEEE, 2013.
 
 \bibitem[S\'{a}nchez et~al.(2016)S\'{a}nchez, Romero, Toselli, and
   Vidal]{icfhrComp2016}
 J.~A. S\'{a}nchez, V.~Romero, A.~H. Toselli, and E.~Vidal.
 \newblock Icfhr2016 competition on handwritten text recognition on the read
   dataset.
-\newblock In \emph{Proceedings of ICFHR}, 2016.
+\newblock In \emph{Proceedings of the 15th International Conference on
+  Frontiers in Handwriting Recognition (ICFHR)}. IEEE, 2016.
 
 \bibitem[S\'{a}nchez et~al.(2017)S\'{a}nchez, Romero, Toselli, Villegas, and
   Vidal]{icdarComp2017}
 J.A. S\'{a}nchez, V.~Romero, A.H. Toselli, M.~Villegas, and E.~Vidal.
 \newblock Icdar2017 competition on handwritten text recognition on the read
   dataset.
-\newblock In \emph{Proceedings of ICDAR}. IEEE, 2017.
+\newblock In \emph{Proceedings of the 14th International Conference on Document
+  Analysis and Recognition (ICDAR)}. IEEE, 2017.
 
 \bibitem[Serrano et~al.(2010)Serrano, Gim{\'e}nez, Sanchis, and
   Juan]{Serrano2010}
 N.~Serrano, A.~Gim{\'e}nez, A.~Sanchis, and A.~Juan.
 \newblock Active learning strategies for handwritten text transcription.
-\newblock In \emph{International Conference on Multimodal Interfaces and the
-  Workshop on Machine Learning for Multimodal Interaction}, ICMI-MLMI '10,
-  pages 48:1--48:4, New York, NY, USA, 2010. ACM.
-\newblock ISBN 978-1-4503-0414-6.
-\newblock \doi{10.1145/1891903.1891962}.
-\newblock URL \url{http://doi.acm.org/10.1145/1891903.1891962}.
+\newblock In \emph{Proceedings of the 12th International Conference on
+  Multimodal Interfaces and the 7th Workshop on Machine Learning for Multimodal
+  Interaction (ICMI-MLMI)}. ACM, 2010.
 
 \bibitem[Serrano et~al.(2014)Serrano, Gim\'{e}nez, Civera, Sanchis, and
   Juan]{Serrano2014}
@@ -194,19 +205,22 @@ N.~Serrano, A.~Gim\'{e}nez, J.~Civera, A.~Sanchis, and A.~Juan.
 \bibitem[Shekhar and Jawahar(2012)]{Shekhar2012}
 R.~Shekhar and C.V. Jawahar.
 \newblock Word image retrieval using bag of visual words.
-\newblock In \emph{Proceedings of DAS}. IEEE, 2012.
+\newblock In \emph{Proceedings of 10th Interational Workshop on Document
+  Analysis Systems (DAS)}. IEEE, 2012.
 
 \bibitem[Sudholt and Fink(2016)]{sudholt2016}
 S.~Sudholt and G.A. Fink.
 \newblock Phocnet: A deep convolutional neural network for word spotting in
   handwritten documents.
-\newblock In \emph{Proceedings of ICFHR}. IEEE, 2016.
+\newblock In \emph{Proceedings of the 15th International Conference on
+  Frontiers in Handwriting Recognition (ICFHR)}. IEEE, 2016.
 
 \bibitem[Sudholt and Fink(2017)]{sudholt2017}
 S.~Sudholt and G.A. Fink.
 \newblock Evaluating word string embeddings and loss functions for cnn-based
   word spotting.
-\newblock In \emph{Proceedings of ICDAR}. IEEE, 2017.
+\newblock In \emph{Proceedings of the 14th International Conference on Document
+  Analysis and Recognition (ICDAR)}. IEEE, 2017.
 
 \bibitem[Toselli et~al.(2010)Toselli, Romero, Pastor, , and Vidal]{Toselli2010}
 A.~Toselli, V.~Romero, M.~Pastor, , and E.~Vidal.
@@ -218,21 +232,23 @@ A.~Toselli, V.~Romero, M.~Pastor, , and E.~Vidal.
   Vidal]{Toselli2007}
 A.H. Toselli, V.~Romero, L.~Rodriguez, and E.~Vidal.
 \newblock Computer assisted transcription of handwritten text images.
-\newblock In \emph{Proceedings of ICDAR}. IEEE, 2007.
+\newblock In \emph{Proceedings of the 9th International Conference on Document
+  Analysis and Recognition (ICDAR)}. IEEE, 2007.
 
 \bibitem[Toselli et~al.(2008)Toselli, Romero, and Vidal]{Toselli2008}
 A.H. Toselli, V.~Romero, and E.~Vidal.
 \newblock Computer assisted transcription of text images and multimodal
   interaction.
 \newblock In \emph{Machine Learning for Multimodal Interaction}, volume 5237 of
-  \emph{Lecture Notes in Computer Science}, pages 296--308. 2008.
+  \emph{Lecture Notes in Computer Science}, pages 296--308. Springer, 2008.
 
 \bibitem[Wigington et~al.(2017)Wigington, Stewart, Davis, and
   Barrett]{wigington2017}
 C.~Wigington, S.~Stewart, B.~Davis, and W.~Barrett.
 \newblock Data augmentation for recognition of handwritten words and lines
   using a cnn-lstm network.
-\newblock In \emph{Proceedings of ICDAR}. IEEE, 2017.
+\newblock In \emph{Proceedings of the 14th International Conference on Document
+  Analysis and Recognition (ICDAR)}. IEEE, 2017.
 
 \bibitem[Wilkinson et~al.(2017)Wilkinson, Lindstr{\"{o}}m, and
   Brun]{wilkinson2017}
@@ -245,6 +261,7 @@ T.~Wilkinson, J.~Lindstr{\"{o}}m, and A.~Brun.
 K.~Zagoris, I.~Pratikakis, and B.~Gatos.
 \newblock A framework for efficient transcription of historical documents using
   keyword spotting.
-\newblock In \emph{Proceedings of HIP}. ACM, 2015.
+\newblock In \emph{Proceedings of the 3rd International Workshop on Historical
+  Document Imaging and Processing (HIP)}. ACM, 2015.
 
 \end{thebibliography}

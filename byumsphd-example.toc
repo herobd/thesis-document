@@ -1,56 +1,56 @@
-\contentsline {chapter}{List of Figures}{ix}{toclistings.1}
-\contentsline {chapter}{List of Tables}{xv}{toclistings.2}
+\contentsline {chapter}{List of Figures}{vii}{toclistings.1}
+\contentsline {chapter}{List of Tables}{xiii}{toclistings.2}
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
 \contentsline {section}{\numberline {1.1}Why Subword Spotting?}{3}{section.1.1}
 \contentsline {section}{\numberline {1.2}Main Contributions}{5}{section.1.2}
-\contentsline {chapter}{\numberline {2}Related Work}{7}{chapter.2}
-\contentsline {section}{\numberline {2.1}Word Spotting}{7}{section.2.1}
-\contentsline {section}{\numberline {2.2}Automatic Handwriting Recognition}{10}{section.2.2}
-\contentsline {section}{\numberline {2.3}Computer Assisted Transcription}{11}{section.2.3}
-\contentsline {chapter}{\numberline {3}Datasets}{17}{chapter.3}
-\contentsline {section}{\numberline {3.1}IAM Dataset}{17}{section.3.1}
-\contentsline {section}{\numberline {3.2}Bentham Dataset}{17}{section.3.2}
-\contentsline {section}{\numberline {3.3}Census Names Dataset}{19}{section.3.3}
-\contentsline {section}{\numberline {3.4}Character Annotation}{20}{section.3.4}
-\contentsline {section}{\numberline {3.5}Lexicon}{20}{section.3.5}
-\contentsline {chapter}{\numberline {4}Subword Spotting}{25}{chapter.4}
-\contentsline {section}{\numberline {4.1}Implementation}{25}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Architecture}{25}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}Training}{28}{subsection.4.1.2}
-\contentsline {subsection}{\numberline {4.1.3}Determining Window Widths}{28}{subsection.4.1.3}
-\contentsline {subsection}{\numberline {4.1.4}Running}{29}{subsection.4.1.4}
-\contentsline {subsection}{\numberline {4.1.5}Combining QbE Results}{29}{subsection.4.1.5}
-\contentsline {section}{\numberline {4.2}Analysis of Subword Spotting}{30}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Full Word Spotting}{30}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}Subword Spotting}{31}{subsection.4.2.2}
-\contentsline {subsection}{\numberline {4.2.3}Respotting Subwords}{37}{subsection.4.2.3}
-\contentsline {chapter}{\numberline {5}Applications of Subword Spotting}{45}{chapter.5}
-\contentsline {section}{\numberline {5.1}Manual Transcription Assistant}{45}{section.5.1}
-\contentsline {section}{\numberline {5.2}Suffix Spotting}{47}{section.5.2}
-\contentsline {chapter}{\numberline {6}Application of Subword Spotting to Transcription}{51}{chapter.6}
-\contentsline {section}{\numberline {6.1}Baseline: CAT Through PHOC Vectors}{51}{section.6.1}
-\contentsline {section}{\numberline {6.2}CAT Through Approved Subword Spottings}{52}{section.6.2}
-\contentsline {subsection}{\numberline {6.2.1}Subword Spotting}{53}{subsection.6.2.1}
-\contentsline {subsection}{\numberline {6.2.2}User Tasks and Interface}{53}{subsection.6.2.2}
-\contentsline {subsubsection}{\numberline {6.2.2.1}Approval}{54}{subsubsection.6.2.2.1}
-\contentsline {subsubsection}{\numberline {6.2.2.2}Transcription Selection}{54}{subsubsection.6.2.2.2}
-\contentsline {subsection}{\numberline {6.2.3}Word Completion / Regular Expression Generation}{57}{subsection.6.2.3}
-\contentsline {subsection}{\numberline {6.2.4}Receiving Transcription}{61}{subsection.6.2.4}
-\contentsline {subsection}{\numberline {6.2.5}Batch Distribution}{61}{subsection.6.2.5}
-\contentsline {subsection}{\numberline {6.2.6}Receiving Spotting Approvals}{64}{subsection.6.2.6}
-\contentsline {section}{\numberline {6.3}CAT Through Approved Subword Spottings Using Clustering}{64}{section.6.3}
-\contentsline {subsection}{\numberline {6.3.1}Clustering}{65}{subsection.6.3.1}
-\contentsline {subsection}{\numberline {6.3.2}Spotting Approval Batch Distribution}{65}{subsection.6.3.2}
-\contentsline {subsection}{\numberline {6.3.3}Spotting Approval UI}{66}{subsection.6.3.3}
-\contentsline {section}{\numberline {6.4}CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment}{66}{section.6.4}
-\contentsline {chapter}{\numberline {7}Evaluation of Transcription Strategies}{73}{chapter.7}
-\contentsline {section}{\numberline {7.1}Evaluation Method}{73}{section.7.1}
-\contentsline {section}{\numberline {7.2}Results}{74}{section.7.2}
-\contentsline {subsection}{\numberline {7.2.1}CAT Through PHOC Vectors Results}{75}{subsection.7.2.1}
-\contentsline {subsection}{\numberline {7.2.2}CAT Through Approved Subword Spottings Results}{76}{subsection.7.2.2}
-\contentsline {subsection}{\numberline {7.2.3}CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment Results}{77}{subsection.7.2.3}
-\contentsline {chapter}{\numberline {8}Conclusion}{81}{chapter.8}
-\contentsline {section}{\numberline {8.1}Contributions}{81}{section.8.1}
-\contentsline {section}{\numberline {8.2}Future Work}{82}{section.8.2}
-\contentsline {chapter}{\numberline {9}Appendix}{85}{chapter.9}
-\contentsline {chapter}{References}{95}{toclistings.3}
+\contentsline {chapter}{\numberline {2}Related Work}{6}{chapter.2}
+\contentsline {section}{\numberline {2.1}Word Spotting}{6}{section.2.1}
+\contentsline {section}{\numberline {2.2}Automatic Handwriting Recognition}{9}{section.2.2}
+\contentsline {section}{\numberline {2.3}Computer Assisted Transcription}{10}{section.2.3}
+\contentsline {chapter}{\numberline {3}Datasets}{16}{chapter.3}
+\contentsline {section}{\numberline {3.1}IAM Dataset}{16}{section.3.1}
+\contentsline {section}{\numberline {3.2}Bentham Dataset}{16}{section.3.2}
+\contentsline {section}{\numberline {3.3}Census Names Dataset}{18}{section.3.3}
+\contentsline {section}{\numberline {3.4}Character Annotation}{19}{section.3.4}
+\contentsline {section}{\numberline {3.5}Lexicon}{19}{section.3.5}
+\contentsline {chapter}{\numberline {4}Subword Spotting}{23}{chapter.4}
+\contentsline {section}{\numberline {4.1}Implementation}{23}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Architecture}{23}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Training}{26}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}Determining Window Widths}{26}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}Running}{27}{subsection.4.1.4}
+\contentsline {subsection}{\numberline {4.1.5}Combining QbE Results}{27}{subsection.4.1.5}
+\contentsline {section}{\numberline {4.2}Analysis of Subword Spotting}{28}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Full Word Spotting}{28}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Subword Spotting}{29}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}Respotting Subwords}{35}{subsection.4.2.3}
+\contentsline {chapter}{\numberline {5}Applications of Subword Spotting}{42}{chapter.5}
+\contentsline {section}{\numberline {5.1}Manual Transcription Assistant}{42}{section.5.1}
+\contentsline {section}{\numberline {5.2}Suffix Spotting}{44}{section.5.2}
+\contentsline {chapter}{\numberline {6}Application of Subword Spotting to Transcription}{47}{chapter.6}
+\contentsline {section}{\numberline {6.1}Baseline: CAT Through PHOC Vectors}{47}{section.6.1}
+\contentsline {section}{\numberline {6.2}CAT Through Approved Subword Spottings}{48}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}Subword Spotting}{49}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}User Tasks and Interface}{49}{subsection.6.2.2}
+\contentsline {subsubsection}{\numberline {6.2.2.1}Approval}{50}{subsubsection.6.2.2.1}
+\contentsline {subsubsection}{\numberline {6.2.2.2}Transcription Selection}{50}{subsubsection.6.2.2.2}
+\contentsline {subsection}{\numberline {6.2.3}Word Completion / Regular Expression Generation}{53}{subsection.6.2.3}
+\contentsline {subsection}{\numberline {6.2.4}Receiving Transcription}{57}{subsection.6.2.4}
+\contentsline {subsection}{\numberline {6.2.5}Batch Distribution}{57}{subsection.6.2.5}
+\contentsline {subsection}{\numberline {6.2.6}Receiving Spotting Approvals}{60}{subsection.6.2.6}
+\contentsline {section}{\numberline {6.3}CAT Through Approved Subword Spottings Using Clustering}{60}{section.6.3}
+\contentsline {subsection}{\numberline {6.3.1}Clustering}{61}{subsection.6.3.1}
+\contentsline {subsection}{\numberline {6.3.2}Spotting Approval Batch Distribution}{61}{subsection.6.3.2}
+\contentsline {subsection}{\numberline {6.3.3}Spotting Approval UI}{62}{subsection.6.3.3}
+\contentsline {section}{\numberline {6.4}CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment}{62}{section.6.4}
+\contentsline {chapter}{\numberline {7}Evaluation of Transcription Strategies}{68}{chapter.7}
+\contentsline {section}{\numberline {7.1}Evaluation Method}{68}{section.7.1}
+\contentsline {section}{\numberline {7.2}Results}{69}{section.7.2}
+\contentsline {subsection}{\numberline {7.2.1}CAT Through PHOC Vectors Results}{70}{subsection.7.2.1}
+\contentsline {subsection}{\numberline {7.2.2}CAT Through Approved Subword Spottings Results}{71}{subsection.7.2.2}
+\contentsline {subsection}{\numberline {7.2.3}CAT Through Unassisted Subword Spotting Using Dynamic Time-Warping Alignment Results}{72}{subsection.7.2.3}
+\contentsline {chapter}{\numberline {8}Conclusion}{75}{chapter.8}
+\contentsline {section}{\numberline {8.1}Contributions}{75}{section.8.1}
+\contentsline {section}{\numberline {8.2}Future Work}{76}{section.8.2}
+\contentsline {chapter}{\numberline {9}Appendix}{78}{chapter.9}
+\contentsline {chapter}{References}{88}{toclistings.3}

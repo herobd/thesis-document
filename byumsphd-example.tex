@@ -1,4 +1,5 @@
-\documentclass[ms,electronic,twosidetoc,letterpaper,chaptercenter,parttop,lof,lot]{byumsphd}
+
+\documentclass[ms,letterpaper,equalmargins,oneside,chaptercenter,parttop,lof,lot]{byumsphd} %electronic,twosidetoc,
 % Author: Chris Monson
 %
 % This document is in the public domain
@@ -166,8 +167,8 @@
 % out if these already exist.
 \newcommand{\Title}{Subword Spotting and its Applications}
 \newcommand{\Author}{Brian L.~Davis}
-\newcommand{\GraduationMonth}{June}
-\newcommand{\GraduationYear}{2018}
+\newcommand{\GraduationMonth}{}
+\newcommand{\GraduationYear}{}
 
 % Set up the internal PDF information so that it becomes part of the document
 % metadata.  The pdfinfo command will display this.
@@ -197,9 +198,9 @@
 \committeemembera{Thomas Sederberg}
 \committeememberb{Daniel Zappala}
 
-\monthgraduated{\GraduationMonth}
-\yeargraduated{\GraduationYear}
-\yearcopyrighted{\GraduationYear}
+%\monthgraduated{\GraduationMonth}
+%\yeargraduated{\GraduationYear}
+\yearcopyrighted{2018}
 
 \documentabstract{%
 We propose subword spotting, a generalization of word spotting where the search is for groups of characters within words. We present a method for performing subword spotting based on state-of-the-art word spotting techniques and evaluate its performance at three granularitires (unigrams, bigrams and trigrams) on two datasets.
@@ -212,9 +213,8 @@ We demonstrate three applications of subword spotting, though others may exist. 
 }
 
 \acknowledgments{%
-    I would like to thank my wife Sarah for her support of, and patience with, my endeavors.
-    \\
-    \\
+    I would like to thank my wife Sarah for her support of, and patience with, my endeavors. Her editing skills are also responsible for eradicating many errors in this document.
+   
     
     I would like to extend thanks to Curtis Wigington, Seth Stewart, Chris Tensmyer and Bill Barrett, who, among other assistance to my work, provided use timing data for my semi-autometed transcription system used in its simulations.
 }
@@ -902,7 +902,7 @@ It is interesting that the best QbE performance is achieved with the original PH
   %\caption{Trigrams}
   %\label{fig:benthamBiSpot}
 \end{subfigure}
-    \caption{These show the QbS mAP for 18 n-grams on the Bentham dataset for varying sliding window sizes (in pixels). Figure \ref{fig:exampleWindows} shows examples of what these windows might look like.
+    \caption{These show QbS mAP for 18 n-grams on the Bentham dataset for varying sliding window sizes (in pixels). Figure \ref{fig:exampleWindows} shows examples of some windows sizes.
     }
     \label{fig:windowsizes}
 \end{figure}
@@ -1626,7 +1626,7 @@ There is a little extra work involved given n-grams are spotted at different win
  \CharacterCounts is a matrix of the same size as \CharacterSums, but tracks how many spottings contributed at each position\;
  \ForEach{$n$ in \{$1,2,3$\}}{
    \ForEach{\Ngram of length $n$}{
-     \PHOCs $:= $ \Spot{\Ngram}\tcc*[r]{Outputs PHOC vector for each window location along the entire word}
+     \PHOCs $:= $ \Spot{\Ngram}\tcc*[r]{PHOC vector for each window location along word image}
    %}   
    \ForEach{position $l$ in \Ngram}{
      \Char $:=$ \Ngram$[l]$\;
@@ -1697,6 +1697,7 @@ We measure the speed of the transcriptions using a words-per-minute metric. This
 
 \begin{table}
 \centering
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{| l | c  c  c | c c c |}
   \hline
    & \multicolumn{3}{c|}{Bentham} & \multicolumn{3}{c|}{Census Names}\\
@@ -1729,13 +1730,14 @@ We measure the speed of the transcriptions using a words-per-minute metric. This
   \hline	
   \multicolumn{7}{|l|}{CAT through approved subword spottings} \\
   Normal UBT & 0.588 & 6.39 & 0.024 &  0.354 & 2.51 & 0.058 \\
-  Closest cluster next UBT & 0.685 & 2.56 & 0.019 & 0.532 & 1.14 & 0.075 \\
+  Closest cluster UBT & 0.685 & 2.56 & 0.019 & 0.532 & 1.14 & 0.075 \\
   \hline	
   \multicolumn{7}{|l|}{CAT through unassisted subword spotting using DTW} \\
   CPV+DTW UB & 0.563 & 8.74 & 0.082 & 0.337 & 4.17 & 0.219  \\
   %? & X & X & X & X \\
   \hline  
 \end{tabular}
+  }%
 \caption{Highlights in the results from simulations. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used. The PHOC vector method is the only method we tested that is able to transcribe words at a rate faster than manual transcription. We note that \cite{Zagoris2015} reports manual transcription far below the one we collected. This is probably due to experimental setup. Their CAT system gets almost a 50\% speed-up from their reported manual time.}
 \label{tab:finalresults}
 \end{table}
@@ -1755,6 +1757,7 @@ We show more detailed results in Table \ref{tab:appresults} for the following th
 
 \begin{table}
 \centering
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{| l | c c c | c c c |}
   \hline
    & \multicolumn{3}{c|}{Bentham} & \multicolumn{3}{c|}{Census Names}\\
@@ -1783,14 +1786,15 @@ We show more detailed results in Table \ref{tab:appresults} for the following th
   Normal UB & 0.475 & 7.78 & 0.021 &  0.219 & 2.53 & 0.049 \\
   Normal BT & 0.489 & 5.67 & 0.025 &  0.213 & 2.54 & 0.057 \\  
   Normal UBT & 0.588 & 6.39 & 0.024 &  0.354 & 2.51 & 0.058 \\
-  Closest cluster next U & 0.266 & 4.93 & 0.047 & 0.171 & 4.17 & 0.036 \\
-  Closest cluster next BT & 0.686 & 2.55 & 0.018 & 0.532 & 1.16 & 0.080 \\
-  Closest cluster next UBT & 0.685 & 2.56 & 0.019 & 0.532 & 1.14 & 0.075 \\
-  Top cluster next U & 0.274 & 5.05 & 0.050 & 0.172 & 4.34 & 0.033 \\
-  Top cluster next BT & 0.693 & 2.52 & 0.020 & 0.529 & 1.15 & 0.076 \\
-  Top cluster next UBT & 0.689 & 2.54 & 0.019 & 0.530 & 1.15 & 0.073 \\
+  Closest cluster U & 0.266 & 4.93 & 0.047 & 0.171 & 4.17 & 0.036 \\
+  Closest cluster BT & 0.686 & 2.55 & 0.018 & 0.532 & 1.16 & 0.080 \\
+  Closest cluster UBT & 0.685 & 2.56 & 0.019 & 0.532 & 1.14 & 0.075 \\
+  Top cluster U & 0.274 & 5.05 & 0.050 & 0.172 & 4.34 & 0.033 \\
+  Top cluster BT & 0.693 & 2.52 & 0.020 & 0.529 & 1.15 & 0.076 \\
+  Top cluster UBT & 0.689 & 2.54 & 0.019 & 0.530 & 1.15 & 0.073 \\
   \hline  
 \end{tabular}
+}%
 \caption{Results from simulations of CATTSS using user approval on subword spotting results. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used.}
 \label{tab:appresults}
 \end{table}
@@ -1828,6 +1832,7 @@ The WER for this method is surprisingly low. This is likely to many transcriptio
 
 \begin{table}
 \centering
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{| l | c c c | c c c |}
   \hline
    & \multicolumn{3}{c|}{Bentham} & \multicolumn{3}{c|}{Census Names}\\
@@ -1845,6 +1850,7 @@ The WER for this method is surprisingly low. This is likely to many transcriptio
   CPV+DTW UBT & 0.489 & 7.11 & 0.107 & 0.318 & 3.89 & 0.238  \\
   \hline    
 \end{tabular}
+}%
 \caption{Results from simulations using character probability vectors derived from subword spotting results. The letters U, B and T represent whether unigrams, bigrams and/or trigrams were used.}
 \label{tab:dtwresults}
 \end{table}
